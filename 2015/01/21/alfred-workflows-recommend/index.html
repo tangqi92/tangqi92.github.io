@@ -1,0 +1,796 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="你不能把这个世界，让给你所鄙视的人" />
+
+
+
+  <meta name="keywords" content="Alfred,Efficiency,Workflow," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="前言如果你要问我「Mac 上必备的软件有哪些?」那么，Alfred 将会当仁不让地成为我第一个推荐给你的神器！！！（对，你没听错，我说的就是 「神器」）
+因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率，无论是工作还是生活，我现在已经离不开它了！
+关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  
+
+神兵利器——Alfred
+丢掉鼠标－Mac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="相见恨晚 - Alfred Workflows">
+<meta property="og:url" content="http://itangqi.me/2015/01/21/alfred-workflows-recommend/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言如果你要问我「Mac 上必备的软件有哪些?」那么，Alfred 将会当仁不让地成为我第一个推荐给你的神器！！！（对，你没听错，我说的就是 「神器」）
+因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率，无论是工作还是生活，我现在已经离不开它了！
+关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  
+
+神兵利器——Alfred
+丢掉鼠标－Mac">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.24.05.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.18.27.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.13.18.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.25.30.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.20.31.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.20.40.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.03.25.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.05.08.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.19.13.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.07.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.24.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.47.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.26.37.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.39.55.png">
+<meta property="og:updated_time" content="2015-09-09T05:29:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="相见恨晚 - Alfred Workflows">
+<meta name="twitter:description" content="前言如果你要问我「Mac 上必备的软件有哪些?」那么，Alfred 将会当仁不让地成为我第一个推荐给你的神器！！！（对，你没听错，我说的就是 「神器」）
+因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率，无论是工作还是生活，我现在已经离不开它了！
+关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  
+
+神兵利器——Alfred
+丢掉鼠标－Mac">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 相见恨晚 - Alfred Workflows | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Qi Tang's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              相见恨晚 - Alfred Workflows
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-01-21T00:00:00+08:00" content="2015-01-21">
+            2015-01-21
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Mac/" itemprop="url" rel="index">
+                  <span itemprop="name">Mac</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/01/21/alfred-workflows-recommend/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/21/alfred-workflows-recommend/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」那么，<a href="http://www.alfredapp.com/" target="_blank" rel="external"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！！！（对，你没听错，我说的就是 「神器」）</p>
+<p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率，无论是工作还是生活，我现在已经离不开它了！</p>
+<p>关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  </p>
+<ul>
+<li><a href="http://macshuo.com/?p=625" target="_blank" rel="external">神兵利器——Alfred</a></li>
+<li><a href="http://wellsnake.com/jekyll/update/2014/06/15/001/" target="_blank" rel="external">丢掉鼠标－Mac神软Alfred使用手册1</a></li>
+</ul>
+<p>而今天我要介绍的重点，则是 Alfred 的杀手级功能 <a href="http://baike.baidu.com/link?url=vWcxHgs2yTgrDl3DgvZl17_FLMZdp9RSdExPrW0MRDtjn4R4SjbSSnRBK3nD3NG03da3IAuEbIs14celMAhEBMNC-NF4lNZjcX2WYG6UtVG4YpDCSQ0x9XgV23TCZyMilFM4WmQPTNfIEu46nymBeK" target="_blank" rel="external">Workflows</a>，下面我将隆重介绍，在我每天工作和生活中都会使用到的 Workflow ，以此来说明其功能是如何之强大。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="例子">例子</h2><h3 id="StackOverflow">StackOverflow</h3><ul>
+<li>StackOverflow on Alfred ~ by <a href="https://github.com/xhinking" target="_blank" rel="external">@xhinking</a>             </li>
+<li>Triggers: st {query}</li>
+<li><a href="https://raw.githubusercontent.com/xhinking/Alfred/master/stackoverflow.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.24.05.png" alt=""></li>
+</ul>
+<h3 id="SNSearch">SNSearch</h3><ul>
+<li>SNSearch 是为 Alfred 开发的一款 Workflow ，主要功能是检索 Startup News 网站的最新推荐文章 ~ by <a href="https://github.com/jackychi" target="_blank" rel="external">@池建强</a></li>
+<li>Triggers: sn all , sn {query}</li>
+<li><a href="https://raw.githubusercontent.com/jackychi/SNSearch/master/SNSearch.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.18.27.png" alt=""></li>
+</ul>
+<h3 id="V2EX">V2EX</h3><ul>
+<li>一个给 V2EXer 用的 Alfred 2 Workflow ~ by <a href="https://github.com/hzlzh" target="_blank" rel="external">@hzlzh</a>           </li>
+<li>Triggers: v2ex new , v2ex @{name}</li>
+<li><a href="http://www.alfredworkflow.com/wp-admin/admin-ajax.php?action=cfdb-file&amp;s=1363880004.5359&amp;form=Alfred+Workflow&amp;field=workflow_file" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.13.18.png" alt=""></li>
+</ul>
+<h3 id="Dash">Dash</h3><ul>
+<li>ScreenshotShorter keywords for using dash lookups. Custom logo for each language included ~ by <a href="https://github.com/willfarrell" target="_blank" rel="external">willfarrell</a></li>
+<li>Triggers: dash {query}</li>
+<li><a href="http://www.alfredworkflow.com/wp-admin/admin-ajax.php?action=cfdb-file&amp;s=1366731149.1667&amp;form=Alfred+Workflow&amp;field=workflow_file" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.25.30.png" alt=""></li>
+</ul>
+<h3 id="知乎">知乎</h3><ul>
+<li>知乎 Workflow ~ by <a href="https://github.com/KJlmfe" target="_blank" rel="external">KJlmfe</a></li>
+<li>在知乎里搜索话题、问题和人：zh {query}</li>
+<li>查看今日知乎日报：zhdaily</li>
+<li><a href="https://raw.githubusercontent.com/KJlmfe/Alfred-workflows/master/zhihu.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.20.31.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.20.40.png" alt=""></li>
+</ul>
+<h3 id="Last_changed_files">Last changed files</h3><ul>
+<li>Lists recently changed files (searchable) for drag&amp;drop or file actions in alfred ~ by <a href="https://github.com/oderwat" target="_blank" rel="external">oderwat</a></li>
+<li>Triggers: .last</li>
+<li><a href="https://raw.githubusercontent.com/oderwat/alfredworkflows/master/Last%20changed%20files.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.03.25.png" alt=""></li>
+</ul>
+<h3 id="百度翻译">百度翻译</h3><ul>
+<li>百度翻译 ~ by <a href="https://github.com/zxyah" target="_blank" rel="external">zxyah</a></li>
+<li>Triggers: bfy {query}</li>
+<li><a href="https://raw.githubusercontent.com/zxyah/alfred/master/Baidu-Translate/%E7%99%BE%E5%BA%A6%E7%BF%BB%E8%AF%91.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.05.08.png" alt=""></li>
+</ul>
+<h3 id="百度地图">百度地图</h3><ul>
+<li>百度地图搜索(Search in Baidu Map) ~ by <a href="https://github.com/wofeiwo" target="_blank" rel="external">GaRy</a></li>
+<li>首先输入”setl”+空格+城市名，设置默认搜索城市地点</li>
+<li>输入”bmap”+空格+搜索关键字即可。然后就等他出结果，回车或者cmd+数字就能打开默认浏览器进入地图页面进入地图页面查看搜索结果。</li>
+<li><a href="https://raw.githubusercontent.com/wofeiwo/alfred-baidu-map/master/Baidu%20Map.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.19.13.png" alt=""></li>
+</ul>
+<h3 id="Douban">Douban</h3><ul>
+<li>搜索豆瓣电影、图书、音乐 ~ by <a href="https://github.com/lucifr" target="_blank" rel="external">Lucifr</a></li>
+<li>Triggers: book {query} , movie {query} , music {query}</li>
+<li><a href="https://raw.githubusercontent.com/lucifr/Alfredv2-Extensions/master/Douban.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.07.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.24.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.47.png" alt=""></li>
+</ul>
+<h3 id="社交网络_ID_直达">社交网络 ID 直达</h3><ul>
+<li>A fast way to view the profile when you know his @username ~ by Astrian Zheng</li>
+<li>Triggers: @ {username}</li>
+<li><a href="http://www.alfredworkflow.com/wp-admin/admin-ajax.php?action=cfdb-file&amp;s=1428503769.7937&amp;form=Alfred+Workflow&amp;field=workflow_file" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.26.37.png" alt=""></li>
+</ul>
+<h3 id="水木社区">水木社区</h3><ul>
+<li>Browse newsmth.net bbs in Alfred ~ by <a href="https://github.com/yrlihuan" target="_blank" rel="external">@yrlihuan</a></li>
+<li>浏览今日十大: smth</li>
+<li>查找板块: smth 板块拼音<ul>
+<li>smth shuimu</li>
+<li>smth jingji</li>
+</ul>
+</li>
+<li>浏览板块: smth &gt; 板块ID<ul>
+<li>smth &gt; ITExpress</li>
+<li>smth &gt; EconForum                                                                 </li>
+</ul>
+</li>
+<li><a href="https://raw.githubusercontent.com/yrlihuan/smth.alfredworkflow/master/release/smth.alfredworkflo" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.39.55.png" alt=""></li>
+</ul>
+<hr>
+<h2 id="Tips">Tips</h2><ul>
+<li>为了方便大家发现、查找、分享优秀实用的 Workflows，<a href="https://github.com/hzlzh" target="_blank" rel="external">hzlzh</a> 制作并维护了<a href="http://www.alfredworkflow.com/" target="_blank" rel="external">http://www.alfredworkflow.com</a> ， 你在上面能找到你所能想得到的所有 Workflows (当然也十分欢迎你将自己制作的 Workflow 分享上去）</li>
+<li>如果你喜欢我的 Alfred 主题话，你可以通过：<a href="https://github.com/krv/Yosemite-Dark-Alfred" target="_blank" rel="external">Dark OS X Yosemite (10.10) inspired theme for Alfred v2</a> 下载得到</li>
+</ul>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Alfred/" rel="tag">#Alfred</a>
+          
+            <a href="/tags/Efficiency/" rel="tag">#Efficiency</a>
+          
+            <a href="/tags/Workflow/" rel="tag">#Workflow</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/02/15/talk-about-material-design/" rel="prev">浅谈 Material Design</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/01/01/everything-is-just-beginning/" rel="next">一切才刚刚开始</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Qi Tang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">你不能把这个世界，让给你所鄙视的人</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">Twitter</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">Weibo</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">2.</span> <span class="nav-text">例子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#StackOverflow"><span class="nav-number">2.1.</span> <span class="nav-text">StackOverflow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SNSearch"><span class="nav-number">2.2.</span> <span class="nav-text">SNSearch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#V2EX"><span class="nav-number">2.3.</span> <span class="nav-text">V2EX</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dash"><span class="nav-number">2.4.</span> <span class="nav-text">Dash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#知乎"><span class="nav-number">2.5.</span> <span class="nav-text">知乎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Last_changed_files"><span class="nav-number">2.6.</span> <span class="nav-text">Last changed files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#百度翻译"><span class="nav-number">2.7.</span> <span class="nav-text">百度翻译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#百度地图"><span class="nav-number">2.8.</span> <span class="nav-text">百度地图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Douban"><span class="nav-number">2.9.</span> <span class="nav-text">Douban</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#社交网络_ID_直达"><span class="nav-number">2.10.</span> <span class="nav-text">社交网络 ID 直达</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#水木社区"><span class="nav-number">2.11.</span> <span class="nav-text">水木社区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">3.</span> <span class="nav-text">Tips</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#期待与你成为朋友"><span class="nav-number">4.</span> <span class="nav-text">期待与你成为朋友</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2015/01/21/alfred-workflows-recommend/';
+      var disqus_title = '相见恨晚 - Alfred Workflows';
+      var disqus_url = 'http://itangqi.me/2015/01/21/alfred-workflows-recommend/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

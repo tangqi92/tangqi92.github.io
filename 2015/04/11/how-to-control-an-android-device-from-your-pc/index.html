@@ -1,0 +1,769 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="你不能把这个世界，让给你所鄙视的人" />
+
+
+
+  <meta name="keywords" content="Root,VNC," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="背景由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何通过电脑操控 Android 设备">
+<meta property="og:url" content="http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="背景由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/1.pic_hd.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/arm2.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/explorer.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/555.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/viewer.png">
+<meta property="og:updated_time" content="2015-09-09T05:29:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何通过电脑操控 Android 设备">
+<meta name="twitter:description" content="背景由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> 如何通过电脑操控 Android 设备 | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Qi Tang's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              如何通过电脑操控 Android 设备
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-04-11T00:00:00+08:00" content="2015-04-11">
+            2015-04-11
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Android/" itemprop="url" rel="index">
+                  <span itemprop="name">Android</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/11/how-to-control-an-android-device-from-your-pc/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/11/how-to-control-an-android-device-from-your-pc/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="背景">背景</h2><p>由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。</p>
+<a id="more"></a> 
+<h3 id="VNC">VNC</h3><p>其中涉及到最主要的技术便是 <a href="http://en.wikipedia.org/wiki/Virtual_Network_Computing" target="_blank" rel="external">VNC</a> (Virtual Network Computing) ，它是使用远程帧缓冲协议（RFB）远程控制另一台计算机（设备）的图形桌面共享系统，其主要包括：                              </p>
+<ul>
+<li><p>VNC Server ：此服务程序必须在在主（或遥控）计算机（设备）上运行。你只能作为使用者（不需要根用户身份）使用此项服务。</p>
+</li>
+<li><p>VNC Viewer ：本地应用程序，用于远程接入运行 VNC Server 的计算机（设备）并显示其环境。你需要知道远程计算机（设备）的 IP 地址和 VNC Server 设定的密码。</p>
+</li>
+</ul>
+<h3 id="工作流程">工作流程</h3><ol>
+<li>在服务器端启动 VNC Server。</li>
+<li>VNC 客户端通过浏览器或 VNC Viewer 连接至 VNC Server。</li>
+<li>VNC Server 传送一对话窗口至客户端，要求输入连接密码， 以及存取的 VNC Server 显示装置。</li>
+<li>在客户端输入联机密码后，VNC Server 验证客户端是否具有存取权限。</li>
+<li>若是客户端通过 VNC Server 的验证，客户端即要求 VNC Server 显示桌面环境。</li>
+<li>VNC Server 通过 X Protocol 要求 X Server 将画面显示控制权交由 VNC Server 负责。</li>
+<li>VNC Server 将来由 X Server 的桌面环境利用 VNC 通信协议送至客户端， 并且允许客户端控制 VNC Server 的桌面环境及输入装置。</li>
+</ol>
+<hr>
+<h2 id="说明">说明</h2><p>网上已经有许多关于电脑控制手机（真机）的工具与教程且亲测可行，具体请参考：  </p>
+<ul>
+<li><a href="http://blog.laptopmag.com/control-android-from-pc" target="_blank" rel="external">How to Control an Android Device From Your PC</a>  </li>
+<li><a href="http://www.21kexin.com/jishu/201307308.html" target="_blank" rel="external">通过Droid VNC Server简单配置让PC电脑控制Android手机
+</a></li>
+</ul>
+<p>但是！但是！但是！！！<br>坑就是从这里开始的，由于项目需求的特殊性，我需要在<a href="http://www.360doc.com/content/11/0412/10/4818519_109021260.shtml" target="_blank" rel="external">模拟器</a>（Android Emulator）上实现相同的效果（后面会具体说明模拟器与真机的差别与难点），所以接下来我会详细介绍实现操控模拟器的具体操作步骤。</p>
+<hr>
+<h2 id="具体操作">具体操作</h2><h3 id="模拟器_ROOT">模拟器 ROOT</h3><p>由于大多数「VNC Server For Android」应用都需要求手机为 Root 状态（后来发现有不需要 Root 的，但没有进行实际验证），所以第一步便是实现模拟器的 Root ：</p>
+<ul>
+<li>如果你使用的是第三方模拟器 <a href="http://www.iplaysoft.com/genymotion.html" target="_blank" rel="external">Genymotion</a> 的话（在这里强烈推荐下），则系统（4.0+）默认为 Root 状态</li>
+</ul>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/1.pic_hd.jpg" alt=""> </p>
+<ul>
+<li><p>如果你使用的是原生模拟器的话（赶紧换吧，立马提升工作效率），则可以按如下操作实现 Root ：                                   </p>
+<p>  <a href="http://blog.csdn.net/guangsuxinhen4/article/details/26241067" target="_blank" rel="external">Android AVD emulator模拟器获取root权限（4.1.2以下）</a></p>
+</li>
+</ul>
+<h3 id="下载_android-vnc-server">下载 android-vnc-server</h3><p>这里就要涉及到「ARM」与「X86」的概念，详情请参见：<a href="http://mobile.hiapk.com/knowledge/common/130718/1438966.html" target="_blank" rel="external">手机CPU科普 ARM构架与X86构架的优劣对比</a>，之后便参照下面步骤实现安装：</p>
+<ul>
+<li><p>如果你使用的是第三方模拟器 Genymotion，由于其依托 <a href="http://baike.baidu.com/link?url=qYBqekGQvAoJs5t2w1c8a1omyj44_lnzwMx5HxNi7YzU2kKMFrs9RFgwqzQ2tuuF7OLmRPJB9D6GqF8cR_myoq" target="_blank" rel="external">VirtualBox</a>，所以其模拟器的架构默认为 X86，因此你需要下载可以在 X86 下运行的 VNC Server 版本：<a href="http://pan.baidu.com/s/1sjODcdB" target="_blank" rel="external">androidvncserver_x86</a></p>
+</li>
+<li><p>如果你使用的是原生模拟器，则在创建 AVD 时「CPU/ABI」选择「ARM」，</p>
+</li>
+</ul>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/arm2.png" alt=""></p>
+<p>随后下载 ARM 版本 <a href="http://pan.baidu.com/s/1pJmh42f" target="_blank" rel="external">androidvncserver</a>               </p>
+<h3 id="安装_android-vnc-server">安装 android-vnc-server</h3><h3 id="1-_将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：">1. 将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：</h3><ul>
+<li><p>使用 adb push 进去，如下：</p>
+<pre><code><span class="label">adb</span> <span class="keyword">push </span>所在路径/<span class="keyword">androidvncserver_x86 </span>/<span class="preprocessor">data</span>/local/
+</code></pre></li>
+<li><p>使用文件夹管理工具，如 <a href="http://pan.baidu.com/s/1c0vXrRq" target="_blank" rel="external">Root Explorer</a></p>
+</li>
+</ul>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/explorer.jpg" alt=""></p>
+<h3 id="2-_更改「androidvncserver_x86」的权限，同样也有两种方法：">2. 更改「androidvncserver_x86」的权限，同样也有两种方法：</h3><ul>
+<li><p>使用 adb</p>
+<pre><code><span class="preprocessor"># chmod <span class="number">555</span> androidvncserver_x86</span>
+</code></pre></li>
+<li><p>使用文件夹管理</p>
+</li>
+</ul>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/555.png" alt=""></p>
+<h3 id="3-_运行_androidvncserver_x86">3. 运行 androidvncserver_x86</h3><pre><code># /<span class="preprocessor">data</span>/local/<span class="keyword">androidvncserver_x86 </span>&amp;
+</code></pre><p><strong>注：如果这一步出现</strong></p>
+<blockquote>
+<p>Initializing framebuffer device /dev/graphics/fb0…<br>xres=320, yres=480, xresv=320, yresv=960, xoffs=0, yoffs=0, bpp=16<br>Initializing keyboard device /dev/input/event3 …<br>cannot open kbd device /dev/input/event3</p>
+</blockquote>
+<p>大家可以参考<a href="http://blog.goo.ne.jp/karutaya/e/a815571ef06640ea33fbb1bcf08ac9ed" target="_blank" rel="external">这里</a>，其关键就是：</p>
+<pre><code>&gt; adb shell
+# <span class="regexp">/data/</span>androidvncserver -k <span class="regexp">/dev/i</span>nput<span class="regexp">/event0 -t /</span>dev<span class="regexp">/input/</span>event0 &amp;
+</code></pre><h3 id="运行_VNC_Viewer">运行 VNC Viewer</h3><ol>
+<li>下载相应版本<a href="https://www.realvnc.com/download/vnc/" target="_blank" rel="external">VNC</a>并安装</li>
+<li>adb forward tcp:5901 tcp:5901</li>
+<li>打开 VNC Viewer，地址填写「127.0.0.1:5901」，点击「连接」后便可看到画面</li>
+</ol>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/viewer.png" alt=""></p>
+<hr>
+<h2 id="Tips">Tips</h2><ol>
+<li><a href="http://jingyan.baidu.com/article/17bd8e52f514d985ab2bb800.html" target="_blank" rel="external">ADB 环境变量配置</a></li>
+<li><a href="http://www.open-open.com/lib/view/1327557366686" target="_blank" rel="external">ADB Shell 命令详解</a></li>
+</ol>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Root/" rel="tag">#Root</a>
+          
+            <a href="/tags/VNC/" rel="tag">#VNC</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/05/11/the-interview-summary/" rel="prev">世界那么大，我想去看看</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/03/07/java-and-javascript-interaction-in-android/" rel="next">Java 与 JavaScript 如何进行交互</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Qi Tang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">你不能把这个世界，让给你所鄙视的人</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">Twitter</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">Weibo</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VNC"><span class="nav-number">1.1.</span> <span class="nav-text">VNC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作流程"><span class="nav-number">1.2.</span> <span class="nav-text">工作流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">2.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体操作"><span class="nav-number">3.</span> <span class="nav-text">具体操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模拟器_ROOT"><span class="nav-number">3.1.</span> <span class="nav-text">模拟器 ROOT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载_android-vnc-server"><span class="nav-number">3.2.</span> <span class="nav-text">下载 android-vnc-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装_android-vnc-server"><span class="nav-number">3.3.</span> <span class="nav-text">安装 android-vnc-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-_将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法："><span class="nav-number">3.4.</span> <span class="nav-text">1. 将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-_更改「androidvncserver_x86」的权限，同样也有两种方法："><span class="nav-number">3.5.</span> <span class="nav-text">2. 更改「androidvncserver_x86」的权限，同样也有两种方法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-_运行_androidvncserver_x86"><span class="nav-number">3.6.</span> <span class="nav-text">3. 运行 androidvncserver_x86</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行_VNC_Viewer"><span class="nav-number">3.7.</span> <span class="nav-text">运行 VNC Viewer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">4.</span> <span class="nav-text">Tips</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#期待与你成为朋友"><span class="nav-number">5.</span> <span class="nav-text">期待与你成为朋友</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2015/04/11/how-to-control-an-android-device-from-your-pc/';
+      var disqus_title = '如何通过电脑操控 Android 设备';
+      var disqus_url = 'http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

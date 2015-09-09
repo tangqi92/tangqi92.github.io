@@ -1,0 +1,744 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
+    <meta name="description" content="你不能把这个世界，让给你所鄙视的人" />
+
+
+
+  <meta name="keywords" content="Google Places," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="前言最近由于项目的原因，接触到了 Google Places 的使用与开发，学习并在项目中实现了简单的地点定位与自动补全功能。在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Google Places for Android 入门指南">
+<meta property="og:url" content="http://itangqi.me/2015/08/09/google-places-for-android-guide/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言最近由于项目的原因，接触到了 Google Places 的使用与开发，学习并在项目中实现了简单的地点定位与自动补全功能。在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-01.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-02.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-03.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-04.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-05.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-layout.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-sc-01.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-sc-02.png">
+<meta property="og:updated_time" content="2015-09-09T05:29:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Google Places for Android 入门指南">
+<meta name="twitter:description" content="前言最近由于项目的原因，接触到了 Google Places 的使用与开发，学习并在项目中实现了简单的地点定位与自动补全功能。在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> Google Places for Android 入门指南 | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Qi Tang's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Google Places for Android 入门指南
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-09T00:00:00+08:00" content="2015-08-09">
+            2015-08-09
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Android/" itemprop="url" rel="index">
+                  <span itemprop="name">Android</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/09/google-places-for-android-guide/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/09/google-places-for-android-guide/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="前言">前言</h2><p>最近由于项目的原因，接触到了 <a href="https://developers.google.com/places/" target="_blank" rel="external">Google Places</a> 的使用与开发，学习并在项目中实现了简单的<strong>地点定位</strong>与<strong>自动补全</strong>功能。<br>在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .</p>
+<a id="more"></a> 
+<hr>
+<h2 id="在_Google_Developers_Console_中创建_API_项目">在 Google Developers Console 中创建 API 项目</h2><p>如果你之前从未在应用中使用过 Google 提供的相关服务（API），那么请直接使用系统引导帮你完成整个流程并自动激活 Google Places API for Android ，请点击<a href="https://console.developers.google.com/flows/enableapi?apiid=placesandroid&amp;keyType=CLIENT_SIDE_ANDROID" target="_blank" rel="external">此链接</a>，按下面截图所示进行操作，便可轻松完成创建。  </p>
+<ol>
+<li>选择「Create a new project」<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-01.png" alt=""></li>
+<li>选择「Go to Credentials」<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-02.png" alt=""></li>
+<li>此处直接选择「Create」，既默认所有应用均可使用同样的「API key」<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-03.png" alt=""></li>
+<li>好啦，此时主角「API key」便自动生成了<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-04.png" alt=""></li>
+<li>如果你还需要新增（使用）其他服务（API），请在「APIs」里进行查看与添加<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-05.png" alt=""></li>
+</ol>
+<hr>
+<h2 id="配置你的应用">配置你的应用</h2><p>使用 Google Places API for Android 的所有应用均需执行以下配置步骤。</p>
+<h3 id="添加_Google_Play_服务">添加 Google Play 服务</h3><p>要访问 Google Places API for Android，应用的开发项目必须包含 Google Play 服务。通过 SDK 管理器下载并安装 Google Play 服务组件，然后将库添加至您的项目。  </p>
+<p>-buidl.gradle (app)<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.google.android.gms:play-services:7.5.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  </p>
+<h3 id="添加相应权限">添加相应权限</h3><p>-AndroidManifest.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- PlacePicker requires the ACCESS_FINE_LOCATION permission and a geo API key.--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_FINE_LOCATION"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.INTERNET"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_COARSE_LOCATION"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- PlacePicker also requires OpenGL ES version 2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-feature</span></span><br><span class="line">	<span class="attribute">android:glEsVersion</span>=<span class="value">"0x00020000"</span></span><br><span class="line">   	<span class="attribute">android:required</span>=<span class="value">"true"</span> /&gt;</span></span><br></pre></td></tr></table></figure>   </p>
+<h3 id="添加_API_密钥">添加 API 密钥</h3><p>请按照以下代码示例所示，将你的 API 密钥添加至 Manifest ，并将 <strong>API_KEY</strong> 替换为您自己的 API 密钥：  </p>
+<p>-AndroidManifest.xml<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="type">application</span>&gt;</span><br><span class="line">  ...</span><br><span class="line">  &lt;meta-data</span><br><span class="line">            android:<span class="property">name</span>=<span class="string">"com.google.android.gms.version"</span></span><br><span class="line">            android:value=<span class="string">"@integer/google_play_services_version"</span> /&gt;</span><br><span class="line">            </span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:<span class="property">name</span>=<span class="string">"com.google.android.geo.API_KEY"</span></span><br><span class="line">      android:value=<span class="string">"API_KEY"</span>/&gt;</span><br><span class="line">&lt;/<span class="type">application</span>&gt;</span><br></pre></td></tr></table></figure>  </p>
+<hr>
+<h2 id="当前地点">当前地点</h2><h3 id="获取当前位置">获取当前位置</h3><p>要查找本地商家或设备的最后已知所在地点，请调用 <code>PlaceDetectionApi.getCurrentPlace()</code>。</p>
+<p>您可以选择指定一个 <code>PlaceFilter</code>，以将结果限制为一个或多个地点 ID（最多 10 个），或者仅选择当前打开的地点。如果未指定筛选器，则不会筛选结果。</p>
+<p>API 会在 <code>PendingResult</code> 中返回 <code>PlaceLikelihoodBuffer</code>。<code>PlaceLikelihoodBuffer</code> 包含表示类似地点的 <code>PlaceLikelihood</code> 对象列表。对于每个地点，结果中都包含指示地点是正确地点的可能性信息。如果没有与筛选条件对应的已知地点，缓冲区可能为空。  </p>
+<p>您可以调用 <code>PlaceLikelihood.getPlace()</code> 来检索 <code>Place</code> 对象，调用 <code>PlaceLikelihood.getLikelihood()</code> 来获取地点的可能性评分。值越高，表示该地点是最佳匹配项的可能性越大。</p>
+<h3 id="地点自动完成">地点自动完成</h3><p>要获取预测地点名称和/或地址的列表，请调用 <code>GeoDataApi.getAutocompletePredictions()</code>，传递以下参数：  </p>
+<ul>
+<li>必填：<code>query</code> 字符串包含用户键入的文本。</li>
+<li>必填：<code>LatLngBounds</code> 对象，将结果限制为通过纬度和经度边界指定的特定区域。</li>
+<li>可选：<code>AutocompleteFilter</code>，包含一组地点类型，您可以使用它们将结果限制为一种或多种地点类型，如商店、学校、邮局等。有关可用地点类型的列表，请参见<a href="https://developers.google.com/places/supported_types#table3" target="_blank" rel="external">支持的类型</a>列表。</li>
+</ul>
+<p>API 会在 <code>PendingResult</code> 中返回 <code>AutocompletePredictionBuffer</code>。<code>AutocompletePredictionBuffer</code> 包含表示预测地点的 <code>AutocompletePrediction</code> 对象列表。如果没有与查询和筛选条件对应的已知地点，缓冲区可能为空。</p>
+<p>对于每个预测地点，都可以调用以下方法来检索地点详情：</p>
+<ul>
+<li><code>getDescription()</code> – 返回地点说明。</li>
+<li><code>getMatchedSubstrings()</code> – 通过与此地点匹配的 query 返回子字符串列表。例如，您可以使用这些子字符串突出显示用户查询中的匹配文本。</li>
+<li><code>getDescription()</code> – 返回预测地点的地点 ID。地点 ID 是唯一标识地点的文本标识符。有关地点 ID 的详细信息，请参阅<a href="https://developers.google.com/places/place-id" target="_blank" rel="external">地点 ID 概览</a>。</li>
+<li>`getPlaceTypes() – 返回与此地点关联的地点类型列表。</li>
+</ul>
+<hr>
+<h2 id="具体实现">具体实现</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-layout.png" alt="screenshot" title="screenshot" width="350" height="622">  </p>
+<p>-activity_main.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">LinearLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_margin</span>=<span class="value">"@dimen/margin_16dp"</span></span><br><span class="line">    <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="title">AutoCompleteTextView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/autocomplete_places"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_gravity</span>=<span class="value">"center_horizontal"</span></span><br><span class="line">        <span class="attribute">android:hint</span>=<span class="value">"@string/autocomplete_hint"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">LinearLayout</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:orientation</span>=<span class="value">"horizontal"</span></span><br><span class="line">        <span class="attribute">android:paddingTop</span>=<span class="value">"@dimen/margin_8dp"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">Button</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/ll_current_location"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">android:layout_gravity</span>=<span class="value">"center_vertical"</span></span><br><span class="line">            <span class="attribute">android:text</span>=<span class="value">"@string/get_current_place"</span></span><br><span class="line">            <span class="attribute">android:textAppearance</span>=<span class="value">"?android:attr/textAppearanceSmall"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">ImageView</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_gravity</span>=<span class="value">"right"</span></span><br><span class="line">        <span class="attribute">android:src</span>=<span class="value">"@drawable/powered_by_google_light"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"@string/selected_place"</span></span><br><span class="line">        <span class="attribute">android:textAppearance</span>=<span class="value">"?android:attr/textAppearanceMedium"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/place_details"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:autoLink</span>=<span class="value">"all"</span></span><br><span class="line">        <span class="attribute">android:paddingTop</span>=<span class="value">"@dimen/margin_8dp"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">""</span></span><br><span class="line">        <span class="attribute">android:textAppearance</span>=<span class="value">"?android:attr/textAppearanceMedium"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/place_attribution"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:autoLink</span>=<span class="value">"all"</span></span><br><span class="line">        <span class="attribute">android:paddingTop</span>=<span class="value">"@dimen/margin_16dp"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">""</span></span><br><span class="line">        <span class="attribute">android:textAppearance</span>=<span class="value">"?android:attr/textAppearanceSmall"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>  </p>
+<p>-PlaceAutocompleteAdapter.java<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PlaceAutocompleteAdapter</span></span><br><span class="line">        <span class="keyword">extends</span> <span class="title">ArrayAdapter</span>&lt;<span class="title">PlaceAutocompleteAdapter</span>.<span class="title">PlaceAutocomplete</span>&gt; <span class="keyword">implements</span> <span class="title">Filterable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"PlaceAutocompleteAdapter"</span>;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Current results returned by this adapter.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;PlaceAutocomplete&gt; mResultList;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Handles autocomplete requests.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> GoogleApiClient mGoogleApiClient;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The bounds used for Places Geo Data autocomplete API requests.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> LatLngBounds mBounds;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The autocomplete filter used to restrict queries to a specific set of place types.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> AutocompleteFilter mPlaceFilter;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Initializes with a resource for text rows and autocomplete query bounds.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@see</span> ArrayAdapter#ArrayAdapter(Context, int)</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PlaceAutocompleteAdapter</span><span class="params">(Context context, <span class="keyword">int</span> resource, GoogleApiClient googleApiClient,</span><br><span class="line">                                    LatLngBounds bounds, AutocompleteFilter filter)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, resource);</span><br><span class="line">        mGoogleApiClient = googleApiClient;</span><br><span class="line">        mBounds = bounds;</span><br><span class="line">        mPlaceFilter = filter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Sets the bounds for all subsequent queries.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setBounds</span><span class="params">(LatLngBounds bounds)</span> </span>&#123;</span><br><span class="line">        mBounds = bounds;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Returns the number of results received in the last autocomplete query.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> mResultList.<span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Returns an item from the last autocomplete query.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function">PlaceAutocomplete <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> mResultList.<span class="title">get</span><span class="params">(position)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Returns the filter for the current set of autocomplete results.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function">Filter <span class="title">getFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Filter filter = <span class="keyword">new</span> Filter() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="function">FilterResults <span class="title">performFiltering</span><span class="params">(CharSequence constraint)</span> </span>&#123;</span><br><span class="line">                FilterResults results = <span class="keyword">new</span> FilterResults();</span><br><span class="line">                <span class="comment">// Skip the autocomplete query if no constraints are given.</span></span><br><span class="line">                <span class="keyword">if</span> (constraint != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// Query the autocomplete API for the (constraint) search string.</span></span><br><span class="line">                    mResultList = getAutocomplete(constraint);</span><br><span class="line">                    <span class="keyword">if</span> (mResultList != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="comment">// The API successfully returned results.</span></span><br><span class="line">                        results.values = mResultList;</span><br><span class="line">                        results.count = mResultList.size();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> results;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">publishResults</span><span class="params">(CharSequence constraint, FilterResults results)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (results != <span class="keyword">null</span> &amp;&amp; results.count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="comment">// The API returned at least one result, update the data.</span></span><br><span class="line">                    notifyDataSetChanged();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// The API did not return any results, invalidate the data set.</span></span><br><span class="line">                    notifyDataSetInvalidated();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> filter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;PlaceAutocomplete&gt; getAutocomplete(CharSequence constraint) &#123;</span><br><span class="line">        <span class="keyword">if</span> (mGoogleApiClient.isConnected()) &#123;</span><br><span class="line">            Log.i(TAG, <span class="string">"Starting autocomplete query for: "</span> + constraint);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Submit the query to the autocomplete API and retrieve a PendingResult that will</span></span><br><span class="line">            <span class="comment">// contain the results when the query completes.</span></span><br><span class="line">            PendingResult&lt;AutocompletePredictionBuffer&gt; results =</span><br><span class="line">                    Places.GeoDataApi</span><br><span class="line">                            .getAutocompletePredictions(mGoogleApiClient, constraint.toString(),</span><br><span class="line">                                    mBounds, mPlaceFilter);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// This method should have been called off the main UI thread. Block and wait for at most 60s</span></span><br><span class="line">            <span class="comment">// for a result from the API.</span></span><br><span class="line">            AutocompletePredictionBuffer autocompletePredictions = results</span><br><span class="line">                    .await(<span class="number">60</span>, TimeUnit.SECONDS);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Confirm that the query completed successfully, otherwise return null</span></span><br><span class="line">            <span class="keyword">final</span> Status status = autocompletePredictions.getStatus();</span><br><span class="line">            <span class="keyword">if</span> (!status.isSuccess()) &#123;</span><br><span class="line">                Toast.makeText(getContext(), <span class="string">"Error contacting API: "</span> + status.toString(),</span><br><span class="line">                        Toast.LENGTH_SHORT).show();</span><br><span class="line">                Log.e(TAG, <span class="string">"Error getting autocomplete prediction API call: "</span> + status.toString());</span><br><span class="line">                autocompletePredictions.release();</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            Log.i(TAG, <span class="string">"Query completed. Received "</span> + autocompletePredictions.getCount()</span><br><span class="line">                    + <span class="string">" predictions."</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Copy the results into our own data structure, because we can't hold onto the buffer.</span></span><br><span class="line">            <span class="comment">// AutocompletePrediction objects encapsulate the API response (place ID and description).</span></span><br><span class="line"></span><br><span class="line">            Iterator&lt;AutocompletePrediction&gt; iterator = autocompletePredictions.iterator();</span><br><span class="line">            ArrayList resultList = <span class="keyword">new</span> ArrayList&lt;&gt;(autocompletePredictions.getCount());</span><br><span class="line">            <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">                AutocompletePrediction prediction = iterator.next();</span><br><span class="line">                <span class="comment">// Get the details of this prediction and copy it into a new PlaceAutocomplete object.</span></span><br><span class="line">                resultList.add(<span class="keyword">new</span> PlaceAutocomplete(prediction.getPlaceId(),</span><br><span class="line">                        prediction.getDescription()));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Release the buffer now that all data has been copied.</span></span><br><span class="line">            autocompletePredictions.release();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> resultList;</span><br><span class="line">        &#125;</span><br><span class="line">        Log.e(TAG, <span class="string">"Google API client is not connected for autocomplete query."</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Holder for Places Geo Data Autocomplete API results.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">PlaceAutocomplete</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> CharSequence placeId;</span><br><span class="line">        <span class="keyword">public</span> CharSequence description;</span><br><span class="line"></span><br><span class="line">        PlaceAutocomplete(CharSequence placeId, CharSequence description) &#123;</span><br><span class="line">            <span class="keyword">this</span>.placeId = placeId;</span><br><span class="line">            <span class="keyword">this</span>.description = description;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function">String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="function"><span class="keyword">return</span> description.<span class="title">toString</span><span class="params">()</span></span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  </p>
+<p>-MainActivity.java<br><figure class="highlight java"><figcaption><span>java</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span></span><br><span class="line">        <span class="keyword">implements</span> <span class="title">GoogleApiClient</span>.<span class="title">OnConnectionFailedListener</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * GoogleApiClient wraps our service connection to Google Play Services and provides access</span><br><span class="line">     * to the user's sign in state as well as the Google's APIs.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> GOOGLE_API_CLIENT_ID = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> GoogleApiClient mGoogleApiClient;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> PlaceAutocompleteAdapter mAdapter;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> AutoCompleteTextView mAutocompleteView;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView mPlaceDetailsText;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView mPlaceDetailsAttribution;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Button mCurrentLocation;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"MainActivity"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> LatLngBounds BOUNDS_GREATER_SYDNEY = <span class="keyword">new</span> LatLngBounds(</span><br><span class="line">            <span class="keyword">new</span> LatLng(-<span class="number">34.041458</span>, <span class="number">150.790100</span>), <span class="keyword">new</span> LatLng(-<span class="number">33.682247</span>, <span class="number">151.383362</span>));</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Construct a GoogleApiClient for the &#123;@link Places#GEO_DATA_API&#125; using AutoManage</span></span><br><span class="line">        <span class="comment">// functionality, which automatically sets up the API client to handle Activity lifecycle</span></span><br><span class="line">        <span class="comment">// events. If your activity does not extend FragmentActivity, make sure to call connect()</span></span><br><span class="line">        <span class="comment">// and disconnect() explicitly.</span></span><br><span class="line">        mGoogleApiClient = <span class="keyword">new</span> GoogleApiClient.Builder(<span class="keyword">this</span>)</span><br><span class="line">                .enableAutoManage(<span class="keyword">this</span>, GOOGLE_API_CLIENT_ID <span class="comment">/* clientId */</span>, <span class="keyword">this</span>)</span><br><span class="line">                .addApi(Places.GEO_DATA_API)</span><br><span class="line">                .addApi(Places.PLACE_DETECTION_API)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Retrieve the AutoCompleteTextView that will display Place suggestions.</span></span><br><span class="line">        mAutocompleteView = (AutoCompleteTextView)</span><br><span class="line">                findViewById(R.id.autocomplete_places);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Register a listener that receives callbacks when a suggestion has been selected</span></span><br><span class="line">        mAutocompleteView.setOnItemClickListener(mAutocompleteClickListener);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Retrieve the TextViews that will display details and attributions of the selected place.</span></span><br><span class="line">        mPlaceDetailsText = (TextView) findViewById(R.id.place_details);</span><br><span class="line">        mPlaceDetailsAttribution = (TextView) findViewById(R.id.place_attribution);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// CurrentLocation</span></span><br><span class="line">        mCurrentLocation = (Button) findViewById(R.id.ll_current_location);</span><br><span class="line">        mCurrentLocation.setOnClickListener(mOnClickListener);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Set up the adapter that will retrieve suggestions from the Places Geo Data API that cover</span></span><br><span class="line">        <span class="comment">// the entire world.</span></span><br><span class="line">        mAdapter = <span class="keyword">new</span> PlaceAutocompleteAdapter(<span class="keyword">this</span>, android.R.layout.simple_list_item_1,</span><br><span class="line">                mGoogleApiClient, BOUNDS_GREATER_SYDNEY, <span class="keyword">null</span>);</span><br><span class="line">        mAutocompleteView.setAdapter(mAdapter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> View.OnClickListener mOnClickListener = <span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">            PendingResult&lt;PlaceLikelihoodBuffer&gt; result = Places.PlaceDetectionApi</span><br><span class="line">                    .getCurrentPlace(mGoogleApiClient, <span class="keyword">null</span>);</span><br><span class="line">            result.setResultCallback(<span class="keyword">new</span> ResultCallback&lt;PlaceLikelihoodBuffer&gt;() &#123;</span><br><span class="line">                <span class="annotation">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResult</span><span class="params">(PlaceLikelihoodBuffer likelyPlaces)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (!likelyPlaces.getStatus().isSuccess()) &#123;</span><br><span class="line">                        <span class="comment">// Request did not complete successfully</span></span><br><span class="line">                        Log.e(TAG, <span class="string">"Place query did not complete. Error: "</span> + likelyPlaces.getStatus().toString());</span><br><span class="line">                        likelyPlaces.release();</span><br><span class="line">                        <span class="keyword">return</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    String placeName = String.format(<span class="string">"%s"</span>, likelyPlaces.get(<span class="number">0</span>).getPlace().getName());</span><br><span class="line">                    String placeAttributuion = String.format(<span class="string">"%s"</span>, likelyPlaces.get(<span class="number">0</span>).getPlace().getAddress());</span><br><span class="line">                    mPlaceDetailsText.setText(placeName);</span><br><span class="line">                    mPlaceDetailsAttribution.setText(placeAttributuion);</span><br><span class="line">                    likelyPlaces.release();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Listener that handles selections from suggestions from the AutoCompleteTextView that</span><br><span class="line">     * displays Place suggestions.</span><br><span class="line">     * Gets the place id of the selected item and issues a request to the Places Geo Data API</span><br><span class="line">     * to retrieve more details about the place.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@see</span> com.google.android.gms.location.places.GeoDataApi#getPlaceById(com.google.android.gms.common.api.GoogleApiClient,</span><br><span class="line">     * String...)</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> AdapterView.OnItemClickListener mAutocompleteClickListener</span><br><span class="line">            = <span class="keyword">new</span> AdapterView.OnItemClickListener() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(AdapterView&lt;?&gt; parent, View view, <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">            <span class="comment">/*</span><br><span class="line">             Retrieve the place ID of the selected item from the Adapter.</span><br><span class="line">             The adapter stores each Place suggestion in a PlaceAutocomplete object from which we</span><br><span class="line">             read the place ID.</span><br><span class="line">              */</span></span><br><span class="line">            <span class="keyword">final</span> PlaceAutocompleteAdapter.PlaceAutocomplete item = mAdapter.getItem(position);</span><br><span class="line">            <span class="keyword">final</span> String placeId = String.valueOf(item.placeId);</span><br><span class="line">            Log.i(TAG, <span class="string">"Autocomplete item selected: "</span> + item.description);</span><br><span class="line"></span><br><span class="line">            <span class="comment">/*</span><br><span class="line">             Issue a request to the Places Geo Data API to retrieve a Place object with additional</span><br><span class="line">              details about the place.</span><br><span class="line">              */</span></span><br><span class="line">            PendingResult&lt;PlaceBuffer&gt; placeResult = Places.GeoDataApi</span><br><span class="line">                    .getPlaceById(mGoogleApiClient, placeId);</span><br><span class="line">            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);</span><br><span class="line">            Log.i(TAG, <span class="string">"Called getPlaceById to get Place details for "</span> + item.placeId);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Callback for results from a Places Geo Data API query that shows the first place result in</span><br><span class="line">     * the details view on screen.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> ResultCallback&lt;PlaceBuffer&gt; mUpdatePlaceDetailsCallback</span><br><span class="line">            = <span class="keyword">new</span> ResultCallback&lt;PlaceBuffer&gt;() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResult</span><span class="params">(PlaceBuffer places)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!places.getStatus().isSuccess()) &#123;</span><br><span class="line">                <span class="comment">// Request did not complete successfully</span></span><br><span class="line">                Log.e(TAG, <span class="string">"Place query did not complete. Error: "</span> + places.getStatus().toString());</span><br><span class="line">                places.release();</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Get the Place object from the buffer.</span></span><br><span class="line">            <span class="keyword">final</span> Place place = places.get(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Format details of the place for display and show it in a TextView.</span></span><br><span class="line">            mPlaceDetailsText.setText(formatPlaceDetails(getResources(), place.getName(),</span><br><span class="line">                    place.getId(), place.getAddress(), place.getPhoneNumber(),</span><br><span class="line">                    place.getWebsiteUri()));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Display the third party attributions if set.</span></span><br><span class="line">            <span class="keyword">final</span> CharSequence thirdPartyAttribution = places.getAttributions();</span><br><span class="line">            <span class="keyword">if</span> (thirdPartyAttribution == <span class="keyword">null</span>) &#123;</span><br><span class="line">                mPlaceDetailsAttribution.setVisibility(View.GONE);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                mPlaceDetailsAttribution.setVisibility(View.VISIBLE);</span><br><span class="line">                mPlaceDetailsAttribution.setText(Html.fromHtml(thirdPartyAttribution.toString()));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            Log.i(TAG, <span class="string">"Place details received: "</span> + place.getName());</span><br><span class="line"></span><br><span class="line">            places.release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Spanned <span class="title">formatPlaceDetails</span><span class="params">(Resources res, CharSequence name, String id,</span><br><span class="line">                                              CharSequence address, CharSequence phoneNumber, Uri websiteUri)</span> </span>&#123;</span><br><span class="line">        Log.e(TAG, res.getString(R.string.place_details, name, id, address, phoneNumber,</span><br><span class="line">                websiteUri));</span><br><span class="line">        <span class="keyword">return</span> Html.fromHtml(res.getString(R.string.place_details, name, id, address, phoneNumber,</span><br><span class="line">                websiteUri));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Called when the Activity could not connect to Google Play services and the auto manager</span><br><span class="line">     * could resolve the error automatically.</span><br><span class="line">     * In this case the API is not available and notify the user.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> connectionResult can be inspected to determine the cause of the failure</span><br><span class="line">     */</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onConnectionFailed</span><span class="params">(ConnectionResult connectionResult)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Log.e(TAG, <span class="string">"onConnectionFailed: ConnectionResult.getErrorCode() = "</span></span><br><span class="line">                + connectionResult.getErrorCode());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// TODO(Developer): Check error code and notify the user of error state and resolution.</span></span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>,</span><br><span class="line">                <span class="string">"Could not connect to Google API Client: Error "</span> + connectionResult.getErrorCode(),</span><br><span class="line">                Toast.LENGTH_SHORT).show();</span><br><span class="line">        MainActivity.<span class="keyword">this</span>.finish();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  </p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-sc-01.png" alt="screenshot" title="screenshot" width="350" height="622"> <img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-sc-02.png" alt="screenshot" title="screenshot" width="350" height="622">    </p>
+<hr>
+<h2 id="最后">最后</h2><ul>
+<li>Demo 下载链接：<a href="https://github.com/tangqi92/MyGooglePlaces" target="_blank" rel="external">https://github.com/tangqi92/MyGooglePlaces</a></li>
+<li>友情提醒：以上的功能，手机需要安装 <a href="https://developers.google.com/android/guides/overview" target="_blank" rel="external">Google Play services</a> 才能正常使用，至于如何安装，就交给万能的 Google 吧：）</li>
+<li>如本文存在任何错误或遗漏，欢迎指正。</li>
+<li>我最爱交朋友了，所以欢迎在社交网络上<a href="http://itangqi.me/tangqi/">互粉</a>！！！</li>
+</ul>
+<hr>
+<h2 id="References_&amp;_More">References &amp; More</h2><ul>
+<li><a href="https://developers.google.com/places/android/" target="_blank" rel="external">https://developers.google.com/places/android</a></li>
+<li><a href="https://github.com/googlesamples/android-play-places" target="_blank" rel="external">https://github.com/googlesamples/android-play-places</a></li>
+</ul>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Google-Places/" rel="tag">#Google Places</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/03/building-blocks/" rel="prev">积木 - 享受搭建应用的乐趣</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/26/orm-greendao-summary/" rel="next">ORM 框架之 greenDAO 使用心得</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Qi Tang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">你不能把这个世界，让给你所鄙视的人</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">Twitter</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">Weibo</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://moment.douban.com/app/" target="_blank">豆瓣一刻</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在_Google_Developers_Console_中创建_API_项目"><span class="nav-number">2.</span> <span class="nav-text">在 Google Developers Console 中创建 API 项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置你的应用"><span class="nav-number">3.</span> <span class="nav-text">配置你的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加_Google_Play_服务"><span class="nav-number">3.1.</span> <span class="nav-text">添加 Google Play 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加相应权限"><span class="nav-number">3.2.</span> <span class="nav-text">添加相应权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加_API_密钥"><span class="nav-number">3.3.</span> <span class="nav-text">添加 API 密钥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当前地点"><span class="nav-number">4.</span> <span class="nav-text">当前地点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取当前位置"><span class="nav-number">4.1.</span> <span class="nav-text">获取当前位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地点自动完成"><span class="nav-number">4.2.</span> <span class="nav-text">地点自动完成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">5.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">6.</span> <span class="nav-text">最后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References_&_More"><span class="nav-number">7.</span> <span class="nav-text">References & More</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#期待与你成为朋友"><span class="nav-number">8.</span> <span class="nav-text">期待与你成为朋友</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2015/08/09/google-places-for-android-guide/';
+      var disqus_title = 'Google Places for Android 入门指南';
+      var disqus_url = 'http://itangqi.me/2015/08/09/google-places-for-android-guide/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
