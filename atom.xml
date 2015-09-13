@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Qi Tang's Blog]]></title>
+  
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://itangqi.me/"/>
+  <updated>2015-09-09T05:29:25.000Z</updated>
+  <id>http://itangqi.me/</id>
+  
+  <author>
+    <name><![CDATA[Qi Tang]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[积木 - 享受搭建应用的乐趣]]></title>
+    <link href="http://itangqi.me/2015/09/03/building-blocks/"/>
+    <id>http://itangqi.me/2015/09/03/building-blocks/</id>
+    <published>2015-09-02T16:00:00.000Z</published>
+    <updated>2015-09-09T05:29:25.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p><strong>积木</strong>是以  <a href="https://github.com/izzyleung" target="_blank" rel="external">Izzy Leung</a> 提供的 <a href="https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90" target="_blank" rel="external">知乎日报 API</a> 既知乎日报为数据展现内容；以 OptionsMenu（选项菜单）的形式为功能扩展入口；以 Design Support Library（依循 Material Design）为主导设计 UI。</p>
+</blockquote>
+<a id="more"></a> 
+<hr>
+<h2 id="How_to_use">How to use</h2><p>那么，你该如何利用她呢？</p>
+<p>好啦，其实我已经帮你完成了整体框架的搭建，你需要做的，仅仅是依据自己的实际需求，简单的替换下数据来源（API）然后改改 UI，就可以快速地完成一款全新应用的开发啦！</p>
+<p>是不是，想想还有点小激动？那么赶紧前往 <a href="https://github.com/tangqi92/BuildingBlocks" target="_blank" rel="external">GitHub</a> <strong>Star</strong> 与 <strong>Fork</strong> 吧！你的支持将成为我最大的动力与褒奖！</p>
+<hr>
+<h2 id="Features_-_功能点">Features - 功能点</h2><ul>
+<li>About - 关于页面</li>
+<li>Pick Photo - 选择与裁剪照片</li>
+<li>Pick Place - 选择位置（需安装 Google Play Services 与 翻墙 - WTF）</li>
+<li>Settings - 详细设置（只实现 UI）</li>
+<li>MaterialDrawer - 导航抽屉（只实现 UI）</li>
+<li>Design Support Library 不完全使用</li>
+<li>未完待续 ……</li>
+</ul>
+<hr>
+<h2 id="Screenshots_-_预览">Screenshots - 预览</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s1.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s2.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s3.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s4.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s5.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s6.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s7.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s8.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
+<hr>
+<h2 id="Dependencies_-_开源项目">Dependencies - 开源项目</h2><ul>
+<li><a href="https://github.com/bumptech/glide" target="_blank" rel="external">glide</a></li>
+<li><a href="https://github.com/orhanobut/logger" target="_blank" rel="external">logger</a></li>
+<li><a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="external">butterknife</a></li>
+<li><a href="https://github.com/jdamcd/android-crop" target="_blank" rel="external">android-crop</a></li>
+<li><a href="https://github.com/mikepenz/MaterialDrawer" target="_blank" rel="external">MaterialDrawer</a></li>
+<li><a href="https://github.com/loopj/android-async-http" target="_blank" rel="external">android-async-http</a></li>
+</ul>
+<hr>
+<h2 id="Thanks_-_感谢你们">Thanks - 感谢你们</h2><ul>
+<li><p>感谢 <a href="https://github.com/drakeet" target="_blank" rel="external">drakeet</a> 及他的 <a href="https://github.com/drakeet/Meizhi" target="_blank" rel="external">妹纸&amp;gank.io</a>， 其代码写得真的非常漂亮：)，从中学到了很多并运用到了项目中（依葫芦画瓢而已啦）</p>
+</li>
+<li><p>感谢 <a href="https://github.com/izzyleung" target="_blank" rel="external">Izzy Leung</a> 及他的 <a href="https://github.com/izzyleung/ZhihuDailyPurify" target="_blank" rel="external">知乎日报·净化</a>，项目最初的原型就来自于此，感谢其提供了详细的知乎日报 API 说明</p>
+</li>
+</ul>
+<hr>
+<h2 id="Help_-_帮帮我">Help - 帮帮我</h2><p>天生不是做设计的料，至今还没学会 Sketch，更别说 PS 了，所以，「积木」的「应用图标」至今还缺省着。</p>
+<p>不愿将就的我，愿意等，如果你正好发现了她，又正好没处发挥你的才华的话，那么不妨为她设计个漂亮的图标吧：）</p>
+<p>你能在下面找到我的联系方式，在此我先替她谢过啦！！！</p>
+<hr>
+<h2 id="Contact_-_联系我">Contact - 联系我</h2><ul>
+<li>Weibo：<a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a></li>
+<li>Blog: <a href="http://itangqi.me">http://itangqi.me</a></li>
+<li>Gmail：<a href="mailto:imtangqi@gmail.com" title="欢迎与我联系" target="_blank" rel="external">imtangqi#gmail.com</a></li>
+</ul>
+<hr>
+<h2 id="Demo_-_示例">Demo - 示例</h2><p><a href="https://github.com/tangqi92/BuildingBlocks/releases/download/v0.3.0/buildingblocks_v0.3.0.apk" target="_blank" rel="external">快速下载</a></p>
+<hr>
+<h2 id="Source_code_-_源码">Source code - 源码</h2><p>源代码：<a href="https://github.com/tangqi92/BuildingBlocks" target="_blank" rel="external">https://github.com/tangqi92/BuildingBlocks</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p><strong>积木</strong>是以  <a href="https://github.com/izzyleung">Izzy Leung</a> 提供的 <a href="https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90">知乎日报 API</a> 既知乎日报为数据展现内容；以 OptionsMenu（选项菜单）的形式为功能扩展入口；以 Design Support Library（依循 Material Design）为主导设计 UI。</p>
+</blockquote>]]>
+    
+    </summary>
+    
+      <category term="AOSP" scheme="http://itangqi.me/tags/AOSP/"/>
+    
+      <category term="Material Design" scheme="http://itangqi.me/tags/Material-Design/"/>
+    
+      <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Google Places for Android 入门指南]]></title>
+    <link href="http://itangqi.me/2015/08/09/google-places-for-android-guide/"/>
+    <id>http://itangqi.me/2015/08/09/google-places-for-android-guide/</id>
+    <published>2015-08-08T16:00:00.000Z</published>
+    <updated>2015-09-09T06:26:18.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>最近由于项目的原因，接触到了 <a href="https://developers.google.com/places/" target="_blank" rel="external">Google Places</a> 的使用与开发，学习并在项目中实现了简单的<strong>地点定位</strong>与<strong>自动补全</strong>功能。<br>在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .</p>
+<a id="more"></a> 
+<hr>
+<h2 id="在_Google_Developers_Console_中创建_API_项目">在 Google Developers Console 中创建 API 项目</h2><p>如果你之前从未在应用中使用过 Google 提供的相关服务（API），那么请直接使用系统引导帮你完成整个流程并自动激活 Google Places API for Android ，请点击<a href="https://console.developers.google.com/flows/enableapi?apiid=placesandroid&amp;keyType=CLIENT_SIDE_ANDROID" target="_blank" rel="external">此链接</a>，按下面截图所示进行操作，便可轻松完成创建。  </p>
+<ol>
+<li>选择「Create a new project」<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-01.png" alt=""></li>
+<li>选择「Go to Credentials」<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-02.png" alt=""></li>
+<li>此处直接选择「Create」，既默认所有应用均可使用同样的「API key」<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-03.png" alt=""></li>
+<li>好啦，此时主角「API key」便自动生成了<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-04.png" alt=""></li>
+<li>如果你还需要新增（使用）其他服务（API），请在「APIs」里进行查看与添加<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-05.png" alt=""></li>
+</ol>
+<hr>
+<h2 id="配置你的应用">配置你的应用</h2><p>使用 Google Places API for Android 的所有应用均需执行以下配置步骤。</p>
+<h3 id="添加_Google_Play_服务">添加 Google Play 服务</h3><p>要访问 Google Places API for Android，应用的开发项目必须包含 Google Play 服务。通过 SDK 管理器下载并安装 Google Play 服务组件，然后将库添加至您的项目。  </p>
+<p>-buidl.gradle (app)<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.google.android.gms:play-services:7.5.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  </p>
+<h3 id="添加相应权限">添加相应权限</h3><p>-AndroidManifest.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- PlacePicker requires the ACCESS_FINE_LOCATION permission and a geo API key.--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_FINE_LOCATION"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.INTERNET"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_COARSE_LOCATION"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- PlacePicker also requires OpenGL ES version 2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-feature</span></span><br><span class="line">	<span class="attribute">android:glEsVersion</span>=<span class="value">"0x00020000"</span></span><br><span class="line">   	<span class="attribute">android:required</span>=<span class="value">"true"</span> /&gt;</span></span><br></pre></td></tr></table></figure>   </p>
+<h3 id="添加_API_密钥">添加 API 密钥</h3><p>请按照以下代码示例所示，将你的 API 密钥添加至 Manifest ，并将 <strong>API_KEY</strong> 替换为您自己的 API 密钥：  </p>
+<p>-AndroidManifest.xml<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="type">application</span>&gt;</span><br><span class="line">  ...</span><br><span class="line">  &lt;meta-data</span><br><span class="line">            android:<span class="property">name</span>=<span class="string">"com.google.android.gms.version"</span></span><br><span class="line">            android:value=<span class="string">"@integer/google_play_services_version"</span> /&gt;</span><br><span class="line">            </span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:<span class="property">name</span>=<span class="string">"com.google.android.geo.API_KEY"</span></span><br><span class="line">      android:value=<span class="string">"API_KEY"</span>/&gt;</span><br><span class="line">&lt;/<span class="type">application</span>&gt;</span><br></pre></td></tr></table></figure>  </p>
+<hr>
+<h2 id="当前地点">当前地点</h2><h3 id="获取当前位置">获取当前位置</h3><p>要查找本地商家或设备的最后已知所在地点，请调用 <code>PlaceDetectionApi.getCurrentPlace()</code>。</p>
+<p>您可以选择指定一个 <code>PlaceFilter</code>，以将结果限制为一个或多个地点 ID（最多 10 个），或者仅选择当前打开的地点。如果未指定筛选器，则不会筛选结果。</p>
+<p>API 会在 <code>PendingResult</code> 中返回 <code>PlaceLikelihoodBuffer</code>。<code>PlaceLikelihoodBuffer</code> 包含表示类似地点的 <code>PlaceLikelihood</code> 对象列表。对于每个地点，结果中都包含指示地点是正确地点的可能性信息。如果没有与筛选条件对应的已知地点，缓冲区可能为空。  </p>
+<p>您可以调用 <code>PlaceLikelihood.getPlace()</code> 来检索 <code>Place</code> 对象，调用 <code>PlaceLikelihood.getLikelihood()</code> 来获取地点的可能性评分。值越高，表示该地点是最佳匹配项的可能性越大。</p>
+<h3 id="地点自动完成">地点自动完成</h3><p>要获取预测地点名称和/或地址的列表，请调用 <code>GeoDataApi.getAutocompletePredictions()</code>，传递以下参数：  </p>
+<ul>
+<li>必填：<code>query</code> 字符串包含用户键入的文本。</li>
+<li>必填：<code>LatLngBounds</code> 对象，将结果限制为通过纬度和经度边界指定的特定区域。</li>
+<li>可选：<code>AutocompleteFilter</code>，包含一组地点类型，您可以使用它们将结果限制为一种或多种地点类型，如商店、学校、邮局等。有关可用地点类型的列表，请参见<a href="https://developers.google.com/places/supported_types#table3" target="_blank" rel="external">支持的类型</a>列表。</li>
+</ul>
+<p>API 会在 <code>PendingResult</code> 中返回 <code>AutocompletePredictionBuffer</code>。<code>AutocompletePredictionBuffer</code> 包含表示预测地点的 <code>AutocompletePrediction</code> 对象列表。如果没有与查询和筛选条件对应的已知地点，缓冲区可能为空。</p>
+<p>对于每个预测地点，都可以调用以下方法来检索地点详情：</p>
+<ul>
+<li><code>getDescription()</code> – 返回地点说明。</li>
+<li><code>getMatchedSubstrings()</code> – 通过与此地点匹配的 query 返回子字符串列表。例如，您可以使用这些子字符串突出显示用户查询中的匹配文本。</li>
+<li><code>getDescription()</code> – 返回预测地点的地点 ID。地点 ID 是唯一标识地点的文本标识符。有关地点 ID 的详细信息，请参阅<a href="https://developers.google.com/places/place-id" target="_blank" rel="external">地点 ID 概览</a>。</li>
+<li>`getPlaceTypes() – 返回与此地点关联的地点类型列表。</li>
+</ul>
+<hr>
+<h2 id="具体实现">具体实现</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-layout.png" alt="screenshot" title="screenshot" width="350" height="622">  </p>
+<p>-activity_main.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">LinearLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_margin</span>=<span class="value">"@dimen/margin_16dp"</span></span><br><span class="line">    <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="title">AutoCompleteTextView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/autocomplete_places"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_gravity</span>=<span class="value">"center_horizontal"</span></span><br><span class="line">        <span class="attribute">android:hint</span>=<span class="value">"@string/autocomplete_hint"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">LinearLayout</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:orientation</span>=<span class="value">"horizontal"</span></span><br><span class="line">        <span class="attribute">android:paddingTop</span>=<span class="value">"@dimen/margin_8dp"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">Button</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/ll_current_location"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">android:layout_gravity</span>=<span class="value">"center_vertical"</span></span><br><span class="line">            <span class="attribute">android:text</span>=<span class="value">"@string/get_current_place"</span></span><br><span class="line">            <span class="attribute">android:textAppearance</span>=<span class="value">"?android:attr/textAppearanceSmall"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">ImageView</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_gravity</span>=<span class="value">"right"</span></span><br><span class="line">        <span class="attribute">android:src</span>=<span class="value">"@drawable/powered_by_google_light"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"@string/selected_place"</span></span><br><span class="line">        <span class="attribute">android:textAppearance</span>=<span class="value">"?android:attr/textAppearanceMedium"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/place_details"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:autoLink</span>=<span class="value">"all"</span></span><br><span class="line">        <span class="attribute">android:paddingTop</span>=<span class="value">"@dimen/margin_8dp"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">""</span></span><br><span class="line">        <span class="attribute">android:textAppearance</span>=<span class="value">"?android:attr/textAppearanceMedium"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/place_attribution"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:autoLink</span>=<span class="value">"all"</span></span><br><span class="line">        <span class="attribute">android:paddingTop</span>=<span class="value">"@dimen/margin_16dp"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">""</span></span><br><span class="line">        <span class="attribute">android:textAppearance</span>=<span class="value">"?android:attr/textAppearanceSmall"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>  </p>
+<p>-PlaceAutocompleteAdapter.java<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PlaceAutocompleteAdapter</span></span><br><span class="line">        <span class="keyword">extends</span> <span class="title">ArrayAdapter</span>&lt;<span class="title">PlaceAutocompleteAdapter</span>.<span class="title">PlaceAutocomplete</span>&gt; <span class="keyword">implements</span> <span class="title">Filterable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"PlaceAutocompleteAdapter"</span>;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Current results returned by this adapter.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;PlaceAutocomplete&gt; mResultList;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Handles autocomplete requests.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> GoogleApiClient mGoogleApiClient;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The bounds used for Places Geo Data autocomplete API requests.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> LatLngBounds mBounds;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * The autocomplete filter used to restrict queries to a specific set of place types.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> AutocompleteFilter mPlaceFilter;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Initializes with a resource for text rows and autocomplete query bounds.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@see</span> ArrayAdapter#ArrayAdapter(Context, int)</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PlaceAutocompleteAdapter</span><span class="params">(Context context, <span class="keyword">int</span> resource, GoogleApiClient googleApiClient,</span><br><span class="line">                                    LatLngBounds bounds, AutocompleteFilter filter)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, resource);</span><br><span class="line">        mGoogleApiClient = googleApiClient;</span><br><span class="line">        mBounds = bounds;</span><br><span class="line">        mPlaceFilter = filter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Sets the bounds for all subsequent queries.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setBounds</span><span class="params">(LatLngBounds bounds)</span> </span>&#123;</span><br><span class="line">        mBounds = bounds;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Returns the number of results received in the last autocomplete query.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> mResultList.<span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Returns an item from the last autocomplete query.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function">PlaceAutocomplete <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> mResultList.<span class="title">get</span><span class="params">(position)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Returns the filter for the current set of autocomplete results.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function">Filter <span class="title">getFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Filter filter = <span class="keyword">new</span> Filter() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="function">FilterResults <span class="title">performFiltering</span><span class="params">(CharSequence constraint)</span> </span>&#123;</span><br><span class="line">                FilterResults results = <span class="keyword">new</span> FilterResults();</span><br><span class="line">                <span class="comment">// Skip the autocomplete query if no constraints are given.</span></span><br><span class="line">                <span class="keyword">if</span> (constraint != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="comment">// Query the autocomplete API for the (constraint) search string.</span></span><br><span class="line">                    mResultList = getAutocomplete(constraint);</span><br><span class="line">                    <span class="keyword">if</span> (mResultList != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="comment">// The API successfully returned results.</span></span><br><span class="line">                        results.values = mResultList;</span><br><span class="line">                        results.count = mResultList.size();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> results;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">publishResults</span><span class="params">(CharSequence constraint, FilterResults results)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (results != <span class="keyword">null</span> &amp;&amp; results.count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="comment">// The API returned at least one result, update the data.</span></span><br><span class="line">                    notifyDataSetChanged();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// The API did not return any results, invalidate the data set.</span></span><br><span class="line">                    notifyDataSetInvalidated();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">return</span> filter;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;PlaceAutocomplete&gt; getAutocomplete(CharSequence constraint) &#123;</span><br><span class="line">        <span class="keyword">if</span> (mGoogleApiClient.isConnected()) &#123;</span><br><span class="line">            Log.i(TAG, <span class="string">"Starting autocomplete query for: "</span> + constraint);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Submit the query to the autocomplete API and retrieve a PendingResult that will</span></span><br><span class="line">            <span class="comment">// contain the results when the query completes.</span></span><br><span class="line">            PendingResult&lt;AutocompletePredictionBuffer&gt; results =</span><br><span class="line">                    Places.GeoDataApi</span><br><span class="line">                            .getAutocompletePredictions(mGoogleApiClient, constraint.toString(),</span><br><span class="line">                                    mBounds, mPlaceFilter);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// This method should have been called off the main UI thread. Block and wait for at most 60s</span></span><br><span class="line">            <span class="comment">// for a result from the API.</span></span><br><span class="line">            AutocompletePredictionBuffer autocompletePredictions = results</span><br><span class="line">                    .await(<span class="number">60</span>, TimeUnit.SECONDS);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Confirm that the query completed successfully, otherwise return null</span></span><br><span class="line">            <span class="keyword">final</span> Status status = autocompletePredictions.getStatus();</span><br><span class="line">            <span class="keyword">if</span> (!status.isSuccess()) &#123;</span><br><span class="line">                Toast.makeText(getContext(), <span class="string">"Error contacting API: "</span> + status.toString(),</span><br><span class="line">                        Toast.LENGTH_SHORT).show();</span><br><span class="line">                Log.e(TAG, <span class="string">"Error getting autocomplete prediction API call: "</span> + status.toString());</span><br><span class="line">                autocompletePredictions.release();</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            Log.i(TAG, <span class="string">"Query completed. Received "</span> + autocompletePredictions.getCount()</span><br><span class="line">                    + <span class="string">" predictions."</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Copy the results into our own data structure, because we can't hold onto the buffer.</span></span><br><span class="line">            <span class="comment">// AutocompletePrediction objects encapsulate the API response (place ID and description).</span></span><br><span class="line"></span><br><span class="line">            Iterator&lt;AutocompletePrediction&gt; iterator = autocompletePredictions.iterator();</span><br><span class="line">            ArrayList resultList = <span class="keyword">new</span> ArrayList&lt;&gt;(autocompletePredictions.getCount());</span><br><span class="line">            <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">                AutocompletePrediction prediction = iterator.next();</span><br><span class="line">                <span class="comment">// Get the details of this prediction and copy it into a new PlaceAutocomplete object.</span></span><br><span class="line">                resultList.add(<span class="keyword">new</span> PlaceAutocomplete(prediction.getPlaceId(),</span><br><span class="line">                        prediction.getDescription()));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Release the buffer now that all data has been copied.</span></span><br><span class="line">            autocompletePredictions.release();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> resultList;</span><br><span class="line">        &#125;</span><br><span class="line">        Log.e(TAG, <span class="string">"Google API client is not connected for autocomplete query."</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Holder for Places Geo Data Autocomplete API results.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">PlaceAutocomplete</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> CharSequence placeId;</span><br><span class="line">        <span class="keyword">public</span> CharSequence description;</span><br><span class="line"></span><br><span class="line">        PlaceAutocomplete(CharSequence placeId, CharSequence description) &#123;</span><br><span class="line">            <span class="keyword">this</span>.placeId = placeId;</span><br><span class="line">            <span class="keyword">this</span>.description = description;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function">String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="function"><span class="keyword">return</span> description.<span class="title">toString</span><span class="params">()</span></span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  </p>
+<p>-MainActivity.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span></span><br><span class="line">        <span class="keyword">implements</span> <span class="title">GoogleApiClient</span>.<span class="title">OnConnectionFailedListener</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * GoogleApiClient wraps our service connection to Google Play Services and provides access</span><br><span class="line">     * to the user's sign in state as well as the Google's APIs.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> GOOGLE_API_CLIENT_ID = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> GoogleApiClient mGoogleApiClient;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> PlaceAutocompleteAdapter mAdapter;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> AutoCompleteTextView mAutocompleteView;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView mPlaceDetailsText;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TextView mPlaceDetailsAttribution;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Button mCurrentLocation;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"MainActivity"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> LatLngBounds BOUNDS_GREATER_SYDNEY = <span class="keyword">new</span> LatLngBounds(</span><br><span class="line">            <span class="keyword">new</span> LatLng(-<span class="number">34.041458</span>, <span class="number">150.790100</span>), <span class="keyword">new</span> LatLng(-<span class="number">33.682247</span>, <span class="number">151.383362</span>));</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Construct a GoogleApiClient for the &#123;@link Places#GEO_DATA_API&#125; using AutoManage</span></span><br><span class="line">        <span class="comment">// functionality, which automatically sets up the API client to handle Activity lifecycle</span></span><br><span class="line">        <span class="comment">// events. If your activity does not extend FragmentActivity, make sure to call connect()</span></span><br><span class="line">        <span class="comment">// and disconnect() explicitly.</span></span><br><span class="line">        mGoogleApiClient = <span class="keyword">new</span> GoogleApiClient.Builder(<span class="keyword">this</span>)</span><br><span class="line">                .enableAutoManage(<span class="keyword">this</span>, GOOGLE_API_CLIENT_ID <span class="comment">/* clientId */</span>, <span class="keyword">this</span>)</span><br><span class="line">                .addApi(Places.GEO_DATA_API)</span><br><span class="line">                .addApi(Places.PLACE_DETECTION_API)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Retrieve the AutoCompleteTextView that will display Place suggestions.</span></span><br><span class="line">        mAutocompleteView = (AutoCompleteTextView)</span><br><span class="line">                findViewById(R.id.autocomplete_places);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Register a listener that receives callbacks when a suggestion has been selected</span></span><br><span class="line">        mAutocompleteView.setOnItemClickListener(mAutocompleteClickListener);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Retrieve the TextViews that will display details and attributions of the selected place.</span></span><br><span class="line">        mPlaceDetailsText = (TextView) findViewById(R.id.place_details);</span><br><span class="line">        mPlaceDetailsAttribution = (TextView) findViewById(R.id.place_attribution);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// CurrentLocation</span></span><br><span class="line">        mCurrentLocation = (Button) findViewById(R.id.ll_current_location);</span><br><span class="line">        mCurrentLocation.setOnClickListener(mOnClickListener);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Set up the adapter that will retrieve suggestions from the Places Geo Data API that cover</span></span><br><span class="line">        <span class="comment">// the entire world.</span></span><br><span class="line">        mAdapter = <span class="keyword">new</span> PlaceAutocompleteAdapter(<span class="keyword">this</span>, android.R.layout.simple_list_item_1,</span><br><span class="line">                mGoogleApiClient, BOUNDS_GREATER_SYDNEY, <span class="keyword">null</span>);</span><br><span class="line">        mAutocompleteView.setAdapter(mAdapter);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> View.OnClickListener mOnClickListener = <span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">            PendingResult&lt;PlaceLikelihoodBuffer&gt; result = Places.PlaceDetectionApi</span><br><span class="line">                    .getCurrentPlace(mGoogleApiClient, <span class="keyword">null</span>);</span><br><span class="line">            result.setResultCallback(<span class="keyword">new</span> ResultCallback&lt;PlaceLikelihoodBuffer&gt;() &#123;</span><br><span class="line">                <span class="annotation">@Override</span></span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResult</span><span class="params">(PlaceLikelihoodBuffer likelyPlaces)</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">if</span> (!likelyPlaces.getStatus().isSuccess()) &#123;</span><br><span class="line">                        <span class="comment">// Request did not complete successfully</span></span><br><span class="line">                        Log.e(TAG, <span class="string">"Place query did not complete. Error: "</span> + likelyPlaces.getStatus().toString());</span><br><span class="line">                        likelyPlaces.release();</span><br><span class="line">                        <span class="keyword">return</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    String placeName = String.format(<span class="string">"%s"</span>, likelyPlaces.get(<span class="number">0</span>).getPlace().getName());</span><br><span class="line">                    String placeAttributuion = String.format(<span class="string">"%s"</span>, likelyPlaces.get(<span class="number">0</span>).getPlace().getAddress());</span><br><span class="line">                    mPlaceDetailsText.setText(placeName);</span><br><span class="line">                    mPlaceDetailsAttribution.setText(placeAttributuion);</span><br><span class="line">                    likelyPlaces.release();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Listener that handles selections from suggestions from the AutoCompleteTextView that</span><br><span class="line">     * displays Place suggestions.</span><br><span class="line">     * Gets the place id of the selected item and issues a request to the Places Geo Data API</span><br><span class="line">     * to retrieve more details about the place.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@see</span> com.google.android.gms.location.places.GeoDataApi#getPlaceById(com.google.android.gms.common.api.GoogleApiClient,</span><br><span class="line">     * String...)</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> AdapterView.OnItemClickListener mAutocompleteClickListener</span><br><span class="line">            = <span class="keyword">new</span> AdapterView.OnItemClickListener() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onItemClick</span><span class="params">(AdapterView&lt;?&gt; parent, View view, <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">            <span class="comment">/*</span><br><span class="line">             Retrieve the place ID of the selected item from the Adapter.</span><br><span class="line">             The adapter stores each Place suggestion in a PlaceAutocomplete object from which we</span><br><span class="line">             read the place ID.</span><br><span class="line">              */</span></span><br><span class="line">            <span class="keyword">final</span> PlaceAutocompleteAdapter.PlaceAutocomplete item = mAdapter.getItem(position);</span><br><span class="line">            <span class="keyword">final</span> String placeId = String.valueOf(item.placeId);</span><br><span class="line">            Log.i(TAG, <span class="string">"Autocomplete item selected: "</span> + item.description);</span><br><span class="line"></span><br><span class="line">            <span class="comment">/*</span><br><span class="line">             Issue a request to the Places Geo Data API to retrieve a Place object with additional</span><br><span class="line">              details about the place.</span><br><span class="line">              */</span></span><br><span class="line">            PendingResult&lt;PlaceBuffer&gt; placeResult = Places.GeoDataApi</span><br><span class="line">                    .getPlaceById(mGoogleApiClient, placeId);</span><br><span class="line">            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);</span><br><span class="line">            Log.i(TAG, <span class="string">"Called getPlaceById to get Place details for "</span> + item.placeId);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Callback for results from a Places Geo Data API query that shows the first place result in</span><br><span class="line">     * the details view on screen.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">private</span> ResultCallback&lt;PlaceBuffer&gt; mUpdatePlaceDetailsCallback</span><br><span class="line">            = <span class="keyword">new</span> ResultCallback&lt;PlaceBuffer&gt;() &#123;</span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onResult</span><span class="params">(PlaceBuffer places)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!places.getStatus().isSuccess()) &#123;</span><br><span class="line">                <span class="comment">// Request did not complete successfully</span></span><br><span class="line">                Log.e(TAG, <span class="string">"Place query did not complete. Error: "</span> + places.getStatus().toString());</span><br><span class="line">                places.release();</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Get the Place object from the buffer.</span></span><br><span class="line">            <span class="keyword">final</span> Place place = places.get(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Format details of the place for display and show it in a TextView.</span></span><br><span class="line">            mPlaceDetailsText.setText(formatPlaceDetails(getResources(), place.getName(),</span><br><span class="line">                    place.getId(), place.getAddress(), place.getPhoneNumber(),</span><br><span class="line">                    place.getWebsiteUri()));</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Display the third party attributions if set.</span></span><br><span class="line">            <span class="keyword">final</span> CharSequence thirdPartyAttribution = places.getAttributions();</span><br><span class="line">            <span class="keyword">if</span> (thirdPartyAttribution == <span class="keyword">null</span>) &#123;</span><br><span class="line">                mPlaceDetailsAttribution.setVisibility(View.GONE);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                mPlaceDetailsAttribution.setVisibility(View.VISIBLE);</span><br><span class="line">                mPlaceDetailsAttribution.setText(Html.fromHtml(thirdPartyAttribution.toString()));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            Log.i(TAG, <span class="string">"Place details received: "</span> + place.getName());</span><br><span class="line"></span><br><span class="line">            places.release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Spanned <span class="title">formatPlaceDetails</span><span class="params">(Resources res, CharSequence name, String id,</span><br><span class="line">                                              CharSequence address, CharSequence phoneNumber, Uri websiteUri)</span> </span>&#123;</span><br><span class="line">        Log.e(TAG, res.getString(R.string.place_details, name, id, address, phoneNumber,</span><br><span class="line">                websiteUri));</span><br><span class="line">        <span class="keyword">return</span> Html.fromHtml(res.getString(R.string.place_details, name, id, address, phoneNumber,</span><br><span class="line">                websiteUri));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Called when the Activity could not connect to Google Play services and the auto manager</span><br><span class="line">     * could resolve the error automatically.</span><br><span class="line">     * In this case the API is not available and notify the user.</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> connectionResult can be inspected to determine the cause of the failure</span><br><span class="line">     */</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onConnectionFailed</span><span class="params">(ConnectionResult connectionResult)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Log.e(TAG, <span class="string">"onConnectionFailed: ConnectionResult.getErrorCode() = "</span></span><br><span class="line">                + connectionResult.getErrorCode());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// TODO(Developer): Check error code and notify the user of error state and resolution.</span></span><br><span class="line">        Toast.makeText(<span class="keyword">this</span>,</span><br><span class="line">                <span class="string">"Could not connect to Google API Client: Error "</span> + connectionResult.getErrorCode(),</span><br><span class="line">                Toast.LENGTH_SHORT).show();</span><br><span class="line">        MainActivity.<span class="keyword">this</span>.finish();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  </p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-sc-01.png" alt="screenshot" title="screenshot" width="350" height="622"> <img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-sc-02.png" alt="screenshot" title="screenshot" width="350" height="622">    </p>
+<hr>
+<h2 id="最后">最后</h2><ul>
+<li>Demo 下载链接：<a href="https://github.com/tangqi92/MyGooglePlaces" target="_blank" rel="external">https://github.com/tangqi92/MyGooglePlaces</a></li>
+<li>友情提醒：以上的功能，手机需要安装 <a href="https://developers.google.com/android/guides/overview" target="_blank" rel="external">Google Play services</a> 才能正常使用，至于如何安装，就交给万能的 Google 吧：）</li>
+<li>如本文存在任何错误或遗漏，欢迎指正。</li>
+<li>我最爱交朋友了，所以欢迎在社交网络上<a href="http://itangqi.me/tangqi/">互粉</a>！！！</li>
+</ul>
+<hr>
+<h2 id="References_&amp;_More">References &amp; More</h2><ul>
+<li><a href="https://developers.google.com/places/android/" target="_blank" rel="external">https://developers.google.com/places/android</a></li>
+<li><a href="https://github.com/googlesamples/android-play-places" target="_blank" rel="external">https://github.com/googlesamples/android-play-places</a></li>
+</ul>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>最近由于项目的原因，接触到了 <a href="https://developers.google.com/places/">Google Places</a> 的使用与开发，学习并在项目中实现了简单的<strong>地点定位</strong>与<strong>自动补全</strong>功能。<br>在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .</p>]]>
+    
+    </summary>
+    
+      <category term="Google Places" scheme="http://itangqi.me/tags/Google-Places/"/>
+    
+      <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[ORM 框架之 greenDAO 使用心得]]></title>
+    <link href="http://itangqi.me/2015/07/26/orm-greendao-summary/"/>
+    <id>http://itangqi.me/2015/07/26/orm-greendao-summary/</id>
+    <published>2015-07-25T16:00:00.000Z</published>
+    <updated>2015-09-09T06:28:19.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>我相信，在平时的开发过程中，大家一定会或多或少地接触到 <a href="https://en.wikipedia.org/wiki/SQLite" target="_blank" rel="external">SQLite</a>。然而在使用它时，我们往往需要做许多额外的工作，像编写 SQL 语句与解析查询结果等。所以，适用于 Android 的 <strong>ORM</strong> 框架也就孕育而生了，现在市面上主流的框架有 OrmLite、SugarORM、Active Android、Realm 与 GreenDAO。而今天的主角便是 <strong>greenDAO</strong>，下面，我将详解地介绍如何在 <strong>Android Studio</strong> 上使用 <strong>greenDAO</strong>，并结合代码总结一些使用过程中的心得。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="关于_greenDAO">关于 greenDAO</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/greenDAO-orm-640.png" alt=""> </p>
+<p>简单的讲，greenDAO 是一个将对象映射到 SQLite 数据库中的轻量且快速的 ORM 解决方案。（greenDAO is a light &amp; fast ORM solution that maps objects to SQLite databases.）<br>而关于 ORM （Object Relation Mapping - 对象关系映射）的概念，可参见 <a href="https://en.wikipedia.org/wiki/Object-relational_mapping" target="_blank" rel="external">Wikipedia</a>。</p>
+<h3 id="greenDAO_设计的主要目标">greenDAO 设计的主要目标</h3><ul>
+<li>一个精简的库    </li>
+<li>性能最大化</li>
+<li>内存开销最小化</li>
+<li>易于使用的 APIs  </li>
+<li>对 Android 进行高度优化    </li>
+</ul>
+<h3 id="greenDAO_设计的主要特点">greenDAO 设计的主要特点</h3><ul>
+<li>greenDAO 性能远远高于同类的 <a href="http://ormlite.com/" target="_blank" rel="external">ORMLite</a>，具体测试结果可见<a href="http://greendao-orm.com/features/" target="_blank" rel="external">官网</a></li>
+<li>greenDAO 支持 <a href="https://github.com/google/protobuf" target="_blank" rel="external">protocol buffer(protobuf)</a> 协议数据的直接存储，如果你通过 protobuf 协议与服务器交互，将不需要任何的映射。</li>
+<li>与 ORMLite 等使用<strong>注解</strong>方式的 ORM 框架不同，greenDAO 使用「Code generation」的方式，这也是其性能能大幅提升的原因。  </li>
+</ul>
+<h3 id="DAO_Code_Generation_Project">DAO Code Generation Project</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/greenDAO-Projects-640.png" alt=""></p>
+<p>这是其核心概念：为了在我们的 Android 工程中使用 greenDAO ，我们需要另建一个纯 Java Project，用于自动生成后继 Android 工程中需要使用到的 Bean、DAO、DaoMaster、DaoSession 等类。</p>
+<h3 id="Core_Classes_&amp;_Modelling_entities">Core Classes &amp; Modelling entities</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/Core-Classes-150.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Meta-Model-180.png" alt=""></p>
+<p>关于以上几个类的相关概念与作用，我将在下面的代码（注释）中详细讲解。<br>当然，你也可以在 <a href="http://greendao-orm.com/documentation/introduction/" target="_blank" rel="external">官网</a> 中找到相关介绍。</p>
+<hr>
+<h2 id="让我们开始吧">让我们开始吧</h2><h3 id="一-_在_Android_工程中配置「greenDao_Generator」模块">一. 在 Android 工程中配置「greenDao Generator」模块</h3><ol>
+<li><p>在 .src/main 目录下新建一个与 java 同层级的「java-gen」目录，用于存放由 greenDAO 生成的 Bean、DAO、DaoMaster、DaoSession 等类。<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_new_java_gen.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_main_javagen_name.png" alt=""> </p>
+</li>
+<li><p>配置 Android 工程（app）的 build.gradle，如图分别添加 <a href="https://docs.gradle.org/current/dsl/org.gradle.api.tasks.SourceSet.html" target="_blank" rel="external">sourceSets</a> 与 <a href="https://docs.gradle.org/1.8-rc-1/userguide/dependency_management.html" target="_blank" rel="external">dependencies</a>。<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_main_gradlee.png" alt=""></p>
+</li>
+</ol>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml">sourceSets </span><span class="expression">&#123;</span><br><span class="line">        <span class="variable">main</span> &#123;</span><br><span class="line">            <span class="variable">java.srcDirs</span> = ['<span class="variable">src</span><span class="end-block">/main</span><span class="end-block">/java</span>', '<span class="variable">src</span><span class="end-block">/main</span><span class="end-block">/java-gen</span>']</span><br><span class="line">        &#125;</span><span class="xml"></span><br><span class="line">    &#125;</span></span><br></pre></td></tr></table></figure>  
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">'de.greenrobot:greendao:1.3.7'</span></span><br></pre></td></tr></table></figure>
+<h3 id="二-_新建「greenDAO_Generator」模块_(纯_Java_工程）">二. 新建「greenDAO Generator」模块 (纯 Java 工程）</h3><ol>
+<li><p>通过 File -&gt; New -&gt; New Module -&gt; Java Library -&gt; 填写相应的包名与类名 -&gt; Finish.<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_new_javamodule.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_main_new_java_library.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_customize_activity2.png" alt=""></p>
+</li>
+<li><p>配置 daoexamplegenerator 工程的 build.gradle，添加 dependencies.<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_generator_gradlee.png" alt="">    </p>
+</li>
+</ol>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">'de.greenrobot:greendao-generator:1.3.1'</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>编写 <strong>ExampleDaoGenerator</strong> 类，<strong>注意</strong>： 我们的 Java 工程只有一个类，它的内容决定了「GreenDao Generator」的输出，你可以在这个类中通过对象、关系等创建数据库结构，下面我将以<strong>注释</strong>的形式详细讲解代码内容。  </li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleDaoGenerator</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// 正如你所见的，你创建了一个用于添加实体（Entity）的模式（Schema）对象。</span></span><br><span class="line">        <span class="comment">// 两个参数分别代表：数据库版本号与自动生成代码的包路径。</span></span><br><span class="line">        Schema schema = <span class="keyword">new</span> Schema(<span class="number">1</span>, <span class="string">"me.itangqi.greendao"</span>);</span><br><span class="line"><span class="comment">//      当然，如果你愿意，你也可以分别指定生成的 Bean 与 DAO 类所在的目录，只要如下所示：</span></span><br><span class="line"><span class="comment">//      Schema schema = new Schema(1, "me.itangqi.bean");</span></span><br><span class="line"><span class="comment">//      schema.setDefaultJavaPackageDao("me.itangqi.dao");</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 模式（Schema）同时也拥有两个默认的 flags，分别用来标示 entity 是否是 activie 以及是否使用 keep sections。</span></span><br><span class="line">        <span class="comment">// schema2.enableActiveEntitiesByDefault();</span></span><br><span class="line">        <span class="comment">// schema2.enableKeepSectionsByDefault();</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 一旦你拥有了一个 Schema 对象后，你便可以使用它添加实体（Entities）了。</span></span><br><span class="line">        addNote(schema);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 最后我们将使用 DAOGenerator 类的 generateAll() 方法自动生成代码，此处你需要根据自己的情况更改输出目录（既之前创建的 java-gen)。</span></span><br><span class="line">        <span class="comment">// 其实，输出目录的路径可以在 build.gradle 中设置，有兴趣的朋友可以自行搜索，这里就不再详解。</span></span><br><span class="line">        <span class="keyword">new</span> DaoGenerator().generateAll(schema, <span class="string">"/Users/tangqi/android-dev/AndroidStudioProjects/MyGreenDAO/app/src/main/java-gen"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * <span class="doctag">@param</span> schema</span><br><span class="line">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addNote</span><span class="params">(Schema schema)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 一个实体（类）就关联到数据库中的一张表，此处表名为「Note」（既类名）</span></span><br><span class="line">        Entity note = schema.addEntity(<span class="string">"Note"</span>);</span><br><span class="line">        <span class="comment">// 你也可以重新给表命名</span></span><br><span class="line">        <span class="comment">// note.setTableName("NODE");</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// greenDAO 会自动根据实体类的属性值来创建表字段，并赋予默认值</span></span><br><span class="line">        <span class="comment">// 接下来你便可以设置表中的字段：</span></span><br><span class="line">        note.addIdProperty();</span><br><span class="line">        note.addStringProperty(<span class="string">"text"</span>).notNull();</span><br><span class="line">        <span class="comment">// 与在 Java 中使用驼峰命名法不同，默认数据库中的命名是使用大写和下划线来分割单词的。</span></span><br><span class="line">        <span class="comment">// For example, a property called “creationDate” will become a database column “CREATION_DATE”.</span></span><br><span class="line">        note.addStringProperty(<span class="string">"comment"</span>);</span><br><span class="line">        note.addDateProperty(<span class="string">"date"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="三-_生成_DAO_文件（数据库）">三. 生成 DAO 文件（数据库）</h3><ul>
+<li><p>执行 generator 工程，如一切正常，你将会在控制台看到如下日志，并且在主工程「java-gen」下会发现生成了DaoMaster、DaoSession、NoteDao、Note共4个类文件。<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gr_result.png" alt=""></p>
+<p>如果在此处出错，你可以依据错误日志进行排查，主要看是否<strong>输出目录</strong>存在？其他<strong>配置</strong>是否正确？等</p>
+</li>
+</ul>
+<h3 id="四-_在_Android_工程中进行数据库操作">四. 在 Android 工程中进行数据库操作</h3><p>这里，我们只创建一个 NodeActivity 类，用于测试与讲解 greenDAO 的增、删、查功能。  </p>
+<ul>
+<li>activity_note.xml  <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">LinearLayout</span> <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"fill_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"fill_parent"</span></span><br><span class="line">    <span class="attribute">android:orientation</span>=<span class="value">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">LinearLayout</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/linearLayout1"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"fill_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:orientation</span>=<span class="value">"horizontal"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">EditText</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/editTextNote"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">android:layout_weight</span>=<span class="value">"1"</span></span><br><span class="line">            <span class="attribute">android:hint</span>=<span class="value">"Enter new note"</span></span><br><span class="line">            <span class="attribute">android:inputType</span>=<span class="value">"text"</span>&gt;</span><span class="tag">&lt;/<span class="title">EditText</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">Button</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/buttonAdd"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">android:onClick</span>=<span class="value">"onMyButtonClick"</span></span><br><span class="line">            <span class="attribute">android:text</span>=<span class="value">"Add"</span>&gt;</span><span class="tag">&lt;/<span class="title">Button</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="title">Button</span></span><br><span class="line">            <span class="attribute">android:id</span>=<span class="value">"@+id/buttonSearch"</span></span><br><span class="line">            <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">            <span class="attribute">android:onClick</span>=<span class="value">"onMyButtonClick"</span></span><br><span class="line">            <span class="attribute">android:text</span>=<span class="value">"Search"</span>&gt;</span><span class="tag">&lt;/<span class="title">Button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">ListView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@android:id/list"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"fill_parent"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span>&gt;</span><span class="tag">&lt;/<span class="title">ListView</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>NoteActivity.java  <figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NoteActivity</span> <span class="keyword">extends</span> <span class="title">ListActivity</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> SQLiteDatabase db;</span><br><span class="line">    <span class="keyword">private</span> EditText editText;</span><br><span class="line">    <span class="keyword">private</span> DaoMaster daoMaster;</span><br><span class="line">    <span class="keyword">private</span> DaoSession daoSession;</span><br><span class="line">    <span class="keyword">private</span> Cursor cursor;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG = <span class="string">"DaoExample"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_note);</span><br><span class="line">        <span class="comment">// 官方推荐将获取 DaoMaster 对象的方法放到 Application 层，这样将避免多次创建生成 Session 对象</span></span><br><span class="line">        setupDatabase();</span><br><span class="line">        <span class="comment">// 获取 NoteDao 对象</span></span><br><span class="line">        getNoteDao();</span><br><span class="line"></span><br><span class="line">        String textColumn = NoteDao.Properties.Text.columnName;</span><br><span class="line">        String orderBy = textColumn + <span class="string">" COLLATE LOCALIZED ASC"</span>;</span><br><span class="line">        cursor = db.query(getNoteDao().getTablename(), getNoteDao().getAllColumns(), <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, orderBy);</span><br><span class="line">        String[] from = &#123;textColumn, NoteDao.Properties.Comment.columnName&#125;;</span><br><span class="line">        <span class="keyword">int</span>[] to = &#123;android.R.id.text1, android.R.id.text2&#125;;</span><br><span class="line"></span><br><span class="line">        SimpleCursorAdapter adapter = <span class="keyword">new</span> SimpleCursorAdapter(<span class="keyword">this</span>, android.R.layout.simple_list_item_2, cursor, from,</span><br><span class="line">                to);</span><br><span class="line">        setListAdapter(adapter);</span><br><span class="line"></span><br><span class="line">        editText = (EditText) findViewById(R.id.editTextNote);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">void</span> <span class="title">setupDatabase</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 通过 DaoMaster 的内部类 DevOpenHelper，你可以得到一个便利的 SQLiteOpenHelper 对象。</span></span><br><span class="line">        <span class="comment">// 可能你已经注意到了，你并不需要去编写「CREATE TABLE」这样的 SQL 语句，因为 greenDAO 已经帮你做了。</span></span><br><span class="line">        <span class="comment">// 注意：默认的 DaoMaster.DevOpenHelper 会在数据库升级时，删除所有的表，意味着这将导致数据的丢失。</span></span><br><span class="line">        <span class="comment">// 所以，在正式的项目中，你还应该做一层封装，来实现数据库的安全升级。</span></span><br><span class="line">        DaoMaster.DevOpenHelper helper = <span class="keyword">new</span> DaoMaster.DevOpenHelper(<span class="keyword">this</span>, <span class="string">"notes-db"</span>, <span class="keyword">null</span>);</span><br><span class="line">        db = helper.getWritableDatabase();</span><br><span class="line">        <span class="comment">// 注意：该数据库连接属于 DaoMaster，所以多个 Session 指的是相同的数据库连接。</span></span><br><span class="line">        daoMaster = <span class="keyword">new</span> DaoMaster(db);</span><br><span class="line">        daoSession = daoMaster.newSession();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function">NoteDao <span class="title">getNoteDao</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> daoSession.<span class="title">getNoteDao</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * Button 点击的监听事件</span><br><span class="line">     *</span><br><span class="line">     * <span class="doctag">@param</span> view</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onMyButtonClick</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (view.getId()) &#123;</span><br><span class="line">            <span class="keyword">case</span> R.id.buttonAdd:</span><br><span class="line">                addNote();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> R.id.buttonSearch:</span><br><span class="line">                search();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                Log.d(TAG, <span class="string">"what has gone wrong ?"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">void</span> <span class="title">addNote</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String noteText = editText.getText().toString();</span><br><span class="line">        editText.setText(<span class="string">""</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);</span><br><span class="line">        String comment = <span class="string">"Added on "</span> + df.format(<span class="keyword">new</span> Date());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 插入操作，简单到只要你创建一个 Java 对象</span></span><br><span class="line">        Note note = <span class="keyword">new</span> Note(<span class="keyword">null</span>, noteText, comment, <span class="keyword">new</span> Date());</span><br><span class="line">        getNoteDao().insert(note);</span><br><span class="line">        Log.d(TAG, <span class="string">"Inserted new note, ID: "</span> + note.getId());</span><br><span class="line">        cursor.requery();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Query 类代表了一个可以被重复执行的查询</span></span><br><span class="line">        Query query = getNoteDao().queryBuilder()</span><br><span class="line">                .where(NoteDao.Properties.Text.eq(<span class="string">"Test1"</span>))</span><br><span class="line">                .orderAsc(NoteDao.Properties.Date)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line"><span class="comment">//      查询结果以 List 返回</span></span><br><span class="line"><span class="comment">//      List notes = query.list();</span></span><br><span class="line">        <span class="comment">// 在 QueryBuilder 类中内置两个 Flag 用于方便输出执行的 SQL 语句与传递参数的值</span></span><br><span class="line">        QueryBuilder.LOG_SQL = <span class="keyword">true</span>;</span><br><span class="line">        QueryBuilder.LOG_VALUES = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * ListView 的监听事件，用于删除一个 Item</span><br><span class="line">     * <span class="doctag">@param</span> l</span><br><span class="line">     * <span class="doctag">@param</span> v</span><br><span class="line">     * <span class="doctag">@param</span> position</span><br><span class="line">     * <span class="doctag">@param</span> id</span><br><span class="line">     */</span></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="function"><span class="keyword">void</span> <span class="title">onListItemClick</span><span class="params">(ListView l, View v, <span class="keyword">int</span> position, <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 删除操作，你可以通过「id」也可以一次性删除所有</span></span><br><span class="line">        getNoteDao().deleteByKey(id);</span><br><span class="line"><span class="comment">//        getNoteDao().deleteAll();</span></span><br><span class="line">        Log.d(TAG, <span class="string">"Deleted note, ID: "</span> + id);</span><br><span class="line">        cursor.requery();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="五-_运行结果">五. 运行结果</h3><p>一切就绪，让我们看看效果吧！运行程序，分别执行<strong>添加</strong>按钮、<strong>删除</strong>（点击 List 的 Item）与<strong>查询</strong>按钮，可以在控制台得到如下日志：  </p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_add_min.png" alt="screenshot" title="screenshot" width="350" height="622"> <img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_delete_min.png" alt="screenshot" title="screenshot" width="350" height="622"> <img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_search.png" alt=""></p>
+<hr>
+<h2 id="最后">最后</h2><ul>
+<li>本文 Demo 下载链接：<a href="https://github.com/tangqi92/MyGreenDAO" target="_blank" rel="external">https://github.com/tangqi92/MyGreenDAO</a>  </li>
+<li>本教程旨在介绍 greenDAO 的基本用法与配置，更高级与详细的使用，请参见 <a href="http://greendao-orm.com/" target="_blank" rel="external">官网</a>  </li>
+<li>如本文有任何错误与遗漏，欢迎指正。</li>
+</ul>
+<hr>
+<h2 id="References_&amp;_More">References &amp; More</h2><p><a href="http://greendao-orm.com/" target="_blank" rel="external">http://greendao-orm.com/</a><br><a href="https://github.com/greenrobot/greenDAO" target="_blank" rel="external">https://github.com/greenrobot/greenDAO</a><br><a href="http://stackoverflow.com/questions/tagged/greendao" target="_blank" rel="external">http://stackoverflow.com/questions/tagged/greendao</a><br><a href="https://groups.google.com/forum/#!forum/greendao" target="_blank" rel="external">https://groups.google.com/forum/#!forum/greendao</a></p>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>我相信，在平时的开发过程中，大家一定会或多或少地接触到 <a href="https://en.wikipedia.org/wiki/SQLite">SQLite</a>。然而在使用它时，我们往往需要做许多额外的工作，像编写 SQL 语句与解析查询结果等。所以，适用于 Android 的 <strong>ORM</strong> 框架也就孕育而生了，现在市面上主流的框架有 OrmLite、SugarORM、Active Android、Realm 与 GreenDAO。而今天的主角便是 <strong>greenDAO</strong>，下面，我将详解地介绍如何在 <strong>Android Studio</strong> 上使用 <strong>greenDAO</strong>，并结合代码总结一些使用过程中的心得。</p>]]>
+    
+    </summary>
+    
+      <category term="ORM" scheme="http://itangqi.me/tags/ORM/"/>
+    
+      <category term="greenDAO" scheme="http://itangqi.me/tags/greenDAO/"/>
+    
+      <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[世界那么大，我想去看看]]></title>
+    <link href="http://itangqi.me/2015/05/11/the-interview-summary/"/>
+    <id>http://itangqi.me/2015/05/11/the-interview-summary/</id>
+    <published>2015-05-10T16:00:00.000Z</published>
+    <updated>2015-09-09T05:28:27.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>一直以来，我都梦想着能加入一家小而美的公司，一家硅谷范儿的公司，一加拥有工程师文化的公司，每天能和一群聪明的人在一起做些酷炫的事情。感谢，在历时两天半，历经五家公司的面试后，这个梦想终于实现了。</p>
+<p>下面，我会依次回顾每家公司的面试经历与总结其中的心得，希望能在自我总结的同时，给大家提供一些有价值的信息。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="分子移动">分子移动</h2><h3 id="公司背景">公司背景</h3><ul>
+<li><p>类型：一家专注于「吃」的 O2O 移动互联网创业公司</p>
+</li>
+<li><p>地址：南京市雨花台区宁双路28号汇智大厦9楼36kr</p>
+</li>
+<li><p>融资：未融资，前期资金来自创始人自己</p>
+</li>
+</ul>
+<h3 id="面试经过">面试经过</h3><p>首先由创始人面试（更确切的说是交谈），创始人为金融行业出身，目前为二次创业，初创项目为金融相关，可惜最终并未成功。与合伙人继续从事金融行业不同，创始人选择投身移动互联网继续创业。公司成立于去年11月份，目前产品仍未完成开发，预计在未来两个月内实现上线，但已经开始进行小范围的市场推广。团队成员主要由曾任职于知名公司的大牛与名校的在读研究生组成。除了介绍团队背景外，创始人还谈及了公司具体的商业模式与愿景、与同类竞争产品的优劣势、及对整个细分市场的分析等。整个交谈进行了大约40分钟，我很好的扮演了聆听者的角色（时不时会流露出崇拜的眼神与频频点头表示赞同）。</p>
+<p>随后便是技术面试，面试官为公司的技术合伙人，拥有17年的开发与带队经验，最早是在一家美资企业做操作系统开发，现在负责公司的移动端。在简短地听取完我的项目介绍后，其显然对我所做过的项目并不感兴趣且觉得没有什么技术含量（好吧我承认，这是事实）于是便开始随机提问：</p>
+<ol>
+<li>现在让你包装一个类，里面实现了若干操作，请问：当在执行完该类中的操作后，如何将结果返回给你？</li>
+<li>谈谈对 <code>Application</code> 类的理解？</li>
+<li>谈谈对 <code>ListFragment</code> 类的理解？</li>
+</ol>
+<p>悲剧，我在第一问就卡住了，在面试官多次解释题意后，仅仅回答出可以使用「广播」的方式，但面试官要求再说出其他的方法，当时脑子一片空白，又不想拖延时间，最后选择放弃。<br>当听到第二问时，心想，这尼玛都什么问题啊，平时都没怎么接触到，想编都编不出来，所以毫不犹豫回答「抱歉，没有了解过」。<br>这时看面试官的表情，我知道这事黄定了，但也许他不想这么快就结束面试或者还想让我回答上个问题好留个面子，于是问了第三问，结果我还真没用过 <code>ListFragment</code>，「图样图森破」啊！然后，就没有然后了……</p>
+<p>虽然面试挂的很干脆，但面试官在整个过程中始终很耐心，并没有半点想要刁难我的意思，最后希望我能在技术上更加努力（实则我前面落下太多了）。</p>
+<h3 id="总结与教训">总结与教训</h3><ol>
+<li>公司租用公用办公场所（36kr），环境一般，但里面有数家创业公司，氛围不错。</li>
+<li>在产品并为上线且融资尚不确定的情况下，公司的前景如何，就仁者见仁了。 </li>
+<li>面试时，要尽量将自己的优势展现出来，或者说，把话题引导到自己熟悉的领域上。</li>
+<li>一切的一切，都是以自身的实力为前提，如果能认清自己的不足，回去加倍努力就是了。</li>
+</ol>
+<hr>
+<h2 id="运策网">运策网</h2><h3 id="公司背景-1">公司背景</h3><ul>
+<li><p>类型：致力于打造基于移动互联网的整车货运 O2O 平台</p>
+</li>
+<li><p>地址：南京市建宁路65号金川国际科技园</p>
+</li>
+<li><p>融资：A 轮</p>
+</li>
+</ul>
+<h3 id="面试经过-1">面试经过</h3><p>仍然没有笔试，面试官为公司 Android 端的技术负责人，样子十分和蔼（的确，整个面试始终保持微笑），在简单的自我介绍后，便从项目切入面试，同样，我做过的项目并没有引起面试官的兴趣，于是又是随机提问：</p>
+<ol>
+<li>如何实现应用自动登录功能？</li>
+<li>如何实现应用常驻后台不被杀死？</li>
+<li>如何实现自定义组件，并详细介绍实现步骤？</li>
+</ol>
+<p>第一问，之前并没有实现过，简单思考后回答「可以使用 SharedPreferences」。<br>当听到第二问时，心中窃喜，这个问题正好有看过，于是脱口而出「用 C 编写守护进程(即子进程)，守护进程做的事情就是循环检查目标进程是否存在，不存在则启动它」，面试官接着提问是否自己实现过，我本着诚实的原则，回答「看过实现原理，但未在实际项目上使用过」。<br>第三问，同样有印象是看过的，但仍然没有在实际中实现过（一定要动手！！！），心中没有底，所以回答「有看过如何实现，但现在记不清了」。</p>
+<p>虽然问题答的并不理想，但在整个面试过程中，我始终保持着谦卑的态度：首先我承认自己的技术水平不足，其次表态自己愿意努力学习，最后放大招，对薪资无要求（其实心里是有个底线的）。面试官最终还是给了我机会，但由于给出的薪资实在远远低于我的预期值，所考虑到我当时的现状，最终我还是选择了放弃。</p>
+<h3 id="总结与教训-1">总结与教训</h3><ol>
+<li>公司的介绍与产品都能在网上搜到，个人认为是一家靠谱的创业公司。</li>
+<li>公司福利不错，中午有专职阿姨做饭，每月 TB ，每月男生/女生假，全勤奖等。</li>
+<li>尽管知道自己的能力不足，但在面试过程中，仍然要保持自信，要敢于表达自己的想法。</li>
+<li>如何平衡眼前的薪资与未来的发展，要视每个人具体的情况而定。</li>
+</ol>
+<hr>
+<h2 id="车置宝">车置宝</h2><h3 id="公司背景-2">公司背景</h3><ul>
+<li><p>类型：二手车帮卖网络竞价平台</p>
+</li>
+<li><p>地址：南京市雨花区花神大道86号东软南京研发基地309</p>
+</li>
+<li><p>融资：B 轮</p>
+</li>
+</ul>
+<h3 id="面试经过-2">面试经过</h3><p>当天同时间来面试的人很多，想必公司是在大规模招人，填完基本信息的表格后，就让在大厅等候面试（其实还要做份笔试题，但由于试卷不够用了，所以…）。等了大概有20分钟，被面试官带到一间会议室。</p>
+<p>不知道是不是一直都在面试的缘故，面试官显得比较严肃（板着脸）。尽管我吸取了之前面试的教训，一上来便吹嘘自己之前做过的项目，但做面试官的都不傻，有没有含量一听就知道。于是面试官开始随机提问，前面的题目都比较基础，没有什么难度，我答的也比较轻松，最后有个问题：</p>
+<ul>
+<li>在 Service 中创建匿名线程，然后在「设置」-&gt; 「应用程序」中<strong>停止</strong>，问该匿名线程是否会立马终止？</li>
+</ul>
+<p>整个面试过程，印象比较深的就是，面试官居然知道我的上家公司，然后对于我离职的原因：「前公司的产品是面向政府机构，觉得没有什么技术含量，而自己一直想做面向大众消费者的产品」，面试官表达了不同的意见，并且我们在这个问题上有过讨论（各抒己见），其核心思想就是：「能力不行，就不要怪公司的产品不好，私下为什么不努力！」。</p>
+<p>最后，面试官很客气地回复说回去等通知，然后，就没有然后了……</p>
+<h3 id="总结与教训-2">总结与教训</h3><ol>
+<li>公司拿了 B 轮，所以规模与环境是所面公司中条件最好的（相对而言），目前发展势头也很好。</li>
+<li>公司在南京有 60~70 人，但基本都是非技术岗，移动组（iOS/Android）目前共6人。</li>
+<li>对于回答「为何要离职与未来的职业规划」，一定要清晰，我想面试挂掉的原因里，肯定有这一点。</li>
+</ol>
+<hr>
+<h2 id="元贝">元贝</h2><h3 id="公司背景-3">公司背景</h3><ul>
+<li><p>类型：提供一站式驾考服务</p>
+</li>
+<li><p>地址：南京市江宁区双龙大道1136号2号楼2楼</p>
+</li>
+<li><p>融资：天使轮</p>
+</li>
+</ul>
+<h3 id="面试经过-3">面试经过</h3><p>到公司时，面试官正在开会，等了有15分钟。面试官十分和蔼（同样，全程微笑），其手里拿了张表格，我们就在进门的大厅沙发上进行面试。开始就是一些基本信息，但问得比较细，随后发现这份问卷更多的是在考察面试者是否适合这个公司，如：</p>
+<ul>
+<li>如果与你合作的同事手脚比较慢，当你完成自己的工作后，会如何做？同样，转换角色，你又会如何做？</li>
+</ul>
+<p>关于技术面（根本谈不上技术面），可以说是最水的一次，面试官虽然说自己负责公司 Android 团队，但却没问一个具体的问题，基本就是依照我的简历，简单地问了：</p>
+<ol>
+<li>项目中最有成就感的事？</li>
+<li>技术栈的熟练程度？</li>
+<li>Android Studio 的使用？</li>
+<li>github 的了解与使用，开源，第三方框架等</li>
+</ol>
+<p>面试很轻松就结束了，最后问了预期的薪资，回复最晚明天给结果。</p>
+<p>第二天一早便收到了 Offer ，薪资也满足了我昨天面试时所提的要求，但由于我的心意已决（决定去现在的公司），所以忍痛回信拒了。（特别感动的是，HR 和 面试官在收到我的回复后，仍然希望我能再三考虑下他们，非常有诚意。）</p>
+<p>但话说回来，如果公司以这样的技术面试继续招人，恐怕招到不靠谱的人的概率会非常大。</p>
+<h3 id="总结与教训-3">总结与教训</h3><ol>
+<li>公司在驾考类的领域比较有名（百度，Google 关键词前三），应该发展会很不错。</li>
+<li>公司地址比较偏僻，办公场所环境不算好，但有好几个妹子！</li>
+<li>公司有加班文化（强制），每周一，二，四到晚上八点半，会有餐补。</li>
+<li>现有的 APP 是外包的，现在准备组建团队重新做（是挑战，也是机遇）。</li>
+<li>简历十分重要，一定要突出自己的优势，切记浮夸吹嘘，但也不要什么都不写。</li>
+</ol>
+<hr>
+<h2 id="Friend_Media">Friend Media</h2><h3 id="公司背景-4">公司背景</h3><ul>
+<li><p>类型：用全新的移动互联网思维来为用户提供全新的数字标牌服务</p>
+</li>
+<li><p>地址：南京市江宁区秣周东路12号紫金江宁科创园P448</p>
+</li>
+<li><p>融资：未融资</p>
+</li>
+</ul>
+<h3 id="面试经过-4">面试经过</h3><p>由公司老总与 Android 端负责人共同进行面试，技术面是所经历过的面试中最严与最全的，一上来便要求直接展示作品，由于前公司的产品实在没法用（我没半点黑的意思啊），所以我退而求其次展示了自己上架过的几款应用，但实在是太小儿科了，面试官遂放弃看作品，转向问项目具体的实现，主要探讨了：</p>
+<ol>
+<li>前公司产品为何采用纯「Web App」的设计架构？</li>
+<li>如何实现「下拉刷新」只加载最新的记录？</li>
+<li>客户端与服务器端具体的网络通信实现？数据请求等？</li>
+<li>是否实现过自定义组件？实现的具体流程？</li>
+<li>用过哪些第三方图片下载与缓存的框架？</li>
+</ol>
+<p>每个问题都由浅入深，绝非三言两语能忽悠过去的，负责面试 Android 的面试官非常资深，虽然问题都非常基础，但我的表现并没有达到他的要求，所以多的问题也没有接着问下去。<br>接下来，是与老总的单独面试，主要是向我介绍公司的相关背景与产品现状：<br>目前团队在南京有7人，全为技术，包括前后移动端。最核心的三人来自「摩托罗拉南京研究中心」，成员都是拥有多年工作经验的工程师，都能独挡一面。团队在美国有2人，分别是 CEO 与 设计师。目前的产品<a href="http://www.friendmedia.com/" target="_blank" rel="external">FriendMedia</a> 面向海外市场，已经有部分用户在试用。<br>现场演示了产品的效果，当时就觉得特别炫酷（主要是我没见过世面）。随后谈了下公司未来的发展方向与规划，希望保持小团队的规模，以技术为主导，人人都能参与到产品的讨论与设计中。当时心中已经沸腾了，这不就是我一直梦想着要加入的公司嘛！我已经设想好了，如果最后能让我加入公司，哪怕不给钱都可以。<br>出乎我意料的，在面试的最后，老总当场就给了我 offer ,薪资不是很高但也够用了。</p>
+<h3 id="总结与教训-4">总结与教训</h3><ol>
+<li>因公司所处「紫金科创」，所以环境设施一流，但地理位置比较偏（尽管有地铁）。</li>
+<li>典型的「小而美」的团队，技术主导，国际化的产品「逼格」比较高。</li>
+<li>老板好，扁平化管理，无需打卡，免费零食。</li>
+<li>成长空间巨大。</li>
+<li>面试和相亲差不多，有时候决定成不成的，是「眼缘」。</li>
+</ol>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+<hr>
+<h2 id="Update">Update</h2><p>虽然时隔有三个月了，但当时面试的细节却还都历历在目，而且现在有了一些与当时不一样的感悟，这就是成长吧！</p>
+<ul>
+<li>最后更新时间：2015/08/14</li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>一直以来，我都梦想着能加入一家小而美的公司，一家硅谷范儿的公司，一加拥有工程师文化的公司，每天能和一群聪明的人在一起做些酷炫的事情。感谢，在历时两天半，历经五家公司的面试后，这个梦想终于实现了。</p>
+<p>下面，我会依次回顾每家公司的面试经历与总结其中的心得，希望能在自我总结的同时，给大家提供一些有价值的信息。</p>]]>
+    
+    </summary>
+    
+      <category term="Interview" scheme="http://itangqi.me/tags/Interview/"/>
+    
+      <category term="Startup" scheme="http://itangqi.me/tags/Startup/"/>
+    
+      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
+    
+      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[如何通过电脑操控 Android 设备]]></title>
+    <link href="http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/"/>
+    <id>http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/</id>
+    <published>2015-04-10T16:00:00.000Z</published>
+    <updated>2015-09-09T05:29:08.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="背景">背景</h2><p>由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。</p>
+<a id="more"></a> 
+<h3 id="VNC">VNC</h3><p>其中涉及到最主要的技术便是 <a href="http://en.wikipedia.org/wiki/Virtual_Network_Computing" target="_blank" rel="external">VNC</a> (Virtual Network Computing) ，它是使用远程帧缓冲协议（RFB）远程控制另一台计算机（设备）的图形桌面共享系统，其主要包括：                              </p>
+<ul>
+<li><p>VNC Server ：此服务程序必须在在主（或遥控）计算机（设备）上运行。你只能作为使用者（不需要根用户身份）使用此项服务。</p>
+</li>
+<li><p>VNC Viewer ：本地应用程序，用于远程接入运行 VNC Server 的计算机（设备）并显示其环境。你需要知道远程计算机（设备）的 IP 地址和 VNC Server 设定的密码。</p>
+</li>
+</ul>
+<h3 id="工作流程">工作流程</h3><ol>
+<li>在服务器端启动 VNC Server。</li>
+<li>VNC 客户端通过浏览器或 VNC Viewer 连接至 VNC Server。</li>
+<li>VNC Server 传送一对话窗口至客户端，要求输入连接密码， 以及存取的 VNC Server 显示装置。</li>
+<li>在客户端输入联机密码后，VNC Server 验证客户端是否具有存取权限。</li>
+<li>若是客户端通过 VNC Server 的验证，客户端即要求 VNC Server 显示桌面环境。</li>
+<li>VNC Server 通过 X Protocol 要求 X Server 将画面显示控制权交由 VNC Server 负责。</li>
+<li>VNC Server 将来由 X Server 的桌面环境利用 VNC 通信协议送至客户端， 并且允许客户端控制 VNC Server 的桌面环境及输入装置。</li>
+</ol>
+<hr>
+<h2 id="说明">说明</h2><p>网上已经有许多关于电脑控制手机（真机）的工具与教程且亲测可行，具体请参考：  </p>
+<ul>
+<li><a href="http://blog.laptopmag.com/control-android-from-pc" target="_blank" rel="external">How to Control an Android Device From Your PC</a>  </li>
+<li><a href="http://www.21kexin.com/jishu/201307308.html" target="_blank" rel="external">通过Droid VNC Server简单配置让PC电脑控制Android手机
+</a></li>
+</ul>
+<p>但是！但是！但是！！！<br>坑就是从这里开始的，由于项目需求的特殊性，我需要在<a href="http://www.360doc.com/content/11/0412/10/4818519_109021260.shtml" target="_blank" rel="external">模拟器</a>（Android Emulator）上实现相同的效果（后面会具体说明模拟器与真机的差别与难点），所以接下来我会详细介绍实现操控模拟器的具体操作步骤。</p>
+<hr>
+<h2 id="具体操作">具体操作</h2><h3 id="模拟器_ROOT">模拟器 ROOT</h3><p>由于大多数「VNC Server For Android」应用都需要求手机为 Root 状态（后来发现有不需要 Root 的，但没有进行实际验证），所以第一步便是实现模拟器的 Root ：</p>
+<ul>
+<li>如果你使用的是第三方模拟器 <a href="http://www.iplaysoft.com/genymotion.html" target="_blank" rel="external">Genymotion</a> 的话（在这里强烈推荐下），则系统（4.0+）默认为 Root 状态</li>
+</ul>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/1.pic_hd.jpg" alt=""> </p>
+<ul>
+<li><p>如果你使用的是原生模拟器的话（赶紧换吧，立马提升工作效率），则可以按如下操作实现 Root ：                                   </p>
+<p>  <a href="http://blog.csdn.net/guangsuxinhen4/article/details/26241067" target="_blank" rel="external">Android AVD emulator模拟器获取root权限（4.1.2以下）</a></p>
+</li>
+</ul>
+<h3 id="下载_android-vnc-server">下载 android-vnc-server</h3><p>这里就要涉及到「ARM」与「X86」的概念，详情请参见：<a href="http://mobile.hiapk.com/knowledge/common/130718/1438966.html" target="_blank" rel="external">手机CPU科普 ARM构架与X86构架的优劣对比</a>，之后便参照下面步骤实现安装：</p>
+<ul>
+<li><p>如果你使用的是第三方模拟器 Genymotion，由于其依托 <a href="http://baike.baidu.com/link?url=qYBqekGQvAoJs5t2w1c8a1omyj44_lnzwMx5HxNi7YzU2kKMFrs9RFgwqzQ2tuuF7OLmRPJB9D6GqF8cR_myoq" target="_blank" rel="external">VirtualBox</a>，所以其模拟器的架构默认为 X86，因此你需要下载可以在 X86 下运行的 VNC Server 版本：<a href="http://pan.baidu.com/s/1sjODcdB" target="_blank" rel="external">androidvncserver_x86</a></p>
+</li>
+<li><p>如果你使用的是原生模拟器，则在创建 AVD 时「CPU/ABI」选择「ARM」，</p>
+</li>
+</ul>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/arm2.png" alt=""></p>
+<p>随后下载 ARM 版本 <a href="http://pan.baidu.com/s/1pJmh42f" target="_blank" rel="external">androidvncserver</a>               </p>
+<h3 id="安装_android-vnc-server">安装 android-vnc-server</h3><h3 id="1-_将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：">1. 将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：</h3><ul>
+<li><p>使用 adb push 进去，如下：</p>
+<pre><code><span class="label">adb</span> <span class="keyword">push </span>所在路径/<span class="keyword">androidvncserver_x86 </span>/<span class="preprocessor">data</span>/local/
+</code></pre></li>
+<li><p>使用文件夹管理工具，如 <a href="http://pan.baidu.com/s/1c0vXrRq" target="_blank" rel="external">Root Explorer</a></p>
+</li>
+</ul>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/explorer.jpg" alt=""></p>
+<h3 id="2-_更改「androidvncserver_x86」的权限，同样也有两种方法：">2. 更改「androidvncserver_x86」的权限，同样也有两种方法：</h3><ul>
+<li><p>使用 adb</p>
+<pre><code><span class="preprocessor"># chmod <span class="number">555</span> androidvncserver_x86</span>
+</code></pre></li>
+<li><p>使用文件夹管理</p>
+</li>
+</ul>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/555.png" alt=""></p>
+<h3 id="3-_运行_androidvncserver_x86">3. 运行 androidvncserver_x86</h3><pre><code># /<span class="preprocessor">data</span>/local/<span class="keyword">androidvncserver_x86 </span>&amp;
+</code></pre><p><strong>注：如果这一步出现</strong></p>
+<blockquote>
+<p>Initializing framebuffer device /dev/graphics/fb0…<br>xres=320, yres=480, xresv=320, yresv=960, xoffs=0, yoffs=0, bpp=16<br>Initializing keyboard device /dev/input/event3 …<br>cannot open kbd device /dev/input/event3</p>
+</blockquote>
+<p>大家可以参考<a href="http://blog.goo.ne.jp/karutaya/e/a815571ef06640ea33fbb1bcf08ac9ed" target="_blank" rel="external">这里</a>，其关键就是：</p>
+<pre><code>&gt; adb shell
+# <span class="regexp">/data/</span>androidvncserver -k <span class="regexp">/dev/i</span>nput<span class="regexp">/event0 -t /</span>dev<span class="regexp">/input/</span>event0 &amp;
+</code></pre><h3 id="运行_VNC_Viewer">运行 VNC Viewer</h3><ol>
+<li>下载相应版本<a href="https://www.realvnc.com/download/vnc/" target="_blank" rel="external">VNC</a>并安装</li>
+<li>adb forward tcp:5901 tcp:5901</li>
+<li>打开 VNC Viewer，地址填写「127.0.0.1:5901」，点击「连接」后便可看到画面</li>
+</ol>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/viewer.png" alt=""></p>
+<hr>
+<h2 id="Tips">Tips</h2><ol>
+<li><a href="http://jingyan.baidu.com/article/17bd8e52f514d985ab2bb800.html" target="_blank" rel="external">ADB 环境变量配置</a></li>
+<li><a href="http://www.open-open.com/lib/view/1327557366686" target="_blank" rel="external">ADB Shell 命令详解</a></li>
+</ol>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="背景">背景</h2><p>由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。</p>]]>
+    
+    </summary>
+    
+      <category term="Root" scheme="http://itangqi.me/tags/Root/"/>
+    
+      <category term="VNC" scheme="http://itangqi.me/tags/VNC/"/>
+    
+      <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Java 与 JavaScript 如何进行交互]]></title>
+    <link href="http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/"/>
+    <id>http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/</id>
+    <published>2015-03-06T16:00:00.000Z</published>
+    <updated>2015-09-09T05:28:54.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="Hybrid_App">Hybrid App</h2><ul>
+<li><p><a href="http://baike.baidu.com/link?url=oEcVTV16sU0agGHHebRey-cur6xumEuvDU77apaDBHKgGyWZwxTQYKCacn_MX51sogG2l4aj_KX406pcrP5sHK" target="_blank" rel="external">Hybrid App</a> : 又称「混合模式移动应用」，是指介于 Web App 和 Native App 这两者之间的 App，兼具「Native App 良好用户交互体验的优势」和「Web App 跨平台开发的优势」。</p>
+</li>
+<li><p><a href="http://www.smashingmagazine.com/2014/10/21/providing-a-native-experience-with-web-technologies/" target="_blank" rel="external">Hybrid Mobile Apps: Providing A Native Experience With Web Technologies</a> : This article provides many hints, code snippets and lessons learned on how to build great hybrid mobile apps.</p>
+</li>
+<li><p><a href="https://www.codementor.io/android/tutorial/secure-hybrid-html5-android-webview-mobile-app" target="_blank" rel="external">Tutorial: How to Safely Implement Hybrid HTML5 Android Applications</a> : In this short tutorial we will discover how to integrate web applications into our native Android applications, including how to create a secure JavaScript-Java bridge.</p>
+</li>
+</ul>
+<a id="more"></a> 
+<hr>
+<h2 id="WebKit_&amp;_Chromium">WebKit &amp; Chromium</h2><ul>
+<li><p><a href="http://developer.android.com/reference/android/webkit/package-summary.html" target="_blank" rel="external">WebKit</a> : 官方文档</p>
+</li>
+<li><p><a href="http://www.mobilexweb.com/blog/android-4-4-kitkat-browser-chrome-webview" target="_blank" rel="external">Android 4.4 KitKat, the browser and the Chrome WebView</a> : Android 4.4 has made a big change in the OS’ internals for HTML5 development: it has replaced its original WebKit-based WebView with modern Chromium.</p>
+</li>
+<li><p><a href="http://blog.csdn.net/milado_nju/article/details/17098399" target="_blank" rel="external">理解WebKit和Chromium: Android 4.4 上的Chromium WebView</a> : 在最新的Android 4.4 Kitkat 版本中，原本基于Android「WebKit」的 WebView 实现被换成基于「Chromium」的 WebView 实现。</p>
+</li>
+</ul>
+<hr>
+<h2 id="交互实例">交互实例</h2><ul>
+<li><a href="http://droidyue.com/blog/2014/09/20/interaction-between-java-and-javascript-in-android/" target="_blank" rel="external">Android中Java和JavaScript交互</a> : 此篇博文十分详细地介绍了具体的实现步骤和可能会遇到的问题及解决办法。</li>
+</ul>
+<p>###Java 与 JS 交互只需如下几步：</p>
+<ol>
+<li>WebView开启JavaScript脚本执行 </li>
+<li>WebView设置供JavaScript调用的交互接口</li>
+<li>客户端和网页端编写调用对方的代码</li>
+</ol>
+<hr>
+<h2 id="安全性">安全性</h2><blockquote>
+<p>网上的方法可以告诉我们这个时候我们可以使用addjavascriptInterface来注入原生接口到JS中，但是在安卓4.2以下的系统中，这种方案却我们的应用带来了很大的安全风险。攻击者如果在页面执行一些非法的JS（诱导用户打开一些钓鱼网站以进入风险页面），极有可能反弹拿到用户手机的shell权限。接下来攻击者就可以在后台默默安装木马，完全洞穿用户的手机。详细的攻击过程可以见乌云平台的这份报告：<a href="http://drops.wooyun.org/papers/548" target="_blank" rel="external">WebView中接口隐患与手机挂马利用</a>。</p>
+</blockquote>
+<ul>
+<li><p><a href="http://www.pedant.cn/2014/07/04/webview-js-java-interface-research/" target="_blank" rel="external">在WebView中如何让JS与Java安全地互相调用</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/leehong2005/article/details/11808557" target="_blank" rel="external">Android WebView的Js对象注入漏洞解决方案</a></p>
+</li>
+<li><p><a href="http://gundumw100.iteye.com/blog/1158719" target="_blank" rel="external">在Android的webview中定制js的alert,confirm和prompt对话框的方法</a></p>
+</li>
+</ul>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="Hybrid_App">Hybrid App</h2><ul>
+<li><p><a href="http://baike.baidu.com/link?url=oEcVTV16sU0agGHHebRey-cur6xumEuvDU77apaDBHKgGyWZwxTQYKCacn_MX51sogG2l4aj_KX406pcrP5sHK">Hybrid App</a> : 又称「混合模式移动应用」，是指介于 Web App 和 Native App 这两者之间的 App，兼具「Native App 良好用户交互体验的优势」和「Web App 跨平台开发的优势」。</p>
+</li>
+<li><p><a href="http://www.smashingmagazine.com/2014/10/21/providing-a-native-experience-with-web-technologies/">Hybrid Mobile Apps: Providing A Native Experience With Web Technologies</a> : This article provides many hints, code snippets and lessons learned on how to build great hybrid mobile apps.</p>
+</li>
+<li><p><a href="https://www.codementor.io/android/tutorial/secure-hybrid-html5-android-webview-mobile-app">Tutorial: How to Safely Implement Hybrid HTML5 Android Applications</a> : In this short tutorial we will discover how to integrate web applications into our native Android applications, including how to create a secure JavaScript-Java bridge.</p>
+</li>
+</ul>]]>
+    
+    </summary>
+    
+      <category term="Hybrid App" scheme="http://itangqi.me/tags/Hybrid-App/"/>
+    
+      <category term="JavaScript" scheme="http://itangqi.me/tags/JavaScript/"/>
+    
+      <category term="WebView" scheme="http://itangqi.me/tags/WebView/"/>
+    
+      <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[浅谈 Material Design]]></title>
+    <link href="http://itangqi.me/2015/02/15/talk-about-material-design/"/>
+    <id>http://itangqi.me/2015/02/15/talk-about-material-design/</id>
+    <published>2015-02-14T16:00:00.000Z</published>
+    <updated>2015-09-09T05:28:36.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>由于公司产品应用场景的特殊性，在平时的开发过程中，我基本不需要涉及 UI 相关的工作，但每每见到各种自定义控件与酷炫的动画效果时，我心里总是痒痒的。所以我决定开始学习与积累相关知识，虽然离「Material Design」概念的提出已经有一段时间了，但现在开始学习也不算太晚。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="Material_Design">Material Design</h2><ul>
+<li><p><a href="http://designshack.net/articles/webstandards/google-material-design-everything-you-need-to-know/" target="_blank" rel="external">Google Material Design: Everything You Need to Know</a>: 正如标题所示，这是一篇，告知你关于 Material Design 所需要知道的所有的文章</p>
+</li>
+<li><p><a href="https://medium.com/feedly-behind-the-curtain/an-exploration-in-material-design-by-feedly-8c1a1cbdfdcd" target="_blank" rel="external">An exploration in Material Design</a>: 作者以 <a href="https://feedly.com/" target="_blank" rel="external">Feedly</a> 客户端的改版为例，介绍 Material Design 在实际开发中的应用</p>
+</li>
+<li><p><a href="http://blog.csdn.net/a396901990/article/category/2634371" target="_blank" rel="external">ANDROID L——Material Design详解</a>: 国内一个讲解 Material Design 的系列专栏</p>
+</li>
+</ul>
+<hr>
+<h2 id="RecyclerView_&amp;_CardView_&amp;_Palette">RecyclerView &amp; CardView &amp; Palette</h2><blockquote>
+<p>Android Lollipop introduces corresponding new APIs to help developers implement the Material Design guidelines, and two of these UI widgets are RecyclerView and CardView. The RecyclerView is designed to replace the ListView, while the CardView is a new type of layout.</p>
+</blockquote>
+<p>Google 官方文档永远是学习的最佳资料：</p>
+<ul>
+<li><p><a href="https://developer.android.com/training/material/lists-cards.html" target="_blank" rel="external">Creating Lists and Cards</a></p>
+</li>
+<li><p><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html" target="_blank" rel="external">RecyclerView</a></p>
+</li>
+<li><p><a href="https://developer.android.com/reference/android/support/v7/widget/CardView.html" target="_blank" rel="external">CardView</a></p>
+</li>
+<li><p><a href="https://developer.android.com/reference/android/support/v7/graphics/Palette.html" target="_blank" rel="external">Palette</a> </p>
+</li>
+</ul>
+<hr>
+<h2 id="How_to_use">How to use</h2><p>下面介绍如何实现：</p>
+<ul>
+<li><p><a href="https://www.grokkingandroid.com/first-glance-androids-recyclerview/" target="_blank" rel="external">A First Glance at Android’s RecyclerView</a></p>
+</li>
+<li><p><a href="http://frank-zhu.github.io/android/2015/01/16/android-recyclerview-part-1/" target="_blank" rel="external">RecyclerView使用详解（一）</a></p>
+</li>
+<li><p><a href="http://techlovejump.com/android-cardview-widget-example-add-to-list-using-recyclerview/" target="_blank" rel="external">Android CardView Widget – Add Cards to List using RecyclerView</a></p>
+</li>
+<li><p><a href="https://www.bignerdranch.com/blog/extracting-colors-to-a-palette-with-android-lollipop/" target="_blank" rel="external">Extracting Colors to a Palette with Android Lollipop</a></p>
+</li>
+<li><p><a href="http://xmodulo.com/recyclerview-cardview-android.html" target="_blank" rel="external">How to use RecyclerView and CardView on Android Lollipop</a></p>
+</li>
+<li><p><a href="http://www.binpress.com/tutorial/android-l-recyclerview-and-cardview-tutorial/156" target="_blank" rel="external">A Guide to Android RecyclerView and CardView</a>  </p>
+</li>
+</ul>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>由于公司产品应用场景的特殊性，在平时的开发过程中，我基本不需要涉及 UI 相关的工作，但每每见到各种自定义控件与酷炫的动画效果时，我心里总是痒痒的。所以我决定开始学习与积累相关知识，虽然离「Material Design」概念的提出已经有一段时间了，但现在开始学习也不算太晚。</p>]]>
+    
+    </summary>
+    
+      <category term="CardView" scheme="http://itangqi.me/tags/CardView/"/>
+    
+      <category term="Material Design" scheme="http://itangqi.me/tags/Material-Design/"/>
+    
+      <category term="Palette" scheme="http://itangqi.me/tags/Palette/"/>
+    
+      <category term="RecyclerView" scheme="http://itangqi.me/tags/RecyclerView/"/>
+    
+      <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[相见恨晚 - Alfred Workflows]]></title>
+    <link href="http://itangqi.me/2015/01/21/alfred-workflows-recommend/"/>
+    <id>http://itangqi.me/2015/01/21/alfred-workflows-recommend/</id>
+    <published>2015-01-20T16:00:00.000Z</published>
+    <updated>2015-09-09T05:29:33.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」那么，<a href="http://www.alfredapp.com/" target="_blank" rel="external"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！！！（对，你没听错，我说的就是 「神器」）</p>
+<p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率，无论是工作还是生活，我现在已经离不开它了！</p>
+<p>关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  </p>
+<ul>
+<li><a href="http://macshuo.com/?p=625" target="_blank" rel="external">神兵利器——Alfred</a></li>
+<li><a href="http://wellsnake.com/jekyll/update/2014/06/15/001/" target="_blank" rel="external">丢掉鼠标－Mac神软Alfred使用手册1</a></li>
+</ul>
+<p>而今天我要介绍的重点，则是 Alfred 的杀手级功能 <a href="http://baike.baidu.com/link?url=vWcxHgs2yTgrDl3DgvZl17_FLMZdp9RSdExPrW0MRDtjn4R4SjbSSnRBK3nD3NG03da3IAuEbIs14celMAhEBMNC-NF4lNZjcX2WYG6UtVG4YpDCSQ0x9XgV23TCZyMilFM4WmQPTNfIEu46nymBeK" target="_blank" rel="external">Workflows</a>，下面我将隆重介绍，在我每天工作和生活中都会使用到的 Workflow ，以此来说明其功能是如何之强大。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="例子">例子</h2><h3 id="StackOverflow">StackOverflow</h3><ul>
+<li>StackOverflow on Alfred ~ by <a href="https://github.com/xhinking" target="_blank" rel="external">@xhinking</a>             </li>
+<li>Triggers: st {query}</li>
+<li><a href="https://raw.githubusercontent.com/xhinking/Alfred/master/stackoverflow.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.24.05.png" alt=""></li>
+</ul>
+<h3 id="SNSearch">SNSearch</h3><ul>
+<li>SNSearch 是为 Alfred 开发的一款 Workflow ，主要功能是检索 Startup News 网站的最新推荐文章 ~ by <a href="https://github.com/jackychi" target="_blank" rel="external">@池建强</a></li>
+<li>Triggers: sn all , sn {query}</li>
+<li><a href="https://raw.githubusercontent.com/jackychi/SNSearch/master/SNSearch.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.18.27.png" alt=""></li>
+</ul>
+<h3 id="V2EX">V2EX</h3><ul>
+<li>一个给 V2EXer 用的 Alfred 2 Workflow ~ by <a href="https://github.com/hzlzh" target="_blank" rel="external">@hzlzh</a>           </li>
+<li>Triggers: v2ex new , v2ex @{name}</li>
+<li><a href="http://www.alfredworkflow.com/wp-admin/admin-ajax.php?action=cfdb-file&amp;s=1363880004.5359&amp;form=Alfred+Workflow&amp;field=workflow_file" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.13.18.png" alt=""></li>
+</ul>
+<h3 id="Dash">Dash</h3><ul>
+<li>ScreenshotShorter keywords for using dash lookups. Custom logo for each language included ~ by <a href="https://github.com/willfarrell" target="_blank" rel="external">willfarrell</a></li>
+<li>Triggers: dash {query}</li>
+<li><a href="http://www.alfredworkflow.com/wp-admin/admin-ajax.php?action=cfdb-file&amp;s=1366731149.1667&amp;form=Alfred+Workflow&amp;field=workflow_file" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.25.30.png" alt=""></li>
+</ul>
+<h3 id="知乎">知乎</h3><ul>
+<li>知乎 Workflow ~ by <a href="https://github.com/KJlmfe" target="_blank" rel="external">KJlmfe</a></li>
+<li>在知乎里搜索话题、问题和人：zh {query}</li>
+<li>查看今日知乎日报：zhdaily</li>
+<li><a href="https://raw.githubusercontent.com/KJlmfe/Alfred-workflows/master/zhihu.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.20.31.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.20.40.png" alt=""></li>
+</ul>
+<h3 id="Last_changed_files">Last changed files</h3><ul>
+<li>Lists recently changed files (searchable) for drag&amp;drop or file actions in alfred ~ by <a href="https://github.com/oderwat" target="_blank" rel="external">oderwat</a></li>
+<li>Triggers: .last</li>
+<li><a href="https://raw.githubusercontent.com/oderwat/alfredworkflows/master/Last%20changed%20files.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.03.25.png" alt=""></li>
+</ul>
+<h3 id="百度翻译">百度翻译</h3><ul>
+<li>百度翻译 ~ by <a href="https://github.com/zxyah" target="_blank" rel="external">zxyah</a></li>
+<li>Triggers: bfy {query}</li>
+<li><a href="https://raw.githubusercontent.com/zxyah/alfred/master/Baidu-Translate/%E7%99%BE%E5%BA%A6%E7%BF%BB%E8%AF%91.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.05.08.png" alt=""></li>
+</ul>
+<h3 id="百度地图">百度地图</h3><ul>
+<li>百度地图搜索(Search in Baidu Map) ~ by <a href="https://github.com/wofeiwo" target="_blank" rel="external">GaRy</a></li>
+<li>首先输入”setl”+空格+城市名，设置默认搜索城市地点</li>
+<li>输入”bmap”+空格+搜索关键字即可。然后就等他出结果，回车或者cmd+数字就能打开默认浏览器进入地图页面进入地图页面查看搜索结果。</li>
+<li><a href="https://raw.githubusercontent.com/wofeiwo/alfred-baidu-map/master/Baidu%20Map.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.19.13.png" alt=""></li>
+</ul>
+<h3 id="Douban">Douban</h3><ul>
+<li>搜索豆瓣电影、图书、音乐 ~ by <a href="https://github.com/lucifr" target="_blank" rel="external">Lucifr</a></li>
+<li>Triggers: book {query} , movie {query} , music {query}</li>
+<li><a href="https://raw.githubusercontent.com/lucifr/Alfredv2-Extensions/master/Douban.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.07.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.24.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.47.png" alt=""></li>
+</ul>
+<h3 id="社交网络_ID_直达">社交网络 ID 直达</h3><ul>
+<li>A fast way to view the profile when you know his @username ~ by Astrian Zheng</li>
+<li>Triggers: @ {username}</li>
+<li><a href="http://www.alfredworkflow.com/wp-admin/admin-ajax.php?action=cfdb-file&amp;s=1428503769.7937&amp;form=Alfred+Workflow&amp;field=workflow_file" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.26.37.png" alt=""></li>
+</ul>
+<h3 id="水木社区">水木社区</h3><ul>
+<li>Browse newsmth.net bbs in Alfred ~ by <a href="https://github.com/yrlihuan" target="_blank" rel="external">@yrlihuan</a></li>
+<li>浏览今日十大: smth</li>
+<li>查找板块: smth 板块拼音<ul>
+<li>smth shuimu</li>
+<li>smth jingji</li>
+</ul>
+</li>
+<li>浏览板块: smth &gt; 板块ID<ul>
+<li>smth &gt; ITExpress</li>
+<li>smth &gt; EconForum                                                                 </li>
+</ul>
+</li>
+<li><a href="https://raw.githubusercontent.com/yrlihuan/smth.alfredworkflow/master/release/smth.alfredworkflo" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.39.55.png" alt=""></li>
+</ul>
+<hr>
+<h2 id="Tips">Tips</h2><ul>
+<li>为了方便大家发现、查找、分享优秀实用的 Workflows，<a href="https://github.com/hzlzh" target="_blank" rel="external">hzlzh</a> 制作并维护了<a href="http://www.alfredworkflow.com/" target="_blank" rel="external">http://www.alfredworkflow.com</a> ， 你在上面能找到你所能想得到的所有 Workflows (当然也十分欢迎你将自己制作的 Workflow 分享上去）</li>
+<li>如果你喜欢我的 Alfred 主题话，你可以通过：<a href="https://github.com/krv/Yosemite-Dark-Alfred" target="_blank" rel="external">Dark OS X Yosemite (10.10) inspired theme for Alfred v2</a> 下载得到</li>
+</ul>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」那么，<a href="http://www.alfredapp.com/"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！！！（对，你没听错，我说的就是 「神器」）</p>
+<p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率，无论是工作还是生活，我现在已经离不开它了！</p>
+<p>关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  </p>
+<ul>
+<li><a href="http://macshuo.com/?p=625">神兵利器——Alfred</a></li>
+<li><a href="http://wellsnake.com/jekyll/update/2014/06/15/001/">丢掉鼠标－Mac神软Alfred使用手册1</a></li>
+</ul>
+<p>而今天我要介绍的重点，则是 Alfred 的杀手级功能 <a href="http://baike.baidu.com/link?url=vWcxHgs2yTgrDl3DgvZl17_FLMZdp9RSdExPrW0MRDtjn4R4SjbSSnRBK3nD3NG03da3IAuEbIs14celMAhEBMNC-NF4lNZjcX2WYG6UtVG4YpDCSQ0x9XgV23TCZyMilFM4WmQPTNfIEu46nymBeK">Workflows</a>，下面我将隆重介绍，在我每天工作和生活中都会使用到的 Workflow ，以此来说明其功能是如何之强大。</p>]]>
+    
+    </summary>
+    
+      <category term="Alfred" scheme="http://itangqi.me/tags/Alfred/"/>
+    
+      <category term="Efficiency" scheme="http://itangqi.me/tags/Efficiency/"/>
+    
+      <category term="Workflow" scheme="http://itangqi.me/tags/Workflow/"/>
+    
+      <category term="Mac" scheme="http://itangqi.me/categories/Mac/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[一切才刚刚开始]]></title>
+    <link href="http://itangqi.me/2015/01/01/everything-is-just-beginning/"/>
+    <id>http://itangqi.me/2015/01/01/everything-is-just-beginning/</id>
+    <published>2014-12-31T16:00:00.000Z</published>
+    <updated>2015-09-09T01:10:29.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="In_a_word">In a word</h2><blockquote>
+<p>Talk is cheap. Show me the code.</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="In_a_word">In a word</h2><blockquote>
+<p>Talk is cheap. Show me the code.</p>
+</blockquote>
+]]>
+    </summary>
+    
+      <category term="Goal" scheme="http://itangqi.me/tags/Goal/"/>
+    
+      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
+    
+  </entry>
+  
+</feed>
