@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2015-09-13T11:50:38.000Z</updated>
+  <updated>2015-09-14T13:26:32.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -13,6 +13,41 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Android Tips - 填坑手册]]></title>
+    <link href="http://itangqi.me/2015/09/14/android-tips/"/>
+    <id>http://itangqi.me/2015/09/14/android-tips/</id>
+    <published>2015-09-13T16:00:00.000Z</published>
+    <updated>2015-09-14T13:26:32.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="介绍">介绍</h2><p>学习 Android 至今，大大小小的坑没少踩，庆幸的是，在强大的搜索引擎与无私奉献的人们的帮助下，我遇到的坑都顺利地被填平了。</p>
+<p>为了便于日后遇到同样的问题时，能免于再次搜索带来的麻烦，我养成了收藏书签的习惯，随着书签（Tips）的日积月累，我想，是时候该有这个项目了。</p>
+<a id="more"></a> 
+<p><strong>如果你是个 Android 新人，那么我希望这份列表，可以成为你踩到坑时的不完全手册。</strong></p>
+<p>当然，这份列表一定会有遗漏，如果不幸，这里没有你所踩到的坑，或者对于某个问题你有更好的 Tips，欢迎分享，让我们一起来维护这个项目！你可以通过 <a href="https://github.com/tangqi92/Android-Tips/issues" target="_blank" rel="external">Commit</a> 的形式，当然也欢迎 <code>Star</code> 与 <code>Fork</code> :)</p>
+<blockquote>
+<p>由于本项目面向的群体为初学者，所以列表的知识点以初级为主，资源大多数为中文，如遇到少数无法访问的情况，请自备梯子。</p>
+</blockquote>
+<hr>
+<h2 id="地址">地址</h2><p>项目地址：<a href="https://github.com/tangqi92/Android-Tips" target="_blank" rel="external">https://github.com/tangqi92/Android-Tips</a></p>
+<hr>
+<h2 id="联系我">联系我</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="介绍">介绍</h2><p>学习 Android 至今，大大小小的坑没少踩，庆幸的是，在强大的搜索引擎与无私奉献的人们的帮助下，我遇到的坑都顺利地被填平了。</p>
+<p>为了便于日后遇到同样的问题时，能免于再次搜索带来的麻烦，我养成了收藏书签的习惯，随着书签（Tips）的日积月累，我想，是时候该有这个项目了。</p>]]>
+    
+    </summary>
+    
+      <category term="Tips" scheme="http://itangqi.me/tags/Tips/"/>
+    
+      <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[积木 - 享受搭建应用的乐趣]]></title>

@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="CardView,Material Design,Palette,RecyclerView," />
+  <meta name="keywords" content="Tips," />
 
 
 
@@ -41,16 +41,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="前言由于公司产品应用场景的特殊性，在平时的开发过程中，我基本不需要涉及 UI 相关的工作，但每每见到各种自定义控件与酷炫的动画效果时，我心里总是痒痒的。所以我决定开始学习与积累相关知识，虽然离「Material Design」概念的提出已经有一段时间了，但现在开始学习也不算太晚。">
+<meta name="description" content="介绍学习 Android 至今，大大小小的坑没少踩，庆幸的是，在强大的搜索引擎与无私奉献的人们的帮助下，我遇到的坑都顺利地被填平了。
+为了便于日后遇到同样的问题时，能免于再次搜索带来的麻烦，我养成了收藏书签的习惯，随着书签（Tips）的日积月累，我想，是时候该有这个项目了。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="浅谈 Material Design">
-<meta property="og:url" content="http://itangqi.me/2015/02/15/talk-about-material-design/index.html">
+<meta property="og:title" content="Android Tips - 填坑手册">
+<meta property="og:url" content="http://itangqi.me/2015/09/14/android-tips/index.html">
 <meta property="og:site_name" content="Qi Tang's Blog">
-<meta property="og:description" content="前言由于公司产品应用场景的特殊性，在平时的开发过程中，我基本不需要涉及 UI 相关的工作，但每每见到各种自定义控件与酷炫的动画效果时，我心里总是痒痒的。所以我决定开始学习与积累相关知识，虽然离「Material Design」概念的提出已经有一段时间了，但现在开始学习也不算太晚。">
-<meta property="og:updated_time" content="2015-09-09T05:28:36.000Z">
+<meta property="og:description" content="介绍学习 Android 至今，大大小小的坑没少踩，庆幸的是，在强大的搜索引擎与无私奉献的人们的帮助下，我遇到的坑都顺利地被填平了。
+为了便于日后遇到同样的问题时，能免于再次搜索带来的麻烦，我养成了收藏书签的习惯，随着书签（Tips）的日积月累，我想，是时候该有这个项目了。">
+<meta property="og:updated_time" content="2015-09-14T13:26:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="浅谈 Material Design">
-<meta name="twitter:description" content="前言由于公司产品应用场景的特殊性，在平时的开发过程中，我基本不需要涉及 UI 相关的工作，但每每见到各种自定义控件与酷炫的动画效果时，我心里总是痒痒的。所以我决定开始学习与积累相关知识，虽然离「Material Design」概念的提出已经有一段时间了，但现在开始学习也不算太晚。">
+<meta name="twitter:title" content="Android Tips - 填坑手册">
+<meta name="twitter:description" content="介绍学习 Android 至今，大大小小的坑没少踩，庆幸的是，在强大的搜索引擎与无私奉献的人们的帮助下，我遇到的坑都顺利地被填平了。
+为了便于日后遇到同样的问题时，能免于再次搜索带来的麻烦，我养成了收藏书签的习惯，随着书签（Tips）的日积月累，我想，是时候该有这个项目了。">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -60,7 +63,7 @@
   };
 </script>
 
-  <title> 浅谈 Material Design | Qi Tang's Blog </title>
+  <title> Android Tips - 填坑手册 | Qi Tang's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -205,7 +208,7 @@
           
           
             
-              浅谈 Material Design
+              Android Tips - 填坑手册
             
           
         </h1>
@@ -214,8 +217,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-02-15T00:00:00+08:00" content="2015-02-15">
-            2015-02-15
+          <time itemprop="dateCreated" datetime="2015-09-14T00:00:00+08:00" content="2015-09-14">
+            2015-09-14
           </time>
         </span>
 
@@ -240,8 +243,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/02/15/talk-about-material-design/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/02/15/talk-about-material-design/" itemprop="commentsCount"></span>
+            <a href="/2015/09/14/android-tips/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/14/android-tips/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -255,50 +258,18 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="前言">前言</h2><p>由于公司产品应用场景的特殊性，在平时的开发过程中，我基本不需要涉及 UI 相关的工作，但每每见到各种自定义控件与酷炫的动画效果时，我心里总是痒痒的。所以我决定开始学习与积累相关知识，虽然离「Material Design」概念的提出已经有一段时间了，但现在开始学习也不算太晚。</p>
+        <span itemprop="articleBody"><h2 id="介绍">介绍</h2><p>学习 Android 至今，大大小小的坑没少踩，庆幸的是，在强大的搜索引擎与无私奉献的人们的帮助下，我遇到的坑都顺利地被填平了。</p>
+<p>为了便于日后遇到同样的问题时，能免于再次搜索带来的麻烦，我养成了收藏书签的习惯，随着书签（Tips）的日积月累，我想，是时候该有这个项目了。</p>
 <a id="more"></a> 
-<hr>
-<h2 id="Material_Design">Material Design</h2><ul>
-<li><p><a href="http://designshack.net/articles/webstandards/google-material-design-everything-you-need-to-know/" target="_blank" rel="external">Google Material Design: Everything You Need to Know</a>: 正如标题所示，这是一篇，告知你关于 Material Design 所需要知道的所有的文章</p>
-</li>
-<li><p><a href="https://medium.com/feedly-behind-the-curtain/an-exploration-in-material-design-by-feedly-8c1a1cbdfdcd" target="_blank" rel="external">An exploration in Material Design</a>: 作者以 <a href="https://feedly.com/" target="_blank" rel="external">Feedly</a> 客户端的改版为例，介绍 Material Design 在实际开发中的应用</p>
-</li>
-<li><p><a href="http://blog.csdn.net/a396901990/article/category/2634371" target="_blank" rel="external">ANDROID L——Material Design详解</a>: 国内一个讲解 Material Design 的系列专栏</p>
-</li>
-</ul>
-<hr>
-<h2 id="RecyclerView_&amp;_CardView_&amp;_Palette">RecyclerView &amp; CardView &amp; Palette</h2><blockquote>
-<p>Android Lollipop introduces corresponding new APIs to help developers implement the Material Design guidelines, and two of these UI widgets are RecyclerView and CardView. The RecyclerView is designed to replace the ListView, while the CardView is a new type of layout.</p>
+<p><strong>如果你是个 Android 新人，那么我希望这份列表，可以成为你踩到坑时的不完全手册。</strong></p>
+<p>当然，这份列表一定会有遗漏，如果不幸，这里没有你所踩到的坑，或者对于某个问题你有更好的 Tips，欢迎分享，让我们一起来维护这个项目！你可以通过 <a href="https://github.com/tangqi92/Android-Tips/issues" target="_blank" rel="external">Commit</a> 的形式，当然也欢迎 <code>Star</code> 与 <code>Fork</code> :)</p>
+<blockquote>
+<p>由于本项目面向的群体为初学者，所以列表的知识点以初级为主，资源大多数为中文，如遇到少数无法访问的情况，请自备梯子。</p>
 </blockquote>
-<p>Google 官方文档永远是学习的最佳资料：</p>
-<ul>
-<li><p><a href="https://developer.android.com/training/material/lists-cards.html" target="_blank" rel="external">Creating Lists and Cards</a></p>
-</li>
-<li><p><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html" target="_blank" rel="external">RecyclerView</a></p>
-</li>
-<li><p><a href="https://developer.android.com/reference/android/support/v7/widget/CardView.html" target="_blank" rel="external">CardView</a></p>
-</li>
-<li><p><a href="https://developer.android.com/reference/android/support/v7/graphics/Palette.html" target="_blank" rel="external">Palette</a> </p>
-</li>
-</ul>
 <hr>
-<h2 id="How_to_use">How to use</h2><p>下面介绍如何实现：</p>
-<ul>
-<li><p><a href="https://www.grokkingandroid.com/first-glance-androids-recyclerview/" target="_blank" rel="external">A First Glance at Android’s RecyclerView</a></p>
-</li>
-<li><p><a href="http://frank-zhu.github.io/android/2015/01/16/android-recyclerview-part-1/" target="_blank" rel="external">RecyclerView使用详解（一）</a></p>
-</li>
-<li><p><a href="http://techlovejump.com/android-cardview-widget-example-add-to-list-using-recyclerview/" target="_blank" rel="external">Android CardView Widget – Add Cards to List using RecyclerView</a></p>
-</li>
-<li><p><a href="https://www.bignerdranch.com/blog/extracting-colors-to-a-palette-with-android-lollipop/" target="_blank" rel="external">Extracting Colors to a Palette with Android Lollipop</a></p>
-</li>
-<li><p><a href="http://xmodulo.com/recyclerview-cardview-android.html" target="_blank" rel="external">How to use RecyclerView and CardView on Android Lollipop</a></p>
-</li>
-<li><p><a href="http://www.binpress.com/tutorial/android-l-recyclerview-and-cardview-tutorial/156" target="_blank" rel="external">A Guide to Android RecyclerView and CardView</a>  </p>
-</li>
-</ul>
+<h2 id="地址">地址</h2><p>项目地址：<a href="https://github.com/tangqi92/Android-Tips" target="_blank" rel="external">https://github.com/tangqi92/Android-Tips</a></p>
 <hr>
-<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<h2 id="联系我">联系我</h2><ul>
 <li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
 <li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
 <li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
@@ -311,13 +282,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/CardView/" rel="tag">#CardView</a>
-          
-            <a href="/tags/Material-Design/" rel="tag">#Material Design</a>
-          
-            <a href="/tags/Palette/" rel="tag">#Palette</a>
-          
-            <a href="/tags/RecyclerView/" rel="tag">#RecyclerView</a>
+            <a href="/tags/Tips/" rel="tag">#Tips</a>
           
         </div>
       
@@ -326,13 +291,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/03/07/java-and-javascript-interaction-in-android/" rel="prev">Java 与 JavaScript 如何进行交互</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/01/21/alfred-workflows-recommend/" rel="next">相见恨晚 - Alfred Workflows</a>
+              <a href="/2015/09/03/building-blocks/" rel="next">积木 - 享受搭建应用的乐趣</a>
             
           </div>
         </div>
@@ -474,7 +437,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Material_Design"><span class="nav-number">2.</span> <span class="nav-text">Material Design</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RecyclerView_&_CardView_&_Palette"><span class="nav-number">3.</span> <span class="nav-text">RecyclerView & CardView & Palette</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How_to_use"><span class="nav-number">4.</span> <span class="nav-text">How to use</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#期待与你成为朋友"><span class="nav-number">5.</span> <span class="nav-text">期待与你成为朋友</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#地址"><span class="nav-number">2.</span> <span class="nav-text">地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联系我"><span class="nav-number">3.</span> <span class="nav-text">联系我</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -528,9 +491,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'tangqi92githubio';
-      var disqus_identifier = '2015/02/15/talk-about-material-design/';
-      var disqus_title = '浅谈 Material Design';
-      var disqus_url = 'http://itangqi.me/2015/02/15/talk-about-material-design/';
+      var disqus_identifier = '2015/09/14/android-tips/';
+      var disqus_title = 'Android Tips - 填坑手册';
+      var disqus_url = 'http://itangqi.me/2015/09/14/android-tips/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
