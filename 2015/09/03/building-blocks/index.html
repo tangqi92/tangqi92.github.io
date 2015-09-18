@@ -56,7 +56,7 @@
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s7.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s8.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s9.png">
-<meta property="og:updated_time" content="2015-09-17T13:18:34.000Z">
+<meta property="og:updated_time" content="2015-09-18T11:17:36.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="积木 - 享受搭建应用的乐趣">
 <meta name="twitter:description" content="积木 - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！">
@@ -273,7 +273,11 @@
 <p>好啦，其实我已经帮你完成了应用整体框架的搭建，你需要做的，仅仅是依据自己的实际需求，简单的替换下数据来源，比如在 <a href="http://apistore.baidu.com/" target="_blank" rel="external">APIStore</a> 上就有详细的类别供你选择，然后再改改 UI，一款全新应用就完成啦！</p>
 <p>是不是，想想还有点小激动？那么赶紧前往 <a href="https://github.com/tangqi92/BuildingBlocks" target="_blank" rel="external">GitHub</a> <strong>Star</strong> 与 <strong>Fork</strong> 吧！你的支持将成为我最大的动力与褒奖！</p>
 <hr>
-<h2 id="Update_Log_-_更新日志">Update Log - 更新日志</h2><h3 id="v0-5-0">v0.5.0</h3><ul>
+<h2 id="Update_Log_-_更新日志">Update Log - 更新日志</h2><h3 id="v0-5-1">v0.5.1</h3><ul>
+<li>修复 - 手势右划返回上级页面在4.4系统上的 Bug</li>
+<li>优化 - 首页 Item 的展示布局</li>
+</ul>
+<h3 id="v0-5-0">v0.5.0</h3><ul>
 <li>抛弃 - CardView，回归朴实并为 RecycerView 中 item 增加分割线</li>
 <li>抛弃 - 第三方 DrawerLayout，华而不实</li>
 <li>抛弃 - WebView 中显示文章标题，取而代之为分享按钮</li>
@@ -283,7 +287,8 @@
 <li>重构 - 尽可能将代码写得优雅和规整</li>
 </ul>
 <hr>
-<h2 id="Screenshots_-_预览">Screenshots - 预览</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s1.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s2.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
+<h2 id="Screenshots_-_预览">Screenshots - 预览</h2><p>这里并不是最新效果预览，请前往 <a href="https://github.com/tangqi92/BuildingBlocks/blob/master/README.z.md" target="_blank" rel="external">GitHub</a> 查看</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s1.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s2.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
 <p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s3.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s4.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
 <p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s5.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s6.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
 <p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s7.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s8.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
@@ -315,11 +320,11 @@
 <li>Gmail：<a href="mailto:imtangqi@gmail.com" title="欢迎与我联系" target="_blank" rel="external">imtangqi#gmail.com</a></li>
 </ul>
 <hr>
-<h2 id="Demo_-_示例">Demo - 示例</h2><p><a href="https://github.com/tangqi92/BuildingBlocks/releases/download/v0.5.0/buildingblocks_v0.5.0.apk" target="_blank" rel="external">快速下载</a></p>
+<h2 id="Demo_-_示例">Demo - 示例</h2><p><a href="https://github.com/tangqi92/BuildingBlocks/releases/download/v0.5.1/buildingblocks_v0.5.1.apk" target="_blank" rel="external">快速下载</a></p>
 <hr>
 <h2 id="Source_code_-_源码">Source code - 源码</h2><p>源代码：<a href="https://github.com/tangqi92/BuildingBlocks" target="_blank" rel="external">https://github.com/tangqi92/BuildingBlocks</a></p>
 <hr>
-<p>最后更新时间：2015-09-17 21:18</p>
+<p>最后更新时间：2015-09-18 19:17</p>
 </span>
       
     </div>
@@ -487,7 +492,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#How_to_use"><span class="nav-number">1.</span> <span class="nav-text">How to use</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update_Log_-_更新日志"><span class="nav-number">2.</span> <span class="nav-text">Update Log - 更新日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v0-5-0"><span class="nav-number">2.1.</span> <span class="nav-text">v0.5.0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Screenshots_-_预览"><span class="nav-number">3.</span> <span class="nav-text">Screenshots - 预览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dependencies_-_开源项目"><span class="nav-number">4.</span> <span class="nav-text">Dependencies - 开源项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thanks_-_感谢你们"><span class="nav-number">5.</span> <span class="nav-text">Thanks - 感谢你们</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Help_-_帮帮我"><span class="nav-number">6.</span> <span class="nav-text">Help - 帮帮我</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contact_-_联系我"><span class="nav-number">7.</span> <span class="nav-text">Contact - 联系我</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo_-_示例"><span class="nav-number">8.</span> <span class="nav-text">Demo - 示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Source_code_-_源码"><span class="nav-number">9.</span> <span class="nav-text">Source code - 源码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#How_to_use"><span class="nav-number">1.</span> <span class="nav-text">How to use</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update_Log_-_更新日志"><span class="nav-number">2.</span> <span class="nav-text">Update Log - 更新日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v0-5-1"><span class="nav-number">2.1.</span> <span class="nav-text">v0.5.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v0-5-0"><span class="nav-number">2.2.</span> <span class="nav-text">v0.5.0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Screenshots_-_预览"><span class="nav-number">3.</span> <span class="nav-text">Screenshots - 预览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dependencies_-_开源项目"><span class="nav-number">4.</span> <span class="nav-text">Dependencies - 开源项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thanks_-_感谢你们"><span class="nav-number">5.</span> <span class="nav-text">Thanks - 感谢你们</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Help_-_帮帮我"><span class="nav-number">6.</span> <span class="nav-text">Help - 帮帮我</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contact_-_联系我"><span class="nav-number">7.</span> <span class="nav-text">Contact - 联系我</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo_-_示例"><span class="nav-number">8.</span> <span class="nav-text">Demo - 示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Source_code_-_源码"><span class="nav-number">9.</span> <span class="nav-text">Source code - 源码</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
