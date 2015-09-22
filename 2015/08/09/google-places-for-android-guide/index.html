@@ -41,24 +41,26 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="前言最近由于项目的原因，接触到了 Google Places 的使用与开发，学习并在项目中实现了简单的地点定位与自动补全功能。在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .">
+<meta name="description" content="前言最近由于项目的原因，接触到了 Google Places 的使用与开发，学习并在项目中实现了简单的地点定位与自动补全功能。
+在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Google Places for Android 入门指南">
 <meta property="og:url" content="http://itangqi.me/2015/08/09/google-places-for-android-guide/index.html">
 <meta property="og:site_name" content="Qi Tang's Blog">
-<meta property="og:description" content="前言最近由于项目的原因，接触到了 Google Places 的使用与开发，学习并在项目中实现了简单的地点定位与自动补全功能。在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .">
+<meta property="og:description" content="前言最近由于项目的原因，接触到了 Google Places 的使用与开发，学习并在项目中实现了简单的地点定位与自动补全功能。
+在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-01.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-02.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-03.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-04.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-05.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-layout.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-sc-01.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-sc-02.png">
-<meta property="og:updated_time" content="2015-09-09T06:26:18.000Z">
+<meta property="og:updated_time" content="2015-09-22T01:20:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Google Places for Android 入门指南">
-<meta name="twitter:description" content="前言最近由于项目的原因，接触到了 Google Places 的使用与开发，学习并在项目中实现了简单的地点定位与自动补全功能。在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .">
+<meta name="twitter:description" content="前言最近由于项目的原因，接触到了 Google Places 的使用与开发，学习并在项目中实现了简单的地点定位与自动补全功能。
+在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -263,7 +265,8 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="前言">前言</h2><p>最近由于项目的原因，接触到了 <a href="https://developers.google.com/places/" target="_blank" rel="external">Google Places</a> 的使用与开发，学习并在项目中实现了简单的<strong>地点定位</strong>与<strong>自动补全</strong>功能。<br>在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .</p>
+        <span itemprop="articleBody"><h2 id="前言">前言</h2><p>最近由于项目的原因，接触到了 <a href="https://developers.google.com/places/" target="_blank" rel="external">Google Places</a> 的使用与开发，学习并在项目中实现了简单的<strong>地点定位</strong>与<strong>自动补全</strong>功能。</p>
+<p>在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .</p>
 <a id="more"></a> 
 <hr>
 <h2 id="在_Google_Developers_Console_中创建_API_项目">在 Google Developers Console 中创建 API 项目</h2><p>如果你之前从未在应用中使用过 Google 提供的相关服务（API），那么请直接使用系统引导帮你完成整个流程并自动激活 Google Places API for Android ，请点击<a href="https://console.developers.google.com/flows/enableapi?apiid=placesandroid&amp;keyType=CLIENT_SIDE_ANDROID" target="_blank" rel="external">此链接</a>，按下面截图所示进行操作，便可轻松完成创建。  </p>
@@ -272,7 +275,6 @@
 <li>选择「Go to Credentials」<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-02.png" alt=""></li>
 <li>此处直接选择「Create」，既默认所有应用均可使用同样的「API key」<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-03.png" alt=""></li>
 <li>好啦，此时主角「API key」便自动生成了<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-04.png" alt=""></li>
-<li>如果你还需要新增（使用）其他服务（API），请在「APIs」里进行查看与添加<br><img src="http://7xikfc.com1.z0.glb.clouddn.com/google-places-api-05.png" alt=""></li>
 </ol>
 <hr>
 <h2 id="配置你的应用">配置你的应用</h2><p>使用 Google Places API for Android 的所有应用均需执行以下配置步骤。</p>
@@ -311,10 +313,9 @@
 <li>Demo 下载链接：<a href="https://github.com/tangqi92/MyGooglePlaces" target="_blank" rel="external">https://github.com/tangqi92/MyGooglePlaces</a></li>
 <li>友情提醒：以上的功能，手机需要安装 <a href="https://developers.google.com/android/guides/overview" target="_blank" rel="external">Google Play services</a> 才能正常使用，至于如何安装，就交给万能的 Google 吧：）</li>
 <li>如本文存在任何错误或遗漏，欢迎指正。</li>
-<li>我最爱交朋友了，所以欢迎在社交网络上<a href="http://itangqi.me/tangqi/">互粉</a>！！！</li>
 </ul>
 <hr>
-<h2 id="References_&amp;_More">References &amp; More</h2><ul>
+<h2 id="References">References</h2><ul>
 <li><a href="https://developers.google.com/places/android/" target="_blank" rel="external">https://developers.google.com/places/android</a></li>
 <li><a href="https://github.com/googlesamples/android-play-places" target="_blank" rel="external">https://github.com/googlesamples/android-play-places</a></li>
 </ul>
@@ -489,7 +490,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在_Google_Developers_Console_中创建_API_项目"><span class="nav-number">2.</span> <span class="nav-text">在 Google Developers Console 中创建 API 项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置你的应用"><span class="nav-number">3.</span> <span class="nav-text">配置你的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加_Google_Play_服务"><span class="nav-number">3.1.</span> <span class="nav-text">添加 Google Play 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加相应权限"><span class="nav-number">3.2.</span> <span class="nav-text">添加相应权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加_API_密钥"><span class="nav-number">3.3.</span> <span class="nav-text">添加 API 密钥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当前地点"><span class="nav-number">4.</span> <span class="nav-text">当前地点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取当前位置"><span class="nav-number">4.1.</span> <span class="nav-text">获取当前位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地点自动完成"><span class="nav-number">4.2.</span> <span class="nav-text">地点自动完成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">5.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">6.</span> <span class="nav-text">最后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References_&_More"><span class="nav-number">7.</span> <span class="nav-text">References & More</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#期待与你成为朋友"><span class="nav-number">8.</span> <span class="nav-text">期待与你成为朋友</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在_Google_Developers_Console_中创建_API_项目"><span class="nav-number">2.</span> <span class="nav-text">在 Google Developers Console 中创建 API 项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置你的应用"><span class="nav-number">3.</span> <span class="nav-text">配置你的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加_Google_Play_服务"><span class="nav-number">3.1.</span> <span class="nav-text">添加 Google Play 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加相应权限"><span class="nav-number">3.2.</span> <span class="nav-text">添加相应权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加_API_密钥"><span class="nav-number">3.3.</span> <span class="nav-text">添加 API 密钥</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当前地点"><span class="nav-number">4.</span> <span class="nav-text">当前地点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取当前位置"><span class="nav-number">4.1.</span> <span class="nav-text">获取当前位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地点自动完成"><span class="nav-number">4.2.</span> <span class="nav-text">地点自动完成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体实现"><span class="nav-number">5.</span> <span class="nav-text">具体实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">6.</span> <span class="nav-text">最后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">7.</span> <span class="nav-text">References</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#期待与你成为朋友"><span class="nav-number">8.</span> <span class="nav-text">期待与你成为朋友</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
