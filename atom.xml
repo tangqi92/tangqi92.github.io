@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2015-09-14T15:08:08.000Z</updated>
+  <updated>2015-10-04T01:20:29.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -13,6 +13,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[我好想你]]></title>
+    <link href="http://itangqi.me/2015/10/04/i-miss-you/"/>
+    <id>http://itangqi.me/2015/10/04/i-miss-you/</id>
+    <published>2015-10-03T16:00:00.000Z</published>
+    <updated>2015-10-04T01:20:29.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>我还踮着脚思念<br>我还任记忆盘旋<br>我还闭着眼流泪<br>我还装作无所谓<br>我好想你 好想你<br>就深藏在心  </p>
+</blockquote>
+<a id="more"></a> 
+<hr>
+<p>亲爱的老爸：</p>
+<p>一年了。</p>
+<p>我好想，每天能给你打个电话，告诉你我这一天生活的点点滴滴，顺道听你唠叨下老妈。  </p>
+<p>我好想，每次回家能吃上你亲自做的饭菜，你是我心中最棒的厨师，最爱你烧的红烧肉了。</p>
+<p>我好想，当我考上研，找到好工作，娶妻生子时……我能第一时间与你分享。</p>
+<p>我好想，给你买好吃的好穿的，让你提前退休，好好享受晚年。</p>
+<p>我好想，再听你喊我一声儿子。</p>
+<p>我好想，告诉你，我是多么多么的爱你！</p>
+<p>我好想，你</p>
+<p>你的儿子：汤奇</p>
+<p>2015年10月04日</p>
+<hr>
+<p><img src="/images/dad.JPG" alt=""></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>我还踮着脚思念<br>我还任记忆盘旋<br>我还闭着眼流泪<br>我还装作无所谓<br>我好想你 好想你<br>就深藏在心  </p>
+</blockquote>]]>
+    
+    </summary>
+    
+      <category term="Dad" scheme="http://itangqi.me/tags/Dad/"/>
+    
+      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Android Tips - 填坑手册]]></title>
