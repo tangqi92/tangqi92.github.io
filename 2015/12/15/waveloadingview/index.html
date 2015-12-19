@@ -30,7 +30,7 @@
 
 
 
-  <meta name="keywords" content="AOSP,Material Design," />
+  <meta name="keywords" content="Loading,View," />
 
 
 
@@ -41,25 +41,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
 
 
-<meta name="description" content="积木 - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！">
+<meta name="description" content="WaveLoadingView  
+WaveLoadingView - An Android library providing to realize wave loading effect.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="积木 - 享受搭建应用的乐趣">
-<meta property="og:url" content="http://itangqi.me/2015/09/03/building-blocks/index.html">
+<meta property="og:title" content="WaveLoadingView - 水波加载">
+<meta property="og:url" content="http://itangqi.me/2015/12/15/waveloadingview/index.html">
 <meta property="og:site_name" content="Qi Tang's Blog">
-<meta property="og:description" content="积木 - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s1.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s2.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s3.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s4.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s5.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s6.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s7.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s8.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s9.png">
-<meta property="og:updated_time" content="2015-10-07T11:48:26.000Z">
+<meta property="og:description" content="WaveLoadingView  
+WaveLoadingView - An Android library providing to realize wave loading effect.">
+<meta property="og:image" content="https://img.shields.io/badge/Android%20Arsenal-WaveLoadingView-green.svg?style=true">
+<meta property="og:image" content="https://img.shields.io/badge/license-Apache%202-green.svg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/waveloadingview.png">
+<meta property="og:updated_time" content="2015-12-19T11:55:25.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="积木 - 享受搭建应用的乐趣">
-<meta name="twitter:description" content="积木 - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！">
+<meta name="twitter:title" content="WaveLoadingView - 水波加载">
+<meta name="twitter:description" content="WaveLoadingView  
+WaveLoadingView - An Android library providing to realize wave loading effect.">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -69,7 +66,7 @@
   };
 </script>
 
-  <title> 积木 - 享受搭建应用的乐趣 | Qi Tang's Blog </title>
+  <title> WaveLoadingView - 水波加载 | Qi Tang's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -214,7 +211,7 @@
           
           
             
-              积木 - 享受搭建应用的乐趣
+              WaveLoadingView - 水波加载
             
           
         </h1>
@@ -223,8 +220,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-09-03T00:00:00+08:00" content="2015-09-03">
-            2015-09-03
+          <time itemprop="dateCreated" datetime="2015-12-15T00:00:00+08:00" content="2015-12-15">
+            2015-12-15
           </time>
         </span>
 
@@ -249,8 +246,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2015/09/03/building-blocks/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/03/building-blocks/" itemprop="commentsCount"></span>
+            <a href="/2015/12/15/waveloadingview/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/12/15/waveloadingview/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -264,93 +261,133 @@
       
 
       
-        <span itemprop="articleBody"><blockquote>
-<p><strong>积木</strong> - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！</p>
-</blockquote>
-<a id="more"></a> 
+        <span itemprop="articleBody"><h1 id="WaveLoadingView">WaveLoadingView</h1><p><a href="https://android-arsenal.com/details/1/2908" target="_blank" rel="external"><img src="https://img.shields.io/badge/Android%20Arsenal-WaveLoadingView-green.svg?style=true" alt="Android Arsenal"></a><br><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="external"><img src="https://img.shields.io/badge/license-Apache%202-green.svg" alt="License"></a>  </p>
+<p><strong>WaveLoadingView</strong> - An Android library providing to realize wave loading effect.</p>
+<a id="more"></a>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/waveloadingview.png"> </p>
 <hr>
-<h2 id="How_to_use">How to use</h2><blockquote>
-<p>dev 分支由 <a href="https://github.com/troyliu0105" target="_blank" rel="external">troyliu0105</a> 同学全力维护，他会不断对<strong>积木</strong>进行重构与增加好玩的功能，这非常酷，欢迎 <strong>Star</strong> 与 <strong>Fork</strong> 此分支！</p>
-</blockquote>
-<p>那么，你该如何利用「她」呢？</p>
-<p>好啦，其实我已经帮你完成了应用整体框架的搭建，你需要做的，仅仅是依据自己的实际需求，简单的替换下数据来源，比如在 <a href="http://apistore.baidu.com/" target="_blank" rel="external">APIStore</a> 上就有详细的类别供你选择，然后再改改 UI，一款全新应用就完成啦！</p>
-<p>想想，是不是还有点小激动？那么赶紧 <strong>Star</strong> 与 <strong>Fork</strong> 吧！你的支持将成为我最大的动力与褒奖！</p>
+<h2 id="Usage">Usage</h2><p><strong>For a working implementation of this project see the <code>sample/</code> folder.</strong>  </p>
+<h3 id="Step_1">Step 1</h3><p>Include the library as local library project or add the dependency in your build.gradle.   </p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'me.itangqi.waveloadingview:library:0.1.4'</span></span><br><span class="line">    <span class="comment">// I have uploaded v0.1.4 on 2015-12-17, if it doesn't take effect or your </span></span><br><span class="line">    <span class="comment">// gradle cannot find it in maven central, you may try v0.1.2. </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+<p>Or</p>
+<p>Import the library, then add it to your /settings.gradle and /app/build.gradle, if you don’t know how to do it, you can read my blog for help.</p>
+<h3 id="Step_2">Step 2</h3><p>Include the WaveLoadingView widget in your layout. And you can customize it like this.</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;me.itangqi.waveloadingview.WaveLoadingView</span><br><span class="line">    android:id=<span class="string">"@+id/waveLoadingView"</span></span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_borderColor=<span class="string">"@color/colorAccent"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_borderWidth=<span class="string">"3dp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_progressValue=<span class="string">"40"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_shapeType=<span class="string">"square"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottom=<span class="string">"Bottom Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottomColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottomSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenter=<span class="string">"Center Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenterColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenterSize=<span class="string">"24sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTop=<span class="string">"Top Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTopColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTopSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_waveAmplitude=<span class="string">"60"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_waveColor=<span class="string">"@color/colorAccent"</span>/&gt;</span><br></pre></td></tr></table></figure> 
+<h3 id="Step_3">Step 3</h3><p>Absolutely，you can write some animation codes to the callbacks such as setOnCheckedChangeListener, onProgressChanged, etc in your Activity.</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setTopTitle("Top Title")<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setCenterTitleColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setBottomTitleSize(18)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setProgressValue(80)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setBorderWidth(10)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setAmplitudeRatio(60)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setWaveColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setBorderColor(Color.GRAY)<span class="comment">;</span></span><br></pre></td></tr></table></figure> 
 <hr>
-<h2 id="Update_Log_-_更新日志">Update Log - 更新日志</h2><h3 id="0-7-0">0.7.0</h3><ul>
-<li>新增 - 夜间模式</li>
-<li>新增 - 程序崩溃日志收集</li>
-<li>新增 - 自动更新</li>
-<li>新增 - <code>html+</code>模式（其实就是修改了html标签==）</li>
-<li>修复 - 自动清理功能的错误</li>
-<li>修复 - 主界面刷新闪烁BUG</li>
-<li>修改 - 部分UI</li>
+<h2 id="Customization">Customization</h2><p>Do what you what :)</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">format</th>
+<th style="text-align:center">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">mlv_borderWidth</td>
+<td style="text-align:center">dimension</td>
+<td style="text-align:center">set border width, default to be 0</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_borderColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">set border color</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_progressValue</td>
+<td style="text-align:center">integer</td>
+<td style="text-align:center">set progress value, default to be 50</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_shapeType</td>
+<td style="text-align:center">enum</td>
+<td style="text-align:center">set shape type, default to be circle</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_waveColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">set wave color</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_waveAmplitude</td>
+<td style="text-align:center">float</td>
+<td style="text-align:center">set wave amplitude</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_titleTopSize</td>
+<td style="text-align:center">dimension</td>
+<td style="text-align:center">set top title size, default to be 18 </td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_titleCenterSize</td>
+<td style="text-align:center">dimension</td>
+<td style="text-align:center">set center title size, default to be 22</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_titleBottomSize</td>
+<td style="text-align:center">dimension</td>
+<td style="text-align:center">set bottom size, default to be 18</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_titleTopColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">set top title color</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_titleCenterColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">set center title color </td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_titleBottomColor</td>
+<td style="text-align:center">color</td>
+<td style="text-align:center">set bottom title color </td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_titleTop</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">set top title content, default to be null</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_titleCenter</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">set center title content, default to be null</td>
+</tr>
+<tr>
+<td style="text-align:center">mlv_titleBottom</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">set bottom title content, default to be null</td>
+</tr>
+</tbody>
+</table>
+<p><strong>All attributes have their respective getters and setters to change them at runtime.</strong></p>
+<hr>
+<h2 id="ChangeLog">ChangeLog</h2><h3 id="0-1-4">0.1.4</h3><ul>
+<li>Fix the bug which <code>setProgressValue() doesn&#39;t change the value of mProgressValue</code></li>
+<li>Fix attributes’ setters</li>
 </ul>
-<h5 id="已知BUG">已知BUG</h5><ul>
-<li>部分文章显示有问题(使用<code>html+</code>模式无影响)</li>
-</ul>
-<h3 id="v0-6-0">v0.6.0</h3><ul>
-<li>新增 - FAB刷新</li>
-<li>新增 - html模式下的页面缓存</li>
-<li>新增 - json模式(速度更快，但部分文章显示有问题)</li>
-<li>新增 - 自动清理过期缓存</li>
-<li>新增 - SQLite数据储存</li>
-<li>重构 - 使用MVP进行重构</li>
-<li>新增 - 由<a href="http://weibo.com/cat93/" target="_blank" rel="external">Mao</a>提供的Logo</li>
-<li>修改 - 部分的UI</li>
-</ul>
-<h3 id="v0-5-1">v0.5.1</h3><ul>
-<li>修复 - 手势右划返回上级页面在4.4系统上的 Bug</li>
-<li>优化 - 首页 Item 的展示布局</li>
-</ul>
-<h3 id="v0-5-0">v0.5.0</h3><ul>
-<li>抛弃 - CardView，回归朴实并为 RecycerView 中 item 增加分割线</li>
-<li>抛弃 - 第三方 DrawerLayout，华而不实</li>
-<li>抛弃 - WebView 中显示文章标题，取而代之为分享按钮</li>
-<li>新增 - 搜索功能，跳转页面显示结果</li>
-<li>新增 - 手势右滑，返回上级页面功能</li>
-<li>优化 - 将功能扩展作为抽屉菜单的子选项</li>
-<li>重构 - 尽可能将代码写得优雅和规整</li>
+<h3 id="0-1-3">0.1.3</h3><ul>
+<li>Fix the bug which <code>Attribute &quot;borderWidth&quot; has already been defined</code></li>
+<li>Prefix the attributes with “wlv”</li>
 </ul>
 <hr>
-<h2 id="Screenshots_-_预览">Screenshots - 预览</h2><p><strong>这里并不是最新效果预览，请前往 <a href="https://github.com/tangqi92/BuildingBlocks/blob/master/README.z.md" target="_blank" rel="external">GitHub</a> 查看</strong></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s1.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s2.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s3.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s4.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s5.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s6.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s7.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s8.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s9.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
+<h2 id="Demo">Demo</h2><p><a href="https://github.com/tangqi92/WaveLoadingView/releases/download/v0.1.2/sample-release-unsigned.apk" target="_blank" rel="external">Download</a></p>
 <hr>
-<h2 id="Dependencies_-_开源项目">Dependencies - 开源项目</h2><ul>
-<li><a href="https://github.com/bumptech/glide" target="_blank" rel="external">glide</a></li>
-<li><a href="https://github.com/orhanobut/logger" target="_blank" rel="external">logger</a></li>
-<li><a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="external">butterknife</a></li>
-<li><a href="https://github.com/jdamcd/android-crop" target="_blank" rel="external">android-crop</a></li>
-<li><a href="https://github.com/loopj/android-async-http" target="_blank" rel="external">android-async-http</a></li>
-<li><a href="https://github.com/ikew0ng/SwipeBackLayout" target="_blank" rel="external">SwipeBackLayout</a></li>
+<h2 id="Community">Community</h2><p>Looking for contributors, feel free to fork !</p>
+<p>Tell me if you’re using my library in your application, I’ll share it in this README.</p>
+<hr>
+<h2 id="Thanks">Thanks</h2><p>Inspired by </p>
+<ul>
+<li><a href="https://github.com/gelitenight/WaveView" target="_blank" rel="external">WaveView</a> created by <a href="https://github.com/gelitenight" target="_blank" rel="external">gelitenight</a></li>
+<li><a href="https://github.com/lopspower/CircularFillableLoaders" target="_blank" rel="external">CircularFillableLoaders</a> created by <a href="https://github.com/lopspower" target="_blank" rel="external">lopspower</a></li>
 </ul>
 <hr>
-<h2 id="Thanks_-_感谢你们">Thanks - 感谢你们</h2><ul>
-<li><p>感谢 <a href="https://github.com/drakeet" target="_blank" rel="external">drakeet</a> 及他的 <a href="https://github.com/drakeet/Meizhi" target="_blank" rel="external">妹纸&amp;gank.io</a>， 其代码写得真的非常漂亮：)，从中学到了很多并运用到了项目中（依葫芦画瓢而已啦）</p>
-</li>
-<li><p>感谢 <a href="https://github.com/izzyleung" target="_blank" rel="external">Izzy Leung</a> 及他的 <a href="https://github.com/izzyleung/ZhihuDailyPurify" target="_blank" rel="external">知乎日报·净化</a>，项目最初的原型就来自于此，感谢其提供了详细的知乎日报 API 说明</p>
-</li>
-</ul>
-<hr>
-<h2 id="Contributors">Contributors</h2><ul>
-<li>dev version: <a href="https://github.com/troyliu0105" target="_blank" rel="external">troyliu0105</a></li>
-<li>Logo: <a href="http://weibo.com/cat93/" target="_blank" rel="external">Mao</a> &amp; <a href="https://github.com/troyliu0105" target="_blank" rel="external">troyliu0105</a></li>
-</ul>
-<hr>
-<h2 id="Contact_-_联系我">Contact - 联系我</h2><ul>
-<li>Weibo：<a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a></li>
-<li>Blog: <a href="http://itangqi.me">http://itangqi.me</a></li>
-<li>Gmail：<a href="mailto:imtangqi@gmail.com" title="欢迎与我联系" target="_blank" rel="external">imtangqi#gmail.com</a></li>
-</ul>
-<hr>
-<h2 id="Demo_-_示例">Demo - 示例</h2><p><a href="http://7xk54v.com1.z0.glb.clouddn.com/app/bb/0.7.0.apk" target="_blank" rel="external">快速下载</a></p>
-<hr>
-<h2 id="Source_code_-_源码">Source code - 源码</h2><p>源代码：<a href="https://github.com/tangqi92/BuildingBlocks" target="_blank" rel="external">https://github.com/tangqi92/BuildingBlocks</a></p>
-<hr>
-<p>最后更新时间：2015-10-07 19:47</p>
+<h2 id="Contact_Me">Contact Me</h2><p>Born in 1992, now a student of Southeast University, master of Software Engineering. Loving technology, programming, reading and sports.</p>
+<p>I will graduate in June 2017, expect the internship or full-time job in Android or iOS.</p>
+<p>If you have any questions or want to make friends with me, please feel free to contact me : <a href="mailto:imtangqi@gmail.com" title="Welcome to contact me" target="_blank" rel="external">imtangqi#gmail.com</a></p>
 </span>
       
     </div>
@@ -359,9 +396,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/AOSP/" rel="tag">#AOSP</a>
+            <a href="/tags/Loading/" rel="tag">#Loading</a>
           
-            <a href="/tags/Material-Design/" rel="tag">#Material Design</a>
+            <a href="/tags/View/" rel="tag">#View</a>
           
         </div>
       
@@ -370,13 +407,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/14/android-tips/" rel="prev">Android Tips - 填坑手册</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/09/google-places-for-android-guide/" rel="next">Google Places for Android 入门指南</a>
+              <a href="/2015/11/02/comeback-diary/" rel="next">回归·日记</a>
             
           </div>
         </div>
@@ -518,7 +553,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#How_to_use"><span class="nav-number">1.</span> <span class="nav-text">How to use</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update_Log_-_更新日志"><span class="nav-number">2.</span> <span class="nav-text">Update Log - 更新日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-7-0"><span class="nav-number">2.1.</span> <span class="nav-text">0.7.0</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#已知BUG"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">已知BUG</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v0-6-0"><span class="nav-number">2.2.</span> <span class="nav-text">v0.6.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v0-5-1"><span class="nav-number">2.3.</span> <span class="nav-text">v0.5.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v0-5-0"><span class="nav-number">2.4.</span> <span class="nav-text">v0.5.0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Screenshots_-_预览"><span class="nav-number">3.</span> <span class="nav-text">Screenshots - 预览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dependencies_-_开源项目"><span class="nav-number">4.</span> <span class="nav-text">Dependencies - 开源项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thanks_-_感谢你们"><span class="nav-number">5.</span> <span class="nav-text">Thanks - 感谢你们</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contributors"><span class="nav-number">6.</span> <span class="nav-text">Contributors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contact_-_联系我"><span class="nav-number">7.</span> <span class="nav-text">Contact - 联系我</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo_-_示例"><span class="nav-number">8.</span> <span class="nav-text">Demo - 示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Source_code_-_源码"><span class="nav-number">9.</span> <span class="nav-text">Source code - 源码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#WaveLoadingView"><span class="nav-number">1.</span> <span class="nav-text">WaveLoadingView</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage"><span class="nav-number">1.1.</span> <span class="nav-text">Usage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step_1"><span class="nav-number">1.1.1.</span> <span class="nav-text">Step 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step_2"><span class="nav-number">1.1.2.</span> <span class="nav-text">Step 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step_3"><span class="nav-number">1.1.3.</span> <span class="nav-text">Step 3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Customization"><span class="nav-number">1.2.</span> <span class="nav-text">Customization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChangeLog"><span class="nav-number">1.3.</span> <span class="nav-text">ChangeLog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-4"><span class="nav-number">1.3.1.</span> <span class="nav-text">0.1.4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-3"><span class="nav-number">1.3.2.</span> <span class="nav-text">0.1.3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">1.4.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Community"><span class="nav-number">1.5.</span> <span class="nav-text">Community</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thanks"><span class="nav-number">1.6.</span> <span class="nav-text">Thanks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contact_Me"><span class="nav-number">1.7.</span> <span class="nav-text">Contact Me</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -572,9 +607,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'tangqi92githubio';
-      var disqus_identifier = '2015/09/03/building-blocks/';
-      var disqus_title = '积木 - 享受搭建应用的乐趣';
-      var disqus_url = 'http://itangqi.me/2015/09/03/building-blocks/';
+      var disqus_identifier = '2015/12/15/waveloadingview/';
+      var disqus_title = 'WaveLoadingView - 水波加载';
+      var disqus_url = 'http://itangqi.me/2015/12/15/waveloadingview/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
