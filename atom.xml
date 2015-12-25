@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2015-12-19T11:55:25.000Z</updated>
+  <updated>2015-12-25T09:52:34.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -13,6 +13,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Bye 2015, Hi 2016]]></title>
+    <link href="http://itangqi.me/2015/12/25/bye2015-hi2016/"/>
+    <id>http://itangqi.me/2015/12/25/bye2015-hi2016/</id>
+    <published>2015-12-24T16:00:00.000Z</published>
+    <updated>2015-12-25T09:52:34.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p>世上哪有终点？什么时候你走不动了，倒下了，那里才是终点。—— 今何在《西游日记》</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="考研">考研</h2><p>2015 年 3 月 25 日，当我接到录取通知电话的那一刻，压在我心底的所有，顷刻间都释然了。</p>
+<p>喜悦的心情只持续了片刻吧，我脑海中的思绪便飘回到了 2014 年。</p>
+<p>那年是我第一次考研，考试前，几乎所有认识我的人，都认为我考上是铁板钉钉的事，而对我而言，我不但要求自己要考上而且还要考第一。可想而知，正是这样的心态导致了我在考场上的心态失衡，而最终的结果便是以我彻彻底底地失败告终。</p>
+<p>没错，不愿就此放弃，确切的说，不愿就此否定自己的我选择了二战。由于时间尚早，加之马上面临毕业的我不愿再向家人伸手要钱了，所以我选择立马工作来作为那段时间的过度。</p>
+<p>于是……</p>
+<p>思绪不知不觉又飘了回来，此时的我还在北信源南京研发中心，回想过去的一年，整个移动开发团队由最初的 3 人扩展到现在的 10 人。感谢已经离职的大飞哥，正是你当时的赏识让我有幸加入，尽管当时你已经提出离职，还是尽职尽责地带着我们几个新人熟悉项目并帮助我们快速提升技术；感谢团队现在的老大王总和姚总，你们为人非常和蔼平易敬人，会尽一切努力为团队的利益着想；感谢一起共事过的小伙伴们，没有你们，我真的无法在在职的情况下完成考研的复习，是你们给了我支持与信任。</p>
+<p>对我而言，考研是一种历练，而过程远远大于结果。</p>
+<h2 id="跳槽">跳槽</h2><p>2015 年 5 月 6 日，在面试结束后，我当场便收到了 FriendMedia 的 Offer，像这样一个小而美且工程师文化浓厚的团队，正是我梦寐以求想要加入的。与此同时，我也到了和北信源说再见的时候了。</p>
+<p>舒适的工作环境，扁平化的管理模式，聪明且有激情的同事，富有挑战性的工作，在 FM 的每一天都充满着压力但却快速的成长着。</p>
+<p>入职后我便由师哥带着参与到公司核心产品的开发，由于能力有限，我的工作从实现界面 UI 开始，看似简单的工作内容，实践起来却总会遇到各种各样的问题。放到之前，我会索性告诉领导这个做不了，但现在我却是加班加点想尽办法去实现，我想正是因为归属感吧。</p>
+<p>由于界面的改版得到了师哥和老总的认可，我得到了完成下一版本某关键功能的开发任务，由于是创业公司，我们奉行快速迭代，可要在短时间内完成，对于当时的我来说，是非常具有挑战性的。最终，尽管我为此熬了好几个夜，也没能在 Deadline 前百分百完成任务。事后，师哥帮我填了坑，王总则教会了我将来在面对此类问题时，一定要及时向大家提出，埋头苦干不是解决问题的办法。</p>
+<p>虽然公司不大，但每一个人都是独挡一面的能手，而当时的我却似乎在拖大家的后腿，无形的压力与内疚充斥着我每天的工作，但公司或者说王总的包容却坚定我要努力证明自己的价值。恰巧此时公司有一个国外的外包项目需要改版升级，由于师哥要接着负责公司自己的产品，这个外包项目便顺理成章的由我来完成。</p>
+<p>庆幸的是，改版过程相对顺利，我在预定的时间内完成了任务，期间我的能力也得到了迅速的提升，我能对一个项目有较为完整的把控。可此时，时间也悄悄来到了 8 月下旬。</p>
+<p>短暂却充实的三个月很快就结束了，我也到了不得不和 FM 说再见的时候了。在这里，我结识了一群聪明且又友爱的伙伴们；在这里，我体会到了创业公司的激情与不易；在这里，我一步步走向了 Android 开发的正轨。感谢 FM 带给我的一切，愿你的未来一帆风顺。</p>
+<h2 id="重返校园">重返校园</h2><p>2015 年 8 月 31 日，我正式成为东大软院的一名研究僧。从大专到本三再到重点本科，一路走来，我从未想证明给任何人看，我只是单纯的不信邪，我始终坚信着我可以。</p>
+<p>正是因为之前的工作经历，让我比其他应届的同学有着更为清晰的自我认识与更为明确的职业规划，对于选择明年就出去实习的我而言，我很清楚其实留给我的时间不多了。</p>
+<p>回首过去的四个月，<strong>开源</strong> 与 <strong>iOS</strong> 不得不提。</p>
+<p>开学以来，陆续开源了 BuildingBlocks、 Android-Tips 与 WaveLoadingView 三个项目，因为开源，我认识了许多志同道合的朋友们（大牛们）；因为开源，我意识到自己的付出是有价值的；因为开源，我不断向她汲取着知识的同时也分享着成果。我很庆幸能叩响开源的这扇大门，得以让我能见识到开源世界的种种美好，这些带给我的快乐与满足，要远远比收集到的星星数与粉丝数重要的多得多。</p>
+<p>而转战 iOS，则是再一次从了自己的内心，即使周围的很多人都不理解，即使现在很多人说 iOS 市场已经饱和，在这里，我不想过多的探讨 iOS 与 Android 的孰优孰劣，亦或是未来的前景如何，但我知道，我只是单纯的选择了一件自己更喜欢的事情去做，对我而言就够了。我的一个 iOS 项目现在也接近尾声了，期待开源的那一天吧。</p>
+<p>除此之外，我还在努力地夯实基础与扩充技术栈，从数据结构到算法再到前端最后到设计，每接触到一个新领域，总能有发现新大陆般的喜悦与激动。</p>
+<h2 id="<2016>"><2016></2016></h2><p>下一站会是哪里？我会遇到怎样的人？还会经历哪些磨砺？– 我不知道，但我很期待！</p>
+<h2 id="书单列表">书单列表</h2><ol>
+<li><a href="http://www.amazon.cn/gp/product/B00DFYLXN6?psc=1&amp;ref_=oh_aui_detailpage_o06_s00" target="_blank" rel="external">追风筝的人</a></li>
+<li><a href="http://www.amazon.cn/gp/product/B008ASCLJW?keywords=%E5%81%B7%E5%BD%B1%E5%AD%90%E7%9A%84%E4%BA%BA&amp;qid=1450852732&amp;ref_=sr_1_1&amp;sr=8-1" target="_blank" rel="external">偷影子的人</a></li>
+<li><a href="http://www.amazon.cn/%E5%A1%94%E5%88%A9%E7%8F%AD-%E8%89%BE%E5%93%88%E8%BF%88%E5%BE%B7%C2%B7%E6%8B%89%E5%B8%8C%E5%BE%B7/dp/B00PVUPR1G/ref=sr_1_1?ie=UTF8&amp;qid=1450963533&amp;sr=8-1&amp;keywords=%E5%A1%94%E5%88%A9%E7%8F%AD" target="_blank" rel="external">塔利班</a></li>
+<li><a href="http://www.amazon.cn/gp/product/B0079RCDAM?keywords=%E5%B9%B3%E5%87%A1%E7%9A%84%E4%B8%96%E7%95%8C&amp;qid=1450852988&amp;ref_=sr_1_1&amp;sr=8-1" target="_blank" rel="external">平凡的世界</a></li>
+<li><a href="http://www.amazon.cn/gp/product/B015FDNC5Q?keywords=Objective-C%E7%BC%96%E7%A8%8B&amp;qid=1450852796&amp;ref_=sr_1_1&amp;sr=8-1" target="_blank" rel="external">Objective-C编程(第2版)</a></li>
+<li><a href="http://www.amazon.cn/iOS%E7%BC%96%E7%A8%8B-%E7%BE%8E-Christian-Keur/dp/B013UG2ULW/ref=sr_1_1?ie=UTF8&amp;qid=1450852842&amp;sr=8-1&amp;keywords=iOS%E7%BC%96%E7%A8%8B%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89" target="_blank" rel="external">iOS编程（第4版）</a></li>
+<li><a href="http://www.amazon.cn/gp/product/B00R43XG9S?keywords=iOS%E5%BC%80%E5%8F%91%E8%BF%9B%E9%98%B6&amp;qid=1450852946&amp;ref_=sr_1_1&amp;sr=8-1" target="_blank" rel="external">iOS开发进阶</a></li>
+<li><a href="http://www.amazon.cn/gp/product/B00FF3P8FY?psc=1&amp;ref_=oh_aui_detailpage_o01_s00" target="_blank" rel="external">Head First HTML与CSS(第2版)</a></li>
+</ol>
+<h2 id="Podcast_列表">Podcast 列表</h2><ol>
+<li><a href="https://ipn.li/itgonglun/" target="_blank" rel="external">IT 公论</a></li>
+<li><a href="https://ipn.li/kernelpanic/" target="_blank" rel="external">内核恐慌</a></li>
+<li><a href="http://teahour.fm/" target="_blank" rel="external">Teahour</a></li>
+<li><a href="https://ipn.li/xuanmei/" target="_blank" rel="external">选·美</a></li>
+</ol>
+<h2 id="推荐利器">推荐利器</h2><p><a href="https://getpocket.com" target="_blank" rel="external">Pocket</a></p>
+<h2 id="无主题">无主题</h2><blockquote>
+<p>感谢过去一年我所经历的事，感谢过去一年我所遇到的人，感谢过去一年我所收获和失去的情感。</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<blockquote>
+<p>世上哪有终点？什么时候你走不动了，倒下了，那里才是终点。—— 今何在《西游日记》</p>
+</blockquote>]]>
+    
+    </summary>
+    
+      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
+    
+      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[WaveLoadingView - 水波加载]]></title>
