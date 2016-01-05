@@ -538,7 +538,7 @@
     <link href="http://itangqi.me/2015/07/26/orm-greendao-summary/"/>
     <id>http://itangqi.me/2015/07/26/orm-greendao-summary/</id>
     <published>2015-07-25T16:00:00.000Z</published>
-    <updated>2015-09-09T06:28:19.000Z</updated>
+    <updated>2016-01-05T01:59:18.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>我相信，在平时的开发过程中，大家一定会或多或少地接触到 <a href="https://en.wikipedia.org/wiki/SQLite" target="_blank" rel="external">SQLite</a>。然而在使用它时，我们往往需要做许多额外的工作，像编写 SQL 语句与解析查询结果等。所以，适用于 Android 的 <strong>ORM</strong> 框架也就孕育而生了，现在市面上主流的框架有 OrmLite、SugarORM、Active Android、Realm 与 GreenDAO。而今天的主角便是 <strong>greenDAO</strong>，下面，我将详解地介绍如何在 <strong>Android Studio</strong> 上使用 <strong>greenDAO</strong>，并结合代码总结一些使用过程中的心得。</p>
 <a id="more"></a> 
 <hr>
@@ -595,7 +595,9 @@
 </li>
 </ul>
 <h3 id="五-_运行结果">五. 运行结果</h3><p>一切就绪，让我们看看效果吧！运行程序，分别执行<strong>添加</strong>按钮、<strong>删除</strong>（点击 List 的 Item）与<strong>查询</strong>按钮，可以在控制台得到如下日志：  </p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_add_min.png" alt="screenshot" title="screenshot" width="350" height="622"> <img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_delete_min.png" alt="screenshot" title="screenshot" width="350" height="622"> <img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_search.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_add_min.png" alt="screenshot" title="screenshot" width="350" height="622"><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_delete_min.png" alt="screenshot" title="screenshot" width="350" height="622"><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_search.png" alt=""></p>
+<hr>
+<h2 id="升级">升级</h2><p><a href="http://blog.csdn.net/growth58/article/details/50453038" target="_blank" rel="external">GreenDao数据库升级解决方案</a> by <a href="http://weibo.com/weiguo58" target="_blank" rel="external">@于卫国</a></p>
 <hr>
 <h2 id="最后">最后</h2><ul>
 <li>本文 Demo 下载链接：<a href="https://github.com/tangqi92/MyGreenDAO" target="_blank" rel="external">https://github.com/tangqi92/MyGreenDAO</a>  </li>

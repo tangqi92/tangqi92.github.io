@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/2015/07/26/orm-greendao-summary/</loc>
+    <lastmod>2016-01-05T01:59:18.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/2015/12/25/bye2015-hi2016/</loc>
     <lastmod>2016-01-03T11:30:21.000Z</lastmod>
   </url>
@@ -39,11 +44,6 @@
   <url>
     <loc>http://itangqi.me/2015/09/14/android-tips/</loc>
     <lastmod>2015-09-14T15:08:08.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2015/07/26/orm-greendao-summary/</loc>
-    <lastmod>2015-09-09T06:28:19.000Z</lastmod>
   </url>
   
   <url>
