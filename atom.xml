@@ -74,7 +74,7 @@
     
     </summary>
     
-      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
+      <category term="Summary" scheme="http://itangqi.me//tags/Summary/"/>
     
       <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
     
@@ -85,21 +85,22 @@
     <link href="http://itangqi.me/2015/12/15/waveloadingview/"/>
     <id>http://itangqi.me/2015/12/15/waveloadingview/</id>
     <published>2015-12-14T16:00:00.000Z</published>
-    <updated>2016-01-07T09:17:19.000Z</updated>
-    <content type="html"><![CDATA[<h1 id="WaveLoadingView">WaveLoadingView</h1><p><a href="https://android-arsenal.com/details/1/2908" target="_blank" rel="external"><img src="https://img.shields.io/badge/Android%20Arsenal-WaveLoadingView-green.svg?style=true" alt="Android Arsenal"></a><br><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="external"><img src="https://img.shields.io/badge/license-Apache%202-green.svg" alt="License"></a>  </p>
+    <updated>2016-01-07T13:40:07.000Z</updated>
+    <content type="html"><![CDATA[<p><a href="https://android-arsenal.com/details/1/2908" target="_blank" rel="external"><img src="https://img.shields.io/badge/Android%20Arsenal-WaveLoadingView-green.svg?style=true" alt="Android Arsenal"></a></p>
+<p><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="external"><img src="https://img.shields.io/badge/license-Apache%202-green.svg" alt="License"></a>  </p>
 <p><strong>WaveLoadingView</strong> - An Android library providing to realize wave loading effect.</p>
 <a id="more"></a>
 <p><img src="http://7xikfc.com1.z0.glb.clouddn.com/waveloadingview.png"> </p>
 <hr>
 <h2 id="Usage">Usage</h2><p><strong>For a working implementation of this project see the <code>sample/</code> folder.</strong>  </p>
 <h3 id="Step_1">Step 1</h3><p>Include the library as local library project or add the dependency in your build.gradle.   </p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'me.itangqi.waveloadingview:library:0.1.4'</span></span><br><span class="line">    <span class="comment">// I have uploaded v0.1.4 on 2015-12-17, if it doesn't take effect or your </span></span><br><span class="line">    <span class="comment">// gradle cannot find it in maven central, you may try v0.1.2. </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--￼0--&gt;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
 <p>Or</p>
 <p>Import the library, then add it to your /settings.gradle and /app/build.gradle, if you don’t know how to do it, you can read my blog for help.</p>
 <h3 id="Step_2">Step 2</h3><p>Include the WaveLoadingView widget in your layout. And you can customize it like this.</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;me.itangqi.waveloadingview.WaveLoadingView</span><br><span class="line">    android:id=<span class="string">"@+id/waveLoadingView"</span></span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_borderColor=<span class="string">"@color/colorAccent"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_borderWidth=<span class="string">"3dp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_progressValue=<span class="string">"40"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_shapeType=<span class="string">"square"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottom=<span class="string">"Bottom Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottomColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottomSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenter=<span class="string">"Center Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenterColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenterSize=<span class="string">"24sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTop=<span class="string">"Top Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTopColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTopSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_waveAmplitude=<span class="string">"60"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_waveColor=<span class="string">"@color/colorAccent"</span>/&gt;</span><br></pre></td></tr></table></figure> 
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;me<span class="class">.itangqi</span><span class="class">.waveloadingview</span><span class="class">.WaveLoadingView</span></span><br><span class="line"></span><br><span class="line">&lt;!--￼<span class="number">1</span>--&gt;</span><br></pre></td></tr></table></figure> 
 <h3 id="Step_3">Step 3</h3><p>Absolutely，you can write some animation codes to the callbacks such as setOnCheckedChangeListener, onProgressChanged, etc in your Activity.</p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setTopTitle("Top Title")<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setCenterTitleColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBottomTitleSize(18)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setProgressValue(80)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderWidth(10)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setAmplitudeRatio(60)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setWaveColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderColor(Color.GRAY)<span class="comment">;</span></span><br></pre></td></tr></table></figure> 
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--￼2--&gt;</span></span><br></pre></td></tr></table></figure> 
 <hr>
 <h2 id="Customization">Customization</h2><p>Do what you what :)</p>
 <table>
@@ -144,7 +145,7 @@
 <tr>
 <td style="text-align:center">mlv_titleTopSize</td>
 <td style="text-align:center">dimension</td>
-<td style="text-align:center">set top title size, default to be 18 </td>
+<td style="text-align:center">set top title size, default to be 18</td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_titleCenterSize</td>
@@ -164,12 +165,12 @@
 <tr>
 <td style="text-align:center">mlv_titleCenterColor</td>
 <td style="text-align:center">color</td>
-<td style="text-align:center">set center title color </td>
+<td style="text-align:center">set center title color</td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_titleBottomColor</td>
 <td style="text-align:center">color</td>
-<td style="text-align:center">set bottom title color </td>
+<td style="text-align:center">set bottom title color</td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_titleTop</td>
@@ -215,14 +216,15 @@
 <p>If you have any questions or want to make friends with me, please feel free to contact me : <a href="mailto:imtangqi@gmail.com" title="Welcome to contact me" target="_blank" rel="external">imtangqi#gmail.com</a></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h1 id="WaveLoadingView">WaveLoadingView</h1><p><a href="https://android-arsenal.com/details/1/2908"><img src="https://img.shields.io/badge/Android%20Arsenal-WaveLoadingView-green.svg?style=true" alt="Android Arsenal"></a><br><a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%202-green.svg" alt="License"></a>  </p>
+    <![CDATA[<p><a href="https://android-arsenal.com/details/1/2908"><img src="https://img.shields.io/badge/Android%20Arsenal-WaveLoadingView-green.svg?style=true" alt="Android Arsenal"></a></p>
+<p><a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%202-green.svg" alt="License"></a>  </p>
 <p><strong>WaveLoadingView</strong> - An Android library providing to realize wave loading effect.</p>]]>
     
     </summary>
     
-      <category term="Loading" scheme="http://itangqi.me/tags/Loading/"/>
+      <category term="Loading" scheme="http://itangqi.me//tags/Loading/"/>
     
-      <category term="View" scheme="http://itangqi.me/tags/View/"/>
+      <category term="View" scheme="http://itangqi.me//tags/View/"/>
     
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
@@ -264,7 +266,7 @@
     
     </summary>
     
-      <category term="Comeback" scheme="http://itangqi.me/tags/Comeback/"/>
+      <category term="Comeback" scheme="http://itangqi.me//tags/Comeback/"/>
     
       <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
     
@@ -302,7 +304,7 @@
     
     </summary>
     
-      <category term="Dad" scheme="http://itangqi.me/tags/Dad/"/>
+      <category term="Dad" scheme="http://itangqi.me//tags/Dad/"/>
     
       <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
     
@@ -337,7 +339,7 @@
     
     </summary>
     
-      <category term="Tips" scheme="http://itangqi.me/tags/Tips/"/>
+      <category term="Tips" scheme="http://itangqi.me//tags/Tips/"/>
     
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
@@ -444,7 +446,7 @@
     
     </summary>
     
-      <category term="AOSP" scheme="http://itangqi.me/tags/AOSP/"/>
+      <category term="AOSP" scheme="http://itangqi.me//tags/AOSP/"/>
     
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
@@ -523,7 +525,7 @@
     
     </summary>
     
-      <category term="Google Places" scheme="http://itangqi.me/tags/Google-Places/"/>
+      <category term="Google Places" scheme="http://itangqi.me//tags/Google-Places/"/>
     
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
@@ -614,9 +616,9 @@
     
     </summary>
     
-      <category term="ORM" scheme="http://itangqi.me/tags/ORM/"/>
+      <category term="ORM" scheme="http://itangqi.me//tags/ORM/"/>
     
-      <category term="greenDAO" scheme="http://itangqi.me/tags/greenDAO/"/>
+      <category term="greenDAO" scheme="http://itangqi.me//tags/greenDAO/"/>
     
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
@@ -772,11 +774,11 @@
     
     </summary>
     
-      <category term="Interview" scheme="http://itangqi.me/tags/Interview/"/>
+      <category term="Interview" scheme="http://itangqi.me//tags/Interview/"/>
     
-      <category term="Startup" scheme="http://itangqi.me/tags/Startup/"/>
+      <category term="Startup" scheme="http://itangqi.me//tags/Startup/"/>
     
-      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
+      <category term="Summary" scheme="http://itangqi.me//tags/Summary/"/>
     
       <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
     
@@ -881,7 +883,7 @@
     
     </summary>
     
-      <category term="VNC" scheme="http://itangqi.me/tags/VNC/"/>
+      <category term="VNC" scheme="http://itangqi.me//tags/VNC/"/>
     
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
@@ -952,7 +954,7 @@
     
     </summary>
     
-      <category term="Hybrid App" scheme="http://itangqi.me/tags/Hybrid-App/"/>
+      <category term="Hybrid App" scheme="http://itangqi.me//tags/Hybrid-App/"/>
     
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
@@ -1018,13 +1020,13 @@
     
     </summary>
     
-      <category term="CardView" scheme="http://itangqi.me/tags/CardView/"/>
+      <category term="CardView" scheme="http://itangqi.me//tags/CardView/"/>
     
-      <category term="Material Design" scheme="http://itangqi.me/tags/Material-Design/"/>
+      <category term="Material Design" scheme="http://itangqi.me//tags/Material-Design/"/>
     
-      <category term="Palette" scheme="http://itangqi.me/tags/Palette/"/>
+      <category term="Palette" scheme="http://itangqi.me//tags/Palette/"/>
     
-      <category term="RecyclerView" scheme="http://itangqi.me/tags/RecyclerView/"/>
+      <category term="RecyclerView" scheme="http://itangqi.me//tags/RecyclerView/"/>
     
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
@@ -1137,7 +1139,7 @@
     
     </summary>
     
-      <category term="Alfred" scheme="http://itangqi.me/tags/Alfred/"/>
+      <category term="Alfred" scheme="http://itangqi.me//tags/Alfred/"/>
     
       <category term="Mac" scheme="http://itangqi.me/categories/Mac/"/>
     
@@ -1160,7 +1162,7 @@
 ]]>
     </summary>
     
-      <category term="Goal" scheme="http://itangqi.me/tags/Goal/"/>
+      <category term="Goal" scheme="http://itangqi.me//tags/Goal/"/>
     
       <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
     

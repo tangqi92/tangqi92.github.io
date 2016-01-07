@@ -90,20 +90,20 @@
            </div>
            <div class="sb-list">
                <div class="sb-item sb-posts">
-                  <a href="/archives">
+                  <a href="//archives">
                     <span class="sb-item-count">14</span>
                     <span class="sb-item-name">日志</span>
                   </a>
                </div>
                <div class="sb-item sb-categories">
-                  <a href="/">
+                  <a href="//categories">
                     <span class="sb-item-count">3</span>
                     <span class="sb-item-name">分类</span>
                   </a>
                </div>
                 <div class="sb-item sb-words">
                   <a href="javascript:void(0)">
-                    <span class="sb-item-count">31.6k</span>
+                    <span class="sb-item-count">31.0k</span>
                     <span class="sb-item-name">字数</span>
                   </a>
                </div>
@@ -158,10 +158,10 @@
                     <nav>
                         <ul class="nav">
                             <li><a href="/" class="animsition-link website-title">Qi Tang's Blog</a></li>
-                            <li><a href="/archives" class="animsition-link" title="archive">归档</a></li>
-                            <li class="mobile-li"><a href="/" class="animsition-link" title="archive">目录</a></li>
-                            <li><a href="/tags" class="animsition-link" title="archive">标签</a></li>
-                            <li class="mobile-li"><a href="/" class="animsition-link" title="archive">关于</a></li>
+                            <li><a href="//archives" class="animsition-link" title="archive">归档</a></li>
+                            <li class="mobile-li"><a href="//categories" class="animsition-link" title="archive">目录</a></li>
+                            <li><a href="//tags" class="animsition-link" title="archive">标签</a></li>
+                            <li class="mobile-li"><a href="//about" class="animsition-link" title="archive">关于</a></li>
                             <li class="mobile-li"><a href="/" class="animsition-link" title="archive">留言板</a></li>
                             
                             <li><a href="https://github.com/tangqi92" title="Github" target="_blank"><i class="icon-Popular_GitHub"></i></a></li>
@@ -229,30 +229,35 @@
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
-                <h3 style="font-size: 26px;line-height: 32px;"><a class="title" href="/2015/09/03/building-blocks/">积木 - 享受搭建应用的乐趣</a></h3>
+                <h3 style="font-size: 26px;line-height: 32px;"><a class="title" href="/2015/03/07/java-and-javascript-interaction-in-android/">Java 与 JavaScript 如何进行交互</a></h3>
                 <p>
                   
-                    <blockquote>
-<p><strong>积木</strong> - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！</p>
-</blockquote>
+                    <h2 id="Hybrid_App">Hybrid App</h2><ul>
+<li><p><a href="http://baike.baidu.com/link?url=oEcVTV16sU0agGHHebRey-cur6xumEuvDU77apaDBHKgGyWZwxTQYKCacn_MX51sogG2l4aj_KX406pcrP5sHK">Hybrid App</a> : 又称「混合模式移动应用」，是指介于 Web App 和 Native App 这两者之间的 App，兼具「Native App 良好用户交互体验的优势」和「Web App 跨平台开发的优势」。</p>
+</li>
+<li><p><a href="http://www.smashingmagazine.com/2014/10/21/providing-a-native-experience-with-web-technologies/">Hybrid Mobile Apps: Providing A Native Experience With Web Technologies</a> : This article provides many hints, code snippets and lessons learned on how to build great hybrid mobile apps.</p>
+</li>
+<li><p><a href="https://www.codementor.io/android/tutorial/secure-hybrid-html5-android-webview-mobile-app">Tutorial: How to Safely Implement Hybrid HTML5 Android Applications</a> : In this short tutorial we will discover how to integrate web applications into our native Android applications, including how to create a secure JavaScript-Java bridge.</p>
+</li>
+</ul>
                   
                 </p>
                 
                 <span>
                     <span class="post-meta">
-      <time datetime="2015-09-02T16:00:00.000Z" itemprop="datePublished">
-          2015-09-03
+      <time datetime="2015-03-06T16:00:00.000Z" itemprop="datePublished">
+          2015-03-07
       </time>
     
     
     | 
-    <a href='/tags/AOSP/'>AOSP</a>
+    <a href='//tags/Hybrid-App/'>Hybrid App</a>
     
     
 </span>
                 </span>
                 <p class="pull-right readMore">
-                    <a href="/2015/09/03/building-blocks/">Read More...</a>
+                    <a href="/2015/03/07/java-and-javascript-interaction-in-android/">Read More...</a>
                 </p>
                 
                 <div class="clearfix"></div>
@@ -262,29 +267,34 @@
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
-                <h3 style="font-size: 26px;line-height: 32px;"><a class="title" href="/2015/08/09/google-places-for-android-guide/">Google Places for Android 入门指南</a></h3>
+                <h3 style="font-size: 26px;line-height: 32px;"><a class="title" href="/2015/02/15/talk-about-material-design/">浅谈 Material Design</a></h3>
                 <p>
                   
-                    <h2 id="前言">前言</h2><p>最近由于项目的原因，接触到了 <a href="https://developers.google.com/places/">Google Places</a> 的使用与开发，学习并在项目中实现了简单的<strong>地点定位</strong>与<strong>自动补全</strong>功能。</p>
-<p>在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .</p>
+                    <h2 id="前言">前言</h2><p>由于公司产品应用场景的特殊性，在平时的开发过程中，我基本不需要涉及 UI 相关的工作，但每每见到各种自定义控件与酷炫的动画效果时，我心里总是痒痒的。所以我决定开始学习与积累相关知识，虽然离「Material Design」概念的提出已经有一段时间了，但现在开始学习也不算太晚。</p>
                   
                 </p>
                 
                 <span>
                     <span class="post-meta">
-      <time datetime="2015-08-08T16:00:00.000Z" itemprop="datePublished">
-          2015-08-09
+      <time datetime="2015-02-14T16:00:00.000Z" itemprop="datePublished">
+          2015-02-15
       </time>
     
     
     | 
-    <a href='/tags/Google-Places/'>Google Places</a>
+    <a href='//tags/CardView/'>CardView</a>,
+    
+    <a href='//tags/Material-Design/'>Material Design</a>,
+    
+    <a href='//tags/Palette/'>Palette</a>,
+    
+    <a href='//tags/RecyclerView/'>RecyclerView</a>
     
     
 </span>
                 </span>
                 <p class="pull-right readMore">
-                    <a href="/2015/08/09/google-places-for-android-guide/">Read More...</a>
+                    <a href="/2015/02/15/talk-about-material-design/">Read More...</a>
                 </p>
                 
                 <div class="clearfix"></div>
@@ -294,30 +304,35 @@
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
-                <h3 style="font-size: 26px;line-height: 32px;"><a class="title" href="/2015/07/26/orm-greendao-summary/">ORM 框架之 greenDAO 使用心得</a></h3>
+                <h3 style="font-size: 26px;line-height: 32px;"><a class="title" href="/2015/01/21/alfred-workflows-recommend/">相见恨晚 - Alfred Workflows</a></h3>
                 <p>
                   
-                    <h2 id="前言">前言</h2><p>我相信，在平时的开发过程中，大家一定会或多或少地接触到 <a href="https://en.wikipedia.org/wiki/SQLite">SQLite</a>。然而在使用它时，我们往往需要做许多额外的工作，像编写 SQL 语句与解析查询结果等。所以，适用于 Android 的 <strong>ORM</strong> 框架也就孕育而生了，现在市面上主流的框架有 OrmLite、SugarORM、Active Android、Realm 与 GreenDAO。而今天的主角便是 <strong>greenDAO</strong>，下面，我将详解地介绍如何在 <strong>Android Studio</strong> 上使用 <strong>greenDAO</strong>，并结合代码总结一些使用过程中的心得。</p>
+                    <h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」那么，<a href="http://www.alfredapp.com/"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！！！（对，你没听错，我说的就是 「神器」）</p>
+<p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率，无论是工作还是生活，我现在已经离不开它了！</p>
+<p>关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  </p>
+<ul>
+<li><a href="http://macshuo.com/?p=625">神兵利器——Alfred</a></li>
+<li><a href="http://wellsnake.com/jekyll/update/2014/06/15/001/">丢掉鼠标－Mac神软Alfred使用手册1</a></li>
+</ul>
+<p>而今天我要介绍的重点，则是 Alfred 的杀手级功能 <a href="http://baike.baidu.com/link?url=vWcxHgs2yTgrDl3DgvZl17_FLMZdp9RSdExPrW0MRDtjn4R4SjbSSnRBK3nD3NG03da3IAuEbIs14celMAhEBMNC-NF4lNZjcX2WYG6UtVG4YpDCSQ0x9XgV23TCZyMilFM4WmQPTNfIEu46nymBeK">Workflows</a>，下面我将隆重介绍，在我每天工作和生活中都会使用到的 Workflow ，以此来说明其功能是如何之强大。</p>
                   
                 </p>
                 
                 <span>
                     <span class="post-meta">
-      <time datetime="2015-07-25T16:00:00.000Z" itemprop="datePublished">
-          2015-07-26
+      <time datetime="2015-01-20T16:00:00.000Z" itemprop="datePublished">
+          2015-01-21
       </time>
     
     
     | 
-    <a href='/tags/ORM/'>ORM</a>,
-    
-    <a href='/tags/greenDAO/'>greenDAO</a>
+    <a href='//tags/Alfred/'>Alfred</a>
     
     
 </span>
                 </span>
                 <p class="pull-right readMore">
-                    <a href="/2015/07/26/orm-greendao-summary/">Read More...</a>
+                    <a href="/2015/01/21/alfred-workflows-recommend/">Read More...</a>
                 </p>
                 
                 <div class="clearfix"></div>
@@ -327,64 +342,31 @@
         
         <div class="row">
             <div class="col-md-8 col-md-offset-2 opening-statement">
-                <h3 style="font-size: 26px;line-height: 32px;"><a class="title" href="/2015/05/11/the-interview-summary/">世界那么大，我想去看看</a></h3>
+                <h3 style="font-size: 26px;line-height: 32px;"><a class="title" href="/2015/01/01/everything-is-just-beginning/">一切才刚刚开始</a></h3>
                 <p>
                   
-                    <h2 id="前言">前言</h2><p>一直以来，我都梦想着能加入一家小而美的公司，一家硅谷范儿的公司，一加拥有工程师文化的公司，每天能和一群聪明的人在一起做些酷炫的事情。感谢，在历时两天半，历经五家公司的面试后，这个梦想终于实现了。</p>
-<p>下面，我会依次回顾每家公司的面试经历与总结其中的心得，希望能在自我总结的同时，给大家提供一些有价值的信息。</p>
+                    In a word
+Talk is cheap. Show me the code.
+
+
                   
                 </p>
                 
                 <span>
                     <span class="post-meta">
-      <time datetime="2015-05-10T16:00:00.000Z" itemprop="datePublished">
-          2015-05-11
+      <time datetime="2014-12-31T16:00:00.000Z" itemprop="datePublished">
+          2015-01-01
       </time>
     
     
     | 
-    <a href='/tags/Interview/'>Interview</a>,
-    
-    <a href='/tags/Startup/'>Startup</a>,
-    
-    <a href='/tags/Summary/'>Summary</a>
+    <a href='//tags/Goal/'>Goal</a>
     
     
 </span>
                 </span>
                 <p class="pull-right readMore">
-                    <a href="/2015/05/11/the-interview-summary/">Read More...</a>
-                </p>
-                
-                <div class="clearfix"></div>
-                <hr class="nogutter">
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 opening-statement">
-                <h3 style="font-size: 26px;line-height: 32px;"><a class="title" href="/2015/04/11/how-to-control-an-android-device-from-your-pc/">如何通过电脑操控 Android 设备</a></h3>
-                <p>
-                  
-                    <h2 id="背景">背景</h2><p>由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。</p>
-                  
-                </p>
-                
-                <span>
-                    <span class="post-meta">
-      <time datetime="2015-04-10T16:00:00.000Z" itemprop="datePublished">
-          2015-04-11
-      </time>
-    
-    
-    | 
-    <a href='/tags/VNC/'>VNC</a>
-    
-    
-</span>
-                </span>
-                <p class="pull-right readMore">
-                    <a href="/2015/04/11/how-to-control-an-android-device-from-your-pc/">Read More...</a>
+                    <a href="/2015/01/01/everything-is-just-beginning/">Read More...</a>
                 </p>
                 
                 <div class="clearfix"></div>
@@ -394,7 +376,7 @@
         
         <nav class="pagination" role="pagination">
           <a class="pull-left" href="/">← Newer Posts</a>
-          <a class="pull-right" href="/page/3/">Older Posts →</a>
+          
         </nav>
     </div>
 </section>
@@ -424,9 +406,12 @@
             </div>
             <div class="copy">
                 <p style="margin:0">
-                    &copy; 2015<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Qi Tang. All Rights Reserved.
+                    &copy; 2015<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script> Qi Tang
                 </p>
                 <p style="margin:0">
+                    Powered by Hexo and theme By <a href="https://github.com/yangzj1992/TKL" style="color: #767D84">yangzj1992</a>
+                </p>
+                 <p style="margin:0">
                     <span id="busuanzi_container_site_pv" style="font-size:12px;color:#767D84;">
                         This site already had <span id="busuanzi_value_site_pv"></span> Visits by
                     </span>
@@ -434,10 +419,6 @@
                         <span id="busuanzi_value_site_uv"></span> Visitors 
                     </span>
                 </p>
-                <p style="margin:0">
-                    Powered by Hexo and theme By <a href="https://github.com/yangzj1992/TKL" style="color: #767D84">yangzj1992</a>
-                </p>
-                
             </div>
             <div class="social">
                 <ul>
