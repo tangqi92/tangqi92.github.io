@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2016-01-03T11:30:21.000Z</updated>
+  <updated>2016-01-07T09:38:49.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://itangqi.me/2015/12/25/bye2015-hi2016/"/>
     <id>http://itangqi.me/2015/12/25/bye2015-hi2016/</id>
     <published>2015-12-24T16:00:00.000Z</published>
-    <updated>2016-01-03T11:30:21.000Z</updated>
+    <updated>2016-01-07T09:38:49.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>世上哪有终点？什么时候你走不动了，倒下了，那里才是终点。—— 今何在《西游日记》</p>
 </blockquote>
@@ -85,7 +85,7 @@
     <link href="http://itangqi.me/2015/12/15/waveloadingview/"/>
     <id>http://itangqi.me/2015/12/15/waveloadingview/</id>
     <published>2015-12-14T16:00:00.000Z</published>
-    <updated>2015-12-19T11:55:25.000Z</updated>
+    <updated>2016-01-07T09:17:19.000Z</updated>
     <content type="html"><![CDATA[<h1 id="WaveLoadingView">WaveLoadingView</h1><p><a href="https://android-arsenal.com/details/1/2908" target="_blank" rel="external"><img src="https://img.shields.io/badge/Android%20Arsenal-WaveLoadingView-green.svg?style=true" alt="Android Arsenal"></a><br><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="external"><img src="https://img.shields.io/badge/license-Apache%202-green.svg" alt="License"></a>  </p>
 <p><strong>WaveLoadingView</strong> - An Android library providing to realize wave loading effect.</p>
 <a id="more"></a>
@@ -99,7 +99,7 @@
 <h3 id="Step_2">Step 2</h3><p>Include the WaveLoadingView widget in your layout. And you can customize it like this.</p>
 <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;me.itangqi.waveloadingview.WaveLoadingView</span><br><span class="line">    android:id=<span class="string">"@+id/waveLoadingView"</span></span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_borderColor=<span class="string">"@color/colorAccent"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_borderWidth=<span class="string">"3dp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_progressValue=<span class="string">"40"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_shapeType=<span class="string">"square"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottom=<span class="string">"Bottom Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottomColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottomSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenter=<span class="string">"Center Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenterColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenterSize=<span class="string">"24sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTop=<span class="string">"Top Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTopColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTopSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_waveAmplitude=<span class="string">"60"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_waveColor=<span class="string">"@color/colorAccent"</span>/&gt;</span><br></pre></td></tr></table></figure> 
 <h3 id="Step_3">Step 3</h3><p>Absolutely，you can write some animation codes to the callbacks such as setOnCheckedChangeListener, onProgressChanged, etc in your Activity.</p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setTopTitle("Top Title")<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setCenterTitleColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setBottomTitleSize(18)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setProgressValue(80)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setBorderWidth(10)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setAmplitudeRatio(60)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setWaveColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">	mWaveLoadingView.setBorderColor(Color.GRAY)<span class="comment">;</span></span><br></pre></td></tr></table></figure> 
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setTopTitle("Top Title")<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setCenterTitleColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBottomTitleSize(18)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setProgressValue(80)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderWidth(10)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setAmplitudeRatio(60)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setWaveColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderColor(Color.GRAY)<span class="comment">;</span></span><br></pre></td></tr></table></figure> 
 <hr>
 <h2 id="Customization">Customization</h2><p>Do what you what :)</p>
 <table>
@@ -233,7 +233,7 @@
     <link href="http://itangqi.me/2015/11/02/comeback-diary/"/>
     <id>http://itangqi.me/2015/11/02/comeback-diary/</id>
     <published>2015-11-01T16:00:00.000Z</published>
-    <updated>2015-11-02T12:08:09.000Z</updated>
+    <updated>2016-01-07T09:43:05.000Z</updated>
     <content type="html"><![CDATA[<h3 id="2015年8月21日">2015年8月21日</h3><p>这一天，我结束了在 <a href="http://friendmedia.com/" target="_blank" rel="external">FriendMedia</a> 三个月短暂却又充实的工作。在这里，我结识了一群聪明且又友爱的伙伴；在这里，我体会到了创业公司的激情与不易；在这里，我一步步走向了 Android 开发的正轨。感谢 FM 给我的一切，愿你的未来一帆风顺。</p>
 <p>离职回到家后，我逼迫自己休息了一个星期，上午睡个懒觉，下午看看综艺节目，饭后出门散个步，晚上陪老妈扯会家常。让自己慢下来，不看技术文档与满屏的代码，享受与家人在一起的悠闲时光，我很珍惜，真的。</p>
 <a id="more"></a> 
@@ -266,8 +266,6 @@
     
       <category term="Comeback" scheme="http://itangqi.me/tags/Comeback/"/>
     
-      <category term="Diary" scheme="http://itangqi.me/tags/Diary/"/>
-    
       <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
     
   </entry>
@@ -277,7 +275,7 @@
     <link href="http://itangqi.me/2015/10/04/i-miss-you/"/>
     <id>http://itangqi.me/2015/10/04/i-miss-you/</id>
     <published>2015-10-03T16:00:00.000Z</published>
-    <updated>2015-10-04T01:20:29.000Z</updated>
+    <updated>2016-01-07T09:42:24.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>我还踮着脚思念<br>我还任记忆盘旋<br>我还闭着眼流泪<br>我还装作无所谓<br>我好想你 好想你<br>就深藏在心  </p>
 </blockquote>
@@ -315,7 +313,7 @@
     <link href="http://itangqi.me/2015/09/14/android-tips/"/>
     <id>http://itangqi.me/2015/09/14/android-tips/</id>
     <published>2015-09-13T16:00:00.000Z</published>
-    <updated>2015-09-14T15:08:08.000Z</updated>
+    <updated>2016-01-07T09:20:52.000Z</updated>
     <content type="html"><![CDATA[<h2 id="介绍">介绍</h2><p>学习 Android 至今，大大小小的坑没少踩，庆幸的是，在强大的搜索引擎与无私奉献的人们的帮助下，我遇到的坑都顺利地被填平了。</p>
 <p>为了便于日后遇到同样的问题时，能免于再次搜索带来的麻烦，我养成了收藏书签的习惯，随着书签（Tips）的日积月累，我想，是时候该有这个项目了。</p>
 <a id="more"></a> 
@@ -350,7 +348,7 @@
     <link href="http://itangqi.me/2015/09/03/building-blocks/"/>
     <id>http://itangqi.me/2015/09/03/building-blocks/</id>
     <published>2015-09-02T16:00:00.000Z</published>
-    <updated>2015-10-07T11:48:26.000Z</updated>
+    <updated>2016-01-07T09:43:13.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p><strong>积木</strong> - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！</p>
 </blockquote>
@@ -448,8 +446,6 @@
     
       <category term="AOSP" scheme="http://itangqi.me/tags/AOSP/"/>
     
-      <category term="Material Design" scheme="http://itangqi.me/tags/Material-Design/"/>
-    
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
   </entry>
@@ -459,7 +455,7 @@
     <link href="http://itangqi.me/2015/08/09/google-places-for-android-guide/"/>
     <id>http://itangqi.me/2015/08/09/google-places-for-android-guide/</id>
     <published>2015-08-08T16:00:00.000Z</published>
-    <updated>2015-09-22T01:20:13.000Z</updated>
+    <updated>2016-01-07T09:41:55.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>最近由于项目的原因，接触到了 <a href="https://developers.google.com/places/" target="_blank" rel="external">Google Places</a> 的使用与开发，学习并在项目中实现了简单的<strong>地点定位</strong>与<strong>自动补全</strong>功能。</p>
 <p>在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .</p>
 <a id="more"></a> 
@@ -475,7 +471,7 @@
 <h2 id="配置你的应用">配置你的应用</h2><p>使用 Google Places API for Android 的所有应用均需执行以下配置步骤。</p>
 <h3 id="添加_Google_Play_服务">添加 Google Play 服务</h3><p>要访问 Google Places API for Android，应用的开发项目必须包含 Google Play 服务。通过 SDK 管理器下载并安装 Google Play 服务组件，然后将库添加至您的项目。  </p>
 <p>-buidl.gradle (app)<br><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'com.google.android.gms:play-services:7.5.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  </p>
-<h3 id="添加相应权限">添加相应权限</h3><p>-AndroidManifest.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- PlacePicker requires the ACCESS_FINE_LOCATION permission and a geo API key.--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_FINE_LOCATION"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.INTERNET"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_COARSE_LOCATION"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- PlacePicker also requires OpenGL ES version 2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-feature</span></span><br><span class="line">	<span class="attribute">android:glEsVersion</span>=<span class="value">"0x00020000"</span></span><br><span class="line">   	<span class="attribute">android:required</span>=<span class="value">"true"</span> /&gt;</span></span><br></pre></td></tr></table></figure>   </p>
+<h3 id="添加相应权限">添加相应权限</h3><p>-AndroidManifest.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- PlacePicker requires the ACCESS_FINE_LOCATION permission and a geo API key.--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_FINE_LOCATION"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.INTERNET"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.WRITE_EXTERNAL_STORAGE"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-permission</span> <span class="attribute">android:name</span>=<span class="value">"android.permission.ACCESS_COARSE_LOCATION"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- PlacePicker also requires OpenGL ES version 2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">uses-feature</span></span><br><span class="line">true<span class="attribute">android:glEsVersion</span>=<span class="value">"0x00020000"</span></span><br><span class="line">   	<span class="attribute">android:required</span>=<span class="value">"true"</span> /&gt;</span></span><br></pre></td></tr></table></figure>   </p>
 <h3 id="添加_API_密钥">添加 API 密钥</h3><p>请按照以下代码示例所示，将你的 API 密钥添加至 Manifest ，并将 <strong>API_KEY</strong> 替换为您自己的 API 密钥：  </p>
 <p>-AndroidManifest.xml<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="type">application</span>&gt;</span><br><span class="line">  ...</span><br><span class="line">  &lt;meta-data</span><br><span class="line">            android:<span class="property">name</span>=<span class="string">"com.google.android.gms.version"</span></span><br><span class="line">            android:value=<span class="string">"@integer/google_play_services_version"</span> /&gt;</span><br><span class="line">            </span><br><span class="line">  &lt;meta-data</span><br><span class="line">      android:<span class="property">name</span>=<span class="string">"com.google.android.geo.API_KEY"</span></span><br><span class="line">      android:value=<span class="string">"API_KEY"</span>/&gt;</span><br><span class="line">&lt;/<span class="type">application</span>&gt;</span><br></pre></td></tr></table></figure>  </p>
 <hr>
@@ -538,7 +534,7 @@
     <link href="http://itangqi.me/2015/07/26/orm-greendao-summary/"/>
     <id>http://itangqi.me/2015/07/26/orm-greendao-summary/</id>
     <published>2015-07-25T16:00:00.000Z</published>
-    <updated>2016-01-05T01:59:18.000Z</updated>
+    <updated>2016-01-07T09:17:34.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>我相信，在平时的开发过程中，大家一定会或多或少地接触到 <a href="https://en.wikipedia.org/wiki/SQLite" target="_blank" rel="external">SQLite</a>。然而在使用它时，我们往往需要做许多额外的工作，像编写 SQL 语句与解析查询结果等。所以，适用于 Android 的 <strong>ORM</strong> 框架也就孕育而生了，现在市面上主流的框架有 OrmLite、SugarORM、Active Android、Realm 与 GreenDAO。而今天的主角便是 <strong>greenDAO</strong>，下面，我将详解地介绍如何在 <strong>Android Studio</strong> 上使用 <strong>greenDAO</strong>，并结合代码总结一些使用过程中的心得。</p>
 <a id="more"></a> 
 <hr>
@@ -631,7 +627,7 @@
     <link href="http://itangqi.me/2015/05/11/the-interview-summary/"/>
     <id>http://itangqi.me/2015/05/11/the-interview-summary/</id>
     <published>2015-05-10T16:00:00.000Z</published>
-    <updated>2015-09-09T05:28:27.000Z</updated>
+    <updated>2016-01-07T09:17:26.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>一直以来，我都梦想着能加入一家小而美的公司，一家硅谷范儿的公司，一加拥有工程师文化的公司，每天能和一群聪明的人在一起做些酷炫的事情。感谢，在历时两天半，历经五家公司的面试后，这个梦想终于实现了。</p>
 <p>下面，我会依次回顾每家公司的面试经历与总结其中的心得，希望能在自我总结的同时，给大家提供一些有价值的信息。</p>
 <a id="more"></a> 
@@ -791,7 +787,7 @@
     <link href="http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/"/>
     <id>http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/</id>
     <published>2015-04-10T16:00:00.000Z</published>
-    <updated>2015-09-09T05:29:08.000Z</updated>
+    <updated>2016-01-07T09:42:33.000Z</updated>
     <content type="html"><![CDATA[<h2 id="背景">背景</h2><p>由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。</p>
 <a id="more"></a> 
 <h3 id="VNC">VNC</h3><p>其中涉及到最主要的技术便是 <a href="http://en.wikipedia.org/wiki/Virtual_Network_Computing" target="_blank" rel="external">VNC</a> (Virtual Network Computing) ，它是使用远程帧缓冲协议（RFB）远程控制另一台计算机（设备）的图形桌面共享系统，其主要包括：                              </p>
@@ -885,8 +881,6 @@
     
     </summary>
     
-      <category term="Root" scheme="http://itangqi.me/tags/Root/"/>
-    
       <category term="VNC" scheme="http://itangqi.me/tags/VNC/"/>
     
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
@@ -898,7 +892,7 @@
     <link href="http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/"/>
     <id>http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/</id>
     <published>2015-03-06T16:00:00.000Z</published>
-    <updated>2015-09-09T05:28:54.000Z</updated>
+    <updated>2016-01-07T09:42:17.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Hybrid_App">Hybrid App</h2><ul>
 <li><p><a href="http://baike.baidu.com/link?url=oEcVTV16sU0agGHHebRey-cur6xumEuvDU77apaDBHKgGyWZwxTQYKCacn_MX51sogG2l4aj_KX406pcrP5sHK" target="_blank" rel="external">Hybrid App</a> : 又称「混合模式移动应用」，是指介于 Web App 和 Native App 这两者之间的 App，兼具「Native App 良好用户交互体验的优势」和「Web App 跨平台开发的优势」。</p>
 </li>
@@ -960,10 +954,6 @@
     
       <category term="Hybrid App" scheme="http://itangqi.me/tags/Hybrid-App/"/>
     
-      <category term="JavaScript" scheme="http://itangqi.me/tags/JavaScript/"/>
-    
-      <category term="WebView" scheme="http://itangqi.me/tags/WebView/"/>
-    
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
   </entry>
@@ -973,7 +963,7 @@
     <link href="http://itangqi.me/2015/02/15/talk-about-material-design/"/>
     <id>http://itangqi.me/2015/02/15/talk-about-material-design/</id>
     <published>2015-02-14T16:00:00.000Z</published>
-    <updated>2015-09-09T05:28:36.000Z</updated>
+    <updated>2016-01-07T09:17:40.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>由于公司产品应用场景的特殊性，在平时的开发过程中，我基本不需要涉及 UI 相关的工作，但每每见到各种自定义控件与酷炫的动画效果时，我心里总是痒痒的。所以我决定开始学习与积累相关知识，虽然离「Material Design」概念的提出已经有一段时间了，但现在开始学习也不算太晚。</p>
 <a id="more"></a> 
 <hr>
@@ -1045,7 +1035,7 @@
     <link href="http://itangqi.me/2015/01/21/alfred-workflows-recommend/"/>
     <id>http://itangqi.me/2015/01/21/alfred-workflows-recommend/</id>
     <published>2015-01-20T16:00:00.000Z</published>
-    <updated>2015-09-09T05:29:33.000Z</updated>
+    <updated>2016-01-07T09:42:03.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」那么，<a href="http://www.alfredapp.com/" target="_blank" rel="external"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！！！（对，你没听错，我说的就是 「神器」）</p>
 <p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率，无论是工作还是生活，我现在已经离不开它了！</p>
 <p>关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  </p>
@@ -1149,10 +1139,6 @@
     
       <category term="Alfred" scheme="http://itangqi.me/tags/Alfred/"/>
     
-      <category term="Efficiency" scheme="http://itangqi.me/tags/Efficiency/"/>
-    
-      <category term="Workflow" scheme="http://itangqi.me/tags/Workflow/"/>
-    
       <category term="Mac" scheme="http://itangqi.me/categories/Mac/"/>
     
   </entry>
@@ -1162,7 +1148,7 @@
     <link href="http://itangqi.me/2015/01/01/everything-is-just-beginning/"/>
     <id>http://itangqi.me/2015/01/01/everything-is-just-beginning/</id>
     <published>2014-12-31T16:00:00.000Z</published>
-    <updated>2015-09-09T01:10:29.000Z</updated>
+    <updated>2016-01-07T09:42:42.000Z</updated>
     <content type="html"><![CDATA[<h2 id="In_a_word">In a word</h2><blockquote>
 <p>Talk is cheap. Show me the code.</p>
 </blockquote>
