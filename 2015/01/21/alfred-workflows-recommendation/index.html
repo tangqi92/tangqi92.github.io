@@ -13,7 +13,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>Java 与 JavaScript 如何进行交互 | Qi Tang&#39;s Blog</title>
+  <title>相见恨晚 - Alfred Workflows | Qi Tang&#39;s Blog</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -97,7 +97,7 @@
                </div>
                <div class="sb-item sb-words">
                   <a href="javascript:void(0)">
-                    <span class="sb-item-count">31.0k</span>
+                    <span class="sb-item-count">31.5k</span>
                     <span class="sb-item-name">字数</span>
                   </a>
                </div>
@@ -113,7 +113,9 @@
       <div class="sb-rss">
         <a href="/atom.xml">RSS</a>
       </div>
-      
+
+       
+
       <div class="web-links"> 
         
         <div class="sb-links">
@@ -127,7 +129,7 @@
         
       </div>
 
-      <div class="cc-license">
+     <div class="cc-license">
         <a href="http://creativecommons.org/licenses/by-nc/4.0">
           <img src="http://7bv937.com1.z0.glb.clouddn.com/qcyoung/cc-by-nc.svg">
         </a>
@@ -158,11 +160,11 @@
                     <nav>
                         <ul class="nav">
                             <li><a href="/" class="animsition-link website-title">Qi Tang's Blog</a></li>
-                            <li><a href="/archives" class="animsition-link" title="archive">归档</a></li>
-                            <li class="mobile-li"><a href="/categories" class="animsition-link" title="categories">目录</a></li>
-                            <li><a href="/tags" class="animsition-link" title="tag">标签</a></li>
-                            <li class="mobile-li"><a href="/about" class="animsition-link" title="about">关于</a></li>
-                            <li class="mobile-li"><a href="/messageboard" class="animsition-link" title="messageboard">留言板</a></li>
+                            <li><a href="/archives" class="animsition-link" title="Archive">归档</a></li>
+                            <li class="mobile-li"><a href="/categories" class="animsition-link" title="Category">目录</a></li>
+                            <li><a href="/tags" class="animsition-link" title="Tag">标签</a></li>
+                            <li class="mobile-li"><a href="/about" class="animsition-link" title="About">关于</a></li>
+                            <li class="mobile-li"><a href="/messageboard" class="animsition-link" title="Messageboard">留言板</a></li>
                             
                             <li><a href="https://github.com/tangqi92" title="Github" target="_blank"><i class="icon-Popular_GitHub"></i></a></li>
                             
@@ -226,9 +228,9 @@
         <div class="post-content">
             <div class="col-md-8 col-md-offset-2">
                 <div>
-                    <h1>Java 与 JavaScript 如何进行交互</h1>
-                    <time datetime="2015-03-06T16:00:00.000Z" itemprop="datePublished" style="color:#969696;display: block;font-size: 13px;font-weight: 400;width: 100%;height: 30px;text-align: center;">
-                        2015 年 03 月 07 日
+                    <h1>相见恨晚 - Alfred Workflows</h1>
+                    <time datetime="2015-01-20T16:00:00.000Z" itemprop="datePublished" style="color:#969696;display: block;font-size: 13px;font-weight: 400;width: 100%;height: 30px;text-align: center;">
+                        2015 年 01 月 21 日
                     </time>
                 </div>
             </div>
@@ -236,48 +238,90 @@
                 
                     <div id="toc" class="toc-article">
                         <strong class="toc-title">目录</strong>
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hybrid_App"><span class="toc-number">1.</span> <span class="toc-text">Hybrid App</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WebKit_&_Chromium"><span class="toc-number">2.</span> <span class="toc-text">WebKit & Chromium</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交互实例"><span class="toc-number">3.</span> <span class="toc-text">交互实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全性"><span class="toc-number">4.</span> <span class="toc-text">安全性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期待与你成为朋友"><span class="toc-number">5.</span> <span class="toc-text">期待与你成为朋友</span></a></li></ol>
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#例子"><span class="toc-number">2.</span> <span class="toc-text">例子</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#StackOverflow"><span class="toc-number">2.1.</span> <span class="toc-text">StackOverflow</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SNSearch"><span class="toc-number">2.2.</span> <span class="toc-text">SNSearch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#V2EX"><span class="toc-number">2.3.</span> <span class="toc-text">V2EX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dash"><span class="toc-number">2.4.</span> <span class="toc-text">Dash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#知乎"><span class="toc-number">2.5.</span> <span class="toc-text">知乎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Last_changed_files"><span class="toc-number">2.6.</span> <span class="toc-text">Last changed files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#百度翻译"><span class="toc-number">2.7.</span> <span class="toc-text">百度翻译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#百度地图"><span class="toc-number">2.8.</span> <span class="toc-text">百度地图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Douban"><span class="toc-number">2.9.</span> <span class="toc-text">Douban</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#社交网络_ID_直达"><span class="toc-number">2.10.</span> <span class="toc-text">社交网络 ID 直达</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#水木社区"><span class="toc-number">2.11.</span> <span class="toc-text">水木社区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tips"><span class="toc-number">3.</span> <span class="toc-text">Tips</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期待与你成为朋友"><span class="toc-number">4.</span> <span class="toc-text">期待与你成为朋友</span></a></li></ol>
                     </div>
                 
-                <h2 id="Hybrid_App">Hybrid App</h2><ul>
-<li><p><a href="http://baike.baidu.com/link?url=oEcVTV16sU0agGHHebRey-cur6xumEuvDU77apaDBHKgGyWZwxTQYKCacn_MX51sogG2l4aj_KX406pcrP5sHK" target="_blank" rel="external">Hybrid App</a> : 又称「混合模式移动应用」，是指介于 Web App 和 Native App 这两者之间的 App，兼具「Native App 良好用户交互体验的优势」和「Web App 跨平台开发的优势」。</p>
-</li>
-<li><p><a href="http://www.smashingmagazine.com/2014/10/21/providing-a-native-experience-with-web-technologies/" target="_blank" rel="external">Hybrid Mobile Apps: Providing A Native Experience With Web Technologies</a> : This article provides many hints, code snippets and lessons learned on how to build great hybrid mobile apps.</p>
-</li>
-<li><p><a href="https://www.codementor.io/android/tutorial/secure-hybrid-html5-android-webview-mobile-app" target="_blank" rel="external">Tutorial: How to Safely Implement Hybrid HTML5 Android Applications</a> : In this short tutorial we will discover how to integrate web applications into our native Android applications, including how to create a secure JavaScript-Java bridge.</p>
-</li>
-</ul>
+                <h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」<br>那么，<a href="http://www.alfredapp.com/" target="_blank" rel="external"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！（对，你没听错，相信我，它绝对配得上「神器」的称号。）</p>
+<p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率（无论是工作还是生活），事实是，我现在已经离不开它了！</p>
 <a id="more"></a> 
-<hr>
-<h2 id="WebKit_&amp;_Chromium">WebKit &amp; Chromium</h2><ul>
-<li><p><a href="http://developer.android.com/reference/android/webkit/package-summary.html" target="_blank" rel="external">WebKit</a> : 官方文档</p>
-</li>
-<li><p><a href="http://www.mobilexweb.com/blog/android-4-4-kitkat-browser-chrome-webview" target="_blank" rel="external">Android 4.4 KitKat, the browser and the Chrome WebView</a> : Android 4.4 has made a big change in the OS’ internals for HTML5 development: it has replaced its original WebKit-based WebView with modern Chromium.</p>
-</li>
-<li><p><a href="http://blog.csdn.net/milado_nju/article/details/17098399" target="_blank" rel="external">理解WebKit和Chromium: Android 4.4 上的Chromium WebView</a> : 在最新的Android 4.4 Kitkat 版本中，原本基于Android「WebKit」的 WebView 实现被换成基于「Chromium」的 WebView 实现。</p>
-</li>
-</ul>
-<hr>
-<h2 id="交互实例">交互实例</h2><ul>
-<li><a href="http://droidyue.com/blog/2014/09/20/interaction-between-java-and-javascript-in-android/" target="_blank" rel="external">Android中Java和JavaScript交互</a> : 此篇博文十分详细地介绍了具体的实现步骤和可能会遇到的问题及解决办法。</li>
-</ul>
-<p>###Java 与 JS 交互只需如下几步：</p>
-<ol>
-<li>WebView开启JavaScript脚本执行 </li>
-<li>WebView设置供JavaScript调用的交互接口</li>
-<li>客户端和网页端编写调用对方的代码</li>
-</ol>
-<hr>
-<h2 id="安全性">安全性</h2><blockquote>
-<p>网上的方法可以告诉我们这个时候我们可以使用addjavascriptInterface来注入原生接口到JS中，但是在安卓4.2以下的系统中，这种方案却我们的应用带来了很大的安全风险。攻击者如果在页面执行一些非法的JS（诱导用户打开一些钓鱼网站以进入风险页面），极有可能反弹拿到用户手机的shell权限。接下来攻击者就可以在后台默默安装木马，完全洞穿用户的手机。详细的攻击过程可以见乌云平台的这份报告：<a href="http://drops.wooyun.org/papers/548" target="_blank" rel="external">WebView中接口隐患与手机挂马利用</a>。</p>
-</blockquote>
+<p>关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  </p>
 <ul>
-<li><p><a href="http://www.pedant.cn/2014/07/04/webview-js-java-interface-research/" target="_blank" rel="external">在WebView中如何让JS与Java安全地互相调用</a></p>
+<li><a href="http://macshuo.com/?p=625" target="_blank" rel="external">神兵利器——Alfred</a>  </li>
+<li><a href="http://wellsnake.com/jekyll/update/2014/06/15/001/" target="_blank" rel="external">丢掉鼠标－Mac神软Alfred使用手册1</a></li>
+</ul>
+<p>而今天我要介绍的重点，则是 Alfred 的杀手级功能 <a href="http://baike.baidu.com/link?url=vWcxHgs2yTgrDl3DgvZl17_FLMZdp9RSdExPrW0MRDtjn4R4SjbSSnRBK3nD3NG03da3IAuEbIs14celMAhEBMNC-NF4lNZjcX2WYG6UtVG4YpDCSQ0x9XgV23TCZyMilFM4WmQPTNfIEu46nymBeK" target="_blank" rel="external">Workflows</a>，下面我将隆重介绍，在我每天工作和生活中都会使用到的 Workflow ，相信其中一定有适合你的。</p>
+<hr>
+<h2 id="例子">例子</h2><h3 id="StackOverflow">StackOverflow</h3><ul>
+<li>StackOverflow on Alfred ~ by <a href="https://github.com/xhinking" target="_blank" rel="external">@xhinking</a>             </li>
+<li>Triggers: st {query}</li>
+<li><a href="https://raw.githubusercontent.com/xhinking/Alfred/master/stackoverflow.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.24.05.png" alt=""></li>
+</ul>
+<h3 id="SNSearch">SNSearch</h3><ul>
+<li>SNSearch 是为 Alfred 开发的一款 Workflow ，主要功能是检索 Startup News 网站的最新推荐文章 ~ by <a href="https://github.com/jackychi" target="_blank" rel="external">@池建强</a></li>
+<li>Triggers: sn all , sn {query}</li>
+<li><a href="https://raw.githubusercontent.com/jackychi/SNSearch/master/SNSearch.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.18.27.png" alt=""></li>
+</ul>
+<h3 id="V2EX">V2EX</h3><ul>
+<li>一个给 V2EXer 用的 Alfred 2 Workflow ~ by <a href="https://github.com/hzlzh" target="_blank" rel="external">@hzlzh</a>           </li>
+<li>Triggers: v2ex new , v2ex @{name}</li>
+<li><a href="http://www.alfredworkflow.com/wp-admin/admin-ajax.php?action=cfdb-file&amp;s=1363880004.5359&amp;form=Alfred+Workflow&amp;field=workflow_file" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.13.18.png" alt=""></li>
+</ul>
+<h3 id="Dash">Dash</h3><ul>
+<li>ScreenshotShorter keywords for using dash lookups. Custom logo for each language included ~ by <a href="https://github.com/willfarrell" target="_blank" rel="external">willfarrell</a></li>
+<li>Triggers: dash {query}</li>
+<li><a href="http://www.alfredworkflow.com/wp-admin/admin-ajax.php?action=cfdb-file&amp;s=1366731149.1667&amp;form=Alfred+Workflow&amp;field=workflow_file" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.25.30.png" alt=""></li>
+</ul>
+<h3 id="知乎">知乎</h3><ul>
+<li>知乎 Workflow ~ by <a href="https://github.com/KJlmfe" target="_blank" rel="external">KJlmfe</a></li>
+<li>在知乎里搜索话题、问题和人：zh {query}</li>
+<li>查看今日知乎日报：zhdaily</li>
+<li><a href="https://raw.githubusercontent.com/KJlmfe/Alfred-workflows/master/zhihu.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.20.31.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.20.40.png" alt=""></li>
+</ul>
+<h3 id="Last_changed_files">Last changed files</h3><ul>
+<li>Lists recently changed files (searchable) for drag&amp;drop or file actions in alfred ~ by <a href="https://github.com/oderwat" target="_blank" rel="external">oderwat</a></li>
+<li>Triggers: .last</li>
+<li><a href="https://raw.githubusercontent.com/oderwat/alfredworkflows/master/Last%20changed%20files.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.03.25.png" alt=""></li>
+</ul>
+<h3 id="百度翻译">百度翻译</h3><ul>
+<li>百度翻译 ~ by <a href="https://github.com/zxyah" target="_blank" rel="external">zxyah</a></li>
+<li>Triggers: bfy {query}</li>
+<li><a href="https://raw.githubusercontent.com/zxyah/alfred/master/Baidu-Translate/%E7%99%BE%E5%BA%A6%E7%BF%BB%E8%AF%91.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.05.08.png" alt=""></li>
+</ul>
+<h3 id="百度地图">百度地图</h3><ul>
+<li>百度地图搜索(Search in Baidu Map) ~ by <a href="https://github.com/wofeiwo" target="_blank" rel="external">GaRy</a></li>
+<li>首先输入”setl”+空格+城市名，设置默认搜索城市地点</li>
+<li>输入”bmap”+空格+搜索关键字即可。然后就等他出结果，回车或者cmd+数字就能打开默认浏览器进入地图页面进入地图页面查看搜索结果。</li>
+<li><a href="https://raw.githubusercontent.com/wofeiwo/alfred-baidu-map/master/Baidu%20Map.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.19.13.png" alt=""></li>
+</ul>
+<h3 id="Douban">Douban</h3><ul>
+<li>搜索豆瓣电影、图书、音乐 ~ by <a href="https://github.com/lucifr" target="_blank" rel="external">Lucifr</a></li>
+<li>Triggers: book {query} , movie {query} , music {query}</li>
+<li><a href="https://raw.githubusercontent.com/lucifr/Alfredv2-Extensions/master/Douban.alfredworkflow" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.07.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.24.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.12.47.png" alt=""></li>
+</ul>
+<h3 id="社交网络_ID_直达">社交网络 ID 直达</h3><ul>
+<li>A fast way to view the profile when you know his @username ~ by Astrian Zheng</li>
+<li>Triggers: @ {username}</li>
+<li><a href="http://www.alfredworkflow.com/wp-admin/admin-ajax.php?action=cfdb-file&amp;s=1428503769.7937&amp;form=Alfred+Workflow&amp;field=workflow_file" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.26.37.png" alt=""></li>
+</ul>
+<h3 id="水木社区">水木社区</h3><ul>
+<li>Browse newsmth.net bbs in Alfred ~ by <a href="https://github.com/yrlihuan" target="_blank" rel="external">@yrlihuan</a></li>
+<li>浏览今日十大: smth</li>
+<li>查找板块: smth 板块拼音<ul>
+<li>smth shuimu</li>
+<li>smth jingji</li>
+</ul>
 </li>
-<li><p><a href="http://blog.csdn.net/leehong2005/article/details/11808557" target="_blank" rel="external">Android WebView的Js对象注入漏洞解决方案</a></p>
+<li>浏览板块: smth &gt; 板块ID<ul>
+<li>smth &gt; ITExpress</li>
+<li>smth &gt; EconForum                                                                 </li>
+</ul>
 </li>
-<li><p><a href="http://gundumw100.iteye.com/blog/1158719" target="_blank" rel="external">在Android的webview中定制js的alert,confirm和prompt对话框的方法</a></p>
-</li>
+<li><a href="https://raw.githubusercontent.com/yrlihuan/smth.alfredworkflow/master/release/smth.alfredworkflo" target="_blank" rel="external">Download Link</a><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Screen Shot 2015-04-28 at 10.39.55.png" alt=""></li>
+</ul>
+<hr>
+<h2 id="Tips">Tips</h2><ul>
+<li>为了方便大家发现、查找、分享优秀实用的 Workflows，<a href="https://github.com/hzlzh" target="_blank" rel="external">hzlzh</a> 制作并维护了<a href="http://www.alfredworkflow.com/" target="_blank" rel="external">http://www.alfredworkflow.com</a> ， 你在上面能找到你所能想得到的所有 Workflows (当然也十分欢迎你将自己制作的 Workflow 分享上去）</li>
+<li>如果你喜欢我的 Alfred 主题话，你可以通过：<a href="https://github.com/krv/Yosemite-Dark-Alfred" target="_blank" rel="external">Dark OS X Yosemite (10.10) inspired theme for Alfred v2</a> 下载得到</li>
 </ul>
 <hr>
 <h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
@@ -291,13 +335,15 @@
             <hr class="nogutter">
             <div class="summary">
                 <!-- <i class="demo-icon icon-file-code">&#xe800;</i> <span class="i-name"></span> -->
-                <i class="demo-icon icon-file-word">&#xe802;</i><span class="i-name">826字</span>
+                <i class="demo-icon icon-file-word">&#xe802;</i><span class="i-name">1,571字</span>
                 <i class="demo-icon icon-tags">&#xe801;</i> <span class="i-name"></span>
                 <span class="post-meta">
                     
                         
                         
-                            <a class='post-tags' href='/tags/Hybrid-App/'>Hybrid App</a>
+                            <a class='post-tags' href='/tags/Alfred/'>Alfred</a>
+                        
+                            <a class='post-tags' href='/tags/Workflows/'>Workflows</a>
                         
                     
                 </span>
@@ -308,23 +354,23 @@
                <span id="share" style="float: right;position: relative;">
                     <div class="qrcode" id="qrcode" style="display: none;"></div>
                     <a id="wechat" class="share-icon" title="分享到微信" data-wechat-url="undefined" href="javascript:void(0);"><i class="icon-CN_tencent_wechat"></i></a>
-                    <a id="weibo" class="share-icon" target="_blank" title="分享到微博" href="http://service.weibo.com/share/share.php?title=Java 与 JavaScript 如何进行交互 | Qi Tang&#39;s Blog &amp;url=http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/index.html&amp;type=3&amp;searchPic=false"><i class="icon-CN_sina_weibo"></i></a>
-                    <a id="qzone" class="share-icon" target="_blank" title="分享到 QQ 空间" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/index.html&amp;title=Java 与 JavaScript 如何进行交互 | Qi Tang&#39;s Blog"><i class="icon-CN_tencent_qzone"></i></a>
-                    <a id="twitter" class="share-icon" target="_blank" title="Share to Twitter" href="https://twitter.com/intent/tweet?url=http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/index.html&amp;text=Java 与 JavaScript 如何进行交互;via=Qi Tang| Qi Tang&#39;s Blog"><i class="icon-Popular_Twitter"></i></a>
-                    <a id="facebook" class="share-icon" target="_blank" title="Share to Facebook" href="http://www.facebook.com/sharer.php?u=undefined&amp;t=Java 与 JavaScript 如何进行交互 | Qi Tang&#39;s Blog"><i class="icon-Popular_Facebook"></i></a>
-                    <a id="gplus" class="share-icon" target="_blank" title="Share to Google+" href="https://plus.google.com/share?url=http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/index.html"><i class="icon-Popular_G"></i></a>
+                    <a id="weibo" class="share-icon" target="_blank" title="分享到微博" href="http://service.weibo.com/share/share.php?title=相见恨晚 - Alfred Workflows | Qi Tang&#39;s Blog &amp;url=http://itangqi.me/2015/01/21/alfred-workflows-recommendation/index.html&amp;type=3&amp;searchPic=false"><i class="icon-CN_sina_weibo"></i></a>
+                    <a id="qzone" class="share-icon" target="_blank" title="分享到 QQ 空间" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://itangqi.me/2015/01/21/alfred-workflows-recommendation/index.html&amp;title=相见恨晚 - Alfred Workflows | Qi Tang&#39;s Blog"><i class="icon-CN_tencent_qzone"></i></a>
+                    <a id="twitter" class="share-icon" target="_blank" title="Share to Twitter" href="https://twitter.com/intent/tweet?url=http://itangqi.me/2015/01/21/alfred-workflows-recommendation/index.html&amp;text=相见恨晚 - Alfred Workflows;via=Qi Tang| Qi Tang&#39;s Blog"><i class="icon-Popular_Twitter"></i></a>
+                    <a id="facebook" class="share-icon" target="_blank" title="Share to Facebook" href="http://www.facebook.com/sharer.php?u=undefined&amp;t=相见恨晚 - Alfred Workflows | Qi Tang&#39;s Blog"><i class="icon-Popular_Facebook"></i></a>
+                    <a id="gplus" class="share-icon" target="_blank" title="Share to Google+" href="https://plus.google.com/share?url=http://itangqi.me/2015/01/21/alfred-workflows-recommendation/index.html"><i class="icon-Popular_G"></i></a>
                 </span>
             </div>
         </div>
         <nav class="pagination" role="pagination">
     
-    <a class="pull-left" href="/2015/04/11/how-to-control-an-android-device-from-your-pc/" style="float: left;">
-        ← 如何通过电脑操控 Android 设备
+    <a class="pull-left" href="/2015/02/15/talk-about-material-design/" style="float: left;">
+        ← 浅谈 Material Design
     </a>
     
     
-    <a class="pull-right" href="/2015/02/15/talk-about-material-design/">
-        浅谈 Material Design →
+    <a class="pull-right" href="/2015/01/01/everything-is-just-beginning/">
+        一切才刚刚开始 →
     </a>
     
 </nav>
@@ -358,7 +404,7 @@
     $("#wechat").hover(function() {
         $("#qrcode").css('display','inline-block');
         jQuery("#qrcode").qrcode({
-            text:utf16to8("http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/index.html"),
+            text:utf16to8("http://itangqi.me/2015/01/21/alfred-workflows-recommendation/index.html"),
             width:96,
             height:96
         });
@@ -404,20 +450,15 @@
             </div>
             <div class="copy">
                 <p style="margin:0">
-                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Qi Tang. All Rights Reserved.
+                    &copy; 2016 Qi Tang
                 </p>
                 <p style="margin:0">
-                    <span id="busuanzi_container_site_pv" style="font-size:12px;color:#767D84;">
-                        This site already had <span id="busuanzi_value_site_pv"></span> Visits by
-                    </span>
-                    <span id="busuanzi_container_site_uv" style="font-size:12px;color:#767D84;">
-                        <span id="busuanzi_value_site_uv"></span> Visitors 
-                    </span>
+                    Powered by <a href="http://zespia.tw/hexo" style="color: #E24412">Hexo</a> | Theme by <a href="https://github.com/yangzj1992/TKL" style="color: #E24412">Kieran</a>
                 </p>
                 <p style="margin:0">
-                    Powered by Hexo and theme By <a href="https://github.com/yangzj1992/TKL" style="color: #767D84">Kieran</a>
+                    <span style="display: inline;" id="busuanzi_container_site_uv">This site already had <span id="busuanzi_value_site_uv" style="color:white"></span> Visits by</span>
+                    <span style="display: inline;" id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv" style="color:white"></span> Visitors </span>
                 </p>
-                
             </div>
             <div class="social">
                 <ul>
@@ -443,6 +484,7 @@
               
         </div>
 </footer>
+<!-- 不蒜子统计脚本-->
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <script async id="dsq-count-scr" src="https://tangqi92githubio.disqus.com/count.js" ></script>
 <!-- ============================ END Footer =========================== -->

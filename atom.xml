@@ -4,7 +4,7 @@
   
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2016-01-07T09:38:49.000Z</updated>
+  <updated>2016-01-08T10:32:12.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://itangqi.me/2015/12/25/bye2015-hi2016/"/>
     <id>http://itangqi.me/2015/12/25/bye2015-hi2016/</id>
     <published>2015-12-24T16:00:00.000Z</published>
-    <updated>2016-01-07T09:38:49.000Z</updated>
+    <updated>2016-01-08T10:32:12.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>世上哪有终点？什么时候你走不动了，倒下了，那里才是终点。—— 今何在《西游日记》</p>
 </blockquote>
@@ -74,6 +74,8 @@
     
     </summary>
     
+      <category term="Review" scheme="http://itangqi.me/tags/Review/"/>
+    
       <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
     
       <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
@@ -85,22 +87,23 @@
     <link href="http://itangqi.me/2015/12/15/waveloadingview/"/>
     <id>http://itangqi.me/2015/12/15/waveloadingview/</id>
     <published>2015-12-14T16:00:00.000Z</published>
-    <updated>2016-01-07T13:40:07.000Z</updated>
-    <content type="html"><![CDATA[<p><a href="https://android-arsenal.com/details/1/2908" target="_blank" rel="external"><img src="https://img.shields.io/badge/Android%20Arsenal-WaveLoadingView-green.svg?style=true" alt="Android Arsenal"></a></p>
-<p><a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="external"><img src="https://img.shields.io/badge/license-Apache%202-green.svg" alt="License"></a>  </p>
-<p><strong>WaveLoadingView</strong> - An Android library providing to realize wave loading effect.</p>
+    <updated>2016-01-08T10:44:12.000Z</updated>
+    <content type="html"><![CDATA[<blockquote>
+<p><strong>WaveLoadingView</strong> - An Android library that provides a realistic wave-loading effect.</p>
+</blockquote>
 <a id="more"></a>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/waveloadingview.png"> </p>
 <hr>
-<h2 id="Usage">Usage</h2><p><strong>For a working implementation of this project see the <code>sample/</code> folder.</strong>  </p>
-<h3 id="Step_1">Step 1</h3><p>Include the library as local library project or add the dependency in your build.gradle.   </p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--￼0--&gt;</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
+<h2 id="Sample">Sample</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/waveloadingview.png" alt="sample" title="sample" width="400" height="680"></p>
+<hr>
+<h2 id="Usage">Usage</h2><p><strong>For a working implementation of this project see the <code>sample/</code> folder.</strong></p>
+<h3 id="Step_1">Step 1</h3><p>Include the library as a local library project or add the dependency in your build.gradle.</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'me.itangqi.waveloadingview:library:0.1.4'</span></span><br><span class="line">    <span class="comment">// I have uploaded v0.1.4 on 2015-12-17, if it doesn't take effect or your </span></span><br><span class="line">    <span class="comment">// gradle cannot find it in maven central, you may try v0.1.2. </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  
 <p>Or</p>
-<p>Import the library, then add it to your /settings.gradle and /app/build.gradle, if you don’t know how to do it, you can read my blog for help.</p>
+<p>Import the library, then add it to your /settings.gradle and /app/build.gradle. If you don’t know how to do this, you can read my blog for help.</p>
 <h3 id="Step_2">Step 2</h3><p>Include the WaveLoadingView widget in your layout. And you can customize it like this.</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;me<span class="class">.itangqi</span><span class="class">.waveloadingview</span><span class="class">.WaveLoadingView</span></span><br><span class="line"></span><br><span class="line">&lt;!--￼<span class="number">1</span>--&gt;</span><br></pre></td></tr></table></figure> 
-<h3 id="Step_3">Step 3</h3><p>Absolutely，you can write some animation codes to the callbacks such as setOnCheckedChangeListener, onProgressChanged, etc in your Activity.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView);</span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--￼2--&gt;</span></span><br></pre></td></tr></table></figure> 
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;me.itangqi.waveloadingview.WaveLoadingView</span><br><span class="line">    android:id=<span class="string">"@+id/waveLoadingView"</span></span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_borderColor=<span class="string">"@color/colorAccent"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_borderWidth=<span class="string">"3dp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_progressValue=<span class="string">"40"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_shapeType=<span class="string">"square"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottom=<span class="string">"Bottom Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottomColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottomSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenter=<span class="string">"Center Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenterColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenterSize=<span class="string">"24sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTop=<span class="string">"Top Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTopColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTopSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_waveAmplitude=<span class="string">"60"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_waveColor=<span class="string">"@color/colorAccent"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Step_3">Step 3</h3><p>You can write some animation codes to the callbacks such as setOnCheckedChangeListener, onProgressChanged, etc in your Activity.</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setTopTitle("Top Title")<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setCenterTitleColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBottomTitleSize(18)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setProgressValue(80)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderWidth(10)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setAmplitudeRatio(60)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setWaveColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderColor(Color.GRAY)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="Customization">Customization</h2><p>Do what you what :)</p>
 <table>
@@ -115,7 +118,7 @@
 <tr>
 <td style="text-align:center">mlv_borderWidth</td>
 <td style="text-align:center">dimension</td>
-<td style="text-align:center">set border width, default to be 0</td>
+<td style="text-align:center">set border width, default is 0</td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_borderColor</td>
@@ -125,12 +128,12 @@
 <tr>
 <td style="text-align:center">mlv_progressValue</td>
 <td style="text-align:center">integer</td>
-<td style="text-align:center">set progress value, default to be 50</td>
+<td style="text-align:center">set progress value, default is 50</td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_shapeType</td>
 <td style="text-align:center">enum</td>
-<td style="text-align:center">set shape type, default to be circle</td>
+<td style="text-align:center">set shape type, default is circle</td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_waveColor</td>
@@ -145,17 +148,17 @@
 <tr>
 <td style="text-align:center">mlv_titleTopSize</td>
 <td style="text-align:center">dimension</td>
-<td style="text-align:center">set top title size, default to be 18</td>
+<td style="text-align:center">set top title size, default is 18 </td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_titleCenterSize</td>
 <td style="text-align:center">dimension</td>
-<td style="text-align:center">set center title size, default to be 22</td>
+<td style="text-align:center">set center title size, default is 22</td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_titleBottomSize</td>
 <td style="text-align:center">dimension</td>
-<td style="text-align:center">set bottom size, default to be 18</td>
+<td style="text-align:center">set bottom size, default is 18</td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_titleTopColor</td>
@@ -165,27 +168,27 @@
 <tr>
 <td style="text-align:center">mlv_titleCenterColor</td>
 <td style="text-align:center">color</td>
-<td style="text-align:center">set center title color</td>
+<td style="text-align:center">set center title color </td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_titleBottomColor</td>
 <td style="text-align:center">color</td>
-<td style="text-align:center">set bottom title color</td>
+<td style="text-align:center">set bottom title color </td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_titleTop</td>
 <td style="text-align:center">string</td>
-<td style="text-align:center">set top title content, default to be null</td>
+<td style="text-align:center">set top title content, default is null</td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_titleCenter</td>
 <td style="text-align:center">string</td>
-<td style="text-align:center">set center title content, default to be null</td>
+<td style="text-align:center">set center title content, default is null</td>
 </tr>
 <tr>
 <td style="text-align:center">mlv_titleBottom</td>
 <td style="text-align:center">string</td>
-<td style="text-align:center">set bottom title content, default to be null</td>
+<td style="text-align:center">set bottom title content, default is null</td>
 </tr>
 </tbody>
 </table>
@@ -211,16 +214,22 @@
 <li><a href="https://github.com/lopspower/CircularFillableLoaders" target="_blank" rel="external">CircularFillableLoaders</a> created by <a href="https://github.com/lopspower" target="_blank" rel="external">lopspower</a></li>
 </ul>
 <hr>
-<h2 id="Contact_Me">Contact Me</h2><p>Born in 1992, now a student of Southeast University, master of Software Engineering. Loving technology, programming, reading and sports.</p>
-<p>I will graduate in June 2017, expect the internship or full-time job in Android or iOS.</p>
-<p>If you have any questions or want to make friends with me, please feel free to contact me : <a href="mailto:imtangqi@gmail.com" title="Welcome to contact me" target="_blank" rel="external">imtangqi#gmail.com</a></p>
+<h2 id="License">License</h2><p>Apache 2.0</p>
+<hr>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
+<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
+<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
+<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+</ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p><a href="https://android-arsenal.com/details/1/2908"><img src="https://img.shields.io/badge/Android%20Arsenal-WaveLoadingView-green.svg?style=true" alt="Android Arsenal"></a></p>
-<p><a href="https://www.apache.org/licenses/LICENSE-2.0"><img src="https://img.shields.io/badge/license-Apache%202-green.svg" alt="License"></a>  </p>
-<p><strong>WaveLoadingView</strong> - An Android library providing to realize wave loading effect.</p>]]>
+    <![CDATA[<blockquote>
+<p><strong>WaveLoadingView</strong> - An Android library that provides a realistic wave-loading effect.</p>
+</blockquote>]]>
     
     </summary>
+    
+      <category term="Library" scheme="http://itangqi.me/tags/Library/"/>
     
       <category term="Loading" scheme="http://itangqi.me/tags/Loading/"/>
     
@@ -235,9 +244,9 @@
     <link href="http://itangqi.me/2015/11/02/comeback-diary/"/>
     <id>http://itangqi.me/2015/11/02/comeback-diary/</id>
     <published>2015-11-01T16:00:00.000Z</published>
-    <updated>2016-01-07T09:43:05.000Z</updated>
+    <updated>2016-01-08T10:32:52.000Z</updated>
     <content type="html"><![CDATA[<h3 id="2015年8月21日">2015年8月21日</h3><p>这一天，我结束了在 <a href="http://friendmedia.com/" target="_blank" rel="external">FriendMedia</a> 三个月短暂却又充实的工作。在这里，我结识了一群聪明且又友爱的伙伴；在这里，我体会到了创业公司的激情与不易；在这里，我一步步走向了 Android 开发的正轨。感谢 FM 给我的一切，愿你的未来一帆风顺。</p>
-<p>离职回到家后，我逼迫自己休息了一个星期，上午睡个懒觉，下午看看综艺节目，饭后出门散个步，晚上陪老妈扯会家常。让自己慢下来，不看技术文档与满屏的代码，享受与家人在一起的悠闲时光，我很珍惜，真的。</p>
+<p>离职回到家后，由于身体的原因，我逼迫自己休息了一个星期，上午睡个懒觉，下午看看综艺节目，饭后出门散个步，晚上陪老妈扯会家常。让自己慢下来，不看技术文档与满屏的代码，享受与家人在一起的悠闲时光，我很珍惜，真的。</p>
 <a id="more"></a> 
 <hr>
 <h3 id="2015年8月31日">2015年8月31日</h3><p>这一天，我成为了 <a href="http://www.seu.edu.cn/" target="_blank" rel="external">东南大学</a> 软件学院的一名研究僧。从 <a href="http://www.ccit.js.cn/" target="_blank" rel="external">常信</a> 到 <a href="http://cxxy.seu.edu.cn/" target="_blank" rel="external">成贤</a> 再到 <a href="http://www.seu.edu.cn/" target="_blank" rel="external">东大</a>，从大专到本三再到重点本科，一路走来，我从未想证明给任何人看，我只是单纯的「不信邪」，我始终坚信「我可以」。</p>
@@ -262,11 +271,15 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<h3 id="2015年8月21日">2015年8月21日</h3><p>这一天，我结束了在 <a href="http://friendmedia.com/">FriendMedia</a> 三个月短暂却又充实的工作。在这里，我结识了一群聪明且又友爱的伙伴；在这里，我体会到了创业公司的激情与不易；在这里，我一步步走向了 Android 开发的正轨。感谢 FM 给我的一切，愿你的未来一帆风顺。</p>
-<p>离职回到家后，我逼迫自己休息了一个星期，上午睡个懒觉，下午看看综艺节目，饭后出门散个步，晚上陪老妈扯会家常。让自己慢下来，不看技术文档与满屏的代码，享受与家人在一起的悠闲时光，我很珍惜，真的。</p>]]>
+<p>离职回到家后，由于身体的原因，我逼迫自己休息了一个星期，上午睡个懒觉，下午看看综艺节目，饭后出门散个步，晚上陪老妈扯会家常。让自己慢下来，不看技术文档与满屏的代码，享受与家人在一起的悠闲时光，我很珍惜，真的。</p>]]>
     
     </summary>
     
       <category term="Comeback" scheme="http://itangqi.me/tags/Comeback/"/>
+    
+      <category term="Diary" scheme="http://itangqi.me/tags/Diary/"/>
+    
+      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
     
       <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
     
@@ -277,7 +290,7 @@
     <link href="http://itangqi.me/2015/10/04/i-miss-you/"/>
     <id>http://itangqi.me/2015/10/04/i-miss-you/</id>
     <published>2015-10-03T16:00:00.000Z</published>
-    <updated>2016-01-07T09:42:24.000Z</updated>
+    <updated>2016-01-08T10:32:38.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>我还踮着脚思念<br>我还任记忆盘旋<br>我还闭着眼流泪<br>我还装作无所谓<br>我好想你 好想你<br>就深藏在心  </p>
 </blockquote>
@@ -306,6 +319,8 @@
     
       <category term="Dad" scheme="http://itangqi.me/tags/Dad/"/>
     
+      <category term="Miss" scheme="http://itangqi.me/tags/Miss/"/>
+    
       <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
     
   </entry>
@@ -315,7 +330,7 @@
     <link href="http://itangqi.me/2015/09/14/android-tips/"/>
     <id>http://itangqi.me/2015/09/14/android-tips/</id>
     <published>2015-09-13T16:00:00.000Z</published>
-    <updated>2016-01-07T09:20:52.000Z</updated>
+    <updated>2016-01-08T09:01:35.000Z</updated>
     <content type="html"><![CDATA[<h2 id="介绍">介绍</h2><p>学习 Android 至今，大大小小的坑没少踩，庆幸的是，在强大的搜索引擎与无私奉献的人们的帮助下，我遇到的坑都顺利地被填平了。</p>
 <p>为了便于日后遇到同样的问题时，能免于再次搜索带来的麻烦，我养成了收藏书签的习惯，随着书签（Tips）的日积月累，我想，是时候该有这个项目了。</p>
 <a id="more"></a> 
@@ -327,7 +342,7 @@
 <hr>
 <h2 id="地址">地址</h2><p>项目地址：<a href="https://github.com/tangqi92/Android-Tips" target="_blank" rel="external">https://github.com/tangqi92/Android-Tips</a></p>
 <hr>
-<h2 id="联系我">联系我</h2><ul>
+<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
 <li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
 <li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
 <li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
@@ -338,6 +353,8 @@
 <p>为了便于日后遇到同样的问题时，能免于再次搜索带来的麻烦，我养成了收藏书签的习惯，随着书签（Tips）的日积月累，我想，是时候该有这个项目了。</p>]]>
     
     </summary>
+    
+      <category term="List" scheme="http://itangqi.me/tags/List/"/>
     
       <category term="Tips" scheme="http://itangqi.me/tags/Tips/"/>
     
@@ -350,7 +367,7 @@
     <link href="http://itangqi.me/2015/09/03/building-blocks/"/>
     <id>http://itangqi.me/2015/09/03/building-blocks/</id>
     <published>2015-09-02T16:00:00.000Z</published>
-    <updated>2016-01-07T09:43:13.000Z</updated>
+    <updated>2016-01-08T10:31:52.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p><strong>积木</strong> - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！</p>
 </blockquote>
@@ -427,15 +444,15 @@
 <li>Logo: <a href="http://weibo.com/cat93/" target="_blank" rel="external">Mao</a> &amp; <a href="https://github.com/troyliu0105" target="_blank" rel="external">troyliu0105</a></li>
 </ul>
 <hr>
+<h2 id="Demo_-_示例">Demo - 示例</h2><p><a href="http://7xk54v.com1.z0.glb.clouddn.com/app/bb/0.7.0.apk" target="_blank" rel="external">快速下载</a></p>
+<hr>
+<h2 id="Source_code_-_源码">Source code - 源码</h2><p>源代码：<a href="https://github.com/tangqi92/BuildingBlocks" target="_blank" rel="external">https://github.com/tangqi92/BuildingBlocks</a></p>
+<hr>
 <h2 id="Contact_-_联系我">Contact - 联系我</h2><ul>
 <li>Weibo：<a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a></li>
 <li>Blog: <a href="http://itangqi.me">http://itangqi.me</a></li>
 <li>Gmail：<a href="mailto:imtangqi@gmail.com" title="欢迎与我联系" target="_blank" rel="external">imtangqi#gmail.com</a></li>
 </ul>
-<hr>
-<h2 id="Demo_-_示例">Demo - 示例</h2><p><a href="http://7xk54v.com1.z0.glb.clouddn.com/app/bb/0.7.0.apk" target="_blank" rel="external">快速下载</a></p>
-<hr>
-<h2 id="Source_code_-_源码">Source code - 源码</h2><p>源代码：<a href="https://github.com/tangqi92/BuildingBlocks" target="_blank" rel="external">https://github.com/tangqi92/BuildingBlocks</a></p>
 <hr>
 <p>最后更新时间：2015-10-07 19:47</p>
 ]]></content>
@@ -448,6 +465,8 @@
     
       <category term="AOSP" scheme="http://itangqi.me/tags/AOSP/"/>
     
+      <category term="Framework" scheme="http://itangqi.me/tags/Framework/"/>
+    
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
   </entry>
@@ -457,7 +476,7 @@
     <link href="http://itangqi.me/2015/08/09/google-places-for-android-guide/"/>
     <id>http://itangqi.me/2015/08/09/google-places-for-android-guide/</id>
     <published>2015-08-08T16:00:00.000Z</published>
-    <updated>2016-01-07T09:41:55.000Z</updated>
+    <updated>2016-01-08T10:32:43.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>最近由于项目的原因，接触到了 <a href="https://developers.google.com/places/" target="_blank" rel="external">Google Places</a> 的使用与开发，学习并在项目中实现了简单的<strong>地点定位</strong>与<strong>自动补全</strong>功能。</p>
 <p>在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .</p>
 <a id="more"></a> 
@@ -527,6 +546,8 @@
     
       <category term="Google Places" scheme="http://itangqi.me/tags/Google-Places/"/>
     
+      <category term="Location" scheme="http://itangqi.me/tags/Location/"/>
+    
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
   </entry>
@@ -536,7 +557,7 @@
     <link href="http://itangqi.me/2015/07/26/orm-greendao-summary/"/>
     <id>http://itangqi.me/2015/07/26/orm-greendao-summary/</id>
     <published>2015-07-25T16:00:00.000Z</published>
-    <updated>2016-01-07T09:17:34.000Z</updated>
+    <updated>2016-01-08T10:38:34.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>我相信，在平时的开发过程中，大家一定会或多或少地接触到 <a href="https://en.wikipedia.org/wiki/SQLite" target="_blank" rel="external">SQLite</a>。然而在使用它时，我们往往需要做许多额外的工作，像编写 SQL 语句与解析查询结果等。所以，适用于 Android 的 <strong>ORM</strong> 框架也就孕育而生了，现在市面上主流的框架有 OrmLite、SugarORM、Active Android、Realm 与 GreenDAO。而今天的主角便是 <strong>greenDAO</strong>，下面，我将详解地介绍如何在 <strong>Android Studio</strong> 上使用 <strong>greenDAO</strong>，并结合代码总结一些使用过程中的心得。</p>
 <a id="more"></a> 
 <hr>
@@ -593,7 +614,8 @@
 </li>
 </ul>
 <h3 id="五-_运行结果">五. 运行结果</h3><p>一切就绪，让我们看看效果吧！运行程序，分别执行<strong>添加</strong>按钮、<strong>删除</strong>（点击 List 的 Item）与<strong>查询</strong>按钮，可以在控制台得到如下日志：  </p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_add_min.png" alt="screenshot" title="screenshot" width="350" height="622"><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_delete_min.png" alt="screenshot" title="screenshot" width="350" height="622"><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_search.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_add_min.png" alt="screenshot" title="screenshot" width="350" height="622"> <img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_delete_min.png" alt="screenshot" title="screenshot" width="350" height="622">  </p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/gd_sc_search.png" alt=""></p>
 <hr>
 <h2 id="升级">升级</h2><p><a href="http://blog.csdn.net/growth58/article/details/50453038" target="_blank" rel="external">GreenDao数据库升级解决方案</a> by <a href="http://weibo.com/weiguo58" target="_blank" rel="external">@于卫国</a></p>
 <hr>
@@ -626,10 +648,10 @@
   
   <entry>
     <title><![CDATA[世界那么大，我想去看看]]></title>
-    <link href="http://itangqi.me/2015/05/11/the-interview-summary/"/>
-    <id>http://itangqi.me/2015/05/11/the-interview-summary/</id>
+    <link href="http://itangqi.me/2015/05/11/interview-summary/"/>
+    <id>http://itangqi.me/2015/05/11/interview-summary/</id>
     <published>2015-05-10T16:00:00.000Z</published>
-    <updated>2016-01-07T09:17:26.000Z</updated>
+    <updated>2016-01-08T10:25:23.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>一直以来，我都梦想着能加入一家小而美的公司，一家硅谷范儿的公司，一加拥有工程师文化的公司，每天能和一群聪明的人在一起做些酷炫的事情。感谢，在历时两天半，历经五家公司的面试后，这个梦想终于实现了。</p>
 <p>下面，我会依次回顾每家公司的面试经历与总结其中的心得，希望能在自我总结的同时，给大家提供一些有价值的信息。</p>
 <a id="more"></a> 
@@ -786,10 +808,10 @@
   
   <entry>
     <title><![CDATA[如何通过电脑操控 Android 设备]]></title>
-    <link href="http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/"/>
-    <id>http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/</id>
+    <link href="http://itangqi.me/2015/04/11/control-android-device-by-pc/"/>
+    <id>http://itangqi.me/2015/04/11/control-android-device-by-pc/</id>
     <published>2015-04-10T16:00:00.000Z</published>
-    <updated>2016-01-07T09:42:33.000Z</updated>
+    <updated>2016-01-08T10:32:49.000Z</updated>
     <content type="html"><![CDATA[<h2 id="背景">背景</h2><p>由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。</p>
 <a id="more"></a> 
 <h3 id="VNC">VNC</h3><p>其中涉及到最主要的技术便是 <a href="http://en.wikipedia.org/wiki/Virtual_Network_Computing" target="_blank" rel="external">VNC</a> (Virtual Network Computing) ，它是使用远程帧缓冲协议（RFB）远程控制另一台计算机（设备）的图形桌面共享系统，其主要包括：                              </p>
@@ -883,6 +905,8 @@
     
     </summary>
     
+      <category term="Emulator" scheme="http://itangqi.me/tags/Emulator/"/>
+    
       <category term="VNC" scheme="http://itangqi.me/tags/VNC/"/>
     
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
@@ -891,10 +915,10 @@
   
   <entry>
     <title><![CDATA[Java 与 JavaScript 如何进行交互]]></title>
-    <link href="http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/"/>
-    <id>http://itangqi.me/2015/03/07/java-and-javascript-interaction-in-android/</id>
+    <link href="http://itangqi.me/2015/03/07/java-and-javascript-interaction/"/>
+    <id>http://itangqi.me/2015/03/07/java-and-javascript-interaction/</id>
     <published>2015-03-06T16:00:00.000Z</published>
-    <updated>2016-01-07T09:42:17.000Z</updated>
+    <updated>2016-01-08T10:32:32.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Hybrid_App">Hybrid App</h2><ul>
 <li><p><a href="http://baike.baidu.com/link?url=oEcVTV16sU0agGHHebRey-cur6xumEuvDU77apaDBHKgGyWZwxTQYKCacn_MX51sogG2l4aj_KX406pcrP5sHK" target="_blank" rel="external">Hybrid App</a> : 又称「混合模式移动应用」，是指介于 Web App 和 Native App 这两者之间的 App，兼具「Native App 良好用户交互体验的优势」和「Web App 跨平台开发的优势」。</p>
 </li>
@@ -956,6 +980,8 @@
     
       <category term="Hybrid App" scheme="http://itangqi.me/tags/Hybrid-App/"/>
     
+      <category term="WebView" scheme="http://itangqi.me/tags/WebView/"/>
+    
       <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
     
   </entry>
@@ -965,7 +991,7 @@
     <link href="http://itangqi.me/2015/02/15/talk-about-material-design/"/>
     <id>http://itangqi.me/2015/02/15/talk-about-material-design/</id>
     <published>2015-02-14T16:00:00.000Z</published>
-    <updated>2016-01-07T09:17:40.000Z</updated>
+    <updated>2016-01-08T10:25:39.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>由于公司产品应用场景的特殊性，在平时的开发过程中，我基本不需要涉及 UI 相关的工作，但每每见到各种自定义控件与酷炫的动画效果时，我心里总是痒痒的。所以我决定开始学习与积累相关知识，虽然离「Material Design」概念的提出已经有一段时间了，但现在开始学习也不算太晚。</p>
 <a id="more"></a> 
 <hr>
@@ -1034,19 +1060,19 @@
   
   <entry>
     <title><![CDATA[相见恨晚 - Alfred Workflows]]></title>
-    <link href="http://itangqi.me/2015/01/21/alfred-workflows-recommend/"/>
-    <id>http://itangqi.me/2015/01/21/alfred-workflows-recommend/</id>
+    <link href="http://itangqi.me/2015/01/21/alfred-workflows-recommendation/"/>
+    <id>http://itangqi.me/2015/01/21/alfred-workflows-recommendation/</id>
     <published>2015-01-20T16:00:00.000Z</published>
-    <updated>2016-01-07T09:42:03.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」那么，<a href="http://www.alfredapp.com/" target="_blank" rel="external"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！！！（对，你没听错，我说的就是 「神器」）</p>
-<p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率，无论是工作还是生活，我现在已经离不开它了！</p>
+    <updated>2016-01-08T10:31:58.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」<br>那么，<a href="http://www.alfredapp.com/" target="_blank" rel="external"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！（对，你没听错，相信我，它绝对配得上「神器」的称号。）</p>
+<p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率（无论是工作还是生活），事实是，我现在已经离不开它了！</p>
+<a id="more"></a> 
 <p>关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  </p>
 <ul>
-<li><a href="http://macshuo.com/?p=625" target="_blank" rel="external">神兵利器——Alfred</a></li>
+<li><a href="http://macshuo.com/?p=625" target="_blank" rel="external">神兵利器——Alfred</a>  </li>
 <li><a href="http://wellsnake.com/jekyll/update/2014/06/15/001/" target="_blank" rel="external">丢掉鼠标－Mac神软Alfred使用手册1</a></li>
 </ul>
-<p>而今天我要介绍的重点，则是 Alfred 的杀手级功能 <a href="http://baike.baidu.com/link?url=vWcxHgs2yTgrDl3DgvZl17_FLMZdp9RSdExPrW0MRDtjn4R4SjbSSnRBK3nD3NG03da3IAuEbIs14celMAhEBMNC-NF4lNZjcX2WYG6UtVG4YpDCSQ0x9XgV23TCZyMilFM4WmQPTNfIEu46nymBeK" target="_blank" rel="external">Workflows</a>，下面我将隆重介绍，在我每天工作和生活中都会使用到的 Workflow ，以此来说明其功能是如何之强大。</p>
-<a id="more"></a> 
+<p>而今天我要介绍的重点，则是 Alfred 的杀手级功能 <a href="http://baike.baidu.com/link?url=vWcxHgs2yTgrDl3DgvZl17_FLMZdp9RSdExPrW0MRDtjn4R4SjbSSnRBK3nD3NG03da3IAuEbIs14celMAhEBMNC-NF4lNZjcX2WYG6UtVG4YpDCSQ0x9XgV23TCZyMilFM4WmQPTNfIEu46nymBeK" target="_blank" rel="external">Workflows</a>，下面我将隆重介绍，在我每天工作和生活中都会使用到的 Workflow ，相信其中一定有适合你的。</p>
 <hr>
 <h2 id="例子">例子</h2><h3 id="StackOverflow">StackOverflow</h3><ul>
 <li>StackOverflow on Alfred ~ by <a href="https://github.com/xhinking" target="_blank" rel="external">@xhinking</a>             </li>
@@ -1128,18 +1154,14 @@
 </ul>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」那么，<a href="http://www.alfredapp.com/"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！！！（对，你没听错，我说的就是 「神器」）</p>
-<p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率，无论是工作还是生活，我现在已经离不开它了！</p>
-<p>关于「Alfred」的基本介绍与使用技巧，你可以参见如下两篇文章：  </p>
-<ul>
-<li><a href="http://macshuo.com/?p=625">神兵利器——Alfred</a></li>
-<li><a href="http://wellsnake.com/jekyll/update/2014/06/15/001/">丢掉鼠标－Mac神软Alfred使用手册1</a></li>
-</ul>
-<p>而今天我要介绍的重点，则是 Alfred 的杀手级功能 <a href="http://baike.baidu.com/link?url=vWcxHgs2yTgrDl3DgvZl17_FLMZdp9RSdExPrW0MRDtjn4R4SjbSSnRBK3nD3NG03da3IAuEbIs14celMAhEBMNC-NF4lNZjcX2WYG6UtVG4YpDCSQ0x9XgV23TCZyMilFM4WmQPTNfIEu46nymBeK">Workflows</a>，下面我将隆重介绍，在我每天工作和生活中都会使用到的 Workflow ，以此来说明其功能是如何之强大。</p>]]>
+    <![CDATA[<h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」<br>那么，<a href="http://www.alfredapp.com/"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！（对，你没听错，相信我，它绝对配得上「神器」的称号。）</p>
+<p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率（无论是工作还是生活），事实是，我现在已经离不开它了！</p>]]>
     
     </summary>
     
       <category term="Alfred" scheme="http://itangqi.me/tags/Alfred/"/>
+    
+      <category term="Workflows" scheme="http://itangqi.me/tags/Workflows/"/>
     
       <category term="Mac" scheme="http://itangqi.me/categories/Mac/"/>
     
@@ -1150,7 +1172,7 @@
     <link href="http://itangqi.me/2015/01/01/everything-is-just-beginning/"/>
     <id>http://itangqi.me/2015/01/01/everything-is-just-beginning/</id>
     <published>2014-12-31T16:00:00.000Z</published>
-    <updated>2016-01-07T09:42:42.000Z</updated>
+    <updated>2016-01-08T10:32:47.000Z</updated>
     <content type="html"><![CDATA[<h2 id="In_a_word">In a word</h2><blockquote>
 <p>Talk is cheap. Show me the code.</p>
 </blockquote>

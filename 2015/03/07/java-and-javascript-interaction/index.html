@@ -13,7 +13,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>如何通过电脑操控 Android 设备 | Qi Tang&#39;s Blog</title>
+  <title>Java 与 JavaScript 如何进行交互 | Qi Tang&#39;s Blog</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -97,7 +97,7 @@
                </div>
                <div class="sb-item sb-words">
                   <a href="javascript:void(0)">
-                    <span class="sb-item-count">31.0k</span>
+                    <span class="sb-item-count">31.5k</span>
                     <span class="sb-item-name">字数</span>
                   </a>
                </div>
@@ -113,7 +113,9 @@
       <div class="sb-rss">
         <a href="/atom.xml">RSS</a>
       </div>
-      
+
+       
+
       <div class="web-links"> 
         
         <div class="sb-links">
@@ -127,7 +129,7 @@
         
       </div>
 
-      <div class="cc-license">
+     <div class="cc-license">
         <a href="http://creativecommons.org/licenses/by-nc/4.0">
           <img src="http://7bv937.com1.z0.glb.clouddn.com/qcyoung/cc-by-nc.svg">
         </a>
@@ -158,11 +160,11 @@
                     <nav>
                         <ul class="nav">
                             <li><a href="/" class="animsition-link website-title">Qi Tang's Blog</a></li>
-                            <li><a href="/archives" class="animsition-link" title="archive">归档</a></li>
-                            <li class="mobile-li"><a href="/categories" class="animsition-link" title="categories">目录</a></li>
-                            <li><a href="/tags" class="animsition-link" title="tag">标签</a></li>
-                            <li class="mobile-li"><a href="/about" class="animsition-link" title="about">关于</a></li>
-                            <li class="mobile-li"><a href="/messageboard" class="animsition-link" title="messageboard">留言板</a></li>
+                            <li><a href="/archives" class="animsition-link" title="Archive">归档</a></li>
+                            <li class="mobile-li"><a href="/categories" class="animsition-link" title="Category">目录</a></li>
+                            <li><a href="/tags" class="animsition-link" title="Tag">标签</a></li>
+                            <li class="mobile-li"><a href="/about" class="animsition-link" title="About">关于</a></li>
+                            <li class="mobile-li"><a href="/messageboard" class="animsition-link" title="Messageboard">留言板</a></li>
                             
                             <li><a href="https://github.com/tangqi92" title="Github" target="_blank"><i class="icon-Popular_GitHub"></i></a></li>
                             
@@ -226,9 +228,9 @@
         <div class="post-content">
             <div class="col-md-8 col-md-offset-2">
                 <div>
-                    <h1>如何通过电脑操控 Android 设备</h1>
-                    <time datetime="2015-04-10T16:00:00.000Z" itemprop="datePublished" style="color:#969696;display: block;font-size: 13px;font-weight: 400;width: 100%;height: 30px;text-align: center;">
-                        2015 年 04 月 11 日
+                    <h1>Java 与 JavaScript 如何进行交互</h1>
+                    <time datetime="2015-03-06T16:00:00.000Z" itemprop="datePublished" style="color:#969696;display: block;font-size: 13px;font-weight: 400;width: 100%;height: 30px;text-align: center;">
+                        2015 年 03 月 07 日
                     </time>
                 </div>
             </div>
@@ -236,90 +238,49 @@
                 
                     <div id="toc" class="toc-article">
                         <strong class="toc-title">目录</strong>
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VNC"><span class="toc-number">1.1.</span> <span class="toc-text">VNC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工作流程"><span class="toc-number">1.2.</span> <span class="toc-text">工作流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">2.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体操作"><span class="toc-number">3.</span> <span class="toc-text">具体操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模拟器_ROOT"><span class="toc-number">3.1.</span> <span class="toc-text">模拟器 ROOT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载_android-vnc-server"><span class="toc-number">3.2.</span> <span class="toc-text">下载 android-vnc-server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装_android-vnc-server"><span class="toc-number">3.3.</span> <span class="toc-text">安装 android-vnc-server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-_将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法："><span class="toc-number">3.4.</span> <span class="toc-text">1. 将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-_更改「androidvncserver_x86」的权限，同样也有两种方法："><span class="toc-number">3.5.</span> <span class="toc-text">2. 更改「androidvncserver_x86」的权限，同样也有两种方法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-_运行_androidvncserver_x86"><span class="toc-number">3.6.</span> <span class="toc-text">3. 运行 androidvncserver_x86</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行_VNC_Viewer"><span class="toc-number">3.7.</span> <span class="toc-text">运行 VNC Viewer</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tips"><span class="toc-number">4.</span> <span class="toc-text">Tips</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期待与你成为朋友"><span class="toc-number">5.</span> <span class="toc-text">期待与你成为朋友</span></a></li></ol>
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hybrid_App"><span class="toc-number">1.</span> <span class="toc-text">Hybrid App</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WebKit_&_Chromium"><span class="toc-number">2.</span> <span class="toc-text">WebKit & Chromium</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交互实例"><span class="toc-number">3.</span> <span class="toc-text">交互实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全性"><span class="toc-number">4.</span> <span class="toc-text">安全性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期待与你成为朋友"><span class="toc-number">5.</span> <span class="toc-text">期待与你成为朋友</span></a></li></ol>
                     </div>
                 
-                <h2 id="背景">背景</h2><p>由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。</p>
+                <h2 id="Hybrid_App">Hybrid App</h2><ul>
+<li><p><a href="http://baike.baidu.com/link?url=oEcVTV16sU0agGHHebRey-cur6xumEuvDU77apaDBHKgGyWZwxTQYKCacn_MX51sogG2l4aj_KX406pcrP5sHK" target="_blank" rel="external">Hybrid App</a> : 又称「混合模式移动应用」，是指介于 Web App 和 Native App 这两者之间的 App，兼具「Native App 良好用户交互体验的优势」和「Web App 跨平台开发的优势」。</p>
+</li>
+<li><p><a href="http://www.smashingmagazine.com/2014/10/21/providing-a-native-experience-with-web-technologies/" target="_blank" rel="external">Hybrid Mobile Apps: Providing A Native Experience With Web Technologies</a> : This article provides many hints, code snippets and lessons learned on how to build great hybrid mobile apps.</p>
+</li>
+<li><p><a href="https://www.codementor.io/android/tutorial/secure-hybrid-html5-android-webview-mobile-app" target="_blank" rel="external">Tutorial: How to Safely Implement Hybrid HTML5 Android Applications</a> : In this short tutorial we will discover how to integrate web applications into our native Android applications, including how to create a secure JavaScript-Java bridge.</p>
+</li>
+</ul>
 <a id="more"></a> 
-<h3 id="VNC">VNC</h3><p>其中涉及到最主要的技术便是 <a href="http://en.wikipedia.org/wiki/Virtual_Network_Computing" target="_blank" rel="external">VNC</a> (Virtual Network Computing) ，它是使用远程帧缓冲协议（RFB）远程控制另一台计算机（设备）的图形桌面共享系统，其主要包括：                              </p>
-<ul>
-<li><p>VNC Server ：此服务程序必须在在主（或遥控）计算机（设备）上运行。你只能作为使用者（不需要根用户身份）使用此项服务。</p>
+<hr>
+<h2 id="WebKit_&amp;_Chromium">WebKit &amp; Chromium</h2><ul>
+<li><p><a href="http://developer.android.com/reference/android/webkit/package-summary.html" target="_blank" rel="external">WebKit</a> : 官方文档</p>
 </li>
-<li><p>VNC Viewer ：本地应用程序，用于远程接入运行 VNC Server 的计算机（设备）并显示其环境。你需要知道远程计算机（设备）的 IP 地址和 VNC Server 设定的密码。</p>
+<li><p><a href="http://www.mobilexweb.com/blog/android-4-4-kitkat-browser-chrome-webview" target="_blank" rel="external">Android 4.4 KitKat, the browser and the Chrome WebView</a> : Android 4.4 has made a big change in the OS’ internals for HTML5 development: it has replaced its original WebKit-based WebView with modern Chromium.</p>
+</li>
+<li><p><a href="http://blog.csdn.net/milado_nju/article/details/17098399" target="_blank" rel="external">理解WebKit和Chromium: Android 4.4 上的Chromium WebView</a> : 在最新的Android 4.4 Kitkat 版本中，原本基于Android「WebKit」的 WebView 实现被换成基于「Chromium」的 WebView 实现。</p>
 </li>
 </ul>
-<h3 id="工作流程">工作流程</h3><ol>
-<li>在服务器端启动 VNC Server。</li>
-<li>VNC 客户端通过浏览器或 VNC Viewer 连接至 VNC Server。</li>
-<li>VNC Server 传送一对话窗口至客户端，要求输入连接密码， 以及存取的 VNC Server 显示装置。</li>
-<li>在客户端输入联机密码后，VNC Server 验证客户端是否具有存取权限。</li>
-<li>若是客户端通过 VNC Server 的验证，客户端即要求 VNC Server 显示桌面环境。</li>
-<li>VNC Server 通过 X Protocol 要求 X Server 将画面显示控制权交由 VNC Server 负责。</li>
-<li>VNC Server 将来由 X Server 的桌面环境利用 VNC 通信协议送至客户端， 并且允许客户端控制 VNC Server 的桌面环境及输入装置。</li>
+<hr>
+<h2 id="交互实例">交互实例</h2><ul>
+<li><a href="http://droidyue.com/blog/2014/09/20/interaction-between-java-and-javascript-in-android/" target="_blank" rel="external">Android中Java和JavaScript交互</a> : 此篇博文十分详细地介绍了具体的实现步骤和可能会遇到的问题及解决办法。</li>
+</ul>
+<p>###Java 与 JS 交互只需如下几步：</p>
+<ol>
+<li>WebView开启JavaScript脚本执行 </li>
+<li>WebView设置供JavaScript调用的交互接口</li>
+<li>客户端和网页端编写调用对方的代码</li>
 </ol>
 <hr>
-<h2 id="说明">说明</h2><p>网上已经有许多关于电脑控制手机（真机）的工具与教程且亲测可行，具体请参考：  </p>
-<ul>
-<li><a href="http://blog.laptopmag.com/control-android-from-pc" target="_blank" rel="external">How to Control an Android Device From Your PC</a>  </li>
-<li><a href="http://www.21kexin.com/jishu/201307308.html" target="_blank" rel="external">通过Droid VNC Server简单配置让PC电脑控制Android手机
-</a></li>
-</ul>
-<p>但是！但是！但是！！！<br>坑就是从这里开始的，由于项目需求的特殊性，我需要在<a href="http://www.360doc.com/content/11/0412/10/4818519_109021260.shtml" target="_blank" rel="external">模拟器</a>（Android Emulator）上实现相同的效果（后面会具体说明模拟器与真机的差别与难点），所以接下来我会详细介绍实现操控模拟器的具体操作步骤。</p>
-<hr>
-<h2 id="具体操作">具体操作</h2><h3 id="模拟器_ROOT">模拟器 ROOT</h3><p>由于大多数「VNC Server For Android」应用都需要求手机为 Root 状态（后来发现有不需要 Root 的，但没有进行实际验证），所以第一步便是实现模拟器的 Root ：</p>
-<ul>
-<li>如果你使用的是第三方模拟器 <a href="http://www.iplaysoft.com/genymotion.html" target="_blank" rel="external">Genymotion</a> 的话（在这里强烈推荐下），则系统（4.0+）默认为 Root 状态</li>
-</ul>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/1.pic_hd.jpg" alt=""> </p>
-<ul>
-<li><p>如果你使用的是原生模拟器的话（赶紧换吧，立马提升工作效率），则可以按如下操作实现 Root ：                                   </p>
-<p>  <a href="http://blog.csdn.net/guangsuxinhen4/article/details/26241067" target="_blank" rel="external">Android AVD emulator模拟器获取root权限（4.1.2以下）</a></p>
-</li>
-</ul>
-<h3 id="下载_android-vnc-server">下载 android-vnc-server</h3><p>这里就要涉及到「ARM」与「X86」的概念，详情请参见：<a href="http://mobile.hiapk.com/knowledge/common/130718/1438966.html" target="_blank" rel="external">手机CPU科普 ARM构架与X86构架的优劣对比</a>，之后便参照下面步骤实现安装：</p>
-<ul>
-<li><p>如果你使用的是第三方模拟器 Genymotion，由于其依托 <a href="http://baike.baidu.com/link?url=qYBqekGQvAoJs5t2w1c8a1omyj44_lnzwMx5HxNi7YzU2kKMFrs9RFgwqzQ2tuuF7OLmRPJB9D6GqF8cR_myoq" target="_blank" rel="external">VirtualBox</a>，所以其模拟器的架构默认为 X86，因此你需要下载可以在 X86 下运行的 VNC Server 版本：<a href="http://pan.baidu.com/s/1sjODcdB" target="_blank" rel="external">androidvncserver_x86</a></p>
-</li>
-<li><p>如果你使用的是原生模拟器，则在创建 AVD 时「CPU/ABI」选择「ARM」，</p>
-</li>
-</ul>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/arm2.png" alt=""></p>
-<p>随后下载 ARM 版本 <a href="http://pan.baidu.com/s/1pJmh42f" target="_blank" rel="external">androidvncserver</a>               </p>
-<h3 id="安装_android-vnc-server">安装 android-vnc-server</h3><h3 id="1-_将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：">1. 将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：</h3><ul>
-<li><p>使用 adb push 进去，如下：</p>
-<pre><code><span class="label">adb</span> <span class="keyword">push </span>所在路径/<span class="keyword">androidvncserver_x86 </span>/<span class="preprocessor">data</span>/local/
-</code></pre></li>
-<li><p>使用文件夹管理工具，如 <a href="http://pan.baidu.com/s/1c0vXrRq" target="_blank" rel="external">Root Explorer</a></p>
-</li>
-</ul>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/explorer.jpg" alt=""></p>
-<h3 id="2-_更改「androidvncserver_x86」的权限，同样也有两种方法：">2. 更改「androidvncserver_x86」的权限，同样也有两种方法：</h3><ul>
-<li><p>使用 adb</p>
-<pre><code><span class="preprocessor"># chmod <span class="number">555</span> androidvncserver_x86</span>
-</code></pre></li>
-<li><p>使用文件夹管理</p>
-</li>
-</ul>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/555.png" alt=""></p>
-<h3 id="3-_运行_androidvncserver_x86">3. 运行 androidvncserver_x86</h3><pre><code># /<span class="preprocessor">data</span>/local/<span class="keyword">androidvncserver_x86 </span>&amp;
-</code></pre><p><strong>注：如果这一步出现</strong></p>
-<blockquote>
-<p>Initializing framebuffer device /dev/graphics/fb0…<br>xres=320, yres=480, xresv=320, yresv=960, xoffs=0, yoffs=0, bpp=16<br>Initializing keyboard device /dev/input/event3 …<br>cannot open kbd device /dev/input/event3</p>
+<h2 id="安全性">安全性</h2><blockquote>
+<p>网上的方法可以告诉我们这个时候我们可以使用addjavascriptInterface来注入原生接口到JS中，但是在安卓4.2以下的系统中，这种方案却我们的应用带来了很大的安全风险。攻击者如果在页面执行一些非法的JS（诱导用户打开一些钓鱼网站以进入风险页面），极有可能反弹拿到用户手机的shell权限。接下来攻击者就可以在后台默默安装木马，完全洞穿用户的手机。详细的攻击过程可以见乌云平台的这份报告：<a href="http://drops.wooyun.org/papers/548" target="_blank" rel="external">WebView中接口隐患与手机挂马利用</a>。</p>
 </blockquote>
-<p>大家可以参考<a href="http://blog.goo.ne.jp/karutaya/e/a815571ef06640ea33fbb1bcf08ac9ed" target="_blank" rel="external">这里</a>，其关键就是：</p>
-<pre><code>&gt; adb shell
-# <span class="regexp">/data/</span>androidvncserver -k <span class="regexp">/dev/i</span>nput<span class="regexp">/event0 -t /</span>dev<span class="regexp">/input/</span>event0 &amp;
-</code></pre><h3 id="运行_VNC_Viewer">运行 VNC Viewer</h3><ol>
-<li>下载相应版本<a href="https://www.realvnc.com/download/vnc/" target="_blank" rel="external">VNC</a>并安装</li>
-<li>adb forward tcp:5901 tcp:5901</li>
-<li>打开 VNC Viewer，地址填写「127.0.0.1:5901」，点击「连接」后便可看到画面</li>
-</ol>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/viewer.png" alt=""></p>
-<hr>
-<h2 id="Tips">Tips</h2><ol>
-<li><a href="http://jingyan.baidu.com/article/17bd8e52f514d985ab2bb800.html" target="_blank" rel="external">ADB 环境变量配置</a></li>
-<li><a href="http://www.open-open.com/lib/view/1327557366686" target="_blank" rel="external">ADB Shell 命令详解</a></li>
-</ol>
+<ul>
+<li><p><a href="http://www.pedant.cn/2014/07/04/webview-js-java-interface-research/" target="_blank" rel="external">在WebView中如何让JS与Java安全地互相调用</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/leehong2005/article/details/11808557" target="_blank" rel="external">Android WebView的Js对象注入漏洞解决方案</a></p>
+</li>
+<li><p><a href="http://gundumw100.iteye.com/blog/1158719" target="_blank" rel="external">在Android的webview中定制js的alert,confirm和prompt对话框的方法</a></p>
+</li>
+</ul>
 <hr>
 <h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
 <li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
@@ -332,13 +293,15 @@
             <hr class="nogutter">
             <div class="summary">
                 <!-- <i class="demo-icon icon-file-code">&#xe800;</i> <span class="i-name"></span> -->
-                <i class="demo-icon icon-file-word">&#xe802;</i><span class="i-name">1,643字</span>
+                <i class="demo-icon icon-file-word">&#xe802;</i><span class="i-name">826字</span>
                 <i class="demo-icon icon-tags">&#xe801;</i> <span class="i-name"></span>
                 <span class="post-meta">
                     
                         
                         
-                            <a class='post-tags' href='/tags/VNC/'>VNC</a>
+                            <a class='post-tags' href='/tags/Hybrid-App/'>Hybrid App</a>
+                        
+                            <a class='post-tags' href='/tags/WebView/'>WebView</a>
                         
                     
                 </span>
@@ -349,23 +312,23 @@
                <span id="share" style="float: right;position: relative;">
                     <div class="qrcode" id="qrcode" style="display: none;"></div>
                     <a id="wechat" class="share-icon" title="分享到微信" data-wechat-url="undefined" href="javascript:void(0);"><i class="icon-CN_tencent_wechat"></i></a>
-                    <a id="weibo" class="share-icon" target="_blank" title="分享到微博" href="http://service.weibo.com/share/share.php?title=如何通过电脑操控 Android 设备 | Qi Tang&#39;s Blog &amp;url=http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/index.html&amp;type=3&amp;searchPic=false"><i class="icon-CN_sina_weibo"></i></a>
-                    <a id="qzone" class="share-icon" target="_blank" title="分享到 QQ 空间" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/index.html&amp;title=如何通过电脑操控 Android 设备 | Qi Tang&#39;s Blog"><i class="icon-CN_tencent_qzone"></i></a>
-                    <a id="twitter" class="share-icon" target="_blank" title="Share to Twitter" href="https://twitter.com/intent/tweet?url=http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/index.html&amp;text=如何通过电脑操控 Android 设备;via=Qi Tang| Qi Tang&#39;s Blog"><i class="icon-Popular_Twitter"></i></a>
-                    <a id="facebook" class="share-icon" target="_blank" title="Share to Facebook" href="http://www.facebook.com/sharer.php?u=undefined&amp;t=如何通过电脑操控 Android 设备 | Qi Tang&#39;s Blog"><i class="icon-Popular_Facebook"></i></a>
-                    <a id="gplus" class="share-icon" target="_blank" title="Share to Google+" href="https://plus.google.com/share?url=http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/index.html"><i class="icon-Popular_G"></i></a>
+                    <a id="weibo" class="share-icon" target="_blank" title="分享到微博" href="http://service.weibo.com/share/share.php?title=Java 与 JavaScript 如何进行交互 | Qi Tang&#39;s Blog &amp;url=http://itangqi.me/2015/03/07/java-and-javascript-interaction/index.html&amp;type=3&amp;searchPic=false"><i class="icon-CN_sina_weibo"></i></a>
+                    <a id="qzone" class="share-icon" target="_blank" title="分享到 QQ 空间" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://itangqi.me/2015/03/07/java-and-javascript-interaction/index.html&amp;title=Java 与 JavaScript 如何进行交互 | Qi Tang&#39;s Blog"><i class="icon-CN_tencent_qzone"></i></a>
+                    <a id="twitter" class="share-icon" target="_blank" title="Share to Twitter" href="https://twitter.com/intent/tweet?url=http://itangqi.me/2015/03/07/java-and-javascript-interaction/index.html&amp;text=Java 与 JavaScript 如何进行交互;via=Qi Tang| Qi Tang&#39;s Blog"><i class="icon-Popular_Twitter"></i></a>
+                    <a id="facebook" class="share-icon" target="_blank" title="Share to Facebook" href="http://www.facebook.com/sharer.php?u=undefined&amp;t=Java 与 JavaScript 如何进行交互 | Qi Tang&#39;s Blog"><i class="icon-Popular_Facebook"></i></a>
+                    <a id="gplus" class="share-icon" target="_blank" title="Share to Google+" href="https://plus.google.com/share?url=http://itangqi.me/2015/03/07/java-and-javascript-interaction/index.html"><i class="icon-Popular_G"></i></a>
                 </span>
             </div>
         </div>
         <nav class="pagination" role="pagination">
     
-    <a class="pull-left" href="/2015/05/11/the-interview-summary/" style="float: left;">
-        ← 世界那么大，我想去看看
+    <a class="pull-left" href="/2015/04/11/control-android-device-by-pc/" style="float: left;">
+        ← 如何通过电脑操控 Android 设备
     </a>
     
     
-    <a class="pull-right" href="/2015/03/07/java-and-javascript-interaction-in-android/">
-        Java 与 JavaScript 如何进行交互 →
+    <a class="pull-right" href="/2015/02/15/talk-about-material-design/">
+        浅谈 Material Design →
     </a>
     
 </nav>
@@ -399,7 +362,7 @@
     $("#wechat").hover(function() {
         $("#qrcode").css('display','inline-block');
         jQuery("#qrcode").qrcode({
-            text:utf16to8("http://itangqi.me/2015/04/11/how-to-control-an-android-device-from-your-pc/index.html"),
+            text:utf16to8("http://itangqi.me/2015/03/07/java-and-javascript-interaction/index.html"),
             width:96,
             height:96
         });
@@ -445,20 +408,15 @@
             </div>
             <div class="copy">
                 <p style="margin:0">
-                    &copy; 2014<script>new Date().getFullYear()>2010&&document.write("-"+new Date().getFullYear());</script>, Content By Qi Tang. All Rights Reserved.
+                    &copy; 2016 Qi Tang
                 </p>
                 <p style="margin:0">
-                    <span id="busuanzi_container_site_pv" style="font-size:12px;color:#767D84;">
-                        This site already had <span id="busuanzi_value_site_pv"></span> Visits by
-                    </span>
-                    <span id="busuanzi_container_site_uv" style="font-size:12px;color:#767D84;">
-                        <span id="busuanzi_value_site_uv"></span> Visitors 
-                    </span>
+                    Powered by <a href="http://zespia.tw/hexo" style="color: #E24412">Hexo</a> | Theme by <a href="https://github.com/yangzj1992/TKL" style="color: #E24412">Kieran</a>
                 </p>
                 <p style="margin:0">
-                    Powered by Hexo and theme By <a href="https://github.com/yangzj1992/TKL" style="color: #767D84">Kieran</a>
+                    <span style="display: inline;" id="busuanzi_container_site_uv">This site already had <span id="busuanzi_value_site_uv" style="color:white"></span> Visits by</span>
+                    <span style="display: inline;" id="busuanzi_container_site_pv"><span id="busuanzi_value_site_pv" style="color:white"></span> Visitors </span>
                 </p>
-                
             </div>
             <div class="social">
                 <ul>
@@ -484,6 +442,7 @@
               
         </div>
 </footer>
+<!-- 不蒜子统计脚本-->
 <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <script async id="dsq-count-scr" src="https://tangqi92githubio.disqus.com/count.js" ></script>
 <!-- ============================ END Footer =========================== -->
