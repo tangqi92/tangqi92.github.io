@@ -19,7 +19,6 @@ b, strong {
 
 figure table, figure tr, figure td {
   border: none; }
-
 figure th, figure td {
   padding: 0;
   min-width: 0; }
@@ -76,6 +75,7 @@ th, td {
     visibility: visible !important;
     -webkit-animation-delay: 0 !important;
     animation-delay: 0 !important; }
+
   .animated {
     -webkit-animation-duration: 0;
     -moz-animation-duration: 0;
@@ -87,7 +87,6 @@ th, td {
     -ms-animation-fill-mode: none;
     -o-animation-fill-mode: none;
     animation-fill-mode: none; } }
-
 h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
@@ -107,7 +106,6 @@ h2 {
 @media (max-width: 768px) {
   h2 {
     font-size: 22px; } }
-
 h3 {
   font-style: normal;
   font-weight: 700;
@@ -117,7 +115,6 @@ h3 {
 @media (max-width: 768px) {
   h3 {
     font-size: 20px; } }
-
 h4 {
   font-style: normal;
   font-weight: 700;
@@ -139,7 +136,6 @@ h1 span {
 
 .index-context .title {
   color: #4a4a4a; }
-
 .index-context h3:hover .title {
   color: #151515; }
 
@@ -147,12 +143,10 @@ h1 span {
   margin-top: 0;
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
   color: #151515; }
-
 .post-content h1 {
   font-size: 22px;
   font-weight: 700;
   text-align: center; }
-
 .post-content h2 {
   text-transform: uppercase;
   font-style: normal;
@@ -163,25 +157,21 @@ h1 span {
   padding-left: 10px;
   border-left: 4px solid #008e59;
   margin-top: 10px; }
-
 @media (max-width: 768px) {
   .post-content h2 {
     font-size: 14px; } }
-
 .post-content h3 {
   font-style: normal;
   font-weight: 700;
   line-height: 21px;
   font-size: 14px;
   margin-top: 14px; }
-
 .post-content h4 {
   font-style: normal;
   font-weight: 700;
   font-size: 12px;
   line-height: 30px;
   color: #151515; }
-
 .post-content h1 span, .post-content h2 span, .post-content h3 span, .post-content h4 span, .post-content h5 span, .post-content h6 span, .post-content .navbar .nav > li > span {
   font-family: 'Georgia', "Open Sans", "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
   font-style: italic;
@@ -190,10 +180,8 @@ h1 span {
   text-transform: none;
   position: relative;
   top: -1px; }
-
 .post-content h1 span {
   top: -2px; }
-
 .post-content .post-tags {
   color: #FFFFFF;
   background-color: #808080;
@@ -224,7 +212,6 @@ a, a:active, a:focus, a:hover, a:visited, a:link {
 @media (min-width: 768px) {
   .container {
     padding: 0 15px; } }
-
 .container p a, .container p a:active, .container p a:visited, .container p a:link {
   color: #008e59;
   text-decoration: none; }
@@ -237,7 +224,6 @@ a, a:active, a:focus, a:hover, a:visited, a:link {
 @-moz-document url-prefix() {
   fieldset {
     display: table-cell; } }
-
 blockquote {
   margin: 40px 0; }
   blockquote p {
@@ -525,7 +511,7 @@ input#delivery {
   margin: 16px 0px;
   color: #151515;
   font: 400 11px/14px 'Montserrat', "Open Sans", "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
-  text-transform: uppercase;
+  text-transform: none;
   letter-spacing: 1px;
   text-shadow: none;
   border-right: 1px solid #aaa; }
@@ -565,9 +551,9 @@ nav i.icon-basic-eye {
 @media (max-width: 1024px) {
   .navbar-inner.lightnav-alt {
     border-bottom: none; }
+
   .navbar-inner {
     border-bottom: none !important; } }
-
 /* Continue Navigation... */
 .navbar .nav > li:last-child > a,
 .navbar .nav > li:last-child {
@@ -585,14 +571,16 @@ nav i.icon-basic-eye {
     -khtml-opacity: 1;
     -moz-opacity: 1;
     opacity: 1; }
+
   .navbar-inner {
     padding: 0 !important;
     height: 60px; }
+
   .navbar .nav > li {
     display: none; }
+
   .navbar .nav .mobile-li {
     display: inline-block; } }
-
 .grey-border {
   border-right: #333 1px solid !important; }
 
@@ -691,7 +679,6 @@ html.sb-init.sb-active.sb-active-right #projects .filter-item div a {
     /* Link colour. */
     text-decoration: none;
     font-weight: 700;
-    text-transform: uppercase;
     font-size: 13px; }
     .sb-slidebar a:hover {
       color: #FFFFFF;
@@ -800,7 +787,7 @@ html.sb-init.sb-active.sb-active-right #projects .filter-item div a {
 /* Sb Dropdown */
 li.sb-toggle-submenu {
   font: 600 13px 'Open Sans', Helvetica, "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
-  text-transform: uppercase;
+  text-transform: none;
   border-left: 3px solid transparent;
   padding: 3px 10px;
   cursor: pointer; }
@@ -851,7 +838,6 @@ span.sb-caret {
 @media (max-width: 991px) {
   .title-emphasis {
     text-align: left; } }
-
 /* *******************************************************
 * Full-height hero section, (homepage, above the fold,)
 ******************************************************* */
@@ -875,21 +861,20 @@ span.sb-caret {
     position: relative; }
     #hero .element-img {
       display: none; }
+
   .heightblock {
     display: none; } }
-
 @media (max-width: 767px) {
   #hero p, footer .copy, .center-me, #statement, .return-top, .summary {
     display: none !important; }
+
   .duoshuo, .pagination, .nogutter {
     width: 100% !important;
     text-align: center;
     margin: 0 auto; } }
-
 @media (max-width: 500px) {
   #toc {
     width: 100%; } }
-
 /* *******************************************************
 * Statement section, (homepage)
 ******************************************************* */
@@ -965,7 +950,6 @@ a.flex-next {
 @media (max-width: 650px) {
   .flex-caption {
     display: none; } }
-
 .flex-caption h4 {
   background-color: #151515;
   color: #FFFFFF;
@@ -1033,7 +1017,6 @@ a.flex-next {
 @media (min-width: 992px) {
   li.support:hover {
     border: none !important; } }
-
 .spacefix {
   padding-top: 101px;
   background-color: transparent !important; }
@@ -1041,7 +1024,6 @@ a.flex-next {
 @media (max-width: 992px) {
   .spacefix {
     padding-top: 25px; } }
-
 /* *******************************************************
 * Global footer, (all pages)
 ******************************************************* */
@@ -1206,10 +1188,8 @@ footer {
 
 .post-content .nogutter {
   padding: 10px 0; }
-
 .post-content .share-icon {
   padding: 0 .2em; }
-
 .post-content .qrcode {
   position: absolute;
   bottom: 30px;
@@ -1245,3 +1225,5 @@ footer {
 
 .icon-Popular_G:hover {
   color: #dc5046; }
+
+/*# sourceMappingURL=style.css.map */

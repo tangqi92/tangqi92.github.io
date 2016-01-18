@@ -576,7 +576,7 @@ input#delivery {
 	margin:16px 0px;
 	color: $NormalBlack;
 	font:400 11px/14px 'Montserrat', "Open Sans", "Helvetica Neue", "Helvetica", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
-	text-transform: uppercase;
+	text-transform: none;
 	letter-spacing: 1px;
 	text-shadow: none;
 	border-right:1px solid #aaa;
@@ -878,7 +878,7 @@ html.sb-init.sb-active.sb-active-right #projects .filter-item div a {
 /* Sb Dropdown */
 li.sb-toggle-submenu {
 	font:600 13px 'Open Sans', Helvetica, "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans CN", "WenQuanYi Micro Hei", Arial, sans-serif;
-	text-transform: uppercase;
+	text-transform: none;
 	border-left: 3px solid transparent;
 	padding: 3px 10px;
 	cursor: pointer;
