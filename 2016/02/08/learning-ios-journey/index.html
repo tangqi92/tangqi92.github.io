@@ -13,7 +13,7 @@
 <!--<![endif]-->
 
 <head>
-  <title>如何通过电脑操控 Android 设备 | Qi Tang&#39;s Blog</title>
+  <title>自学 iOS 开发之旅 | Qi Tang&#39;s Blog</title>
   <!-- Meta data -->
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -244,9 +244,9 @@
         <div class="post-content">
             <div class="col-md-8 col-md-offset-2">
                 <div>
-                    <h1>如何通过电脑操控 Android 设备</h1>
-                    <time datetime="2015-04-10T16:00:00.000Z" itemprop="datePublished" style="color:#969696;display: block;font-size: 13px;font-weight: 400;width: 100%;height: 30px;text-align: center;">
-                        2015 年 04 月 11 日
+                    <h1>自学 iOS 开发之旅</h1>
+                    <time datetime="2016-02-07T16:00:00.000Z" itemprop="datePublished" style="color:#969696;display: block;font-size: 13px;font-weight: 400;width: 100%;height: 30px;text-align: center;">
+                        2016 年 02 月 08 日
                     </time>
                 </div>
             </div>
@@ -254,111 +254,108 @@
                 
                     <div id="toc" class="toc-article">
                         <strong class="toc-title">目录</strong>
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#背景"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VNC"><span class="toc-number">1.1.</span> <span class="toc-text">VNC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工作流程"><span class="toc-number">1.2.</span> <span class="toc-text">工作流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#说明"><span class="toc-number">2.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体操作"><span class="toc-number">3.</span> <span class="toc-text">具体操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模拟器_ROOT"><span class="toc-number">3.1.</span> <span class="toc-text">模拟器 ROOT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#下载_android-vnc-server"><span class="toc-number">3.2.</span> <span class="toc-text">下载 android-vnc-server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装_android-vnc-server"><span class="toc-number">3.3.</span> <span class="toc-text">安装 android-vnc-server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-_将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法："><span class="toc-number">3.4.</span> <span class="toc-text">1. 将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-_更改「androidvncserver_x86」的权限，同样也有两种方法："><span class="toc-number">3.5.</span> <span class="toc-text">2. 更改「androidvncserver_x86」的权限，同样也有两种方法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-_运行_androidvncserver_x86"><span class="toc-number">3.6.</span> <span class="toc-text">3. 运行 androidvncserver_x86</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行_VNC_Viewer"><span class="toc-number">3.7.</span> <span class="toc-text">运行 VNC Viewer</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tips"><span class="toc-number">4.</span> <span class="toc-text">Tips</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期待与你成为朋友"><span class="toc-number">5.</span> <span class="toc-text">期待与你成为朋友</span></a></li></ol>
+                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#书籍"><span class="toc-number">2.</span> <span class="toc-text">书籍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视频"><span class="toc-number">3.</span> <span class="toc-text">视频</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开源项目"><span class="toc-number">4.</span> <span class="toc-text">开源项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客"><span class="toc-number">5.</span> <span class="toc-text">博客</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-number">6.</span> <span class="toc-text">其他</span></a></li></ol>
                     </div>
                 
-                <h2 id="背景">背景</h2><p>由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。</p>
-<a id="more"></a> 
-<h3 id="VNC">VNC</h3><p>其中涉及到最主要的技术便是 <a href="http://en.wikipedia.org/wiki/Virtual_Network_Computing" target="_blank" rel="external">VNC</a> (Virtual Network Computing) ，它是使用远程帧缓冲协议（RFB）远程控制另一台计算机（设备）的图形桌面共享系统，其主要包括：                              </p>
-<ul>
-<li><p>VNC Server ：此服务程序必须在在主（或遥控）计算机（设备）上运行。你只能作为使用者（不需要根用户身份）使用此项服务。</p>
-</li>
-<li><p>VNC Viewer ：本地应用程序，用于远程接入运行 VNC Server 的计算机（设备）并显示其环境。你需要知道远程计算机（设备）的 IP 地址和 VNC Server 设定的密码。</p>
-</li>
-</ul>
-<h3 id="工作流程">工作流程</h3><ol>
-<li>在服务器端启动 VNC Server。</li>
-<li>VNC 客户端通过浏览器或 VNC Viewer 连接至 VNC Server。</li>
-<li>VNC Server 传送一对话窗口至客户端，要求输入连接密码， 以及存取的 VNC Server 显示装置。</li>
-<li>在客户端输入联机密码后，VNC Server 验证客户端是否具有存取权限。</li>
-<li>若是客户端通过 VNC Server 的验证，客户端即要求 VNC Server 显示桌面环境。</li>
-<li>VNC Server 通过 X Protocol 要求 X Server 将画面显示控制权交由 VNC Server 负责。</li>
-<li>VNC Server 将来由 X Server 的桌面环境利用 VNC 通信协议送至客户端， 并且允许客户端控制 VNC Server 的桌面环境及输入装置。</li>
-</ol>
-<hr>
-<h2 id="说明">说明</h2><p>网上已经有许多关于电脑控制手机（真机）的工具与教程且亲测可行，具体请参考：  </p>
-<ul>
-<li><a href="http://blog.laptopmag.com/control-android-from-pc" target="_blank" rel="external">How to Control an Android Device From Your PC</a>  </li>
-<li><a href="http://www.21kexin.com/jishu/201307308.html" target="_blank" rel="external">通过Droid VNC Server简单配置让PC电脑控制Android手机
-</a></li>
-</ul>
-<p>但是！但是！但是！！！<br>坑就是从这里开始的，由于项目需求的特殊性，我需要在<a href="http://www.360doc.com/content/11/0412/10/4818519_109021260.shtml" target="_blank" rel="external">模拟器</a>（Android Emulator）上实现相同的效果（后面会具体说明模拟器与真机的差别与难点），所以接下来我会详细介绍实现操控模拟器的具体操作步骤。</p>
-<hr>
-<h2 id="具体操作">具体操作</h2><h3 id="模拟器_ROOT">模拟器 ROOT</h3><p>由于大多数「VNC Server For Android」应用都需要求手机为 Root 状态（后来发现有不需要 Root 的，但没有进行实际验证），所以第一步便是实现模拟器的 Root ：</p>
-<ul>
-<li>如果你使用的是第三方模拟器 <a href="http://www.iplaysoft.com/genymotion.html" target="_blank" rel="external">Genymotion</a> 的话（在这里强烈推荐下），则系统（4.0+）默认为 Root 状态</li>
-</ul>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/1.pic_hd.jpg" alt=""> </p>
-<ul>
-<li><p>如果你使用的是原生模拟器的话（赶紧换吧，立马提升工作效率），则可以按如下操作实现 Root ：                                   </p>
-<p>  <a href="http://blog.csdn.net/guangsuxinhen4/article/details/26241067" target="_blank" rel="external">Android AVD emulator模拟器获取root权限（4.1.2以下）</a></p>
-</li>
-</ul>
-<h3 id="下载_android-vnc-server">下载 android-vnc-server</h3><p>这里就要涉及到「ARM」与「X86」的概念，详情请参见：<a href="http://mobile.hiapk.com/knowledge/common/130718/1438966.html" target="_blank" rel="external">手机CPU科普 ARM构架与X86构架的优劣对比</a>，之后便参照下面步骤实现安装：</p>
-<ul>
-<li><p>如果你使用的是第三方模拟器 Genymotion，由于其依托 <a href="http://baike.baidu.com/link?url=qYBqekGQvAoJs5t2w1c8a1omyj44_lnzwMx5HxNi7YzU2kKMFrs9RFgwqzQ2tuuF7OLmRPJB9D6GqF8cR_myoq" target="_blank" rel="external">VirtualBox</a>，所以其模拟器的架构默认为 X86，因此你需要下载可以在 X86 下运行的 VNC Server 版本：<a href="http://pan.baidu.com/s/1sjODcdB" target="_blank" rel="external">androidvncserver_x86</a></p>
-</li>
-<li><p>如果你使用的是原生模拟器，则在创建 AVD 时「CPU/ABI」选择「ARM」，</p>
-</li>
-</ul>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/arm2.png" alt=""></p>
-<p>随后下载 ARM 版本 <a href="http://pan.baidu.com/s/1pJmh42f" target="_blank" rel="external">androidvncserver</a>               </p>
-<h3 id="安装_android-vnc-server">安装 android-vnc-server</h3><h3 id="1-_将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：">1. 将「androidvncserver_x86」(如果你使用原生模拟器则为「androidserver」)拷贝到模拟器指定路径（/data/local）下，我试了两种方法：</h3><ul>
-<li><p>使用 adb push 进去，如下：</p>
-<pre><code><span class="label">adb</span> <span class="keyword">push </span>所在路径/<span class="keyword">androidvncserver_x86 </span>/<span class="preprocessor">data</span>/local/
-</code></pre></li>
-<li><p>使用文件夹管理工具，如 <a href="http://pan.baidu.com/s/1c0vXrRq" target="_blank" rel="external">Root Explorer</a></p>
-</li>
-</ul>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/explorer.jpg" alt=""></p>
-<h3 id="2-_更改「androidvncserver_x86」的权限，同样也有两种方法：">2. 更改「androidvncserver_x86」的权限，同样也有两种方法：</h3><ul>
-<li><p>使用 adb</p>
-<pre><code><span class="preprocessor"># chmod <span class="number">555</span> androidvncserver_x86</span>
-</code></pre></li>
-<li><p>使用文件夹管理</p>
-</li>
-</ul>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/555.png" alt=""></p>
-<h3 id="3-_运行_androidvncserver_x86">3. 运行 androidvncserver_x86</h3><pre><code># /<span class="preprocessor">data</span>/local/<span class="keyword">androidvncserver_x86 </span>&amp;
-</code></pre><p><strong>注：如果这一步出现</strong></p>
-<blockquote>
-<p>Initializing framebuffer device /dev/graphics/fb0…<br>xres=320, yres=480, xresv=320, yresv=960, xoffs=0, yoffs=0, bpp=16<br>Initializing keyboard device /dev/input/event3 …<br>cannot open kbd device /dev/input/event3</p>
+                <h2 id="前言">前言</h2><blockquote>
+<p>不知不觉，学习 iOS 开发已经有 3 个多月的时间了，我想，也是时候写篇文章作为总结与回顾了吧。</p>
 </blockquote>
-<p>大家可以参考<a href="http://blog.goo.ne.jp/karutaya/e/a815571ef06640ea33fbb1bcf08ac9ed" target="_blank" rel="external">这里</a>，其关键就是：</p>
-<pre><code>&gt; adb shell
-# <span class="regexp">/data/</span>androidvncserver -k <span class="regexp">/dev/i</span>nput<span class="regexp">/event0 -t /</span>dev<span class="regexp">/input/</span>event0 &amp;
-</code></pre><h3 id="运行_VNC_Viewer">运行 VNC Viewer</h3><ol>
-<li>下载相应版本<a href="https://www.realvnc.com/download/vnc/" target="_blank" rel="external">VNC</a>并安装</li>
-<li>adb forward tcp:5901 tcp:5901</li>
-<li>打开 VNC Viewer，地址填写「127.0.0.1:5901」，点击「连接」后便可看到画面</li>
-</ol>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/viewer.png" alt=""></p>
-<hr>
-<h2 id="Tips">Tips</h2><ol>
-<li><a href="http://jingyan.baidu.com/article/17bd8e52f514d985ab2bb800.html" target="_blank" rel="external">ADB 环境变量配置</a></li>
-<li><a href="http://www.open-open.com/lib/view/1327557366686" target="_blank" rel="external">ADB Shell 命令详解</a></li>
-</ol>
-<hr>
-<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
-<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
-<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
-<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
+<a id="more"></a> 
+<p>我相信，很多人都会有这样的经历：每当他在学习一门新语言时，都会阅读许多 <strong>XXX 自学必备资源</strong> 这类的文章，然后一股脑地买下推荐的书，收藏推荐的网站，下载推荐的视频，订阅推荐的邮箱，注册推荐的论坛等等，当时那个热血沸腾劲，心中一定默默地告诉自己：「来吧，我 XXX 要大干一场了！」</p>
+<p>然而现实却是：在经过几天的热血过后，你会发现其实你并没有那么多精力与时间去学习去消化那么多资料，一方面的确是因为你时间有限，另一方面更因为并不是所有的都适合现阶段的你。一段时间过，你会发现有些收藏的网站你始终未打开过，有些订阅的邮件你从未阅读过，有些下载的视频你从未看过。</p>
+<p>所以，凡事都不能心急与贪多，稳扎稳打方能在学习的道路上越走越远。文中所列出的资料（均以时间为顺序排列），都是到目前为止我所学习过的，并且我会定期更新文章，记录我一步步从小白到<strong>大牛</strong>的心路历程（真是不要脸啊！）。</p>
+<h2 id="书籍">书籍</h2><ul>
+<li><p><a href="http://book.douban.com/subject/19962787/" target="_blank" rel="external">Objective-C 编程</a></p>
+<p>本书首先从基本的编程概念讲起（变量、条件语句、循环结构等），接着用浅显易懂的语言讲解 Objective-C 和 Foundation 的知识，包括 Objective-C 的基本语法、 Foundation 常用类 、内存管理、常用设计模式等。—— 本书内容浅显易懂，比较适合作为 OC 的入门书籍。</p>
+</li>
 </ul>
+<ul>
+<li><p><a href="http://book.douban.com/subject/26287812/" target="_blank" rel="external">iOS 编程（第4版）</a></p>
+<p>本书涵盖了开发 iOS 应用的方方面面：从 Objective-C 基础知识到新增加的语言特性；从 AppKit 库到常见的 Cocoa 设计模式；从 Xcode 技巧到 Instruments 等。—— 本书手把手带你一步步完成一个完整的 iOS 应用，随着章节的深入，循序渐进地不断完善与优化，让你深切体会到开发一款应用所需了解的方方面面。</p>
+</li>
+</ul>
+<ul>
+<li><p><a href="http://book.douban.com/subject/26287173/" target="_blank" rel="external">iOS 开发进阶</a></p>
+<p>本书分工具、实践、理论三大部分：第一部分介绍 iOS 开发的常用工具；第二部分介绍 iOS 开发中的一些常见的实践经验；第三部分介绍 iOS 开发中涉及的原理。—— 本书中绝大部分内容都能在作者的博客中找到，所谓「进阶」，我想作者更多的是在抛砖引玉吧。</p>
+</li>
+</ul>
+<ul>
+<li><p><a href="http://book.douban.com/subject/24284008/" target="_blank" rel="external">Objective-C 基础教程</a></p>
+<p>本书全面系统地讲述了 Objective-C 的基础知识和面向对象编程的重要概念，结合实例介绍了 Cocoa 工具包的优秀特性及框架，以及继承、复合、对象初始化、类别、协议、内存管理和源文件组织等重要编程技术。—— 本想作为 OC 的进阶书籍阅读，但并没有预期中好。</p>
+</li>
+</ul>
+<ul>
+<li><p><a href="http://book.douban.com/subject/19967897/" target="_blank" rel="external">Objective-C 程序设计</a></p>
+<p>本书是针对初学者编写的一个完整又循序渐进的 Objective-C 语言权威入门。阅读本书，不需要先学过 C 语言或其他面向对象语言。本书包含许多详细且实用的范例，用来告诉你如何在实践中运用Objective-C。本书完整展示如何利用 Foundation framework 所提供的丰富自带类库 (Library of classes)，并对 iOS 程序设计原理有所讲解。—— 与《Objective-C 编程》同样作为入门书籍，内容相对前者详实许多。</p>
+</li>
+</ul>
+<ul>
+<li><p><a href="http://book.douban.com/subject/24720270/" target="_blank" rel="external">Objective-C 高级编程</a></p>
+<p>本书主要介绍 iOS 与 OS X 多线程和内存管理, 深入破析了苹果官方公布的源代码, 告诉你一些苹果公司官方文档中不会出现的知识。—— 真正的 OC 进阶书籍，满满的干货，值得反复阅读。</p>
+</li>
+<li><p><a href="http://book.douban.com/subject/25829244/" target="_blank" rel="external">Effective Objective-C 2.0</a></p>
+<p>本书从语法、接口与 API 设计、内存管理、框架等 7 大方面总结和探讨了 Objective-C 编程中 52 个鲜为人知和容易被忽视的特性与陷阱。书中包含大量实用范例代码，为编写易于理解、便于维护、易于扩展和高效的 Objective-C  应用提供了解决方案。—— Effective 系列为进阶必备之书，但我认为应该在有一定的项目经验后回过头来阅读，才更能体会其中的精髓。</p>
+</li>
+</ul>
+<ul>
+<li><p><a href="http://producter.io/" target="_blank" rel="external">Producer</a> by <a href="http://weibo.com/kevinzhow" target="_blank" rel="external">周楷雯Kevin</a> </p>
+<p>本书主要涵盖了：设计原理、原型，动效，交互设计、iOS 开发与营销，这四个部分，以 <strong>小记</strong> 作为例子，完整的还原了一款产品从想法到编码，再到上架，以及营销的全过程。 —— 它会作为叩响你成为独立开发者大门的敲门砖。</p>
+</li>
+</ul>
+<ul>
+<li><p><a href="https://gumroad.com/l/JnWS" target="_blank" rel="external">A GUIDE TO IOS ANIMATION</a> by <a href="http://weibo.com/imapplegeeker" target="_blank" rel="external">KITTEN-YANG</a> </p>
+<p>动画小王子的力作 —— 如何你想学习动画，那么就选它作为入门吧。</p>
+</li>
+</ul>
+<h2 id="视频">视频</h2><ul>
+<li><a href="https://itunes.apple.com/us/course/developing-ios-7-apps-for/id733644550" target="_blank" rel="external">Developing iOS 7 Apps for iPhone and iPad</a> —— 目前唯一看过的视频教程，老爷子讲得非常棒，如果你想学习 Swift ，可以搜索其相应的课程。我是一边看视频一边将课上所讲的例子都手敲实现了一遍，最后对 iOS 开发有了较全面的了解。</li>
+<li><a href="https://developer.apple.com/videos/" target="_blank" rel="external">WWDC Session</a> —— 苹果自家的视频，内容相当多，计划之后空下来按系列来看。</li>
+</ul>
+<h2 id="开源项目">开源项目</h2><ul>
+<li><p><a href="https://github.com/dsxNiubility/SXNews" target="_blank" rel="external">SXNews</a></p>
+<p>精仿网易新闻客户端 —— 学习 Android 时第一个仿写的应用便是网易新闻。</p>
+</li>
+<li><p><a href="https://github.com/hshpy/HPYZhiHuDaily" target="_blank" rel="external">HPYZhiHuDailly</a></p>
+<p>采用 MVVM 的 OC 版知乎客户端 —— 第一个 Android 开源项目便是仿写知乎。</p>
+</li>
+<li><p><a href="https://github.com/liaojinxing/Voice2Note" target="_blank" rel="external">Voice2Note</a></p>
+<p>懒人笔记客户端 —— 第一个完整的 iOS 应用便是以此为基础进行修修改改的。</p>
+</li>
+<li><p><a href="https://github.com/meilbn/MyOne-iOS" target="_blank" rel="external">MyOne</a></p>
+<p>精仿「一个」iOS 客户端 —— 代码规范，难度适中，非常适合拿来当做练手的项目。目前希望能将其剩余未完成的功能完成。</p>
+</li>
+<li><p><a href="https://github.com/Coding/Coding-iOS" target="_blank" rel="external"> Coding</a></p>
+<p>Coding 官方 iOS 客户端 —— 官方源码，编写规范，文档较完整，且不断更新中，是个进阶学习的项目。</p>
+</li>
+</ul>
+<h2 id="博客">博客</h2><ul>
+<li><a href="https://www.objc.io/" target="_blank" rel="external">objc</a></li>
+</ul>
+<p>objc.io 国外一个定期发布关于 Objective-c 的最佳实践以及进阶技术的网站，基本上是每月一期，每期关注一个技术主题，围绕这个主题，有几篇文章涉及到本主题的不同方面。</p>
+<p>当然，我订阅了许多国内外大牛的技术博客，但是我觉得，如果不是系列性的文章，我更喜欢<strong>通过 Google 搜索关键字来快速寻找出最符合我当下要求的文章来阅读学习</strong>。</p>
+<h2 id="其他">其他</h2><ul>
+<li><p><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%88%E4%B8%8A%EF%BC%89.md" target="_blank" rel="external">《招聘一个靠谱的 iOS》面试题参考答案</a></p>
+<p>面试题来自 <a href="http://weibo.com/u/1364395395" target="_blank" rel="external">微博@我就叫Sunny怎么了</a> 的博文<a href="http://blog.sunnyxx.com/2015/07/04/ios-interview/" target="_blank" rel="external">《招聘一个靠谱的 iOS》</a>，其中共 55 题，除第 1 题为纠错题外，其他 54 道均为简答题，答案为 <a href="http://weibo.com/luohanchenyilong/" target="_blank" rel="external">微博@iOS程序犭袁</a> 整理。—— 由于有年后进行实习生面试的计划，所以，我每天都会来看上两题。当然，即使你不为面试，这里的题目也可以作为检验你学习成果的一个有效方法。</p>
+</li>
+</ul>
+<blockquote>
+<p>未完待续……</p>
+</blockquote>
 
             </div>
             <div class="clearfix"></div>
             <hr class="nogutter">
             <div class="summary">
                 <!-- <i class="demo-icon icon-file-code">&#xe800;</i> <span class="i-name"></span> -->
-                <i class="demo-icon icon-file-word">&#xe802;</i><span class="i-name">1,643字</span>
+                <i class="demo-icon icon-file-word">&#xe802;</i><span class="i-name">2,337字</span>
                 <i class="demo-icon icon-tags">&#xe801;</i> <span class="i-name"></span>
                 <span class="post-meta">
                     
                         
                         
-                            <a class='post-tags' href='/tags/Emulator/'>Emulator</a>
+                            <a class='post-tags' href='/tags/Summary/'>Summary</a>
                         
-                            <a class='post-tags' href='/tags/VNC/'>VNC</a>
+                            <a class='post-tags' href='/tags/iOS/'>iOS</a>
                         
                     
                 </span>
@@ -369,23 +366,19 @@
                <span id="share" style="float: right;position: relative;">
                     <div class="qrcode" id="qrcode" style="display: none;"></div>
                     <a id="wechat" class="share-icon" title="分享到微信" data-wechat-url="undefined" href="javascript:void(0);"><i class="icon-CN_tencent_wechat"></i></a>
-                    <a id="weibo" class="share-icon" target="_blank" title="分享到微博" href="http://service.weibo.com/share/share.php?title=如何通过电脑操控 Android 设备 | Qi Tang&#39;s Blog &amp;url=http://itangqi.me/2015/04/11/control-android-device-by-pc/index.html&amp;type=3&amp;searchPic=false"><i class="icon-CN_sina_weibo"></i></a>
-                    <a id="qzone" class="share-icon" target="_blank" title="分享到 QQ 空间" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://itangqi.me/2015/04/11/control-android-device-by-pc/index.html&amp;title=如何通过电脑操控 Android 设备 | Qi Tang&#39;s Blog"><i class="icon-CN_tencent_qzone"></i></a>
-                    <a id="twitter" class="share-icon" target="_blank" title="Share to Twitter" href="https://twitter.com/intent/tweet?url=http://itangqi.me/2015/04/11/control-android-device-by-pc/index.html&amp;text=如何通过电脑操控 Android 设备;via=Qi Tang| Qi Tang&#39;s Blog"><i class="icon-Popular_Twitter"></i></a>
-                    <a id="facebook" class="share-icon" target="_blank" title="Share to Facebook" href="http://www.facebook.com/sharer.php?u=undefined&amp;t=如何通过电脑操控 Android 设备 | Qi Tang&#39;s Blog"><i class="icon-Popular_Facebook"></i></a>
-                    <a id="gplus" class="share-icon" target="_blank" title="Share to Google+" href="https://plus.google.com/share?url=http://itangqi.me/2015/04/11/control-android-device-by-pc/index.html"><i class="icon-Popular_G"></i></a>
+                    <a id="weibo" class="share-icon" target="_blank" title="分享到微博" href="http://service.weibo.com/share/share.php?title=自学 iOS 开发之旅 | Qi Tang&#39;s Blog &amp;url=http://itangqi.me/2016/02/08/learning-ios-journey/index.html&amp;type=3&amp;searchPic=false"><i class="icon-CN_sina_weibo"></i></a>
+                    <a id="qzone" class="share-icon" target="_blank" title="分享到 QQ 空间" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://itangqi.me/2016/02/08/learning-ios-journey/index.html&amp;title=自学 iOS 开发之旅 | Qi Tang&#39;s Blog"><i class="icon-CN_tencent_qzone"></i></a>
+                    <a id="twitter" class="share-icon" target="_blank" title="Share to Twitter" href="https://twitter.com/intent/tweet?url=http://itangqi.me/2016/02/08/learning-ios-journey/index.html&amp;text=自学 iOS 开发之旅;via=Qi Tang| Qi Tang&#39;s Blog"><i class="icon-Popular_Twitter"></i></a>
+                    <a id="facebook" class="share-icon" target="_blank" title="Share to Facebook" href="http://www.facebook.com/sharer.php?u=undefined&amp;t=自学 iOS 开发之旅 | Qi Tang&#39;s Blog"><i class="icon-Popular_Facebook"></i></a>
+                    <a id="gplus" class="share-icon" target="_blank" title="Share to Google+" href="https://plus.google.com/share?url=http://itangqi.me/2016/02/08/learning-ios-journey/index.html"><i class="icon-Popular_G"></i></a>
                 </span>
             </div>
         </div>
         <nav class="pagination" role="pagination">
     
-    <a class="pull-left" href="/2015/05/11/interview-summary/" style="float: left;">
-        ← 世界那么大，我想去看看
-    </a>
     
-    
-    <a class="pull-right" href="/2015/03/07/java-and-javascript-interaction/">
-        Java 与 JavaScript 如何进行交互 →
+    <a class="pull-right" href="/2015/12/25/bye2015-hi2016/">
+        Bye 2015, Hi 2016 →
     </a>
     
 </nav>
@@ -419,7 +412,7 @@
     $("#wechat").hover(function() {
         $("#qrcode").css('display','inline-block');
         jQuery("#qrcode").qrcode({
-            text:utf16to8("http://itangqi.me/2015/04/11/control-android-device-by-pc/index.html"),
+            text:utf16to8("http://itangqi.me/2016/02/08/learning-ios-journey/index.html"),
             width:96,
             height:96
         });
