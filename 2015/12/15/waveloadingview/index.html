@@ -1,263 +1,262 @@
-<!DOCTYPE html>
-<!--[if lte IE 8 ]>
-<html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
-<![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<!--                                             
- ___ _______ _____  __ _____  ___ _      _______  __ _ 
-/ _ `/ __/ // / _ \/ // / _ \/ _ `/ _   / __/ _ \/  ' \
-\_, /\__/\_, /\___/\_,_/_//_/\_, / (_)  \__/\___/_/_/_/
- /_/    /___/               /___/                                                                         
--->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
-<!--<![endif]-->
-
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
 <head>
-  <title>WaveLoadingView - 水波加载 | Qi Tang&#39;s Blog</title>
-  <!-- Meta data -->
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" >
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="baidu-site-verification" content="teMXKvOcC9" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="generator" content="Qi Tang's Blog">
-    <meta name="author" content="Qi Tang">
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1"/>
+
+
     <meta name="description" content="你不能把这个世界，让给你所鄙视的人" />
-    <meta name="keywords" content="" />
 
-    <!-- Favicon, (keep icon in root folder) -->
-    <link rel="Shortcut Icon" href="/img/favicon.ico" type="image/ico">
 
-    <link rel="alternate" href="/atom.xml" title="Qi Tang&#39;s Blog" type="application/atom+xml">
-    <link rel="stylesheet" href="/css/all.css" media="screen" type="text/css">
-	
-    <link rel="stylesheet" href="/highlightjs/vs.css" type="text/css">
-    
-    
 
-    <!-- Custom stylesheet, (add custom styles here, always load last) -->
-    <!-- Load our stylesheet for IE8 -->
-    <!--[if IE 8]>
-    <link rel="stylesheet" type="text/css" href="/css/ie8.css" />
-    <![endif]-->
+  <meta name="keywords" content="Library,Loading,View," />
 
-    <!-- Google Webfonts (Monserrat 400/700, Open Sans 400/600) -->
-    <link href='//fonts.useso.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
-    <link href='//fonts.useso.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 
-    <!-- Load our fonts individually if IE8+, to avoid faux bold & italic rendering -->
-    <!--[if IE]>
-    <link href='http://fonts.useso.com/css?family=Montserrat:400' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.useso.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.useso.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.useso.com/css?family=Open+Sans:600' rel='stylesheet' type='text/css'>
-    <![endif]-->
 
-    <!-- jQuery | Load our jQuery, with an alternative source fallback to a local version if request is unavailable -->
-    <script src="/js/jquery-1.11.1.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/jquery-1.11.1.min.js"><\/script>')</script>
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
 
-    <!-- Load these in the <head> for quicker IE8+ load times -->
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="/js/html5shiv.min.js"></script>
-    <script src="/js/respond.min.js"></script>
-    <![endif]-->
-  
-  
-  <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="atom.xml">
-  
-  
 
-  
-  <style>.col-md-8.col-md-offset-2.opening-statement img{display:none;}</style>
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1" />
+
+
+<meta name="description" content="WaveLoadingView - An Android library that provides a realistic wave-loading effect.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WaveLoadingView - 水波加载">
+<meta property="og:url" content="http://itangqi.me/2015/12/15/waveloadingview/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="WaveLoadingView - An Android library that provides a realistic wave-loading effect.">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/waveloadingview.png">
+<meta property="og:updated_time" content="2016-01-08T10:44:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WaveLoadingView - 水波加载">
+<meta name="twitter:description" content="WaveLoadingView - An Android library that provides a realistic wave-loading effect.">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+  <title> WaveLoadingView - 水波加载 | Qi Tang's Blog </title>
 </head>
 
-<!--
-<body class="post-template">
--->
-<body id="index" class="lightnav animsition">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
-      <!-- ============================ Off-canvas navigation =========================== -->
-    
-    <div class="sb-slidebar sb-right sb-style-overlay sb-momentum-scrolling">
-        <div class="sb-close" aria-label="Close Menu" aria-hidden="true">
-            <img src="http://7bv937.com1.z0.glb.clouddn.com/qcyoung/TKL/close.png" alt="Close"/>
-        </div>
-        <div class="site-overview">
-           <div class="site-author">
-               <img class="site-author-img" width="100px" height="100px" src="http://7xikfc.com1.z0.glb.clouddn.com/tangqi.png"></img>
-               <div class="site-author-name">Qi Tang</div>
-           </div>
-           <div class="sb-list">
-               <div class="sb-item sb-posts">
-                  <a href="/archives">
-                    <span class="sb-item-count">15</span>
-                    <span class="sb-item-name">日志</span>
-                  </a>
-               </div>
-               <div class="sb-item sb-words">
-                  <a href="javascript:void(0)">
-                    <span class="sb-item-count">33.9k</span>
-                    <span class="sb-item-name">字数</span>
-                  </a>
-               </div>
-               <div class="sb-item sb-categories">
-                  <a href="/categories">
-                    <span class="sb-item-count">4</span>
-                    <span class="sb-item-name">分类</span>
-                  </a>
-               </div>
-           </div>
-       </div>
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
-      <div class="sb-rss">
-        <a href="/atom.xml">RSS</a>
-      </div>
 
-      <div class="web-links"> 
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Qi Tang's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
         
-        <div class="sb-links">
-          <div class="links-title">友情链接</div>
-          <span class="sb-item-links">
-            
-              <a href="http://tikitoo.me/" class="animsition-link">安卓同学</a>
-            
-              <a href="http://lovinghuan.com/" class="animsition-link">poberWong</a>
-            
-              <a href="http://blog.zhaiyifan.cn/" class="animsition-link">markzhai</a>
-            
-              <a href="http://yifeiyuan.me/" class="animsition-link">程序亦非猿</a>
-            
-              <a href="http://abner-nimengbo.cn/" class="animsition-link">阿布</a>
-            
-              <a href="http://www.easydone.cn/" class="animsition-link">Ailurus</a>
-            
-              <a href="http://wuxiaolong.me/" class="animsition-link">吴小龙同學</a>
-            
-              <a href="http://drakeet.me/" class="animsition-link">Drakeet</a>
-            
-              <a href="http://blog.fangjie.info/" class="animsition-link">方杰</a>
-            
-              <a href="http://hujiaweibujidao.github.io/" class="animsition-link">五道口宅男</a>
-            
-          </span>
-        </div>
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
         
-      </div>
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
 
-     <div class="cc-license">
-        <a href="http://creativecommons.org/licenses/by-nc/4.0">
-          <img src="http://7bv937.com1.z0.glb.clouddn.com/qcyoung/cc-by-nc.svg">
-        </a>
-      </div>
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <form class="site-search-form">
+    <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+  </form>
+
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
 
     </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
     
-    <!-- ============================ END Off-canvas navigation =========================== -->
 
-    <!-- ============================ #sb-site Main Page Wrapper =========================== -->
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
 
-    <div id="sb-site">
-        <!-- #sb-site - All page content should be contained within this id, except the off-canvas navigation itself -->
-
-        <!-- ============================ Header & Logo bar =========================== -->
-
-        <div id="navigation" class="navbar navbar-fixed-top" style="border:0">
-            <div class="navbar-inner">
-                <div class="container">
-                    <!-- Nav logo -->
-                    <div class="logo">
-                        <a href="/" title="Logo" class="animsition-link">
-                         <img id="white-logo" src="/img/logo.png" alt="Logo" width="35px;"/><img id="brown-logo" src="/img/logoc.png" alt="Logo" width="35px;" style="display:none"/> 
-                        </a>
-                    </div>
-                    <!-- // Nav logo -->
-                    <!-- Info-bar -->
-                    <nav>
-                        <ul class="nav">
-                            <li><a href="/" class="animsition-link website-title">Qi Tang's Blog</a></li>
-                            <li><a href="/archives" class="animsition-link" title="Archive">归档</a></li>
-                            <li class="mobile-li"><a href="/categories" class="animsition-link" title="Category">目录</a></li>
-                            <li><a href="/tags" class="animsition-link" title="Tag">标签</a></li>
-                            <li class="mobile-li"><a href="/about" class="animsition-link" title="About">关于</a></li>
-                            <li class="mobile-li"><a href="/messageboard" class="animsition-link" title="Messageboard">留言板</a></li>
-                            
-                            <li><a href="https://github.com/tangqi92" title="Github" target="_blank"><i class="icon-Popular_GitHub"></i></a></li>
-                            
-                            <li><a href="javascript:void(0)" title="Weixin" class="weixin"><i class="icon-CN_tencent_wechat"></i></a></li>
-                            
-                            <li><a href="http://weibo.com/qiktang" title="Sina-Weibo" target="_blank"><i class="icon-CN_sina_weibo"></i></a></li>
-                            
-                            
-                            <li><a href="https://twitter.com/tangqi92" title="Twitter" target="_blank"><i class="icon-Popular_Twitter"></i></a></li>
-                            
-                            
-                            <li><a href="http://www.zhihu.com/people/tangqi92" title="Zhihu" target="_blank"><i class="icon-CN_zhihu"></i></a></li>
-                            
-                            <li class="nolink"><span>Welcome!</span></li>
-                        </ul>
-                    </nav>
-                    <!--// Info-bar -->
-                </div>
-                <!-- // .container -->
-                <button type="button" class="navbar-toggle menu-icon sb-toggle-right" title="More">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar before"></span>
-                <span class="icon-bar main"></span>
-                <span class="icon-bar after"></span>
-                </button>
-            </div>
-            <!-- // .navbar-inner -->
-        </div>
-
-        <!-- ============================ Header & Logo bar =========================== -->
-
-        <!-- ============================ Hero Image =========================== -->
-
-        <section id="hero" class="scrollme">
-            <div class="container-fluid element-img">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 vertical-align cover boost text-center">
-                        <div class="center-me animateme" data-when="exit" data-from="0" data-to="0.6" data-opacity="0" data-translatey="100">
-                            <div>
-                            	
-                                <h2>GLAD TO SEE U, WELCOME TO Qi Tang &#39;S BLOG.</h2>
-                                <p></p>
-				    			
-                                <h2></h2>
-                                <p>世上哪有终点？什么时候你走不动了，倒下了，那里才是终点。—— 今何在《西游日记》</p>
-				    			
-
-                            </div>
-                        </div>
-                    </div>
-                    <!-- // .col-md-12 -->
-                </div>
-                <div class="herofade beige-dk"></div>
-            </div>
-        </section>
-
-        <!-- ============================ END Hero Image =========================== -->
       
-<section id="intro">
-    <div class="container">
-        <div class="post-content">
-            <div class="col-md-8 col-md-offset-2">
-                <div>
-                    <h1>WaveLoadingView - 水波加载</h1>
-                    <time datetime="2015-12-14T16:00:00.000Z" itemprop="datePublished" style="color:#969696;display: block;font-size: 13px;font-weight: 400;width: 100%;height: 30px;text-align: center;">
-                        2015 年 12 月 15 日
-                    </time>
-                </div>
-            </div>
-            <div class="col-md-8 col-md-offset-2">
-                
-                    <div id="toc" class="toc-article">
-                        <strong class="toc-title">目录</strong>
-                        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sample"><span class="toc-number">1.</span> <span class="toc-text">Sample</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Usage"><span class="toc-number">2.</span> <span class="toc-text">Usage</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Step_1"><span class="toc-number">2.1.</span> <span class="toc-text">Step 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step_2"><span class="toc-number">2.2.</span> <span class="toc-text">Step 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Step_3"><span class="toc-number">2.3.</span> <span class="toc-text">Step 3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Customization"><span class="toc-number">3.</span> <span class="toc-text">Customization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ChangeLog"><span class="toc-number">4.</span> <span class="toc-text">ChangeLog</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#0-1-4"><span class="toc-number">4.1.</span> <span class="toc-text">0.1.4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#0-1-3"><span class="toc-number">4.2.</span> <span class="toc-text">0.1.3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Demo"><span class="toc-number">5.</span> <span class="toc-text">Demo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Community"><span class="toc-number">6.</span> <span class="toc-text">Community</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Thanks"><span class="toc-number">7.</span> <span class="toc-text">Thanks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#License"><span class="toc-number">8.</span> <span class="toc-text">License</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#期待与你成为朋友"><span class="toc-number">9.</span> <span class="toc-text">期待与你成为朋友</span></a></li></ol>
-                    </div>
-                
-                <blockquote>
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              WaveLoadingView - 水波加载
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-12-15T00:00:00+08:00" content="2015-12-15">
+            2015-12-15
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                <a href="/categories/Android/" itemprop="url" rel="index">
+                  <span itemprop="name">Android</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/12/15/waveloadingview/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/12/15/waveloadingview/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><blockquote>
 <p><strong>WaveLoadingView</strong> - An Android library that provides a realistic wave-loading effect.</p>
 </blockquote>
 <a id="more"></a>
@@ -390,200 +389,455 @@
 <li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
 <li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
 </ul>
-
-            </div>
-            <div class="clearfix"></div>
-            <hr class="nogutter">
-            <div class="summary">
-                <!-- <i class="demo-icon icon-file-code">&#xe800;</i> <span class="i-name"></span> -->
-                <i class="demo-icon icon-file-word">&#xe802;</i><span class="i-name">1,666字</span>
-                <i class="demo-icon icon-tags">&#xe801;</i> <span class="i-name"></span>
-                <span class="post-meta">
-                    
-                        
-                        
-                            <a class='post-tags' href='/tags/Library/'>Library</a>
-                        
-                            <a class='post-tags' href='/tags/Loading/'>Loading</a>
-                        
-                            <a class='post-tags' href='/tags/View/'>View</a>
-                        
-                    
-                </span>
-                <i class="demo-icon icon-eye">&#xe803;</i> <span class="i-name"><span id="busuanzi_container_page_pv">
-                  <span id="busuanzi_value_page_pv"></span>次阅读
-                </span></span>
-                
-               <span id="share" style="float: right;position: relative;">
-                    <div class="qrcode" id="qrcode" style="display: none;"></div>
-                    <a id="wechat" class="share-icon" title="分享到微信" data-wechat-url="undefined" href="javascript:void(0);"><i class="icon-CN_tencent_wechat"></i></a>
-                    <a id="weibo" class="share-icon" target="_blank" title="分享到微博" href="http://service.weibo.com/share/share.php?title=WaveLoadingView - 水波加载 | Qi Tang&#39;s Blog &amp;url=http://itangqi.me/2015/12/15/waveloadingview/index.html&amp;type=3&amp;searchPic=false"><i class="icon-CN_sina_weibo"></i></a>
-                    <a id="qzone" class="share-icon" target="_blank" title="分享到 QQ 空间" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://itangqi.me/2015/12/15/waveloadingview/index.html&amp;title=WaveLoadingView - 水波加载 | Qi Tang&#39;s Blog"><i class="icon-CN_tencent_qzone"></i></a>
-                    <a id="twitter" class="share-icon" target="_blank" title="Share to Twitter" href="https://twitter.com/intent/tweet?url=http://itangqi.me/2015/12/15/waveloadingview/index.html&amp;text=WaveLoadingView - 水波加载;via=Qi Tang| Qi Tang&#39;s Blog"><i class="icon-Popular_Twitter"></i></a>
-                    <a id="facebook" class="share-icon" target="_blank" title="Share to Facebook" href="http://www.facebook.com/sharer.php?u=undefined&amp;t=WaveLoadingView - 水波加载 | Qi Tang&#39;s Blog"><i class="icon-Popular_Facebook"></i></a>
-                    <a id="gplus" class="share-icon" target="_blank" title="Share to Google+" href="https://plus.google.com/share?url=http://itangqi.me/2015/12/15/waveloadingview/index.html"><i class="icon-Popular_G"></i></a>
-                </span>
-            </div>
-        </div>
-        <nav class="pagination" role="pagination">
-    
-    <a class="pull-left" href="/2015/12/25/bye2015-hi2016/" style="float: left;">
-        ← Bye 2015, Hi 2016
-    </a>
-    
-    
-    <a class="pull-right" href="/2015/11/02/comeback-diary/">
-        回归·日记 →
-    </a>
-    
-</nav>
-
-        <div class="duoshuo"><div id="disqus_thread"></div>
-<script>
-    /**
-     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-     */
-    /*
-    var disqus_config = function () {
-        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
-    (function() {  // DON'T EDIT BELOW THIS LINE
-        var d = document, s = d.createElement('script');
-        
-        s.src = '//tangqi92githubio.disqus.com/embed.js';
-        
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript></div>
+</span>
+      
     </div>
-</section>
-<script src="/js/jquery.qrcode.min.js"></script>
-<script>
-    $("#wechat").hover(function() {
-        $("#qrcode").css('display','inline-block');
-        jQuery("#qrcode").qrcode({
-            text:utf16to8("http://itangqi.me/2015/12/15/waveloadingview/index.html"),
-            width:96,
-            height:96
-        });
-    },function(){
-        $("#qrcode").css('display','none');
-        jQuery("#qrcode").html('');
-    });
-    function utf16to8(str) {
-        var out, i, len, c;
-        out = "";
-        len = str.length;
-        for (i = 0; i < len; i++) {
-            c = str.charCodeAt(i);
-            if ((c >= 0x0001) && (c <= 0x007F)) {
-                out += str.charAt(i);
-            } else if (c > 0x07FF) {
-                out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
-                out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
-                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
-            } else {
-                out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
-                out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
-            }
-        }
-        return out;
-    }
-</script>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Library/" rel="tag">#Library</a>
+          
+            <a href="/tags/Loading/" rel="tag">#Loading</a>
+          
+            <a href="/tags/View/" rel="tag">#View</a>
+          
+        </div>
+      
 
       
-<!-- ============================ Footer =========================== -->
-<div class="return-top">
-    <a data-action:"return-top" data-tip="回到顶部" href="" class="btn-return-top"> 
-        <div class="arrow"></div>
-        <div class="stick"></div>
-    </a>
-</div>
-<footer>
-    <div class="footer">
-            <div class="myself">
-                <p>
-                   
-                </p>
-            </div>
-            <div class="copy">
-                <p style="margin:0">
-                    &copy; 2016 Qi Tang
-                </p>
-                <p style="margin:0">
-                    Powered by <a href="http://zespia.tw/hexo" style="color: #E24412">Hexo</a> | Theme by <a href="https://github.com/yangzj1992/TKL" style="color: #E24412">Kieran</a>
-                </p>
-                <p style="margin:0">
-                    <span style="display: inline;" id="busuanzi_container_site_pv">This site already had <span id="busuanzi_value_site_pv" style="color:white"></span> Visits by</span>
-                    <span style="display: inline;" id="busuanzi_container_site_uv"><span id="busuanzi_value_site_uv" style="color:white"></span> Visitors since </span>
-                    <span id="from_date" style="color:white">2016-01-08</span>
-                </p>
-            </div>
-            <div class="social">
-                <ul>
-                    
-                    <li><a href="https://github.com/tangqi92" title="Github" target="_blank"><i class="icon-Popular_GitHub"></i>&nbsp;</a></li>
-                    
-                    <li class="weixin"><a href="javascript:void(0)" title="Weixin"><i class="icon-CN_tencent_wechat"></i>&nbsp;</a></li>
-                    
-                    <li><a href="http://weibo.com/qiktang" title="Sina-Weibo" target="_blank"><i class="icon-CN_sina_weibo"></i>&nbsp;</a></li>
-                    
-                    
-                    <li><a href="https://twitter.com/tangqi92" title="Twitter" target="_blank"><i class="icon-Popular_Twitter"></i>&nbsp;</a></li>
-                    
-                    
-                    <li><a href="http://www.zhihu.com/people/tangqi92" title="Zhihu" target="_blank"><i class="icon-CN_zhihu"></i></a>&nbsp;</li>
-                    
-                </ul>
-            </div>
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
             
-            <div class="clearfix"> </div>
-        </div>
-        <div style="display:none">
-              
-        </div>
-</footer>
-<!-- 不蒜子统计脚本-->
-<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-<script async id="dsq-count-scr" src="https://tangqi92githubio.disqus.com/count.js" ></script>
-<!-- ============================ END Footer =========================== -->
-      <!-- Load our scripts -->
-        
-<!-- Resizable 'on-demand' full-height hero -->
-<script type="text/javascript">
-    
-    var resizeHero = function () {
-        var hero = $(".cover,.heightblock"),
-            window1 = $(window);
-        hero.css({
-            "height": window1.height()
-        });
-    };
-    
-    resizeHero();
-    
-    $(window).resize(function () {
-        resizeHero();
-    });
-</script>
-<script src="/js/my.min.js"></script>
+              <a href="/2015/12/25/bye2015-hi2016/" rel="prev">Bye 2015, Hi 2016</a>
+            
+          </div>
 
-<!-- Initiate flexslider plugin -->
-<script type="text/javascript">
-    $(document).ready(function($) {
-      $('.flexslider').flexslider({
-        animation: "fade",
-        prevText: "",
-        nextText: "",
-        directionNav: true
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/02/comeback-diary/" rel="next">回归·日记</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/avatar.jpg" alt="Qi Tang" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">你不能把这个世界，让给你所鄙视的人</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">GitHub</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">Twitter</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">Weibo</a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">Links</p>
+            
+              <span class="links-of-author-item">
+              <a href="http://book.douban.com/people/139568581/" target="_blank">我的豆瓣</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sample"><span class="nav-number">1.</span> <span class="nav-text">Sample</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage"><span class="nav-number">2.</span> <span class="nav-text">Usage</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step_1"><span class="nav-number">2.1.</span> <span class="nav-text">Step 1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step_2"><span class="nav-number">2.2.</span> <span class="nav-text">Step 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step_3"><span class="nav-number">2.3.</span> <span class="nav-text">Step 3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Customization"><span class="nav-number">3.</span> <span class="nav-text">Customization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ChangeLog"><span class="nav-number">4.</span> <span class="nav-text">ChangeLog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-4"><span class="nav-number">4.1.</span> <span class="nav-text">0.1.4</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1-3"><span class="nav-number">4.2.</span> <span class="nav-text">0.1.3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo"><span class="nav-number">5.</span> <span class="nav-text">Demo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Community"><span class="nav-number">6.</span> <span class="nav-text">Community</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thanks"><span class="nav-number">7.</span> <span class="nav-text">Thanks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#License"><span class="nav-number">8.</span> <span class="nav-text">License</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#期待与你成为朋友"><span class="nav-number">9.</span> <span class="nav-text">期待与你成为朋友</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2015/12/15/waveloadingview/';
+      var disqus_title = 'WaveLoadingView - 水波加载';
+      var disqus_url = 'http://itangqi.me/2015/12/15/waveloadingview/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
       });
     });
-</script>
-
+  </script>
 </body>
 </html>
