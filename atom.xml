@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title><![CDATA[Qi Tang's Blog]]></title>
-  
+  <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
   <updated>2016-02-08T14:12:51.000Z</updated>
