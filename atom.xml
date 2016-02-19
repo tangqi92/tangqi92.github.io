@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2016-02-08T14:12:51.000Z</updated>
+  <updated>2016-02-17T08:44:52.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://itangqi.me/2016/02/08/learning-ios-journey/"/>
     <id>http://itangqi.me/2016/02/08/learning-ios-journey/</id>
     <published>2016-02-07T16:00:00.000Z</published>
-    <updated>2016-02-08T14:12:51.000Z</updated>
+    <updated>2016-02-17T08:44:52.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
 <p>不知不觉，学习 iOS 开发已经有 3 个多月的时间了，我想，也是时候写篇文章作为总结与回顾了吧。</p>
 </blockquote>
@@ -92,9 +92,10 @@
 </li>
 </ul>
 <h2 id="博客">博客</h2><ul>
-<li><a href="https://www.objc.io/" target="_blank" rel="external">objc</a></li>
+<li><p><a href="https://www.objc.io/" target="_blank" rel="external">objc</a></p>
+<p>  objc.io 国外一个定期发布关于 Objective-c 的最佳实践以及进阶技术的网站，基本上是每月一期，每期关注一个技术主题，围绕这个主题，有几篇文章涉及到本主题的不同方面。</p>
+</li>
 </ul>
-<p>objc.io 国外一个定期发布关于 Objective-c 的最佳实践以及进阶技术的网站，基本上是每月一期，每期关注一个技术主题，围绕这个主题，有几篇文章涉及到本主题的不同方面。</p>
 <p>当然，我订阅了许多国内外大牛的技术博客，但是我觉得，如果不是系列性的文章，我更喜欢<strong>通过 Google 搜索关键字来快速寻找出最符合我当下要求的文章来阅读学习</strong>。</p>
 <h2 id="其他">其他</h2><ul>
 <li><p><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%88%E4%B8%8A%EF%BC%89.md" target="_blank" rel="external">《招聘一个靠谱的 iOS》面试题参考答案</a></p>

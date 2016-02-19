@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/2016/02/08/learning-ios-journey/</loc>
+    <lastmod>2016-02-17T08:44:52.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/about/index.html</loc>
     <lastmod>2016-02-16T08:34:15.000Z</lastmod>
   </url>
@@ -14,11 +19,6 @@
   <url>
     <loc>http://itangqi.me/tags/index.html</loc>
     <lastmod>2016-02-16T08:33:22.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/02/08/learning-ios-journey/</loc>
-    <lastmod>2016-02-08T14:12:51.000Z</lastmod>
   </url>
   
   <url>
