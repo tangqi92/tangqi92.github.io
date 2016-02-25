@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2016-02-17T08:44:52.000Z</updated>
+  <updated>2016-02-25T05:43:02.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://itangqi.me/2016/02/08/learning-ios-journey/"/>
     <id>http://itangqi.me/2016/02/08/learning-ios-journey/</id>
     <published>2016-02-07T16:00:00.000Z</published>
-    <updated>2016-02-17T08:44:52.000Z</updated>
+    <updated>2016-02-25T05:43:02.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
 <p>不知不觉，学习 iOS 开发已经有 3 个多月的时间了，我想，也是时候写篇文章作为总结与回顾了吧。</p>
 </blockquote>
@@ -126,7 +126,7 @@
     <link href="http://itangqi.me/2015/12/25/bye2015-hi2016/"/>
     <id>http://itangqi.me/2015/12/25/bye2015-hi2016/</id>
     <published>2015-12-24T16:00:00.000Z</published>
-    <updated>2016-01-08T10:32:12.000Z</updated>
+    <updated>2016-02-25T05:44:11.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p>世上哪有终点？什么时候你走不动了，倒下了，那里才是终点。—— 今何在《西游日记》</p>
 </blockquote>
@@ -194,7 +194,7 @@
     <link href="http://itangqi.me/2015/12/15/waveloadingview/"/>
     <id>http://itangqi.me/2015/12/15/waveloadingview/</id>
     <published>2015-12-14T16:00:00.000Z</published>
-    <updated>2016-01-08T10:44:12.000Z</updated>
+    <updated>2016-02-25T05:42:34.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p><strong>WaveLoadingView</strong> - An Android library that provides a realistic wave-loading effect.</p>
 </blockquote>
@@ -204,14 +204,13 @@
 <hr>
 <h2 id="Usage">Usage</h2><p><strong>For a working implementation of this project see the <code>sample/</code> folder.</strong></p>
 <h3 id="Step_1">Step 1</h3><p>Include the library as a local library project or add the dependency in your build.gradle.</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'me.itangqi.waveloadingview:library:0.1.4'</span></span><br><span class="line">    <span class="comment">// I have uploaded v0.1.4 on 2015-12-17, if it doesn't take effect or your </span></span><br><span class="line">    <span class="comment">// gradle cannot find it in maven central, you may try v0.1.2. </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>  
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'me.itangqi.waveloadingview:library:0.2.0'</span></span><br><span class="line">    <span class="comment">// I have uploaded v0.2.0 on 2016-02-17, if it doesn't take effect or your </span></span><br><span class="line">    <span class="comment">// gradle cannot find it in maven central, you may try v0.1.5. </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
 <p>Or</p>
 <p>Import the library, then add it to your /settings.gradle and /app/build.gradle. If you don’t know how to do this, you can read my blog for help.</p>
 <h3 id="Step_2">Step 2</h3><p>Include the WaveLoadingView widget in your layout. And you can customize it like this.</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;me.itangqi.waveloadingview.WaveLoadingView</span><br><span class="line">    android:id=<span class="string">"@+id/waveLoadingView"</span></span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_borderColor=<span class="string">"@color/colorAccent"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_borderWidth=<span class="string">"3dp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_progressValue=<span class="string">"40"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_shapeType=<span class="string">"square"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottom=<span class="string">"Bottom Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottomColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleBottomSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenter=<span class="string">"Center Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenterColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleCenterSize=<span class="string">"24sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTop=<span class="string">"Top Title"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTopColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_titleTopSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_waveAmplitude=<span class="string">"60"</span></span><br><span class="line">    <span class="keyword">app</span>:mlv_waveColor=<span class="string">"@color/colorAccent"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;me.itangqi.waveloadingview.WaveLoadingView</span><br><span class="line">    android:id=<span class="string">"@+id/waveLoadingView"</span></span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_borderColor=<span class="string">"@color/colorAccent"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_borderWidth=<span class="string">"3dp"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_progressValue=<span class="string">"40"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_shapeType=<span class="string">"circle"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleBottom=<span class="string">"Bottom Title"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleBottomColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleBottomSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleCenter=<span class="string">"Center Title"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleCenterColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleCenterSize=<span class="string">"24sp"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleTop=<span class="string">"Top Title"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleTopColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleTopSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_waveAmplitude=<span class="string">"70"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_waveColor=<span class="string">"@color/colorAccent"</span>/&gt;</span><br></pre></td></tr></table></figure> 
 <h3 id="Step_3">Step 3</h3><p>You can write some animation codes to the callbacks such as setOnCheckedChangeListener, onProgressChanged, etc in your Activity.</p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setTopTitle("Top Title")<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setCenterTitleColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBottomTitleSize(18)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setProgressValue(80)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderWidth(10)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setAmplitudeRatio(60)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setWaveColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderColor(Color.GRAY)<span class="comment">;</span></span><br></pre></td></tr></table></figure>
-<hr>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setTopTitle("Top Title")<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setCenterTitleColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBottomTitleSize(18)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setProgressValue(80)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderWidth(10)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setAmplitudeRatio(60)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setWaveColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderColor(Color.GRAY)<span class="comment">;</span></span><br></pre></td></tr></table></figure> 
 <h2 id="Customization">Customization</h2><p>Do what you what :)</p>
 <table>
 <thead>
@@ -223,105 +222,111 @@
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">mlv_borderWidth</td>
+<td style="text-align:center">wlv_borderWidth</td>
 <td style="text-align:center">dimension</td>
 <td style="text-align:center">set border width, default is 0</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_borderColor</td>
+<td style="text-align:center">wlv_borderColor</td>
 <td style="text-align:center">color</td>
 <td style="text-align:center">set border color</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_progressValue</td>
+<td style="text-align:center">wlv_progressValue</td>
 <td style="text-align:center">integer</td>
 <td style="text-align:center">set progress value, default is 50</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_shapeType</td>
+<td style="text-align:center">wlv_shapeType</td>
 <td style="text-align:center">enum</td>
 <td style="text-align:center">set shape type, default is circle</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_waveColor</td>
+<td style="text-align:center">wlv_waveColor</td>
 <td style="text-align:center">color</td>
 <td style="text-align:center">set wave color</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_waveAmplitude</td>
+<td style="text-align:center">wlv_waveAmplitude</td>
 <td style="text-align:center">float</td>
 <td style="text-align:center">set wave amplitude</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_titleTopSize</td>
+<td style="text-align:center">wlv_titleTopSize</td>
 <td style="text-align:center">dimension</td>
 <td style="text-align:center">set top title size, default is 18 </td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_titleCenterSize</td>
+<td style="text-align:center">wlv_titleCenterSize</td>
 <td style="text-align:center">dimension</td>
 <td style="text-align:center">set center title size, default is 22</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_titleBottomSize</td>
+<td style="text-align:center">wlv_titleBottomSize</td>
 <td style="text-align:center">dimension</td>
 <td style="text-align:center">set bottom size, default is 18</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_titleTopColor</td>
+<td style="text-align:center">wlv_titleTopColor</td>
 <td style="text-align:center">color</td>
 <td style="text-align:center">set top title color</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_titleCenterColor</td>
+<td style="text-align:center">wlv_titleCenterColor</td>
 <td style="text-align:center">color</td>
 <td style="text-align:center">set center title color </td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_titleBottomColor</td>
+<td style="text-align:center">wlv_titleBottomColor</td>
 <td style="text-align:center">color</td>
 <td style="text-align:center">set bottom title color </td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_titleTop</td>
+<td style="text-align:center">wlv_titleTop</td>
 <td style="text-align:center">string</td>
 <td style="text-align:center">set top title content, default is null</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_titleCenter</td>
+<td style="text-align:center">wlv_titleCenter</td>
 <td style="text-align:center">string</td>
 <td style="text-align:center">set center title content, default is null</td>
 </tr>
 <tr>
-<td style="text-align:center">mlv_titleBottom</td>
+<td style="text-align:center">wlv_titleBottom</td>
 <td style="text-align:center">string</td>
 <td style="text-align:center">set bottom title content, default is null</td>
 </tr>
 </tbody>
 </table>
 <p><strong>All attributes have their respective getters and setters to change them at runtime.</strong></p>
-<hr>
-<h2 id="ChangeLog">ChangeLog</h2><h3 id="0-1-4">0.1.4</h3><ul>
-<li>Fix the bug which <code>setProgressValue() doesn&#39;t change the value of mProgressValue</code></li>
-<li>Fix attributes’ setters</li>
-</ul>
-<h3 id="0-1-3">0.1.3</h3><ul>
-<li>Fix the bug which <code>Attribute &quot;borderWidth&quot; has already been defined</code></li>
+<h2 id="Change_Log">Change Log</h2><h3 id="0-2-0_(2016-02-17)">0.2.0 (2016-02-17)</h3><h4 id="Implemented_enhancements:">Implemented enhancements:</h4><ul>
 <li>Prefix the attributes with “wlv”</li>
 </ul>
-<hr>
+<h4 id="Fixed_bugs:">Fixed bugs:</h4><ul>
+<li>setProgressValue() increase doesn’t conform to logic <a href="https://github.com/tangqi92/WaveLoadingView/issues/8" target="_blank" rel="external">#8</a></li>
+</ul>
+<h4 id="Update:">Update:</h4><ul>
+<li>Update <code>build.gradle</code></li>
+<li>Update Sample</li>
+</ul>
+<h3 id="0-1-5_(2016-01-14)">0.1.5 (2016-01-14)</h3><h4 id="Fixed_bugs:-1">Fixed bugs:</h4><ul>
+<li>IllegalArgumentException: width and height must be &gt; 0 while loading Bitmap from View <a href="https://github.com/tangqi92/WaveLoadingView/issues/6" target="_blank" rel="external">#6</a></li>
+</ul>
+<h3 id="0-1-4_(2015-12-17)">0.1.4 (2015-12-17)</h3><h4 id="Fixed_bugs:-2">Fixed bugs:</h4><ul>
+<li>setProgressValue() doesn’t change the value of mProgressValue <a href="https://github.com/tangqi92/WaveLoadingView/issues/4" target="_blank" rel="external">#4</a></li>
+</ul>
+<h3 id="0-1-3">0.1.3</h3><h4 id="Fixed_bugs:-3">Fixed bugs:</h4><ul>
+<li>Attribute “borderWidth” has already been defined <a href="https://github.com/tangqi92/WaveLoadingView/issues/2" target="_blank" rel="external">#2</a></li>
+</ul>
 <h2 id="Demo">Demo</h2><p><a href="https://github.com/tangqi92/WaveLoadingView/releases/download/v0.1.2/sample-release-unsigned.apk" target="_blank" rel="external">Download</a></p>
-<hr>
 <h2 id="Community">Community</h2><p>Looking for contributors, feel free to fork !</p>
 <p>Tell me if you’re using my library in your application, I’ll share it in this README.</p>
-<hr>
 <h2 id="Thanks">Thanks</h2><p>Inspired by </p>
 <ul>
 <li><a href="https://github.com/gelitenight/WaveView" target="_blank" rel="external">WaveView</a> created by <a href="https://github.com/gelitenight" target="_blank" rel="external">gelitenight</a></li>
 <li><a href="https://github.com/lopspower/CircularFillableLoaders" target="_blank" rel="external">CircularFillableLoaders</a> created by <a href="https://github.com/lopspower" target="_blank" rel="external">lopspower</a></li>
 </ul>
-<hr>
-<h2 id="License">License</h2><p>Apache 2.0</p>
+<h2 id="License">License</h2><p>Apache 2.0 </p>
 <hr>
 <h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
 <li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
@@ -351,7 +356,7 @@
     <link href="http://itangqi.me/2015/11/02/comeback-diary/"/>
     <id>http://itangqi.me/2015/11/02/comeback-diary/</id>
     <published>2015-11-01T16:00:00.000Z</published>
-    <updated>2016-01-08T10:32:52.000Z</updated>
+    <updated>2016-02-25T05:43:59.000Z</updated>
     <content type="html"><![CDATA[<h3 id="2015年8月21日">2015年8月21日</h3><p>这一天，我结束了在 <a href="http://friendmedia.com/" target="_blank" rel="external">FriendMedia</a> 三个月短暂却又充实的工作。在这里，我结识了一群聪明且又友爱的伙伴；在这里，我体会到了创业公司的激情与不易；在这里，我一步步走向了 Android 开发的正轨。感谢 FM 给我的一切，愿你的未来一帆风顺。</p>
 <p>离职回到家后，由于身体的原因，我逼迫自己休息了一个星期，上午睡个懒觉，下午看看综艺节目，饭后出门散个步，晚上陪老妈扯会家常。让自己慢下来，不看技术文档与满屏的代码，享受与家人在一起的悠闲时光，我很珍惜，真的。</p>
 <a id="more"></a> 
@@ -393,51 +398,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[我好想你]]></title>
-    <link href="http://itangqi.me/2015/10/04/i-miss-you/"/>
-    <id>http://itangqi.me/2015/10/04/i-miss-you/</id>
-    <published>2015-10-03T16:00:00.000Z</published>
-    <updated>2016-01-08T10:32:38.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
-<p>我还踮着脚思念<br>我还任记忆盘旋<br>我还闭着眼流泪<br>我还装作无所谓<br>我好想你 好想你<br>就深藏在心  </p>
-</blockquote>
-<a id="more"></a> 
-<hr>
-<p>亲爱的老爸：</p>
-<p>一年了。</p>
-<p>我好想，每天能给你打个电话，告诉你我这一天生活的点点滴滴，顺道听你唠叨下老妈。  </p>
-<p>我好想，每次回家能吃上你亲自做的饭菜，你是我心中最棒的厨师，最爱你烧的红烧肉了。</p>
-<p>我好想，当我考上研，找到好工作，娶妻生子时……我能第一时间与你分享。</p>
-<p>我好想，给你买好吃的好穿的，让你提前退休，好好享受晚年。</p>
-<p>我好想，再听你喊我一声儿子。</p>
-<p>我好想，告诉你，我是多么多么的爱你！</p>
-<p>我好想，你</p>
-<p>你的儿子：汤奇</p>
-<p>2015年10月04日</p>
-<hr>
-<p><img src="/images/dad.JPG" alt=""></p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<blockquote>
-<p>我还踮着脚思念<br>我还任记忆盘旋<br>我还闭着眼流泪<br>我还装作无所谓<br>我好想你 好想你<br>就深藏在心  </p>
-</blockquote>]]>
-    
-    </summary>
-    
-      <category term="Dad" scheme="http://itangqi.me/tags/Dad/"/>
-    
-      <category term="Miss" scheme="http://itangqi.me/tags/Miss/"/>
-    
-      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[Android Tips - 填坑手册]]></title>
     <link href="http://itangqi.me/2015/09/14/android-tips/"/>
     <id>http://itangqi.me/2015/09/14/android-tips/</id>
     <published>2015-09-13T16:00:00.000Z</published>
-    <updated>2016-01-08T09:01:35.000Z</updated>
+    <updated>2016-02-25T05:44:26.000Z</updated>
     <content type="html"><![CDATA[<h2 id="介绍">介绍</h2><p>学习 Android 至今，大大小小的坑没少踩，庆幸的是，在强大的搜索引擎与无私奉献的人们的帮助下，我遇到的坑都顺利地被填平了。</p>
 <p>为了便于日后遇到同样的问题时，能免于再次搜索带来的麻烦，我养成了收藏书签的习惯，随着书签（Tips）的日积月累，我想，是时候该有这个项目了。</p>
 <a id="more"></a> 
@@ -474,7 +439,7 @@
     <link href="http://itangqi.me/2015/09/03/building-blocks/"/>
     <id>http://itangqi.me/2015/09/03/building-blocks/</id>
     <published>2015-09-02T16:00:00.000Z</published>
-    <updated>2016-01-08T10:31:52.000Z</updated>
+    <updated>2016-02-25T05:44:19.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
 <p><strong>积木</strong> - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！</p>
 </blockquote>
@@ -546,7 +511,7 @@
 </li>
 </ul>
 <hr>
-<h2 id="Contributors">Contributors</h2><ul>
+<h2 id="Contributors_-_贡献者">Contributors - 贡献者</h2><ul>
 <li>dev version: <a href="https://github.com/troyliu0105" target="_blank" rel="external">troyliu0105</a></li>
 <li>Logo: <a href="http://weibo.com/cat93/" target="_blank" rel="external">Mao</a> &amp; <a href="https://github.com/troyliu0105" target="_blank" rel="external">troyliu0105</a></li>
 </ul>
@@ -583,7 +548,7 @@
     <link href="http://itangqi.me/2015/08/09/google-places-for-android-guide/"/>
     <id>http://itangqi.me/2015/08/09/google-places-for-android-guide/</id>
     <published>2015-08-08T16:00:00.000Z</published>
-    <updated>2016-01-08T10:32:43.000Z</updated>
+    <updated>2016-02-25T05:43:31.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>最近由于项目的原因，接触到了 <a href="https://developers.google.com/places/" target="_blank" rel="external">Google Places</a> 的使用与开发，学习并在项目中实现了简单的<strong>地点定位</strong>与<strong>自动补全</strong>功能。</p>
 <p>在整个实践过程中，发现除了官方文档外，网上可以参考的中文教程寥寥无几且质量都不高，遂决定自己写篇入门指南（其实也没多少干货啦），希望可以帮助到，有这方面需求的同学们。下面，我将以一个实际的例子，图文并茂的带着你快速了解并使用上 Google Places .</p>
 <a id="more"></a> 
@@ -664,7 +629,7 @@
     <link href="http://itangqi.me/2015/07/26/orm-greendao-summary/"/>
     <id>http://itangqi.me/2015/07/26/orm-greendao-summary/</id>
     <published>2015-07-25T16:00:00.000Z</published>
-    <updated>2016-01-08T10:38:34.000Z</updated>
+    <updated>2016-02-25T05:42:48.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>我相信，在平时的开发过程中，大家一定会或多或少地接触到 <a href="https://en.wikipedia.org/wiki/SQLite" target="_blank" rel="external">SQLite</a>。然而在使用它时，我们往往需要做许多额外的工作，像编写 SQL 语句与解析查询结果等。所以，适用于 Android 的 <strong>ORM</strong> 框架也就孕育而生了，现在市面上主流的框架有 OrmLite、SugarORM、Active Android、Realm 与 GreenDAO。而今天的主角便是 <strong>greenDAO</strong>，下面，我将详解地介绍如何在 <strong>Android Studio</strong> 上使用 <strong>greenDAO</strong>，并结合代码总结一些使用过程中的心得。</p>
 <a id="more"></a> 
 <hr>
@@ -754,171 +719,11 @@
   </entry>
   
   <entry>
-    <title><![CDATA[世界那么大，我想去看看]]></title>
-    <link href="http://itangqi.me/2015/05/11/interview-summary/"/>
-    <id>http://itangqi.me/2015/05/11/interview-summary/</id>
-    <published>2015-05-10T16:00:00.000Z</published>
-    <updated>2016-01-08T10:25:23.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>一直以来，我都梦想着能加入一家小而美的公司，一家硅谷范儿的公司，一加拥有工程师文化的公司，每天能和一群聪明的人在一起做些酷炫的事情。感谢，在历时两天半，历经五家公司的面试后，这个梦想终于实现了。</p>
-<p>下面，我会依次回顾每家公司的面试经历与总结其中的心得，希望能在自我总结的同时，给大家提供一些有价值的信息。</p>
-<a id="more"></a> 
-<hr>
-<h2 id="分子移动">分子移动</h2><h3 id="公司背景">公司背景</h3><ul>
-<li><p>类型：一家专注于「吃」的 O2O 移动互联网创业公司</p>
-</li>
-<li><p>地址：南京市雨花台区宁双路28号汇智大厦9楼36kr</p>
-</li>
-<li><p>融资：未融资，前期资金来自创始人自己</p>
-</li>
-</ul>
-<h3 id="面试经过">面试经过</h3><p>首先由创始人面试（更确切的说是交谈），创始人为金融行业出身，目前为二次创业，初创项目为金融相关，可惜最终并未成功。与合伙人继续从事金融行业不同，创始人选择投身移动互联网继续创业。公司成立于去年11月份，目前产品仍未完成开发，预计在未来两个月内实现上线，但已经开始进行小范围的市场推广。团队成员主要由曾任职于知名公司的大牛与名校的在读研究生组成。除了介绍团队背景外，创始人还谈及了公司具体的商业模式与愿景、与同类竞争产品的优劣势、及对整个细分市场的分析等。整个交谈进行了大约40分钟，我很好的扮演了聆听者的角色（时不时会流露出崇拜的眼神与频频点头表示赞同）。</p>
-<p>随后便是技术面试，面试官为公司的技术合伙人，拥有17年的开发与带队经验，最早是在一家美资企业做操作系统开发，现在负责公司的移动端。在简短地听取完我的项目介绍后，其显然对我所做过的项目并不感兴趣且觉得没有什么技术含量（好吧我承认，这是事实）于是便开始随机提问：</p>
-<ol>
-<li>现在让你包装一个类，里面实现了若干操作，请问：当在执行完该类中的操作后，如何将结果返回给你？</li>
-<li>谈谈对 <code>Application</code> 类的理解？</li>
-<li>谈谈对 <code>ListFragment</code> 类的理解？</li>
-</ol>
-<p>悲剧，我在第一问就卡住了，在面试官多次解释题意后，仅仅回答出可以使用「广播」的方式，但面试官要求再说出其他的方法，当时脑子一片空白，又不想拖延时间，最后选择放弃。<br>当听到第二问时，心想，这尼玛都什么问题啊，平时都没怎么接触到，想编都编不出来，所以毫不犹豫回答「抱歉，没有了解过」。<br>这时看面试官的表情，我知道这事黄定了，但也许他不想这么快就结束面试或者还想让我回答上个问题好留个面子，于是问了第三问，结果我还真没用过 <code>ListFragment</code>，「图样图森破」啊！然后，就没有然后了……</p>
-<p>虽然面试挂的很干脆，但面试官在整个过程中始终很耐心，并没有半点想要刁难我的意思，最后希望我能在技术上更加努力（实则我前面落下太多了）。</p>
-<h3 id="总结与教训">总结与教训</h3><ol>
-<li>公司租用公用办公场所（36kr），环境一般，但里面有数家创业公司，氛围不错。</li>
-<li>在产品并为上线且融资尚不确定的情况下，公司的前景如何，就仁者见仁了。 </li>
-<li>面试时，要尽量将自己的优势展现出来，或者说，把话题引导到自己熟悉的领域上。</li>
-<li>一切的一切，都是以自身的实力为前提，如果能认清自己的不足，回去加倍努力就是了。</li>
-</ol>
-<hr>
-<h2 id="运策网">运策网</h2><h3 id="公司背景-1">公司背景</h3><ul>
-<li><p>类型：致力于打造基于移动互联网的整车货运 O2O 平台</p>
-</li>
-<li><p>地址：南京市建宁路65号金川国际科技园</p>
-</li>
-<li><p>融资：A 轮</p>
-</li>
-</ul>
-<h3 id="面试经过-1">面试经过</h3><p>仍然没有笔试，面试官为公司 Android 端的技术负责人，样子十分和蔼（的确，整个面试始终保持微笑），在简单的自我介绍后，便从项目切入面试，同样，我做过的项目并没有引起面试官的兴趣，于是又是随机提问：</p>
-<ol>
-<li>如何实现应用自动登录功能？</li>
-<li>如何实现应用常驻后台不被杀死？</li>
-<li>如何实现自定义组件，并详细介绍实现步骤？</li>
-</ol>
-<p>第一问，之前并没有实现过，简单思考后回答「可以使用 SharedPreferences」。<br>当听到第二问时，心中窃喜，这个问题正好有看过，于是脱口而出「用 C 编写守护进程(即子进程)，守护进程做的事情就是循环检查目标进程是否存在，不存在则启动它」，面试官接着提问是否自己实现过，我本着诚实的原则，回答「看过实现原理，但未在实际项目上使用过」。<br>第三问，同样有印象是看过的，但仍然没有在实际中实现过（一定要动手！！！），心中没有底，所以回答「有看过如何实现，但现在记不清了」。</p>
-<p>虽然问题答的并不理想，但在整个面试过程中，我始终保持着谦卑的态度：首先我承认自己的技术水平不足，其次表态自己愿意努力学习，最后放大招，对薪资无要求（其实心里是有个底线的）。面试官最终还是给了我机会，但由于给出的薪资实在远远低于我的预期值，所考虑到我当时的现状，最终我还是选择了放弃。</p>
-<h3 id="总结与教训-1">总结与教训</h3><ol>
-<li>公司的介绍与产品都能在网上搜到，个人认为是一家靠谱的创业公司。</li>
-<li>公司福利不错，中午有专职阿姨做饭，每月 TB ，每月男生/女生假，全勤奖等。</li>
-<li>尽管知道自己的能力不足，但在面试过程中，仍然要保持自信，要敢于表达自己的想法。</li>
-<li>如何平衡眼前的薪资与未来的发展，要视每个人具体的情况而定。</li>
-</ol>
-<hr>
-<h2 id="车置宝">车置宝</h2><h3 id="公司背景-2">公司背景</h3><ul>
-<li><p>类型：二手车帮卖网络竞价平台</p>
-</li>
-<li><p>地址：南京市雨花区花神大道86号东软南京研发基地309</p>
-</li>
-<li><p>融资：B 轮</p>
-</li>
-</ul>
-<h3 id="面试经过-2">面试经过</h3><p>当天同时间来面试的人很多，想必公司是在大规模招人，填完基本信息的表格后，就让在大厅等候面试（其实还要做份笔试题，但由于试卷不够用了，所以…）。等了大概有20分钟，被面试官带到一间会议室。</p>
-<p>不知道是不是一直都在面试的缘故，面试官显得比较严肃（板着脸）。尽管我吸取了之前面试的教训，一上来便吹嘘自己之前做过的项目，但做面试官的都不傻，有没有含量一听就知道。于是面试官开始随机提问，前面的题目都比较基础，没有什么难度，我答的也比较轻松，最后有个问题：</p>
-<ul>
-<li>在 Service 中创建匿名线程，然后在「设置」-&gt; 「应用程序」中<strong>停止</strong>，问该匿名线程是否会立马终止？</li>
-</ul>
-<p>整个面试过程，印象比较深的就是，面试官居然知道我的上家公司，然后对于我离职的原因：「前公司的产品是面向政府机构，觉得没有什么技术含量，而自己一直想做面向大众消费者的产品」，面试官表达了不同的意见，并且我们在这个问题上有过讨论（各抒己见），其核心思想就是：「能力不行，就不要怪公司的产品不好，私下为什么不努力！」。</p>
-<p>最后，面试官很客气地回复说回去等通知，然后，就没有然后了……</p>
-<h3 id="总结与教训-2">总结与教训</h3><ol>
-<li>公司拿了 B 轮，所以规模与环境是所面公司中条件最好的（相对而言），目前发展势头也很好。</li>
-<li>公司在南京有 60~70 人，但基本都是非技术岗，移动组（iOS/Android）目前共6人。</li>
-<li>对于回答「为何要离职与未来的职业规划」，一定要清晰，我想面试挂掉的原因里，肯定有这一点。</li>
-</ol>
-<hr>
-<h2 id="元贝">元贝</h2><h3 id="公司背景-3">公司背景</h3><ul>
-<li><p>类型：提供一站式驾考服务</p>
-</li>
-<li><p>地址：南京市江宁区双龙大道1136号2号楼2楼</p>
-</li>
-<li><p>融资：天使轮</p>
-</li>
-</ul>
-<h3 id="面试经过-3">面试经过</h3><p>到公司时，面试官正在开会，等了有15分钟。面试官十分和蔼（同样，全程微笑），其手里拿了张表格，我们就在进门的大厅沙发上进行面试。开始就是一些基本信息，但问得比较细，随后发现这份问卷更多的是在考察面试者是否适合这个公司，如：</p>
-<ul>
-<li>如果与你合作的同事手脚比较慢，当你完成自己的工作后，会如何做？同样，转换角色，你又会如何做？</li>
-</ul>
-<p>关于技术面（根本谈不上技术面），可以说是最水的一次，面试官虽然说自己负责公司 Android 团队，但却没问一个具体的问题，基本就是依照我的简历，简单地问了：</p>
-<ol>
-<li>项目中最有成就感的事？</li>
-<li>技术栈的熟练程度？</li>
-<li>Android Studio 的使用？</li>
-<li>github 的了解与使用，开源，第三方框架等</li>
-</ol>
-<p>面试很轻松就结束了，最后问了预期的薪资，回复最晚明天给结果。</p>
-<p>第二天一早便收到了 Offer ，薪资也满足了我昨天面试时所提的要求，但由于我的心意已决（决定去现在的公司），所以忍痛回信拒了。（特别感动的是，HR 和 面试官在收到我的回复后，仍然希望我能再三考虑下他们，非常有诚意。）</p>
-<p>但话说回来，如果公司以这样的技术面试继续招人，恐怕招到不靠谱的人的概率会非常大。</p>
-<h3 id="总结与教训-3">总结与教训</h3><ol>
-<li>公司在驾考类的领域比较有名（百度，Google 关键词前三），应该发展会很不错。</li>
-<li>公司地址比较偏僻，办公场所环境不算好，但有好几个妹子！</li>
-<li>公司有加班文化（强制），每周一，二，四到晚上八点半，会有餐补。</li>
-<li>现有的 APP 是外包的，现在准备组建团队重新做（是挑战，也是机遇）。</li>
-<li>简历十分重要，一定要突出自己的优势，切记浮夸吹嘘，但也不要什么都不写。</li>
-</ol>
-<hr>
-<h2 id="Friend_Media">Friend Media</h2><h3 id="公司背景-4">公司背景</h3><ul>
-<li><p>类型：用全新的移动互联网思维来为用户提供全新的数字标牌服务</p>
-</li>
-<li><p>地址：南京市江宁区秣周东路12号紫金江宁科创园P448</p>
-</li>
-<li><p>融资：未融资</p>
-</li>
-</ul>
-<h3 id="面试经过-4">面试经过</h3><p>由公司老总与 Android 端负责人共同进行面试，技术面是所经历过的面试中最严与最全的，一上来便要求直接展示作品，由于前公司的产品实在没法用（我没半点黑的意思啊），所以我退而求其次展示了自己上架过的几款应用，但实在是太小儿科了，面试官遂放弃看作品，转向问项目具体的实现，主要探讨了：</p>
-<ol>
-<li>前公司产品为何采用纯「Web App」的设计架构？</li>
-<li>如何实现「下拉刷新」只加载最新的记录？</li>
-<li>客户端与服务器端具体的网络通信实现？数据请求等？</li>
-<li>是否实现过自定义组件？实现的具体流程？</li>
-<li>用过哪些第三方图片下载与缓存的框架？</li>
-</ol>
-<p>每个问题都由浅入深，绝非三言两语能忽悠过去的，负责面试 Android 的面试官非常资深，虽然问题都非常基础，但我的表现并没有达到他的要求，所以多的问题也没有接着问下去。<br>接下来，是与老总的单独面试，主要是向我介绍公司的相关背景与产品现状：<br>目前团队在南京有7人，全为技术，包括前后移动端。最核心的三人来自「摩托罗拉南京研究中心」，成员都是拥有多年工作经验的工程师，都能独挡一面。团队在美国有2人，分别是 CEO 与 设计师。目前的产品<a href="http://www.friendmedia.com/" target="_blank" rel="external">FriendMedia</a> 面向海外市场，已经有部分用户在试用。<br>现场演示了产品的效果，当时就觉得特别炫酷（主要是我没见过世面）。随后谈了下公司未来的发展方向与规划，希望保持小团队的规模，以技术为主导，人人都能参与到产品的讨论与设计中。当时心中已经沸腾了，这不就是我一直梦想着要加入的公司嘛！我已经设想好了，如果最后能让我加入公司，哪怕不给钱都可以。<br>出乎我意料的，在面试的最后，老总当场就给了我 offer ,薪资不是很高但也够用了。</p>
-<h3 id="总结与教训-4">总结与教训</h3><ol>
-<li>因公司所处「紫金科创」，所以环境设施一流，但地理位置比较偏（尽管有地铁）。</li>
-<li>典型的「小而美」的团队，技术主导，国际化的产品「逼格」比较高。</li>
-<li>老板好，扁平化管理，无需打卡，免费零食。</li>
-<li>成长空间巨大。</li>
-<li>面试和相亲差不多，有时候决定成不成的，是「眼缘」。</li>
-</ol>
-<hr>
-<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
-<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
-<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
-<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
-</ul>
-<hr>
-<h2 id="Update">Update</h2><p>虽然时隔有三个月了，但当时面试的细节却还都历历在目，而且现在有了一些与当时不一样的感悟，这就是成长吧！</p>
-<ul>
-<li>最后更新时间：2015/08/14</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="前言">前言</h2><p>一直以来，我都梦想着能加入一家小而美的公司，一家硅谷范儿的公司，一加拥有工程师文化的公司，每天能和一群聪明的人在一起做些酷炫的事情。感谢，在历时两天半，历经五家公司的面试后，这个梦想终于实现了。</p>
-<p>下面，我会依次回顾每家公司的面试经历与总结其中的心得，希望能在自我总结的同时，给大家提供一些有价值的信息。</p>]]>
-    
-    </summary>
-    
-      <category term="Interview" scheme="http://itangqi.me/tags/Interview/"/>
-    
-      <category term="Startup" scheme="http://itangqi.me/tags/Startup/"/>
-    
-      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
-    
-      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
-    
-  </entry>
-  
-  <entry>
     <title><![CDATA[如何通过电脑操控 Android 设备]]></title>
     <link href="http://itangqi.me/2015/04/11/control-android-device-by-pc/"/>
     <id>http://itangqi.me/2015/04/11/control-android-device-by-pc/</id>
     <published>2015-04-10T16:00:00.000Z</published>
-    <updated>2016-01-08T10:32:49.000Z</updated>
+    <updated>2016-02-25T05:43:46.000Z</updated>
     <content type="html"><![CDATA[<h2 id="背景">背景</h2><p>由于公司项目的需要，最近花时间研究了下「电脑操控 Android 设备」的具体实现，其间踩了不少坑（说多了都是泪啊），在此记录下来供大家参考与学习。</p>
 <a id="more"></a> 
 <h3 id="VNC">VNC</h3><p>其中涉及到最主要的技术便是 <a href="http://en.wikipedia.org/wiki/Virtual_Network_Computing" target="_blank" rel="external">VNC</a> (Virtual Network Computing) ，它是使用远程帧缓冲协议（RFB）远程控制另一台计算机（设备）的图形桌面共享系统，其主要包括：                              </p>
@@ -1025,7 +830,7 @@
     <link href="http://itangqi.me/2015/03/07/java-and-javascript-interaction/"/>
     <id>http://itangqi.me/2015/03/07/java-and-javascript-interaction/</id>
     <published>2015-03-06T16:00:00.000Z</published>
-    <updated>2016-01-08T10:32:32.000Z</updated>
+    <updated>2016-02-25T05:43:07.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Hybrid_App">Hybrid App</h2><ul>
 <li><p><a href="http://baike.baidu.com/link?url=oEcVTV16sU0agGHHebRey-cur6xumEuvDU77apaDBHKgGyWZwxTQYKCacn_MX51sogG2l4aj_KX406pcrP5sHK" target="_blank" rel="external">Hybrid App</a> : 又称「混合模式移动应用」，是指介于 Web App 和 Native App 这两者之间的 App，兼具「Native App 良好用户交互体验的优势」和「Web App 跨平台开发的优势」。</p>
 </li>
@@ -1098,7 +903,7 @@
     <link href="http://itangqi.me/2015/02/15/talk-about-material-design/"/>
     <id>http://itangqi.me/2015/02/15/talk-about-material-design/</id>
     <published>2015-02-14T16:00:00.000Z</published>
-    <updated>2016-01-08T10:25:39.000Z</updated>
+    <updated>2016-02-25T05:42:41.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>由于公司产品应用场景的特殊性，在平时的开发过程中，我基本不需要涉及 UI 相关的工作，但每每见到各种自定义控件与酷炫的动画效果时，我心里总是痒痒的。所以我决定开始学习与积累相关知识，虽然离「Material Design」概念的提出已经有一段时间了，但现在开始学习也不算太晚。</p>
 <a id="more"></a> 
 <hr>
@@ -1170,7 +975,7 @@
     <link href="http://itangqi.me/2015/01/21/alfred-workflows-recommendation/"/>
     <id>http://itangqi.me/2015/01/21/alfred-workflows-recommendation/</id>
     <published>2015-01-20T16:00:00.000Z</published>
-    <updated>2016-01-08T10:31:58.000Z</updated>
+    <updated>2016-02-25T05:42:11.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>如果你要问我「Mac 上必备的软件有哪些?」<br>那么，<a href="http://www.alfredapp.com/" target="_blank" rel="external"><strong>Alfred</strong></a> 将会当仁不让地成为我第一个推荐给你的<strong>神器</strong>！（对，你没听错，相信我，它绝对配得上「神器」的称号。）</p>
 <p>因为当我用上 Alfred 的那一刻，我便有种相见恨晚的感觉，它极大地提高了我的效率（无论是工作还是生活），事实是，我现在已经离不开它了！</p>
 <a id="more"></a> 
@@ -1279,7 +1084,7 @@
     <link href="http://itangqi.me/2015/01/01/everything-is-just-beginning/"/>
     <id>http://itangqi.me/2015/01/01/everything-is-just-beginning/</id>
     <published>2014-12-31T16:00:00.000Z</published>
-    <updated>2016-01-08T10:32:47.000Z</updated>
+    <updated>2016-02-25T05:43:37.000Z</updated>
     <content type="html"><![CDATA[<h2 id="In_a_word">In a word</h2><blockquote>
 <p>Talk is cheap. Show me the code.</p>
 </blockquote>
