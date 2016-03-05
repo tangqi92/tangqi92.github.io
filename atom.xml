@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2016-02-25T05:43:02.000Z</updated>
+  <updated>2016-03-05T06:12:30.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -15,9 +15,82 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[Text Kit 学习笔记]]></title>
+    <link href="http://itangqi.me/2016/02/18/the-notes-of-learning-text-kit/"/>
+    <id>http://itangqi.me/2016/02/18/the-notes-of-learning-text-kit/</id>
+    <published>2016-02-17T16:00:00.000Z</published>
+    <updated>2016-03-05T06:12:30.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>目前，我正在开发自己的第一款 iOS App: <a href="https://github.com/tangqi92/SuperNote" target="_blank" rel="external">SuperNote</a>, 作为一款笔记类应用，其最基础也是最核心的功能便是富文本的编辑。起初为了能快速地实现此功能，我直接使用了 <a href="https://github.com/ibireme/YYText" target="_blank" rel="external">YYText</a>, 照着其 Demo 改了改便基本实现了需求，虽然看似便捷但随后我便发现自己其实是「知其然，而不知其所以然」，对于其中的实现原理只知胜少。</p>
+<p>于是决定对富文本编辑的实现原理进行一探究竟，而 <a href="https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html" target="_blank" rel="external">Text Kit</a> 便是今天的主角。</p>
+<a id="more"></a> 
+<h2 id="简介">简介</h2><p>苹果在 <a href="https://developer.apple.com/library/prerelease/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html" target="_blank" rel="external">Text Programming Guide for iOS</a> 中对其做了如下解释:</p>
+<blockquote>
+<p>“Text Kit is a set of classes and protocols in the UIKit framework that provide high-quality typographical services which enable applications to store, lay out, and display text with all the characteristics of fine typesetting, such as kerning, ligatures, line-breaking, and justification.”</p>
+</blockquote>
+<p>一句话总结：Text Kit 就是为文字排版与渲染孕应而生的。</p>
+<h3 id="历史">历史</h3><p><strong>iOS 2</strong>：这是第一个公开的 SDK，包括一个简单的文本显示组件（UILabel），一个简单的文本输入组件（UITextField），以及一个简单的、可滚动、可编辑的并且支持更大量文本的组件：UITextView。这些组件都只支持纯文本，没有文本选择支持（仅支持插入点），除了设置字体和文本颜色外几乎没有其他可定制功能。</p>
+<p><strong>iOS 3</strong>：新特性有复制和粘贴，以及复制粘贴所需要的文本选择功能。数据探测器（Data Detector）为文本视图提供了一个高亮电话号码和链接的方法。然而，除了打开或关闭这些特性外，开发者基本上没有什么别的事情可以做。</p>
+<p><strong>iOS 3.2</strong>：iPad 的出现带来了 CoreText，一个低级文本布局和渲染引擎（从Mac OS X 10.5 移植过来的），以及 UITextInput，就是前面也提到的键盘存取协议。</p>
+<p><strong>iOS 4</strong>：iOS 3.2 发布仅仅几个月后就发布了，文本方面没有一丁点新功能。</p>
+<p><strong>iOS 5</strong>：文本方面没啥变化。</p>
+<p><strong>iOS 6</strong>：有些动作了：属性文本编辑被加入了 UITextView。很不幸的是，它很难定制。默认的 UI 有粗体、斜体和下划线。用户可以设置字体大小和颜色。粗看起来相当不错，但还是没法控制布局或者提供一个便利的途径来定制文本属性。然而对于（文本编辑）开发者，有一个大的新功能：可以继承 UITextView 了，这样的话，除了以前版本提供的键盘输入外，开发者可以“免费”获得文本选择功能。而在这以前，开发者必须实现一个完全自定义的文本选择功能，这可能是很多非纯文本工具的开发半途而废的原因。</p>
+<p><strong>iOS 7</strong>：终于等来了 TextKit。</p>
+<h3 id="架构">架构</h3><p>在 <strong>iOS 6 之前</strong>，WebView 通常是呈现混合风格，如粗体，斜体，甚至颜色文本的最简单方法。</p>
+<p>在 <strong>iOS 6 时代</strong>，文本控件如：UILabel、UITextField 和 UITextView 是基于 String Drawing 和 WebKit 构建的。其中 String Drawing 与 Core Graphics 直接通信。因此在iOS 7 之前文本控件也可以实现多种样式的文字排版，但是事实上是通过 WebKit 实现的。WebKit 是一种浏览器内核技术，使用它进行文字渲染会消耗掉比较多的内存，对应用的性能有一定的影响。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-01.png" alt=""></p>
+<p>在 <strong>iOS 7 时代</strong>，Text Kit 是建立在 Core Text 之上的，它通过 Core Text 与 Core Graphics 进行交互。而文本控件如：UILabel、UITextField 和 UITextView，则构建于 Text Kit 之上，可见这些文本控件可以利用 Text Kit 提供的 API 来对文字进行排版和渲染处理。从下图可见，UIWebView 是基于 WebKit 的，它不能使用 Text Kit 提供的功能。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-02.png" alt=""></p>
+<h2 id="核心">核心</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-04.png" alt=""></p>
+<p>下面将对上图涉及到的核心类进行一一解释：</p>
+<ul>
+<li><p><code>NSTextStorage</code>:<br>顾名思义，NSTextStorage 就是用来存储文本的字符和相关属性的，例如字体或段落信息等，因为它是 <code>NSMutableAttributedString</code> 的子类，这也就是为什么它来负责存储文本的属性。此外，当 NSTextStorage 中的字符或属性发生改变时，会通知 <code>NSLayoutManager</code>, 进而做到文本内容的显示更新。</p>
+</li>
+<li><p><code>NSLayoutManager</code>:<br>该类负责对文字进行编辑排版处理，将存储在 <code>NSTextStorage</code> 中的数据转换为可以在视图控件中显示的文本内容，并把字符编码映射到对应的字形上，然后将字形排版到 <code>NSTextContainer</code> 定义的区域中。</p>
+</li>
+<li><p><code>NSTextContainer</code>:<br>定义了文本可以排版的区域，默认情况下是矩形区域，如果是其他形状的区域，需要通过子类化 NSTextContainer 来创建。</p>
+</li>
+</ul>
+<p>三者的关系可见下图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-06.png" alt=""></p>
+<p><code>NSLayoutManager</code> 对象从 <code>NSTextStorage</code> 对象中取得文本内容，进行排版，然后把排版之后的文本放到 <code>NSTextContainer</code> 对象指定的区域上。最后再由一个文本控件从 <code>NSTextContainer</code> 中取出内容显示到屏幕中。</p>
+<h3 id="相关">相关</h3><ul>
+<li><code>Core Text</code>: 处于底层技术，如果我们需要将文本内容直接渲染到图形上下文(Graphics context)时，从性能和易用性来考虑，最佳方案就是使用Core Text</li>
+<li><code>NSAttributedString</code>: 就是用来设置文字的效果(颜色、字体、下划线等等)</li>
+<li><p><code>NSMutableAttributedString</code>:是 NSAttributedString 的子类，可变类型的NSAttributedString</p>
+<p>  <img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-05.jpg" alt=""></p>
+</li>
+</ul>
+<h2 id="功能">功能</h2><ul>
+<li>Dynamic type - 动态字体效果</li>
+<li>Letterpress effects - 突出印刷效果</li>
+<li>Exclusion paths - 图文混排效果</li>
+<li>等等</li>
+</ul>
+<p>本文并不会对具体功能的实现进行详细的阐述，毕竟本文重点是了解内在的实现原理而非具体实现。好啦，剩下的事情就交给你了！</p>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://developer.apple.com/library/prerelease/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html" target="_blank" rel="external">Using Text Kit to Draw and Manage Text</a></li>
+<li><a href="https://www.objc.io/issues/5-ios7/getting-to-know-textkit/" target="_blank" rel="external">Getting to Know TextKit</a></li>
+<li><a href="https://www.raywenderlich.com/50151/text-kit-tutorial" target="_blank" rel="external">Text Kit Tutorial</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>目前，我正在开发自己的第一款 iOS App: <a href="https://github.com/tangqi92/SuperNote">SuperNote</a>, 作为一款笔记类应用，其最基础也是最核心的功能便是富文本的编辑。起初为了能快速地实现此功能，我直接使用了 <a href="https://github.com/ibireme/YYText">YYText</a>, 照着其 Demo 改了改便基本实现了需求，虽然看似便捷但随后我便发现自己其实是「知其然，而不知其所以然」，对于其中的实现原理只知胜少。</p>
+<p>于是决定对富文本编辑的实现原理进行一探究竟，而 <a href="https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html">Text Kit</a> 便是今天的主角。</p>]]>
+    
+    </summary>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[自学 iOS 开发之旅]]></title>
-    <link href="http://itangqi.me/2016/02/08/learning-ios-journey/"/>
-    <id>http://itangqi.me/2016/02/08/learning-ios-journey/</id>
+    <link href="http://itangqi.me/2016/02/08/the-journey-of-learning-ios/"/>
+    <id>http://itangqi.me/2016/02/08/the-journey-of-learning-ios/</id>
     <published>2016-02-07T16:00:00.000Z</published>
     <updated>2016-02-25T05:43:02.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
