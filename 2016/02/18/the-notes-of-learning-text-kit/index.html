@@ -71,8 +71,15 @@
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-02.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-04.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-06.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-09.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-08.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-07.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-10.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-05.jpg">
-<meta property="og:updated_time" content="2016-03-05T06:12:30.000Z">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-11.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-12.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-13.png">
+<meta property="og:updated_time" content="2016-03-05T07:06:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Text Kit 学习笔记">
 <meta name="twitter:description" content="前言目前，我正在开发自己的第一款 iOS App: SuperNote, 作为一款笔记类应用，其最基础也是最核心的功能便是富文本的编辑。起初为了能快速地实现此功能，我直接使用了 YYText, 照着其 Demo 改了改便基本实现了需求，虽然看似便捷但随后我便发现自己其实是「知其然，而不知其所以然」，对于其中的实现原理只知胜少。
@@ -358,6 +365,8 @@
 <h2 id="核心">核心</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-04.png" alt=""></p>
 <p>下面将对上图涉及到的核心类进行一一解释：</p>
 <ul>
+<li><p><code>UITextView</code>：<br>在 TextKit 中，有两个目的：第一，它是文本系统用来绘制的视图。文本视图它自己并不会做任何绘制；它仅仅提供一个供其它类绘制的区域。第二，处理所有的用户交互，具体来说，Text View 实现 UITextInput 的协议来处理键盘事件，它为用户提供了一种途径来设置一个插入点或选择文本。它并不对文本做任何实际上的改变，仅仅将这些改变请求转发给刚刚讨论的 Text Storage。</p>
+</li>
 <li><p><code>NSTextStorage</code>:<br>顾名思义，NSTextStorage 就是用来存储文本的字符和相关属性的，例如字体或段落信息等，因为它是 <code>NSMutableAttributedString</code> 的子类，这也就是为什么它来负责存储文本的属性。此外，当 NSTextStorage 中的字符或属性发生改变时，会通知 <code>NSLayoutManager</code>, 进而做到文本内容的显示更新。</p>
 </li>
 <li><p><code>NSLayoutManager</code>:<br>该类负责对文字进行编辑排版处理，将存储在 <code>NSTextStorage</code> 中的数据转换为可以在视图控件中显示的文本内容，并把字符编码映射到对应的字形上，然后将字形排版到 <code>NSTextContainer</code> 定义的区域中。</p>
@@ -365,22 +374,32 @@
 <li><p><code>NSTextContainer</code>:<br>定义了文本可以排版的区域，默认情况下是矩形区域，如果是其他形状的区域，需要通过子类化 NSTextContainer 来创建。</p>
 </li>
 </ul>
-<p>三者的关系可见下图：</p>
+<p>它们的关系可见下图：</p>
 <p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-06.png" alt=""></p>
 <p><code>NSLayoutManager</code> 对象从 <code>NSTextStorage</code> 对象中取得文本内容，进行排版，然后把排版之后的文本放到 <code>NSTextContainer</code> 对象指定的区域上。最后再由一个文本控件从 <code>NSTextContainer</code> 中取出内容显示到屏幕中。</p>
-<h3 id="相关">相关</h3><ul>
-<li><code>Core Text</code>: 处于底层技术，如果我们需要将文本内容直接渲染到图形上下文(Graphics context)时，从性能和易用性来考虑，最佳方案就是使用Core Text</li>
+<h3 id="使用场景">使用场景</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-09.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-08.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-07.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-10.png" alt=""></p>
+<h3 id="补充">补充</h3><ul>
+<li><code>Core Text</code>: 没有直接包含在 TextKit 中，CoreText 是进行实际排版的库。对于布局管理器的每一步，CoreText 被这样或那样的方式调用。它提供了从字符到字形的翻译，用它们来填充行，以及建议断字点</li>
 <li><code>NSAttributedString</code>: 就是用来设置文字的效果(颜色、字体、下划线等等)</li>
 <li><p><code>NSMutableAttributedString</code>:是 NSAttributedString 的子类，可变类型的NSAttributedString</p>
 <p>  <img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-05.jpg" alt=""></p>
 </li>
 </ul>
 <h2 id="功能">功能</h2><ul>
-<li>Dynamic type - 动态字体效果</li>
-<li>Letterpress effects - 突出印刷效果</li>
-<li>Exclusion paths - 图文混排效果</li>
-<li>等等</li>
+<li>对文字进行分页或多列排版</li>
+<li>支持文字的换行、折叠和着色等处理</li>
+<li>可以调整字与字之间的距离、行间距、文字大小、指定特定的字体</li>
+<li>支持富文本编辑，可以自定义文字截断</li>
+<li>支持凸版印刷效果（letterpress）</li>
+<li>支持数据类型的检测（例如链接、附件等）</li>
+<li>效果如下图所示：</li>
 </ul>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-11.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-12.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-13.png" alt=""></p>
 <p>本文并不会对具体功能的实现进行详细的阐述，毕竟本文重点是了解内在的实现原理而非具体实现。好啦，剩下的事情就交给你了！</p>
 <h2 id="参考">参考</h2><ul>
 <li><a href="https://developer.apple.com/library/prerelease/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html" target="_blank" rel="external">Using Text Kit to Draw and Manage Text</a></li>
@@ -413,6 +432,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/25/the-notes-of-learning-of-uitableview-one/" rel="prev" title="聊一聊 UITableView（一）">
+                聊一聊 UITableView（一） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -510,7 +533,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -527,7 +550,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -662,7 +685,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#历史"><span class="nav-number">2.1.</span> <span class="nav-text">历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构"><span class="nav-number">2.2.</span> <span class="nav-text">架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心"><span class="nav-number">3.</span> <span class="nav-text">核心</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#相关"><span class="nav-number">3.1.</span> <span class="nav-text">相关</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能"><span class="nav-number">4.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#历史"><span class="nav-number">2.1.</span> <span class="nav-text">历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构"><span class="nav-number">2.2.</span> <span class="nav-text">架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心"><span class="nav-number">3.</span> <span class="nav-text">核心</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用场景"><span class="nav-number">3.1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#补充"><span class="nav-number">3.2.</span> <span class="nav-text">补充</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能"><span class="nav-number">4.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">

@@ -1,0 +1,982 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Notes,UITableView,UITableViewCell,iOS," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="前言
+在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。
+
+本文是系列文章《聊一聊 UITableView》的完结篇。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊一聊 UITableView（三）">
+<meta property="og:url" content="http://itangqi.me/2016/02/27/the-notes-of-learning-of-uitableview-three/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言
+在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。
+
+本文是系列文章《聊一聊 UITableView》的完结篇。">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uitableview-three-01.jpg">
+<meta property="og:updated_time" content="2016-03-07T07:00:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="聊一聊 UITableView（三）">
+<meta name="twitter:description" content="前言
+在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。
+
+本文是系列文章《聊一聊 UITableView》的完结篇。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 聊一聊 UITableView（三） | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                聊一聊 UITableView（三）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-27T00:00:00+08:00" content="2016-02-27">
+              2016-02-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/02/27/the-notes-of-learning-of-uitableview-three/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/02/27/the-notes-of-learning-of-uitableview-three/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><blockquote>
+<p>在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。</p>
+</blockquote>
+<p>本文是系列文章《聊一聊 UITableView》的完结篇。</p>
+<a id="more"></a> 
+<p>第一篇：<a href="http://itangqi.me/2016/02/25/the-notes-of-learning-of-uitableview-one/">聊一聊 UITableView（一）</a><br>第二篇：<a href="http://itangqi.me/2016/02/26/the-notes-of-learning-of-uitableview-two/">聊一聊 UITableView（二）</a></p>
+<hr>
+<h2 id="实现">实现</h2><p>如果你有仔细阅读过本系列文章的前两篇（没看过的一定要去看看呀！），那么我想你基本上已经对实现的原理及流程有了清晰的认识。所以关于具体的实现，本文不做详细介绍，你可以参见下面两篇文章：</p>
+<ul>
+<li><a href="http://www.wugaojun.com/blog/2015/05/24/autolayoutshi-zhan-cellgao-du-bu-gu-ding-de-uitableview/" target="_blank" rel="external">AutoLayout实战:cell高度不固定的UITableView</a></li>
+<li><a href="http://tutuge.me/2015/08/08/autolayout-example-with-masonry2/" target="_blank" rel="external">有趣的Autolayout示例2-Masonry实现</a></li>
+</ul>
+<hr>
+<h2 id="那些坑">那些坑</h2><p>下面列举了几个在开发中比较常见的<strong>坑</strong>供大家学习：</p>
+<h4 id="1-_UILabel_的_preferredMaxLayoutWidth">1. UILabel 的 <code>preferredMaxLayoutWidth</code></h4><p>定义如下:</p>
+<blockquote>
+<p>This property affects the size of the label when layout constraints are applied to it. During layout, if the text extends beyond the width specified by this property, the additional text is flowed to one or more new lines, thereby increasing the height of the label.</p>
+</blockquote>
+<p>如果我们要使用 Auto Layout 自动计算<strong>多行</strong> UILabel 的高度，这个属性就必须在运行时指定，要不然系统计算不出 UILabel 的宽度。这是因为 UILabel 需要知道 superview 的宽度才能<strong>折行</strong>，而 superview 的宽度还依仗着子 view 宽度的累加才能确定。</p>
+<p>同时需要设置 UILabel 的 <code>numberOfLines</code> 属性为 0 以表示显示多行。</p>
+<h4 id="2-_UITableView_的_estimatedRowHeight">2. UITableView 的 <code>estimatedRowHeight</code></h4><blockquote>
+<p>我们知道，UITableView 是个 UIScrollView，就像平时使用 UIScrollView 一样，加载时指定 contentSize 后它才能根据自己的 bounds、contentInset、contentOffset 等属性共同决定是否可以滑动以及滚动条的长度。而 UITableView 在一开始并不知道自己会被填充多少内容，于是询问 data source 个数和创建 cell，同时询问 delegate 这些 cell 应该显示的高度，这就造成它在加载的时候浪费了多余的计算在屏幕外边的 cell 上。</p>
+</blockquote>
+<p>1.设置估算高度后，contentSize.height 根据“cell 估算值 x cell 个数”计算，这就导致滚动条的大小处于不稳定的状态，contentSize 会随着滚动从估算高度慢慢替换成真实高度，肉眼可见滚动条突然变化甚至“跳跃”。</p>
+<p>2.若是有设计不好的下拉刷新或上拉加载控件，或是 KVO 了 contentSize 或 contentOffset 属性，有可能使表格滑动时跳动。</p>
+<p>3.估算高度设计初衷是好的，让加载速度更快，那凭啥要去侵害滑动的流畅性呢，用户可能对进入页面时多零点几秒加载时间感觉不大，但是滑动时实时计算高度带来的卡顿是明显能体验到的，个人觉得还不如一开始都算好了呢（iOS8 更过分，即使都算好了也会边划边计算）</p>
+<h4 id="3-_UITableView_的_heightForRowAtIndexPath:">3. UITableView 的 <code>heightForRowAtIndexPath:</code></h4><p>对于 Auto Layout 下的 cell，使用 <code>systemLayoutSizeFittingSize:</code> 计算 tableview.contentView 的 <code>UILayoutFittingCompressedSize</code> 返回的 CGSize 的高度是首选，但它同样是根据 <code>intrinsicContentSize</code> 来计算的，得出的高度其实是不包含 <code>UITextView</code> 这种 view 的，所以结果还需要<strong>加上</strong> UITextView 的高度即可。</p>
+<h4 id="4-_iOS_8_算高机制">4. iOS 8 算高机制</h4><p>相同的代码在 iOS 7 和 iOS 8 上滑动顺畅程度完全不同，iOS8 莫名奇妙的卡。很大一部分原因是 iOS 8 上的算高机制大不相同，图片来自 <a href="http://blog.sunnyxx.com/2015/05/17/cell-height-calculation/" target="_blank" rel="external">sunnyxx</a>：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uitableview-three-01.jpg" alt=""></p>
+<p>造成这样的原因：<br>1.不开启高度估算时，UITableView 上来就要对所有 cell 调用算高来确定 contentSize<br>2.<code>dequeueReusableCellWithIdentifier:forIndexPath:</code> 相比不带 “forIndexPath” 的版本会多调用一次高度计算<br>3.iOS 7 计算高度后有”缓存“机制，不会重复计算；而 iOS 8 不论何时都会重新计算 cell 高度（cell 被认为随时都可能改变高度（如从设置中调整动态字体大小），所以每次滑动出来后都要重新计算高度。）</p>
+<hr>
+<h2 id="那些优化">那些优化</h2><h4 id="1-_避免_cell_的重新布局">1. 避免 cell 的重新布局</h4><p>cell 的布局填充等操作比较耗时，一般可在创建时就布局好。如自定义 cell, 可重写其 <code>initWithStyle:</code> 方法，在其中将 cell 的布局设置完成。<br>创建 cell 完成之后，调用 <strong>相应方法</strong> 往其中填充内容即可，即将 cell 的布局及填充分开执行，且尽量将要填充的 data 提前准备好。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用 UITableView 的 dequeueReusableCellWithIdentifier 方法时会通过这个方法初始化 Cell</span></span><br><span class="line">- (instancetype)initWithStyle:(<span class="built_in">UITableViewCellStyle</span>)style reuseIdentifier:(<span class="built_in">NSString</span> *)reuseIdentifier &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithStyle:style reuseIdentifier:reuseIdentifier];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">    	<span class="comment">// 在这里！！！</span></span><br><span class="line">     	[<span class="keyword">self</span> initView];</span><br><span class="line">        [<span class="keyword">self</span> updateConstraints];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-_在_Model（Entity）中计算并保存_Cell_的高度">2. 在 Model（Entity）中计算并保存 Cell 的高度</h4><p>我们都知道，UITableView 是继承自 UIScrollView 的，需要先确定它的 contentSize 及每个 cell 的位置，然后才会把重用的 cell 放置到对应的位置。所以事实上，UITableView 的回调顺序是先多次调用 <code>tableView:heightForRowAtIndexPath:</code>以确定 contentSize 及 cell 的位置，然后才会调用 <code>tableView:cellForRowAtIndexPath:</code>，从而来显示在当前屏幕的 cell。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DataEntity</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 原始数据</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *content;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *title;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Cell 高度</span></span><br><span class="line">@roperty(<span class="keyword">assign</span>, <span class="keyword">nonatomic</span>) <span class="built_in">CGFloat</span> cellHeight;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>这样，就不用在 <code>tableView:heightForRowAtIndexPath:</code> 中每次都计算了。</p>
+<p>补充：同理可将 view 缓存起来的：比如每一个 cell 都需要用到的 UIImage, UIFont, NSDateFormatter 或者任何在绘制时需要的对象，推荐使用类层级的初始化方法中执行分配，并将其存储为静态变量。</p>
+<h4 id="3-_滑动_UITableView_时，按需加载对应的内容">3. 滑动 UITableView 时，按需加载对应的内容</h4><p>从 UIScrollView 的角度出发，对 cell 进行按需加载, 即滚动很快时候, 只加载目标范围内的 cell.</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (needLoadArr<span class="variable">.count</span>&gt;<span class="number">0</span> &amp;&amp; [needLoadArr indexOfObject:indexPath]==<span class="built_in">NSNotFound</span>) &#123;</span><br><span class="line">    [cell clear]; <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>例如：如果目标行与当前行相差超过指定行数，只在目标滚动范围的前后指定 3 行加载。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)scrollViewWillEndDragging:(<span class="built_in">UIScrollView</span> *)scrollView withVelocity:(<span class="built_in">CGPoint</span>)velocity targetContentOffset:(<span class="keyword">inout</span> <span class="built_in">CGPoint</span> *)targetContentOffset&#123;</span><br><span class="line">    <span class="built_in">NSIndexPath</span> *ip = [<span class="keyword">self</span> indexPathForRowAtPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>, targetContentOffset-&gt;y)];</span><br><span class="line">    <span class="built_in">NSIndexPath</span> *cip = [[<span class="keyword">self</span> indexPathsForVisibleRows] firstObject];</span><br><span class="line">    <span class="built_in">NSInteger</span> skipCount = <span class="number">8</span>;</span><br><span class="line">    <span class="keyword">if</span> (labs(cip<span class="variable">.row</span>-ip<span class="variable">.row</span>)&gt;skipCount) &#123;</span><br><span class="line">        <span class="built_in">NSArray</span> *temp = [<span class="keyword">self</span> indexPathsForRowsInRect:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, targetContentOffset-&gt;y, <span class="keyword">self</span><span class="variable">.width</span>, <span class="keyword">self</span><span class="variable">.height</span>)];</span><br><span class="line">        <span class="built_in">NSMutableArray</span> *arr = [<span class="built_in">NSMutableArray</span> arrayWithArray:temp];</span><br><span class="line">        <span class="keyword">if</span> (velocity<span class="variable">.y</span>&lt;<span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">NSIndexPath</span> *indexPath = [temp lastObject];</span><br><span class="line">            <span class="keyword">if</span> (indexPath<span class="variable">.row</span>+<span class="number">33</span>) &#123;</span><br><span class="line">                [arr addObject:[<span class="built_in">NSIndexPath</span> indexPathForRow:indexPath<span class="variable">.row</span>-<span class="number">3</span> inSection:<span class="number">0</span>]];</span><br><span class="line">                [arr addObject:[<span class="built_in">NSIndexPath</span> indexPathForRow:indexPath<span class="variable">.row</span>-<span class="number">2</span> inSection:<span class="number">0</span>]];</span><br><span class="line">                [arr addObject:[<span class="built_in">NSIndexPath</span> indexPathForRow:indexPath<span class="variable">.row</span>-<span class="number">1</span> inSection:<span class="number">0</span>]];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        [needLoadArr addObjectsFromArray:arr];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-_复用高开销的对象">4. 复用高开销的对象</h4><p>在 Objective-C 中有些对象的初始化过程很缓慢，比如：<code>NSDateFormatter</code> 和 <code>NSCalendar</code>，但是有些时候，你也不得不使用它们。为了这样的高开销的对象成为影响程序性能的重要因素，我们可以复用它们。</p>
+<p>比如，我们在一个类里添加一个 <code>NSDateFormatter</code> 的对象，并使用懒加载机制来使用它，整个类只用到一个这样的对象，并只初始化一次：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// in your .h or inside a class extension</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSDateFormatter</span> *dateFormatter;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// inside the implementation (.m)</span></span><br><span class="line"><span class="comment">// When you need, just use self.dateFormatter</span></span><br><span class="line">- (<span class="built_in">NSDateFormatter</span> *)dateFormatter &#123;</span><br><span class="line">    <span class="keyword">if</span> (! _dateFormatter) &#123;</span><br><span class="line">        _dateFormatter = [[<span class="built_in">NSDateFormatter</span> alloc] init];</span><br><span class="line">        [_dateFormatter setDateFormat:<span class="string">@"yyyy-MM-dd a HH:mm:ss EEEE"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _dateFormatter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是上面的代码在多线程环境下会有问题，所以我们可以改进如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// no property is required anymore. The following code goes inside the implementation (.m)</span></span><br><span class="line">- (<span class="built_in">NSDateFormatter</span> *)dateFormatter &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">NSDateFormatter</span> *dateFormatter;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">        dateFormatter = [[<span class="built_in">NSDateFormatter</span> alloc] init];</span><br><span class="line">        [dateFormatter setDateFormat:<span class="string">@"yyyy-MM-dd a HH:mm:ss EEEE"</span>];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> dateFormatter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就线程安全了。</p>
+<h4 id="5-_尽量减少不必要的透明_View">5. 尽量减少不必要的透明 View</h4><p>透明图层对渲染性能会有一定的影响，系统必须将透明图层与下面的视图混合起来计算颜色，并绘制出来。减少透明图层并使用不透明的图层来替代它们，可以极大地提高渲染速度。</p>
+<h4 id="6-_优化touch事件传递">6. 优化touch事件传递</h4><p>把不需要接受 touch 的 view 的 <code>userInteractionEnabled</code> 设为 0 </p>
+<h4 id="7-_其他">7. 其他</h4><ul>
+<li>尽量避免渐变效果、图片拉伸和离屏渲染。</li>
+<li>如果 Cell 展示的内容来自网络，确保用异步加载的方式来获取数据，并且缓存服务器的 response。</li>
+<li>使用 shadowPath 来设置阴影效果。</li>
+<li>尽量减少 subview 的数量，对于 subview 较多并且样式多变的 Cell，可以考虑用异步绘制或重写 drawRect。</li>
+<li>尽量优化 - [UITableView tableView:cellForRowAtIndexPath:] 方法中的处理逻辑，如果确实要做一些处理，可以考虑做一次，缓存结果。</li>
+<li>选择合适的数据结构来承载数据，不同的数据结构对不同操作的开销是存在差异的。</li>
+<li>对于 rowHeight、sectionFooterHeight、sectionHeaderHeight 尽量使用常量。</li>
+</ul>
+<hr>
+<h2 id="写在最后">写在最后</h2><blockquote>
+<p>纸上谈兵终觉浅 绝知此事要躬行</p>
+</blockquote>
+<p>好啦，不管怎样，亲自去实践才是获取与巩固知识的最佳办法！</p>
+<h2 id="参考">参考</h2><ul>
+<li><a href="http://blog.sunnyxx.com/2015/05/17/cell-height-calculation/" target="_blank" rel="external">优化UITableViewCell高度计算的那些事</a></li>
+<li><a href="http://blog.alchemistxxd.com/2015/12/05/Auto-Layout-dynamic-UITableViewCell/" target="_blank" rel="external">使用 Auto Layout 处理动态高度的 UITableViewCell 方法的归纳与心得 ⭕️</a></li>
+<li><a href="http://tutuge.me/2015/02/19/%E6%8F%90%E5%8D%87UITableView%E6%80%A7%E8%83%BD-%E5%A4%8D%E6%9D%82%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%BC%98%E5%8C%96/" target="_blank" rel="external">提升UITableView性能-复杂页面的优化</a></li>
+<li><a href="http://www.samirchen.com/ios-performance-optimization/" target="_blank" rel="external">iOS 程序性能优化</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Notes/" rel="tag">#Notes</a>
+          
+            <a href="/tags/UITableView/" rel="tag">#UITableView</a>
+          
+            <a href="/tags/UITableViewCell/" rel="tag">#UITableViewCell</a>
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/26/the-notes-of-learning-of-uitableview-two/" rel="next" title="聊一聊 UITableView（二）">
+                <i class="fa fa-chevron-left"></i> 聊一聊 UITableView（二）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾的走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 知乎
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 豆瓣
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">小伙伴们</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://tikitoo.me/" target="_blank">安卓同学</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://lovinghuan.com/" target="_blank">poberWong</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.zhaiyifan.cn/" target="_blank">MarkZhai</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://yifeiyuan.me/" target="_blank">程序亦非猿</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://abner-nimengbo.cn/" target="_blank">阿布</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.easydone.cn/" target="_blank">Ailurus</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://wuxiaolong.me/" target="_blank">吴小龙同學</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://drakeet.me/" target="_blank">Drakeet</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.fangjie.info/" target="_blank">方杰</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://hujiaweibujidao.github.io/" target="_blank">五道口宅男</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://gudong.name/" target="_blank">咕咚</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那些坑"><span class="nav-number">3.</span> <span class="nav-text">那些坑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-_UILabel_的_preferredMaxLayoutWidth"><span class="nav-number">3.0.1.</span> <span class="nav-text">1. UILabel 的 preferredMaxLayoutWidth</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-_UITableView_的_estimatedRowHeight"><span class="nav-number">3.0.2.</span> <span class="nav-text">2. UITableView 的 estimatedRowHeight</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-_UITableView_的_heightForRowAtIndexPath:"><span class="nav-number">3.0.3.</span> <span class="nav-text">3. UITableView 的 heightForRowAtIndexPath:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-_iOS_8_算高机制"><span class="nav-number">3.0.4.</span> <span class="nav-text">4. iOS 8 算高机制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#那些优化"><span class="nav-number">4.</span> <span class="nav-text">那些优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-_避免_cell_的重新布局"><span class="nav-number">4.0.1.</span> <span class="nav-text">1. 避免 cell 的重新布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-_在_Model（Entity）中计算并保存_Cell_的高度"><span class="nav-number">4.0.2.</span> <span class="nav-text">2. 在 Model（Entity）中计算并保存 Cell 的高度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-_滑动_UITableView_时，按需加载对应的内容"><span class="nav-number">4.0.3.</span> <span class="nav-text">3. 滑动 UITableView 时，按需加载对应的内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-_复用高开销的对象"><span class="nav-number">4.0.4.</span> <span class="nav-text">4. 复用高开销的对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-_尽量减少不必要的透明_View"><span class="nav-number">4.0.5.</span> <span class="nav-text">5. 尽量减少不必要的透明 View</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-_优化touch事件传递"><span class="nav-number">4.0.6.</span> <span class="nav-text">6. 优化touch事件传递</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-_其他"><span class="nav-number">4.0.7.</span> <span class="nav-text">7. 其他</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写在最后"><span class="nav-number">5.</span> <span class="nav-text">写在最后</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2016/02/27/the-notes-of-learning-of-uitableview-three/';
+      var disqus_title = '聊一聊 UITableView（三）';
+      var disqus_url = 'http://itangqi.me/2016/02/27/the-notes-of-learning-of-uitableview-three/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>

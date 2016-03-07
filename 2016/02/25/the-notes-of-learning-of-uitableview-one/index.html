@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="AOSP,Framework," />
+  <meta name="keywords" content="Notes,UITableView,UITableViewCell,iOS," />
 
 
 
@@ -59,25 +59,26 @@
 
 
 
-<meta name="description" content="积木 - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！">
+<meta name="description" content="前言
+在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。
+
+前几天正好看了关于 AutoLayout 与 UITableViewCell 高度动态计算的文章，于是便在 SuperNote 上践行了所学的知识，并做了相关笔记的总结，在此与大家进行分享。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="积木 - 享受搭建应用的乐趣">
-<meta property="og:url" content="http://itangqi.me/2015/09/03/building-blocks/index.html">
+<meta property="og:title" content="聊一聊 UITableView（一）">
+<meta property="og:url" content="http://itangqi.me/2016/02/25/the-notes-of-learning-of-uitableview-one/index.html">
 <meta property="og:site_name" content="Qi Tang's Blog">
-<meta property="og:description" content="积木 - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s1.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s2.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s3.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s4.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s5.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s6.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s7.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s8.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/bb_s9.png">
-<meta property="og:updated_time" content="2016-02-25T05:44:19.000Z">
+<meta property="og:description" content="前言
+在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。
+
+前几天正好看了关于 AutoLayout 与 UITableViewCell 高度动态计算的文章，于是便在 SuperNote 上践行了所学的知识，并做了相关笔记的总结，在此与大家进行分享。">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-uitableviewcell-01.png">
+<meta property="og:updated_time" content="2016-03-07T05:42:56.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="积木 - 享受搭建应用的乐趣">
-<meta name="twitter:description" content="积木 - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！">
+<meta name="twitter:title" content="聊一聊 UITableView（一）">
+<meta name="twitter:description" content="前言
+在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。
+
+前几天正好看了关于 AutoLayout 与 UITableViewCell 高度动态计算的文章，于是便在 SuperNote 上践行了所学的知识，并做了相关笔记的总结，在此与大家进行分享。">
 
 
 
@@ -95,7 +96,7 @@
   };
 </script>
 
-  <title> 积木 - 享受搭建应用的乐趣 | Qi Tang's Blog </title>
+  <title> 聊一聊 UITableView（一） | Qi Tang's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +273,7 @@
             
             
               
-                积木 - 享受搭建应用的乐趣
+                聊一聊 UITableView（一）
               
             
           </h1>
@@ -284,8 +285,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-09-03T00:00:00+08:00" content="2015-09-03">
-              2015-09-03
+            <time itemprop="dateCreated" datetime="2016-02-25T00:00:00+08:00" content="2016-02-25">
+              2016-02-25
             </time>
           </span>
 
@@ -298,8 +299,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
                   </a>
                 </span>
 
@@ -314,8 +315,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/09/03/building-blocks/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/03/building-blocks/" itemprop="commentsCount"></span>
+                <a href="/2016/02/25/the-notes-of-learning-of-uitableview-one/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/02/25/the-notes-of-learning-of-uitableview-one/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -336,93 +337,43 @@
       
 
       
-        <blockquote>
-<p><strong>积木</strong> - 一个以知乎日报作为数据展现内容；以抽屉菜单作为功能扩展入口；依循 Material Design 作为主导设计 UI 的应用；好吧，我承认这听上去就很酷！</p>
+        <h2 id="前言">前言</h2><blockquote>
+<p>在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。</p>
 </blockquote>
+<p>前几天正好看了关于 AutoLayout 与 UITableViewCell 高度动态计算的文章，于是便在 <a href="https://github.com/tangqi92/SuperNote" target="_blank" rel="external">SuperNote</a> 上践行了所学的知识，并做了相关笔记的总结，在此与大家进行分享。</p>
 <a id="more"></a> 
 <hr>
-<h2 id="How_to_use">How to use</h2><blockquote>
-<p>dev 分支由 <a href="https://github.com/troyliu0105" target="_blank" rel="external">troyliu0105</a> 同学全力维护，他会不断对<strong>积木</strong>进行重构与增加好玩的功能，这非常酷，欢迎 <strong>Star</strong> 与 <strong>Fork</strong> 此分支！</p>
+<h2 id="Auto_Layout">Auto Layout</h2><p>首先看官方文档<a href="https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/AutolayoutPG/" target="_blank" rel="external">《Auto Layout Guide》</a>中关于 Auto Layout 的描述：</p>
+<blockquote>
+<p>Auto Layout dynamically calculates the size and position of all the views in your view hierarchy, based on constraints placed on those views. For example, you can constrain a button so that it is horizontally centered with an Image view and so that the button’s top edge always remains 8 points below the image’s bottom. If the image view’s size or position changes, the button’s position automatically adjusts to match.</p>
+<p>This constraint-based approach to design allows you to build user interfaces that dynamically respond to both internal and external changes.</p>
 </blockquote>
-<p>那么，你该如何利用「她」呢？</p>
-<p>好啦，其实我已经帮你完成了应用整体框架的搭建，你需要做的，仅仅是依据自己的实际需求，简单的替换下数据来源，比如在 <a href="http://apistore.baidu.com/" target="_blank" rel="external">APIStore</a> 上就有详细的类别供你选择，然后再改改 UI，一款全新应用就完成啦！</p>
-<p>想想，是不是还有点小激动？那么赶紧 <strong>Star</strong> 与 <strong>Fork</strong> 吧！你的支持将成为我最大的动力与褒奖！</p>
-<hr>
-<h2 id="Update_Log_-_更新日志">Update Log - 更新日志</h2><h3 id="0-7-0">0.7.0</h3><ul>
-<li>新增 - 夜间模式</li>
-<li>新增 - 程序崩溃日志收集</li>
-<li>新增 - 自动更新</li>
-<li>新增 - <code>html+</code>模式（其实就是修改了html标签==）</li>
-<li>修复 - 自动清理功能的错误</li>
-<li>修复 - 主界面刷新闪烁BUG</li>
-<li>修改 - 部分UI</li>
-</ul>
-<h5 id="已知BUG">已知BUG</h5><ul>
-<li>部分文章显示有问题(使用<code>html+</code>模式无影响)</li>
-</ul>
-<h3 id="v0-6-0">v0.6.0</h3><ul>
-<li>新增 - FAB刷新</li>
-<li>新增 - html模式下的页面缓存</li>
-<li>新增 - json模式(速度更快，但部分文章显示有问题)</li>
-<li>新增 - 自动清理过期缓存</li>
-<li>新增 - SQLite数据储存</li>
-<li>重构 - 使用MVP进行重构</li>
-<li>新增 - 由<a href="http://weibo.com/cat93/" target="_blank" rel="external">Mao</a>提供的Logo</li>
-<li>修改 - 部分的UI</li>
-</ul>
-<h3 id="v0-5-1">v0.5.1</h3><ul>
-<li>修复 - 手势右划返回上级页面在4.4系统上的 Bug</li>
-<li>优化 - 首页 Item 的展示布局</li>
-</ul>
-<h3 id="v0-5-0">v0.5.0</h3><ul>
-<li>抛弃 - CardView，回归朴实并为 RecycerView 中 item 增加分割线</li>
-<li>抛弃 - 第三方 DrawerLayout，华而不实</li>
-<li>抛弃 - WebView 中显示文章标题，取而代之为分享按钮</li>
-<li>新增 - 搜索功能，跳转页面显示结果</li>
-<li>新增 - 手势右滑，返回上级页面功能</li>
-<li>优化 - 将功能扩展作为抽屉菜单的子选项</li>
-<li>重构 - 尽可能将代码写得优雅和规整</li>
+<p>作为从 Android 阵营转过来的我，一路都是手撕页面布局的，当我面对要在 Storyboard 中拖拽各种约束时，我的内心是几乎是崩溃的（也许我该尝试下），直到我发现了 <a href="https://github.com/SnapKit/Masonry" target="_blank" rel="external">Masonry</a>，妈妈再也不用担心我写 Auto Layout 了。</p>
+<p>Masonry 老少皆宜，非常容易上手，具体的使用可参见<strong>里脊串</strong>的文章：</p>
+<ul>
+<li><a href="http://adad184.com/2014/09/28/use-masonry-to-quick-solve-autolayout/" target="_blank" rel="external">Masonry介绍与使用实践(快速上手Autolayout)</a></li>
 </ul>
 <hr>
-<h2 id="Screenshots_-_预览">Screenshots - 预览</h2><p><strong>这里并不是最新效果预览，请前往 <a href="https://github.com/tangqi92/BuildingBlocks/blob/master/README.z.md" target="_blank" rel="external">GitHub</a> 查看</strong></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s1.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s2.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s3.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s4.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s5.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s6.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s7.png" alt="screenshot" title="screenshot" width="270" height="486">  <img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s8.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/bb_s9.png" alt="screenshot" title="screenshot" width="270" height="486"></p>
-<hr>
-<h2 id="Dependencies_-_开源项目">Dependencies - 开源项目</h2><ul>
-<li><a href="https://github.com/bumptech/glide" target="_blank" rel="external">glide</a></li>
-<li><a href="https://github.com/orhanobut/logger" target="_blank" rel="external">logger</a></li>
-<li><a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="external">butterknife</a></li>
-<li><a href="https://github.com/jdamcd/android-crop" target="_blank" rel="external">android-crop</a></li>
-<li><a href="https://github.com/loopj/android-async-http" target="_blank" rel="external">android-async-http</a></li>
-<li><a href="https://github.com/ikew0ng/SwipeBackLayout" target="_blank" rel="external">SwipeBackLayout</a></li>
-</ul>
-<hr>
-<h2 id="Thanks_-_感谢你们">Thanks - 感谢你们</h2><ul>
-<li><p>感谢 <a href="https://github.com/drakeet" target="_blank" rel="external">drakeet</a> 及他的 <a href="https://github.com/drakeet/Meizhi" target="_blank" rel="external">妹纸&amp;gank.io</a>， 其代码写得真的非常漂亮：)，从中学到了很多并运用到了项目中（依葫芦画瓢而已啦）</p>
+<h2 id="UITableViewCell_重用机制">UITableViewCell 重用机制</h2><p>在讲 UITableViewCell 高度自适应前，首先简单介绍下 UITableViewCell 的重用机制：</p>
+<ul>
+<li><p>当用户滚动 UITableView 对象时，部分 UITableViewCell 对象会移出窗口。此时 UITableView 对象会将移出窗口的 UITableViewCell 对象放入 UITableViewCell <strong>对象池</strong>，等待重新利用。当 UITableView 对象要求数据源返回某个 UITableViewCell 对象时，数据源可以先查看对象池。如果有未使用的 UITableViewCell 对象，就可以用<strong>新的数据</strong>配置这个 UITableViewCell 对象，然后将其返回给 UITableView 对象，从而避免创建新对象。</p>
 </li>
-<li><p>感谢 <a href="https://github.com/izzyleung" target="_blank" rel="external">Izzy Leung</a> 及他的 <a href="https://github.com/izzyleung/ZhihuDailyPurify" target="_blank" rel="external">知乎日报·净化</a>，项目最初的原型就来自于此，感谢其提供了详细的知乎日报 API 说明</p>
+<li><p>这里还有一个问题：因为有时需要创建 UITableViewCell 的<strong>子类</strong>，用于实现特定的外观或特性，所以 UITableView 对象可能会拥有<strong>不同类型</strong>的 UITableViewCell 对象。如果 UITableViewCell 对象池中的对象创建自不同的子类，那么 UITableView 对象就有可能得到错误类型的 UITableViewCell 对象。鉴于上述原因，必须确保 UITableView 对象能够得到指定类型的 UITableViewCell 对象，这样才能确定返回的对象会拥有哪些属性和方法。</p>
+</li>
+<li><p>从 UITableViewCell 对象池获取对象时，无须关心取回的是否是某个特定的对象，因为无论取回的是哪个对象，都要重新设置数据。真正要关心的是取回的对象是否是某个<strong>特定</strong>的类型。每个 UITableViewCell 对象都有一个类型为 NSString 的 <strong>reuseIdentifier</strong> 属性。当数据源向 UITableView 对象获取可重用的 UITableViewCell 对象时，可传入一个字符串并要求 UITableView 对象返回相应的 UITableViewCell 对象，这些 UITableViewCell 对象的 reuseIdentifier 属性必须和传入的字符串相同。按照约定，应该将 UITableViewCell 或者 UITableViewCell 子类的类名用作 reuseIdentifier。</p>
 </li>
 </ul>
+<p>上面讲得那么啰嗦，不如直接看下面的图： </p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-uitableviewcell-01.png" alt=""></p>
+<p>情况 A: 所有 Cell 具有相同的类型</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> *  实现数据绑定</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="comment">// 根据标识符 identifier 从重用队列中取出一个 cell</span></span><br><span class="line">    NoteListCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellReuseIdentifier];</span><br><span class="line">    <span class="comment">// 由于一开始重用队列是空的，所以取出的 cell 也是空的，if(!cell) 条件成立，就会去执行 &#123;&#125; 内的代码</span></span><br><span class="line">    <span class="keyword">if</span> (!cell) &#123;</span><br><span class="line">    	<span class="comment">// 创建 UITableViewCellStyleDefault类型的 cell，并将其标识为 identifier（@”cell”），这样一个 cell 就创建完成了</span></span><br><span class="line">        cell = [[NoteListCell alloc] initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:kCellReuseIdentifier];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 绑定指定数据</span></span><br><span class="line">    VNNote *note = [<span class="keyword">self</span><span class="variable">.dataSource</span> objectAtIndex:indexPath<span class="variable">.row</span>];</span><br><span class="line">    note<span class="variable">.index</span> = indexPath<span class="variable">.row</span>;</span><br><span class="line">    [cell updateWithNote:note];</span><br><span class="line">    <span class="comment">// Make sure the constraints have been added to this cell, since it may have just been created from scratch</span></span><br><span class="line">    [cell setNeedsUpdateConstraints];</span><br><span class="line">    [cell updateConstraintsIfNeeded];</span><br><span class="line">    <span class="keyword">return</span> cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>情况 B: 具有多种类型的 Cell</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *cellIdentifier;</span><br><span class="line">    <span class="built_in">UITableViewCellStyle</span> cellStyle;</span><br><span class="line">    <span class="keyword">switch</span> ((indexPath<span class="variable">.row</span> + <span class="number">1</span>)%<span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:&#123;</span><br><span class="line">            <span class="comment">//有标题和副标题，可选图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Subtitle Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleSubtitle</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:&#123;</span><br><span class="line">            <span class="comment">//左边文字左对齐，右边文字右对齐，可选的图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Value1 Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleValue1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:&#123;</span><br><span class="line">            <span class="comment">//左边文字右对齐，蓝色字体。右边文字左对齐，黑色。没有图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Value2 Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleValue2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:&#123;</span><br><span class="line">            <span class="comment">//有标题，没有副标题，可选的图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Default Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleDefault</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">NSInteger</span> times = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">UITableViewCell</span> *myCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];</span><br><span class="line">    <span class="keyword">if</span> (!myCell) &#123;</span><br><span class="line">        myCell = [[<span class="built_in">UITableViewCell</span> alloc] initWithStyle:cellStyle reuseIdentifier:cellIdentifier];</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"创建%d次"</span>,++times);</span><br><span class="line">    &#125;</span><br><span class="line">    myCell<span class="variable">.textLabel</span><span class="variable">.text</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"第%d行%@"</span>,indexPath<span class="variable">.row</span>+<span class="number">1</span>, cellIdentifier];</span><br><span class="line">    myCell<span class="variable">.detailTextLabel</span><span class="variable">.text</span> = <span class="string">@"Subtitle Text"</span>;</span><br><span class="line">    <span class="keyword">if</span> (indexPath<span class="variable">.row</span> &gt; <span class="number">3</span>) &#123;</span><br><span class="line">        myCell<span class="variable">.imageView</span><span class="variable">.image</span> = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"smile.png"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> myCell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>未完待续……</p>
 <hr>
-<h2 id="Contributors_-_贡献者">Contributors - 贡献者</h2><ul>
-<li>dev version: <a href="https://github.com/troyliu0105" target="_blank" rel="external">troyliu0105</a></li>
-<li>Logo: <a href="http://weibo.com/cat93/" target="_blank" rel="external">Mao</a> &amp; <a href="https://github.com/troyliu0105" target="_blank" rel="external">troyliu0105</a></li>
+<h2 id="参考">参考</h2><ul>
+<li><a href="http://sharonhu1990.github.io/2015/10/28/%E6%B5%85%E6%9E%90UITableViewCell%E9%87%8D%E7%94%A8%E6%9C%BA%E5%88%B6/" target="_blank" rel="external">浅析UITableViewCell重用机制</a></li>
 </ul>
-<hr>
-<h2 id="Demo_-_示例">Demo - 示例</h2><p><a href="http://7xk54v.com1.z0.glb.clouddn.com/app/bb/0.7.0.apk" target="_blank" rel="external">快速下载</a></p>
-<hr>
-<h2 id="Source_code_-_源码">Source code - 源码</h2><p>源代码：<a href="https://github.com/tangqi92/BuildingBlocks" target="_blank" rel="external">https://github.com/tangqi92/BuildingBlocks</a></p>
-<hr>
-<h2 id="Contact_-_联系我">Contact - 联系我</h2><ul>
-<li>Weibo：<a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a></li>
-<li>Blog: <a href="http://itangqi.me">http://itangqi.me</a></li>
-<li>Gmail：<a href="mailto:imtangqi@gmail.com" title="欢迎与我联系" target="_blank" rel="external">imtangqi#gmail.com</a></li>
-</ul>
-<hr>
-<p>最后更新时间：2015-10-07 19:47</p>
 
       
     </div>
@@ -431,9 +382,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/AOSP/" rel="tag">#AOSP</a>
+            <a href="/tags/Notes/" rel="tag">#Notes</a>
           
-            <a href="/tags/Framework/" rel="tag">#Framework</a>
+            <a href="/tags/UITableView/" rel="tag">#UITableView</a>
+          
+            <a href="/tags/UITableViewCell/" rel="tag">#UITableViewCell</a>
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
           
         </div>
       
@@ -442,16 +397,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/09/google-places-for-android-guide/" rel="next" title="Google Places for Android 入门指南">
-                <i class="fa fa-chevron-left"></i> Google Places for Android 入门指南
+              <a href="/2016/02/18/the-notes-of-learning-text-kit/" rel="next" title="Text Kit 学习笔记">
+                <i class="fa fa-chevron-left"></i> Text Kit 学习笔记
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/14/android-tips/" rel="prev" title="Android Tips - 填坑手册">
-                Android Tips - 填坑手册 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/02/26/the-notes-of-learning-of-uitableview-two/" rel="prev" title="聊一聊 UITableView（二）">
+                聊一聊 UITableView（二） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -702,7 +657,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#How_to_use"><span class="nav-number">1.</span> <span class="nav-text">How to use</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update_Log_-_更新日志"><span class="nav-number">2.</span> <span class="nav-text">Update Log - 更新日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-7-0"><span class="nav-number">2.1.</span> <span class="nav-text">0.7.0</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#已知BUG"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">已知BUG</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v0-6-0"><span class="nav-number">2.2.</span> <span class="nav-text">v0.6.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v0-5-1"><span class="nav-number">2.3.</span> <span class="nav-text">v0.5.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v0-5-0"><span class="nav-number">2.4.</span> <span class="nav-text">v0.5.0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Screenshots_-_预览"><span class="nav-number">3.</span> <span class="nav-text">Screenshots - 预览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dependencies_-_开源项目"><span class="nav-number">4.</span> <span class="nav-text">Dependencies - 开源项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thanks_-_感谢你们"><span class="nav-number">5.</span> <span class="nav-text">Thanks - 感谢你们</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contributors_-_贡献者"><span class="nav-number">6.</span> <span class="nav-text">Contributors - 贡献者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Demo_-_示例"><span class="nav-number">7.</span> <span class="nav-text">Demo - 示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Source_code_-_源码"><span class="nav-number">8.</span> <span class="nav-text">Source code - 源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Contact_-_联系我"><span class="nav-number">9.</span> <span class="nav-text">Contact - 联系我</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Auto_Layout"><span class="nav-number">2.</span> <span class="nav-text">Auto Layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UITableViewCell_重用机制"><span class="nav-number">3.</span> <span class="nav-text">UITableViewCell 重用机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
@@ -967,9 +922,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'tangqi92githubio';
-      var disqus_identifier = '2015/09/03/building-blocks/';
-      var disqus_title = '积木 - 享受搭建应用的乐趣';
-      var disqus_url = 'http://itangqi.me/2015/09/03/building-blocks/';
+      var disqus_identifier = '2016/02/25/the-notes-of-learning-of-uitableview-one/';
+      var disqus_title = '聊一聊 UITableView（一）';
+      var disqus_url = 'http://itangqi.me/2016/02/25/the-notes-of-learning-of-uitableview-one/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

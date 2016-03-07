@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2016-03-05T06:12:30.000Z</updated>
+  <updated>2016-03-07T07:00:37.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -15,11 +15,233 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[聊一聊 UITableView（三）]]></title>
+    <link href="http://itangqi.me/2016/02/27/the-notes-of-learning-of-uitableview-three/"/>
+    <id>http://itangqi.me/2016/02/27/the-notes-of-learning-of-uitableview-three/</id>
+    <published>2016-02-26T16:00:00.000Z</published>
+    <updated>2016-03-07T07:00:37.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
+<p>在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。</p>
+</blockquote>
+<p>本文是系列文章《聊一聊 UITableView》的完结篇。</p>
+<a id="more"></a> 
+<p>第一篇：<a href="http://itangqi.me/2016/02/25/the-notes-of-learning-of-uitableview-one/">聊一聊 UITableView（一）</a><br>第二篇：<a href="http://itangqi.me/2016/02/26/the-notes-of-learning-of-uitableview-two/">聊一聊 UITableView（二）</a></p>
+<hr>
+<h2 id="实现">实现</h2><p>如果你有仔细阅读过本系列文章的前两篇（没看过的一定要去看看呀！），那么我想你基本上已经对实现的原理及流程有了清晰的认识。所以关于具体的实现，本文不做详细介绍，你可以参见下面两篇文章：</p>
+<ul>
+<li><a href="http://www.wugaojun.com/blog/2015/05/24/autolayoutshi-zhan-cellgao-du-bu-gu-ding-de-uitableview/" target="_blank" rel="external">AutoLayout实战:cell高度不固定的UITableView</a></li>
+<li><a href="http://tutuge.me/2015/08/08/autolayout-example-with-masonry2/" target="_blank" rel="external">有趣的Autolayout示例2-Masonry实现</a></li>
+</ul>
+<hr>
+<h2 id="那些坑">那些坑</h2><p>下面列举了几个在开发中比较常见的<strong>坑</strong>供大家学习：</p>
+<h4 id="1-_UILabel_的_preferredMaxLayoutWidth">1. UILabel 的 <code>preferredMaxLayoutWidth</code></h4><p>定义如下:</p>
+<blockquote>
+<p>This property affects the size of the label when layout constraints are applied to it. During layout, if the text extends beyond the width specified by this property, the additional text is flowed to one or more new lines, thereby increasing the height of the label.</p>
+</blockquote>
+<p>如果我们要使用 Auto Layout 自动计算<strong>多行</strong> UILabel 的高度，这个属性就必须在运行时指定，要不然系统计算不出 UILabel 的宽度。这是因为 UILabel 需要知道 superview 的宽度才能<strong>折行</strong>，而 superview 的宽度还依仗着子 view 宽度的累加才能确定。</p>
+<p>同时需要设置 UILabel 的 <code>numberOfLines</code> 属性为 0 以表示显示多行。</p>
+<h4 id="2-_UITableView_的_estimatedRowHeight">2. UITableView 的 <code>estimatedRowHeight</code></h4><blockquote>
+<p>我们知道，UITableView 是个 UIScrollView，就像平时使用 UIScrollView 一样，加载时指定 contentSize 后它才能根据自己的 bounds、contentInset、contentOffset 等属性共同决定是否可以滑动以及滚动条的长度。而 UITableView 在一开始并不知道自己会被填充多少内容，于是询问 data source 个数和创建 cell，同时询问 delegate 这些 cell 应该显示的高度，这就造成它在加载的时候浪费了多余的计算在屏幕外边的 cell 上。</p>
+</blockquote>
+<p>1.设置估算高度后，contentSize.height 根据“cell 估算值 x cell 个数”计算，这就导致滚动条的大小处于不稳定的状态，contentSize 会随着滚动从估算高度慢慢替换成真实高度，肉眼可见滚动条突然变化甚至“跳跃”。</p>
+<p>2.若是有设计不好的下拉刷新或上拉加载控件，或是 KVO 了 contentSize 或 contentOffset 属性，有可能使表格滑动时跳动。</p>
+<p>3.估算高度设计初衷是好的，让加载速度更快，那凭啥要去侵害滑动的流畅性呢，用户可能对进入页面时多零点几秒加载时间感觉不大，但是滑动时实时计算高度带来的卡顿是明显能体验到的，个人觉得还不如一开始都算好了呢（iOS8 更过分，即使都算好了也会边划边计算）</p>
+<h4 id="3-_UITableView_的_heightForRowAtIndexPath:">3. UITableView 的 <code>heightForRowAtIndexPath:</code></h4><p>对于 Auto Layout 下的 cell，使用 <code>systemLayoutSizeFittingSize:</code> 计算 tableview.contentView 的 <code>UILayoutFittingCompressedSize</code> 返回的 CGSize 的高度是首选，但它同样是根据 <code>intrinsicContentSize</code> 来计算的，得出的高度其实是不包含 <code>UITextView</code> 这种 view 的，所以结果还需要<strong>加上</strong> UITextView 的高度即可。</p>
+<h4 id="4-_iOS_8_算高机制">4. iOS 8 算高机制</h4><p>相同的代码在 iOS 7 和 iOS 8 上滑动顺畅程度完全不同，iOS8 莫名奇妙的卡。很大一部分原因是 iOS 8 上的算高机制大不相同，图片来自 <a href="http://blog.sunnyxx.com/2015/05/17/cell-height-calculation/" target="_blank" rel="external">sunnyxx</a>：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uitableview-three-01.jpg" alt=""></p>
+<p>造成这样的原因：<br>1.不开启高度估算时，UITableView 上来就要对所有 cell 调用算高来确定 contentSize<br>2.<code>dequeueReusableCellWithIdentifier:forIndexPath:</code> 相比不带 “forIndexPath” 的版本会多调用一次高度计算<br>3.iOS 7 计算高度后有”缓存“机制，不会重复计算；而 iOS 8 不论何时都会重新计算 cell 高度（cell 被认为随时都可能改变高度（如从设置中调整动态字体大小），所以每次滑动出来后都要重新计算高度。）</p>
+<hr>
+<h2 id="那些优化">那些优化</h2><h4 id="1-_避免_cell_的重新布局">1. 避免 cell 的重新布局</h4><p>cell 的布局填充等操作比较耗时，一般可在创建时就布局好。如自定义 cell, 可重写其 <code>initWithStyle:</code> 方法，在其中将 cell 的布局设置完成。<br>创建 cell 完成之后，调用 <strong>相应方法</strong> 往其中填充内容即可，即将 cell 的布局及填充分开执行，且尽量将要填充的 data 提前准备好。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用 UITableView 的 dequeueReusableCellWithIdentifier 方法时会通过这个方法初始化 Cell</span></span><br><span class="line">- (instancetype)initWithStyle:(<span class="built_in">UITableViewCellStyle</span>)style reuseIdentifier:(<span class="built_in">NSString</span> *)reuseIdentifier &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithStyle:style reuseIdentifier:reuseIdentifier];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">    	<span class="comment">// 在这里！！！</span></span><br><span class="line">     	[<span class="keyword">self</span> initView];</span><br><span class="line">        [<span class="keyword">self</span> updateConstraints];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-_在_Model（Entity）中计算并保存_Cell_的高度">2. 在 Model（Entity）中计算并保存 Cell 的高度</h4><p>我们都知道，UITableView 是继承自 UIScrollView 的，需要先确定它的 contentSize 及每个 cell 的位置，然后才会把重用的 cell 放置到对应的位置。所以事实上，UITableView 的回调顺序是先多次调用 <code>tableView:heightForRowAtIndexPath:</code>以确定 contentSize 及 cell 的位置，然后才会调用 <code>tableView:cellForRowAtIndexPath:</code>，从而来显示在当前屏幕的 cell。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">DataEntity</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 原始数据</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *content;</span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">copy</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSString</span> *title;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Cell 高度</span></span><br><span class="line">@roperty(<span class="keyword">assign</span>, <span class="keyword">nonatomic</span>) <span class="built_in">CGFloat</span> cellHeight;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>这样，就不用在 <code>tableView:heightForRowAtIndexPath:</code> 中每次都计算了。</p>
+<p>补充：同理可将 view 缓存起来的：比如每一个 cell 都需要用到的 UIImage, UIFont, NSDateFormatter 或者任何在绘制时需要的对象，推荐使用类层级的初始化方法中执行分配，并将其存储为静态变量。</p>
+<h4 id="3-_滑动_UITableView_时，按需加载对应的内容">3. 滑动 UITableView 时，按需加载对应的内容</h4><p>从 UIScrollView 的角度出发，对 cell 进行按需加载, 即滚动很快时候, 只加载目标范围内的 cell.</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (needLoadArr<span class="variable">.count</span>&gt;<span class="number">0</span> &amp;&amp; [needLoadArr indexOfObject:indexPath]==<span class="built_in">NSNotFound</span>) &#123;</span><br><span class="line">    [cell clear]; <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>例如：如果目标行与当前行相差超过指定行数，只在目标滚动范围的前后指定 3 行加载。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)scrollViewWillEndDragging:(<span class="built_in">UIScrollView</span> *)scrollView withVelocity:(<span class="built_in">CGPoint</span>)velocity targetContentOffset:(<span class="keyword">inout</span> <span class="built_in">CGPoint</span> *)targetContentOffset&#123;</span><br><span class="line">    <span class="built_in">NSIndexPath</span> *ip = [<span class="keyword">self</span> indexPathForRowAtPoint:<span class="built_in">CGPointMake</span>(<span class="number">0</span>, targetContentOffset-&gt;y)];</span><br><span class="line">    <span class="built_in">NSIndexPath</span> *cip = [[<span class="keyword">self</span> indexPathsForVisibleRows] firstObject];</span><br><span class="line">    <span class="built_in">NSInteger</span> skipCount = <span class="number">8</span>;</span><br><span class="line">    <span class="keyword">if</span> (labs(cip<span class="variable">.row</span>-ip<span class="variable">.row</span>)&gt;skipCount) &#123;</span><br><span class="line">        <span class="built_in">NSArray</span> *temp = [<span class="keyword">self</span> indexPathsForRowsInRect:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, targetContentOffset-&gt;y, <span class="keyword">self</span><span class="variable">.width</span>, <span class="keyword">self</span><span class="variable">.height</span>)];</span><br><span class="line">        <span class="built_in">NSMutableArray</span> *arr = [<span class="built_in">NSMutableArray</span> arrayWithArray:temp];</span><br><span class="line">        <span class="keyword">if</span> (velocity<span class="variable">.y</span>&lt;<span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">NSIndexPath</span> *indexPath = [temp lastObject];</span><br><span class="line">            <span class="keyword">if</span> (indexPath<span class="variable">.row</span>+<span class="number">33</span>) &#123;</span><br><span class="line">                [arr addObject:[<span class="built_in">NSIndexPath</span> indexPathForRow:indexPath<span class="variable">.row</span>-<span class="number">3</span> inSection:<span class="number">0</span>]];</span><br><span class="line">                [arr addObject:[<span class="built_in">NSIndexPath</span> indexPathForRow:indexPath<span class="variable">.row</span>-<span class="number">2</span> inSection:<span class="number">0</span>]];</span><br><span class="line">                [arr addObject:[<span class="built_in">NSIndexPath</span> indexPathForRow:indexPath<span class="variable">.row</span>-<span class="number">1</span> inSection:<span class="number">0</span>]];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        [needLoadArr addObjectsFromArray:arr];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-_复用高开销的对象">4. 复用高开销的对象</h4><p>在 Objective-C 中有些对象的初始化过程很缓慢，比如：<code>NSDateFormatter</code> 和 <code>NSCalendar</code>，但是有些时候，你也不得不使用它们。为了这样的高开销的对象成为影响程序性能的重要因素，我们可以复用它们。</p>
+<p>比如，我们在一个类里添加一个 <code>NSDateFormatter</code> 的对象，并使用懒加载机制来使用它，整个类只用到一个这样的对象，并只初始化一次：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// in your .h or inside a class extension</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSDateFormatter</span> *dateFormatter;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// inside the implementation (.m)</span></span><br><span class="line"><span class="comment">// When you need, just use self.dateFormatter</span></span><br><span class="line">- (<span class="built_in">NSDateFormatter</span> *)dateFormatter &#123;</span><br><span class="line">    <span class="keyword">if</span> (! _dateFormatter) &#123;</span><br><span class="line">        _dateFormatter = [[<span class="built_in">NSDateFormatter</span> alloc] init];</span><br><span class="line">        [_dateFormatter setDateFormat:<span class="string">@"yyyy-MM-dd a HH:mm:ss EEEE"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _dateFormatter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是上面的代码在多线程环境下会有问题，所以我们可以改进如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// no property is required anymore. The following code goes inside the implementation (.m)</span></span><br><span class="line">- (<span class="built_in">NSDateFormatter</span> *)dateFormatter &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">NSDateFormatter</span> *dateFormatter;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">        dateFormatter = [[<span class="built_in">NSDateFormatter</span> alloc] init];</span><br><span class="line">        [dateFormatter setDateFormat:<span class="string">@"yyyy-MM-dd a HH:mm:ss EEEE"</span>];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> dateFormatter;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就线程安全了。</p>
+<h4 id="5-_尽量减少不必要的透明_View">5. 尽量减少不必要的透明 View</h4><p>透明图层对渲染性能会有一定的影响，系统必须将透明图层与下面的视图混合起来计算颜色，并绘制出来。减少透明图层并使用不透明的图层来替代它们，可以极大地提高渲染速度。</p>
+<h4 id="6-_优化touch事件传递">6. 优化touch事件传递</h4><p>把不需要接受 touch 的 view 的 <code>userInteractionEnabled</code> 设为 0 </p>
+<h4 id="7-_其他">7. 其他</h4><ul>
+<li>尽量避免渐变效果、图片拉伸和离屏渲染。</li>
+<li>如果 Cell 展示的内容来自网络，确保用异步加载的方式来获取数据，并且缓存服务器的 response。</li>
+<li>使用 shadowPath 来设置阴影效果。</li>
+<li>尽量减少 subview 的数量，对于 subview 较多并且样式多变的 Cell，可以考虑用异步绘制或重写 drawRect。</li>
+<li>尽量优化 - [UITableView tableView:cellForRowAtIndexPath:] 方法中的处理逻辑，如果确实要做一些处理，可以考虑做一次，缓存结果。</li>
+<li>选择合适的数据结构来承载数据，不同的数据结构对不同操作的开销是存在差异的。</li>
+<li>对于 rowHeight、sectionFooterHeight、sectionHeaderHeight 尽量使用常量。</li>
+</ul>
+<hr>
+<h2 id="写在最后">写在最后</h2><blockquote>
+<p>纸上谈兵终觉浅 绝知此事要躬行</p>
+</blockquote>
+<p>好啦，不管怎样，亲自去实践才是获取与巩固知识的最佳办法！</p>
+<h2 id="参考">参考</h2><ul>
+<li><a href="http://blog.sunnyxx.com/2015/05/17/cell-height-calculation/" target="_blank" rel="external">优化UITableViewCell高度计算的那些事</a></li>
+<li><a href="http://blog.alchemistxxd.com/2015/12/05/Auto-Layout-dynamic-UITableViewCell/" target="_blank" rel="external">使用 Auto Layout 处理动态高度的 UITableViewCell 方法的归纳与心得 ⭕️</a></li>
+<li><a href="http://tutuge.me/2015/02/19/%E6%8F%90%E5%8D%87UITableView%E6%80%A7%E8%83%BD-%E5%A4%8D%E6%9D%82%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%BC%98%E5%8C%96/" target="_blank" rel="external">提升UITableView性能-复杂页面的优化</a></li>
+<li><a href="http://www.samirchen.com/ios-performance-optimization/" target="_blank" rel="external">iOS 程序性能优化</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><blockquote>
+<p>在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。</p>
+</blockquote>
+<p>本文是系列文章《聊一聊 UITableView》的完结篇。</p>]]>
+    
+    </summary>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="UITableView" scheme="http://itangqi.me/tags/UITableView/"/>
+    
+      <category term="UITableViewCell" scheme="http://itangqi.me/tags/UITableViewCell/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[聊一聊 UITableView（二）]]></title>
+    <link href="http://itangqi.me/2016/02/26/the-notes-of-learning-of-uitableview-two/"/>
+    <id>http://itangqi.me/2016/02/26/the-notes-of-learning-of-uitableview-two/</id>
+    <published>2016-02-25T16:00:00.000Z</published>
+    <updated>2016-03-07T05:58:27.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
+<p>在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。</p>
+</blockquote>
+<p>本文是系列文章《聊一聊 UITableView》的第二篇。</p>
+<a id="more"></a> 
+<p>第一篇：<a href="http://itangqi.me/2016/02/25/the-notes-of-learning-of-uitableview-one/">聊一聊 UITableView（一）</a></p>
+<hr>
+<h2 id="相关知识储备">相关知识储备</h2><h3 id="estimatedHeightForRowAtIndexPath:"><code>estimatedHeightForRowAtIndexPath:</code></h3><p>首先，丢张官方文档截图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-uitableviewcell-two-02.png" alt=""></p>
+<p>在 iOS 7 上， 苹果为 <code>UITableViewDelegate</code> 带来了新方法 <code>estimatedHeightForRowAtIndexPath:</code>。此方法用于返回一个 cell 的预估高度，如果在程序中实现了这个方法，tableview 首次加载的时候就不会调用 <code>heightForRowAtIndexPath:</code> 方法，而是用 <code>estimatedHeightForRowAtIndexPath:</code> 返回的预估高度计算 tableview 的总高度，然后 tableview 就可以显示出来了，等到 cell 可见的时候，再去调用 <code>heightForRowAtIndexPath:</code> 获取 cell 的实际高度。</p>
+<p>注意：除非行高极端变化并且你已经明显的觉察到了滚动时滚动条的“跳跃”现象，你才需要实现此方法；否则，直接用 tableView 的 estimatedRowHeight 属性即可。</p>
+<p>而在 iOS 8 上，苹果为 UITableView 带来了 <a href="https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/AutolayoutPG/WorkingwithSelf-SizingTableViewCells.html" target="_blank" rel="external">Self-Sizing</a> </p>
+<p>首先，进行行高预估：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tableView<span class="variable">.rowHeight</span> = <span class="built_in">UITableViewAutomaticDimension</span>;</span><br><span class="line">tableView<span class="variable">.estimatedRowHeight</span> = <span class="number">85.0</span>;</span><br></pre></td></tr></table></figure></p>
+<p>其次，在 <code>heightForRowAtIndexPath:</code> 中返回 UITableViewAutomaticDimension 即可：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">CGFloat</span>)tableView:(<span class="built_in">UITableView</span> *)tableView heightForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#ifdef IOS_8_NEW_FEATURE_SELF_SIZING</span></span><br><span class="line">    <span class="comment">// iOS 8 的 Self-sizing 特性</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">UITableViewAutomaticDimension</span>;</span><br><span class="line"><span class="preprocessor">#else</span></span><br><span class="line">......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>你没看错，就这么简单。好啦，你可以愉快的去玩耍了。</p>
+<h3 id="systemLayoutSizeFittingSize:"><code>systemLayoutSizeFittingSize:</code></h3><p>没错，还是官方文档截图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-uitableviewcell-two-01.png" alt=""></p>
+<p>如果要适配 iOS 8 以下，则要使用到 <code>stemLayoutSizeFittingSize:</code> 方法。 由于其需要 cell 的一个实例才能计算，所以这儿用字典专门存放 cell 的实列，这样就不需要每次计算 cell 高度的时候去动态生成实例，这样即方便也高效也少用内存，可谓一举三得。</p>
+<p>首先，试图从字典中取出指定 cell:<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// offscreenCells 为成员变量</span></span><br><span class="line">NoteListCell *_templateCell = [<span class="keyword">self</span><span class="variable">.offscreenCells</span> objectForKey:reuseIdentifier];</span><br></pre></td></tr></table></figure></p>
+<p>如果为空，创建并存入字典：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!_templateCell) &#123;</span><br><span class="line">    _templateCell = [[NoteListCell alloc] init];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.offscreenCells</span> setObject:_templateCell forKey:reuseIdentifier];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后，计算 cell 的实际高度：<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 填充数据</span></span><br><span class="line">[_templateCell updateWithNote:note];</span><br><span class="line"><span class="comment">// 根据当前数据，计算 Cell 的高度，注意 +1</span></span><br><span class="line">note<span class="variable">.cellHeight</span> = [_templateCell<span class="variable">.contentView</span></span><br><span class="line"><span class="comment">// 使用 `UILayoutFittingCompressedSize` 参数可以得到适合 cell 中所有内容所需的最小尺寸  </span></span><br><span class="line">systemLayoutSizeFittingSize:<span class="built_in">UILayoutFittingCompressedSize</span>]<span class="variable">.height</span> + <span class="number">1.0</span>f;</span><br></pre></td></tr></table></figure></p>
+<p>注意：由于是在 _templateCell.contentView 上调用这个方法，那么返回的值将是 contentView 的高度，UITableViewCell 的高度要比它的 contentView 要高 1, 也就是它的分隔线的高度。</p>
+<h3 id="setNeedsLayout_vs-_setNeedsUpdateConstraints_and_layoutIfNeeded_vs_updateConstraintsIfNeeded"><code>setNeedsLayout</code> vs. <code>setNeedsUpdateConstraints</code> and <code>layoutIfNeeded</code> vs <code>updateConstraintsIfNeeded</code></h3><p>参见 <a href="http://stackoverflow.com/questions/20609206/setneedslayout-vs-setneedsupdateconstraints-and-layoutifneeded-vs-updateconstra" target="_blank" rel="external">stackoverflow</a> 上相关问题的解答：</p>
+<ol>
+<li>如果仅想要立即改变约束，调用 <code>setNeedsLayout</code>;</li>
+<li>如果改变 view 的一些属性（如 offsets）可能会导致布局的改变，那么调用 <code>setNeedsUpdateConstraints</code>, 更多的时候后面需要加 <code>setNeedsLayout</code>;</li>
+<li>如果想要立即改变布局，如会形成新的 frame, 那么需要在调用 <code>layoutIfNeeded</code>;</li>
+</ol>
+<h3 id="缓存行高">缓存行高</h3><p>如果上面提到的你都做了，但是 <code>tableView:heightForRowAtIndexPath:</code> 的性能仍然慢的不可接受。非常不幸，你需要给行高做一些缓存（这是苹果的工程师们给出的改进建议）。大体的思路是，第一次计算时让自动布局引擎解析约束条件，然后将计算出的行高缓存起来，以后所有对该cell 的高度的请求都返回缓存值。当然，关键还要确保任何会导致 cell 高度变化的情况发生时你都清除了缓存的行高——这通常发生在 cell 的内容变化时或其他重大事件发生时（比如用户调节了动态类型文本大小(Dynamic Type text size)的滑动条）。</p>
+<p>未完待续……</p>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="http://www.ifun.cc/blog/2014/02/21/dong-tai-ji-suan-uitableviewcellgao-du-xiang-jie/" target="_blank" rel="external">动态计算UITableViewCell高度详解</a></li>
+<li><a href="http://codingobjc.com/blog/2014/10/15/shi-yong-autolayoutshi-xian-uitableviewde-celldong-tai-bu-ju-he-ke-bian-xing-gao/" target="_blank" rel="external">使用Autolayout实现UITableView的Cell动态布局和高度动态改变</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><blockquote>
+<p>在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。</p>
+</blockquote>
+<p>本文是系列文章《聊一聊 UITableView》的第二篇。</p>]]>
+    
+    </summary>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="UITableView" scheme="http://itangqi.me/tags/UITableView/"/>
+    
+      <category term="UITableViewCell" scheme="http://itangqi.me/tags/UITableViewCell/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[聊一聊 UITableView（一）]]></title>
+    <link href="http://itangqi.me/2016/02/25/the-notes-of-learning-of-uitableview-one/"/>
+    <id>http://itangqi.me/2016/02/25/the-notes-of-learning-of-uitableview-one/</id>
+    <published>2016-02-24T16:00:00.000Z</published>
+    <updated>2016-03-07T05:42:56.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
+<p>在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。</p>
+</blockquote>
+<p>前几天正好看了关于 AutoLayout 与 UITableViewCell 高度动态计算的文章，于是便在 <a href="https://github.com/tangqi92/SuperNote" target="_blank" rel="external">SuperNote</a> 上践行了所学的知识，并做了相关笔记的总结，在此与大家进行分享。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="Auto_Layout">Auto Layout</h2><p>首先看官方文档<a href="https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/AutolayoutPG/" target="_blank" rel="external">《Auto Layout Guide》</a>中关于 Auto Layout 的描述：</p>
+<blockquote>
+<p>Auto Layout dynamically calculates the size and position of all the views in your view hierarchy, based on constraints placed on those views. For example, you can constrain a button so that it is horizontally centered with an Image view and so that the button’s top edge always remains 8 points below the image’s bottom. If the image view’s size or position changes, the button’s position automatically adjusts to match.</p>
+<p>This constraint-based approach to design allows you to build user interfaces that dynamically respond to both internal and external changes.</p>
+</blockquote>
+<p>作为从 Android 阵营转过来的我，一路都是手撕页面布局的，当我面对要在 Storyboard 中拖拽各种约束时，我的内心是几乎是崩溃的（也许我该尝试下），直到我发现了 <a href="https://github.com/SnapKit/Masonry" target="_blank" rel="external">Masonry</a>，妈妈再也不用担心我写 Auto Layout 了。</p>
+<p>Masonry 老少皆宜，非常容易上手，具体的使用可参见<strong>里脊串</strong>的文章：</p>
+<ul>
+<li><a href="http://adad184.com/2014/09/28/use-masonry-to-quick-solve-autolayout/" target="_blank" rel="external">Masonry介绍与使用实践(快速上手Autolayout)</a></li>
+</ul>
+<hr>
+<h2 id="UITableViewCell_重用机制">UITableViewCell 重用机制</h2><p>在讲 UITableViewCell 高度自适应前，首先简单介绍下 UITableViewCell 的重用机制：</p>
+<ul>
+<li><p>当用户滚动 UITableView 对象时，部分 UITableViewCell 对象会移出窗口。此时 UITableView 对象会将移出窗口的 UITableViewCell 对象放入 UITableViewCell <strong>对象池</strong>，等待重新利用。当 UITableView 对象要求数据源返回某个 UITableViewCell 对象时，数据源可以先查看对象池。如果有未使用的 UITableViewCell 对象，就可以用<strong>新的数据</strong>配置这个 UITableViewCell 对象，然后将其返回给 UITableView 对象，从而避免创建新对象。</p>
+</li>
+<li><p>这里还有一个问题：因为有时需要创建 UITableViewCell 的<strong>子类</strong>，用于实现特定的外观或特性，所以 UITableView 对象可能会拥有<strong>不同类型</strong>的 UITableViewCell 对象。如果 UITableViewCell 对象池中的对象创建自不同的子类，那么 UITableView 对象就有可能得到错误类型的 UITableViewCell 对象。鉴于上述原因，必须确保 UITableView 对象能够得到指定类型的 UITableViewCell 对象，这样才能确定返回的对象会拥有哪些属性和方法。</p>
+</li>
+<li><p>从 UITableViewCell 对象池获取对象时，无须关心取回的是否是某个特定的对象，因为无论取回的是哪个对象，都要重新设置数据。真正要关心的是取回的对象是否是某个<strong>特定</strong>的类型。每个 UITableViewCell 对象都有一个类型为 NSString 的 <strong>reuseIdentifier</strong> 属性。当数据源向 UITableView 对象获取可重用的 UITableViewCell 对象时，可传入一个字符串并要求 UITableView 对象返回相应的 UITableViewCell 对象，这些 UITableViewCell 对象的 reuseIdentifier 属性必须和传入的字符串相同。按照约定，应该将 UITableViewCell 或者 UITableViewCell 子类的类名用作 reuseIdentifier。</p>
+</li>
+</ul>
+<p>上面讲得那么啰嗦，不如直接看下面的图： </p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-uitableviewcell-01.png" alt=""></p>
+<p>情况 A: 所有 Cell 具有相同的类型</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> *  实现数据绑定</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="comment">// 根据标识符 identifier 从重用队列中取出一个 cell</span></span><br><span class="line">    NoteListCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellReuseIdentifier];</span><br><span class="line">    <span class="comment">// 由于一开始重用队列是空的，所以取出的 cell 也是空的，if(!cell) 条件成立，就会去执行 &#123;&#125; 内的代码</span></span><br><span class="line">    <span class="keyword">if</span> (!cell) &#123;</span><br><span class="line">    	<span class="comment">// 创建 UITableViewCellStyleDefault类型的 cell，并将其标识为 identifier（@”cell”），这样一个 cell 就创建完成了</span></span><br><span class="line">        cell = [[NoteListCell alloc] initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:kCellReuseIdentifier];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 绑定指定数据</span></span><br><span class="line">    VNNote *note = [<span class="keyword">self</span><span class="variable">.dataSource</span> objectAtIndex:indexPath<span class="variable">.row</span>];</span><br><span class="line">    note<span class="variable">.index</span> = indexPath<span class="variable">.row</span>;</span><br><span class="line">    [cell updateWithNote:note];</span><br><span class="line">    <span class="comment">// Make sure the constraints have been added to this cell, since it may have just been created from scratch</span></span><br><span class="line">    [cell setNeedsUpdateConstraints];</span><br><span class="line">    [cell updateConstraintsIfNeeded];</span><br><span class="line">    <span class="keyword">return</span> cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>情况 B: 具有多种类型的 Cell</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *cellIdentifier;</span><br><span class="line">    <span class="built_in">UITableViewCellStyle</span> cellStyle;</span><br><span class="line">    <span class="keyword">switch</span> ((indexPath<span class="variable">.row</span> + <span class="number">1</span>)%<span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:&#123;</span><br><span class="line">            <span class="comment">//有标题和副标题，可选图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Subtitle Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleSubtitle</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:&#123;</span><br><span class="line">            <span class="comment">//左边文字左对齐，右边文字右对齐，可选的图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Value1 Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleValue1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:&#123;</span><br><span class="line">            <span class="comment">//左边文字右对齐，蓝色字体。右边文字左对齐，黑色。没有图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Value2 Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleValue2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:&#123;</span><br><span class="line">            <span class="comment">//有标题，没有副标题，可选的图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Default Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleDefault</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">NSInteger</span> times = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">UITableViewCell</span> *myCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];</span><br><span class="line">    <span class="keyword">if</span> (!myCell) &#123;</span><br><span class="line">        myCell = [[<span class="built_in">UITableViewCell</span> alloc] initWithStyle:cellStyle reuseIdentifier:cellIdentifier];</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"创建%d次"</span>,++times);</span><br><span class="line">    &#125;</span><br><span class="line">    myCell<span class="variable">.textLabel</span><span class="variable">.text</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"第%d行%@"</span>,indexPath<span class="variable">.row</span>+<span class="number">1</span>, cellIdentifier];</span><br><span class="line">    myCell<span class="variable">.detailTextLabel</span><span class="variable">.text</span> = <span class="string">@"Subtitle Text"</span>;</span><br><span class="line">    <span class="keyword">if</span> (indexPath<span class="variable">.row</span> &gt; <span class="number">3</span>) &#123;</span><br><span class="line">        myCell<span class="variable">.imageView</span><span class="variable">.image</span> = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"smile.png"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> myCell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>未完待续……</p>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="http://sharonhu1990.github.io/2015/10/28/%E6%B5%85%E6%9E%90UITableViewCell%E9%87%8D%E7%94%A8%E6%9C%BA%E5%88%B6/" target="_blank" rel="external">浅析UITableViewCell重用机制</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><blockquote>
+<p>在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。</p>
+</blockquote>
+<p>前几天正好看了关于 AutoLayout 与 UITableViewCell 高度动态计算的文章，于是便在 <a href="https://github.com/tangqi92/SuperNote">SuperNote</a> 上践行了所学的知识，并做了相关笔记的总结，在此与大家进行分享。</p>]]>
+    
+    </summary>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="UITableView" scheme="http://itangqi.me/tags/UITableView/"/>
+    
+      <category term="UITableViewCell" scheme="http://itangqi.me/tags/UITableViewCell/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[Text Kit 学习笔记]]></title>
     <link href="http://itangqi.me/2016/02/18/the-notes-of-learning-text-kit/"/>
     <id>http://itangqi.me/2016/02/18/the-notes-of-learning-text-kit/</id>
     <published>2016-02-17T16:00:00.000Z</published>
-    <updated>2016-03-05T06:12:30.000Z</updated>
+    <updated>2016-03-05T07:06:59.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>目前，我正在开发自己的第一款 iOS App: <a href="https://github.com/tangqi92/SuperNote" target="_blank" rel="external">SuperNote</a>, 作为一款笔记类应用，其最基础也是最核心的功能便是富文本的编辑。起初为了能快速地实现此功能，我直接使用了 <a href="https://github.com/ibireme/YYText" target="_blank" rel="external">YYText</a>, 照着其 Demo 改了改便基本实现了需求，虽然看似便捷但随后我便发现自己其实是「知其然，而不知其所以然」，对于其中的实现原理只知胜少。</p>
 <p>于是决定对富文本编辑的实现原理进行一探究竟，而 <a href="https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html" target="_blank" rel="external">Text Kit</a> 便是今天的主角。</p>
 <a id="more"></a> 
@@ -43,6 +265,8 @@
 <h2 id="核心">核心</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-04.png" alt=""></p>
 <p>下面将对上图涉及到的核心类进行一一解释：</p>
 <ul>
+<li><p><code>UITextView</code>：<br>在 TextKit 中，有两个目的：第一，它是文本系统用来绘制的视图。文本视图它自己并不会做任何绘制；它仅仅提供一个供其它类绘制的区域。第二，处理所有的用户交互，具体来说，Text View 实现 UITextInput 的协议来处理键盘事件，它为用户提供了一种途径来设置一个插入点或选择文本。它并不对文本做任何实际上的改变，仅仅将这些改变请求转发给刚刚讨论的 Text Storage。</p>
+</li>
 <li><p><code>NSTextStorage</code>:<br>顾名思义，NSTextStorage 就是用来存储文本的字符和相关属性的，例如字体或段落信息等，因为它是 <code>NSMutableAttributedString</code> 的子类，这也就是为什么它来负责存储文本的属性。此外，当 NSTextStorage 中的字符或属性发生改变时，会通知 <code>NSLayoutManager</code>, 进而做到文本内容的显示更新。</p>
 </li>
 <li><p><code>NSLayoutManager</code>:<br>该类负责对文字进行编辑排版处理，将存储在 <code>NSTextStorage</code> 中的数据转换为可以在视图控件中显示的文本内容，并把字符编码映射到对应的字形上，然后将字形排版到 <code>NSTextContainer</code> 定义的区域中。</p>
@@ -50,22 +274,32 @@
 <li><p><code>NSTextContainer</code>:<br>定义了文本可以排版的区域，默认情况下是矩形区域，如果是其他形状的区域，需要通过子类化 NSTextContainer 来创建。</p>
 </li>
 </ul>
-<p>三者的关系可见下图：</p>
+<p>它们的关系可见下图：</p>
 <p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-06.png" alt=""></p>
 <p><code>NSLayoutManager</code> 对象从 <code>NSTextStorage</code> 对象中取得文本内容，进行排版，然后把排版之后的文本放到 <code>NSTextContainer</code> 对象指定的区域上。最后再由一个文本控件从 <code>NSTextContainer</code> 中取出内容显示到屏幕中。</p>
-<h3 id="相关">相关</h3><ul>
-<li><code>Core Text</code>: 处于底层技术，如果我们需要将文本内容直接渲染到图形上下文(Graphics context)时，从性能和易用性来考虑，最佳方案就是使用Core Text</li>
+<h3 id="使用场景">使用场景</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-09.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-08.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-07.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-10.png" alt=""></p>
+<h3 id="补充">补充</h3><ul>
+<li><code>Core Text</code>: 没有直接包含在 TextKit 中，CoreText 是进行实际排版的库。对于布局管理器的每一步，CoreText 被这样或那样的方式调用。它提供了从字符到字形的翻译，用它们来填充行，以及建议断字点</li>
 <li><code>NSAttributedString</code>: 就是用来设置文字的效果(颜色、字体、下划线等等)</li>
 <li><p><code>NSMutableAttributedString</code>:是 NSAttributedString 的子类，可变类型的NSAttributedString</p>
 <p>  <img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-05.jpg" alt=""></p>
 </li>
 </ul>
 <h2 id="功能">功能</h2><ul>
-<li>Dynamic type - 动态字体效果</li>
-<li>Letterpress effects - 突出印刷效果</li>
-<li>Exclusion paths - 图文混排效果</li>
-<li>等等</li>
+<li>对文字进行分页或多列排版</li>
+<li>支持文字的换行、折叠和着色等处理</li>
+<li>可以调整字与字之间的距离、行间距、文字大小、指定特定的字体</li>
+<li>支持富文本编辑，可以自定义文字截断</li>
+<li>支持凸版印刷效果（letterpress）</li>
+<li>支持数据类型的检测（例如链接、附件等）</li>
+<li>效果如下图所示：</li>
 </ul>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-11.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-12.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-text-kit-13.png" alt=""></p>
 <p>本文并不会对具体功能的实现进行详细的阐述，毕竟本文重点是了解内在的实现原理而非具体实现。好啦，剩下的事情就交给你了！</p>
 <h2 id="参考">参考</h2><ul>
 <li><a href="https://developer.apple.com/library/prerelease/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/CustomTextProcessing/CustomTextProcessing.html" target="_blank" rel="external">Using Text Kit to Draw and Manage Text</a></li>
