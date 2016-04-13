@@ -1,0 +1,1049 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="GCD,Notes,iOS," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="前言本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Objective-C 高级编程》读书笔记之 GCD">
+<meta property="og:url" content="http://itangqi.me/2016/03/15/the-notes-of-learning-of-gcd/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-001.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-002.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-003.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-004.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-005.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-006.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-007.png">
+<meta property="og:updated_time" content="2016-04-13T08:42:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Objective-C 高级编程》读书笔记之 GCD">
+<meta name="twitter:description" content="前言本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 《Objective-C 高级编程》读书笔记之 GCD | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                《Objective-C 高级编程》读书笔记之 GCD
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-15T00:00:00+08:00" content="2016-03-15">
+              2016-03-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/15/the-notes-of-learning-of-gcd/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/15/the-notes-of-learning-of-gcd/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><p>本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="概念">概念</h2><p>Grand Central Dispatch (GCD) 是异步执行任务的技术之一。开发者只需要定义想执行的任务并追加到适当的 Dispatch Queue 中，GCD 就能生成必要的线程并计划执行任务。由于线程管理是作为系统的一部分来实现的，因此可统一管理，也可执行任务，这样就比以前的线程更有效率。</p>
+<p>以下摘自苹果的官方文档：</p>
+<blockquote>
+<p>Grand Central Dispatch (GCD) comprises language features, runtime libraries, and system enhancements that provide systemic, comprehensive improvements to the support for concurrent code execution on multicore hardware in iOS and OS X.</p>
+<p>The BSD subsystem, CoreFoundation, and Cocoa APIs have all been extended to use these enhancements to help both the system and your application to run faster, more efficiently, and with improved responsiveness. </p>
+</blockquote>
+<p>一句话总结就是：<strong>GCD 用我们难以置信的非常简洁的记述方法，实现了极为复杂繁琐的多线程编程，可以说这是一项划时代的技术。</strong></p>
+<hr>
+<h2 id="多线程编程">多线程编程</h2><p>在讲多线程之前，首先来复习下相关概念：</p>
+<ul>
+<li><p><strong>进程</strong>：一个具有一定独立功能的程序关于某个数据集合的一次运行活动，进程是系统进行资源分配和调度的一个独立单位，可以理解成一个运行中的应用程序。</p>
+</li>
+<li><p><strong>线程</strong>：进程的一个实体，是 CPU 调度和分派的基本单位。线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源(如程序计数器,一组寄存器和栈)，但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。</p>
+</li>
+<li><p><strong>上下文切换（Context Switch）</strong>：当一个进程中有多个线程来回切换时，Context Switch 用来记录执行状态，这样的进程和一般的多线程进程没有太大差别，但会产生一些额外的开销。</p>
+</li>
+</ul>
+<p>由于使用多线程的程序可以在某个线程和其他线程之间反复多次进行上下文切换，因此看上去就好像 1 个 CPU 核能够并列地执行多个线程一样。而且在具有多个 CPU 核的情况下，就不是「看上去像」了，而是真的提供了多个 CPU 核并行执行多个线程的技术。</p>
+<p>这种利用多线程编程的技术就被称为「多线程编程」。</p>
+<h3 id="多线程编程的问题">多线程编程的问题</h3><p>但是，多线程编程实际上是一种易发生各种问题的编程技术。比如多个线程更新相同的资源会导致数据的不一致（数据竞争）、停止等待事件的线程会导致多个线程相互持续等待（死锁）、使用太多线程会消耗大量内存等。如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-001.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-002.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-003.png" alt=""></p>
+<h3 id="多线程编程的优点">多线程编程的优点</h3><p>尽管极易发生各种问题，也应当使用多线程编程。这是为什么呢？因为使用多线程编程可以保证应用程序的响应性能。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-004.png" alt=""></p>
+<p>使用多线程编程，在执行长时间的处理时仍可保证用户界面的响应性能。</p>
+<p>GCD 大大简化了偏于复杂的多线程编程的实现。接下来我们就来看下 GCD 的 API。</p>
+<hr>
+<h2 id="GCD_的_API">GCD 的 API</h2><p>关于 GCD 相关 API 的详细讲解与使用案例，可以直接参见官方文档或者其他博客，本文仅对我在学习 GCD 过程中觉得难以理解的知识点进行简单总结。</p>
+<h3 id="Dispatch_Queue">Dispatch Queue</h3><p>首先回顾一下苹果官方对 GCD 的说明：<strong>开发者要做的只是定义想执行的任务并追加到适当的 Dispatch Queue 中。</strong></p>
+<p>那么「Dispatch Queue」是什么呢？</p>
+<p>如其名称所示，是执行处理的等待队列。应用程序编程人员通过 dispatch_async 函数等 API，在 Block 语法中记述想执行的处理并将其追加到 Dispatch Queue 中。<strong>Dispatch Queue</strong> 按照追加的顺序（先进先出 FIFO，First-In-First-Out）执行处理。</p>
+<p>GCD 提供两种 Dispatch Queue:</p>
+<table>
+<thead>
+<tr>
+<th>Dispatch Queue 的种类</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Serial Dispatch Queue</td>
+<td style="text-align:center">等待现在执行中处理结束</td>
+<td style="text-align:center">多个线程更新相同资源导致数据竞争时 </td>
+</tr>
+<tr>
+<td>Concurrent Dispatch Queue</td>
+<td style="text-align:center">不等待现在执行中处理结束</td>
+<td style="text-align:center">并行执行不发生数据竞争等问题的处理时</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-005.png" alt=""></p>
+<h3 id="dispatch_queue_create/dispatch_retain/dispatch_release">dispatch_queue_create/dispatch_retain/dispatch_release</h3><p>Dispatch Queue 也像 Objective-C 的引用计数式内存管理一样，需要通过 dispatch_retain 函数和 dispatch_release 函数的引用计数来管理内存。</p>
+<p><strong>如果你部署的最低目标低于 iOS 6.0 or Mac OS X 10.8</strong></p>
+<ul>
+<li>你应该自己管理 GCD 对象,使用 dispatch_retain/dispatch_release</li>
+</ul>
+<p><strong>如果你部署的最低目标是 iOS 6.0 or Mac OS X 10.8 或者更高</strong></p>
+<ul>
+<li>ARC 已经能够管理 GCD 对象了，这时候 GCD 对象就如同普通的 OC 对象一样，不用再 dispatch_retain/dispatch_release  </li>
+</ul>
+<h3 id="Main_Dispatch_Queue/Global_Dispatch_Queue">Main Dispatch Queue/Global Dispatch Queue</h3><p>实际上不用特意生成 Dispatch Queue 系统也会给我们提供几个，那就是 Main Dispatch Queue 和 Global Dispatch Queue：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th style="text-align:center">Dispatch Queue 的种类</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main Dispatch Queue</td>
+<td style="text-align:center">Serial Dispatch Queue</td>
+<td style="text-align:center">主线程执行</td>
+</tr>
+<tr>
+<td>Global Dispatch Queue（High Priority）</td>
+<td style="text-align:center">Concurrent Dispatch Queue</td>
+<td style="text-align:center">执行优先级：高（最高优先）</td>
+</tr>
+<tr>
+<td>Global Dispatch Queue（Default Priority）</td>
+<td style="text-align:center">Concurrent Dispatch Queue</td>
+<td style="text-align:center">执行优先级：默认</td>
+</tr>
+<tr>
+<td>Global Dispatch Queue（Low Priority）</td>
+<td style="text-align:center">Concurrent Dispatch Queue</td>
+<td style="text-align:center">执行优先级：低</td>
+</tr>
+<tr>
+<td>Global Dispatch Queue（Background Priority）</td>
+<td style="text-align:center">Concurrent Dispatch Queue</td>
+<td style="text-align:center">执行优先级：后台</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dispatch_set_target_queue">dispatch_set_target_queue</h3><p>将 Dispatch Queue 指定为 dispatch_set_target_queue 函数的参数，不仅可以变更 Dispatch Queue 的执行优先级。还可以作成 Dispatch Queue 的执行阶层。如果在多个 Serial Dispatch Queue 中用 dispatch_set_target_queue 函数指定目标为某一个 Serial Dispatch Queue，那么原先本应并行执行的多个 Serial Dispatch Queue，在目标 Serial Dispatch Queue 上只能同时执行一个处理。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-006.png" alt=""></p>
+<p>在必须将可不并行执行的处理追加到多个 Serial Dispatch Queue 中时，如果使用 dispatch_set_target_queue 函数将目标指定为某一个 Serial Dispatch Queue，即可防止处理并行执行。</p>
+<h3 id="dispatch_barrier_async">dispatch_barrier_async</h3><p>dispatch_barrier_async 函数会等待追加到 Concurrent Dispatch Queue 上的并行执行的处理全部结束后，再将指定的处理追加到该 Concurrent Dispatch Queue 中。然后在由 dispatch_barrier_async 函数追加的处理执行完毕后，Concurrent Dispatch Queue 才恢复为一般的动作，追加到该 Concurrent Dispatch Queue 的处理又开始并行执行。</p>
+<p>使用方法非常简单，如图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-007.png" alt=""></p>
+<h3 id="Dispatch_Semaphore">Dispatch Semaphore</h3><p>Dispatch Semaphore 是持有计数的信号，该计数是多线程编程中的计数类型信号。所谓信号，类似于过马路时常用的手旗。可以通过时举起手旗，不可通过时放下手旗。而 Dispatch Semaphore 中，使用计数来实现该功能。</p>
+<p>信号量的具体做法是：当信号计数大于 0 时，每条进来的线程使计数减 1，直到变为 0，变为 0 后其他的线程将进不来，处于等待状态；执行完任务的线程释放信号，使计数加 1，如此循环下去。</p>
+<hr>
+<h2 id="要点">要点</h2><ol>
+<li><p>多个 Serial Dispatch Queue 可并行执行，但生成过线程，就会消耗大量内存，引起大量的上下文切换，大幅度降低系统的响应性能</p>
+</li>
+<li><p>dispatch_afer 函数并不是在指定时间后执行处理，而只是在指定时间追加处理到 Dispatch Queue</p>
+</li>
+<li><p>无论向什么样的 Dispatch Queue 中追加处理，使用 Dispatch Group 都可监视这些处理执行的结束。一旦监测到所有处理执行结束，就可将结束的处理追加到 Dispatch Queue 中。这就是使用 Dispatch Group 的原因</p>
+</li>
+<li><p>关于 dispatch_sync，不得不提<strong>死锁</strong>，详情可参见：<a href="http://www.saitjr.com/ios/ios-gcd-deadlock.html" target="_blank" rel="external">GCD死锁</a> </p>
+</li>
+<li><p>Serial Dispatch Queue 与 Concurrent Dispatch Queue 都是遵循 FIFO 原则</p>
+</li>
+<li><p>dispatch_once 方法用 <code>dispatch_once_t</code> 来测试 Block 是否被执行过了。如果执行过了，那么就不在执行，<code>dispatch_once_t</code> 必须是全局或 static 变量</p>
+</li>
+<li><p>dispatch_create 函数生成的 Dispatch Queue 不管是 Serial Dispatch Queue 还是 Concurrent Dispatch Queue，都使用与默认优先级 Global Dispatch Queue 相同执行优先级的线程</p>
+</li>
+<li><p>并发与并行的区别：<a href="https://www.zhihu.com/question/33515481" target="_blank" rel="external">https://www.zhihu.com/question/33515481</a></p>
+</li>
+</ol>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">Grand Central Dispatch (GCD) Reference</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GCD/" rel="tag">#GCD</a>
+          
+            <a href="/tags/Notes/" rel="tag">#Notes</a>
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/13/the-notes-of-learning-of-blocks/" rel="next" title="《Objective-C 高级编程》读书笔记之 Blocks">
+                <i class="fa fa-chevron-left"></i> 《Objective-C 高级编程》读书笔记之 Blocks
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/13/the-notes-of-learning-uicollectionview/" rel="prev" title="UICollectionView 学习笔记">
+                UICollectionView 学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾的走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 知乎
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 豆瓣
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">小伙伴们</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://tikitoo.me/" target="_blank">安卓同学</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://lovinghuan.com/" target="_blank">poberWong</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.zhaiyifan.cn/" target="_blank">MarkZhai</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://yifeiyuan.me/" target="_blank">程序亦非猿</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://abner-nimengbo.cn/" target="_blank">阿布</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.easydone.cn/" target="_blank">Ailurus</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://wuxiaolong.me/" target="_blank">吴小龙同學</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://drakeet.me/" target="_blank">Drakeet</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.fangjie.info/" target="_blank">方杰</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://hujiaweibujidao.github.io/" target="_blank">五道口宅男</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://gudong.name/" target="_blank">咕咚</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://soledad.me/" target="_blank">蔡越</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程编程"><span class="nav-number">3.</span> <span class="nav-text">多线程编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程编程的问题"><span class="nav-number">3.1.</span> <span class="nav-text">多线程编程的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程编程的优点"><span class="nav-number">3.2.</span> <span class="nav-text">多线程编程的优点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GCD_的_API"><span class="nav-number">4.</span> <span class="nav-text">GCD 的 API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dispatch_Queue"><span class="nav-number">4.1.</span> <span class="nav-text">Dispatch Queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dispatch_queue_create/dispatch_retain/dispatch_release"><span class="nav-number">4.2.</span> <span class="nav-text">dispatch_queue_create/dispatch_retain/dispatch_release</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Main_Dispatch_Queue/Global_Dispatch_Queue"><span class="nav-number">4.3.</span> <span class="nav-text">Main Dispatch Queue/Global Dispatch Queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dispatch_set_target_queue"><span class="nav-number">4.4.</span> <span class="nav-text">dispatch_set_target_queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dispatch_barrier_async"><span class="nav-number">4.5.</span> <span class="nav-text">dispatch_barrier_async</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dispatch_Semaphore"><span class="nav-number">4.6.</span> <span class="nav-text">Dispatch Semaphore</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点"><span class="nav-number">5.</span> <span class="nav-text">要点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2016/03/15/the-notes-of-learning-of-gcd/';
+      var disqus_title = '《Objective-C 高级编程》读书笔记之 GCD';
+      var disqus_url = 'http://itangqi.me/2016/03/15/the-notes-of-learning-of-gcd/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>

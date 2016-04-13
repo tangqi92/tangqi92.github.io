@@ -72,7 +72,7 @@
 
 本文是系列文章《聊一聊 UITableView》的完结篇。">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uitableview-three-01.jpg">
-<meta property="og:updated_time" content="2016-03-07T07:00:37.000Z">
+<meta property="og:updated_time" content="2016-04-06T10:57:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聊一聊 UITableView（三）">
 <meta name="twitter:description" content="前言
@@ -387,13 +387,11 @@
 <h4 id="5-_尽量减少不必要的透明_View">5. 尽量减少不必要的透明 View</h4><p>透明图层对渲染性能会有一定的影响，系统必须将透明图层与下面的视图混合起来计算颜色，并绘制出来。减少透明图层并使用不透明的图层来替代它们，可以极大地提高渲染速度。</p>
 <h4 id="6-_优化touch事件传递">6. 优化touch事件传递</h4><p>把不需要接受 touch 的 view 的 <code>userInteractionEnabled</code> 设为 0 </p>
 <h4 id="7-_其他">7. 其他</h4><ul>
-<li>尽量避免渐变效果、图片拉伸和离屏渲染。</li>
-<li>如果 Cell 展示的内容来自网络，确保用异步加载的方式来获取数据，并且缓存服务器的 response。</li>
-<li>使用 shadowPath 来设置阴影效果。</li>
-<li>尽量减少 subview 的数量，对于 subview 较多并且样式多变的 Cell，可以考虑用异步绘制或重写 drawRect。</li>
-<li>尽量优化 - [UITableView tableView:cellForRowAtIndexPath:] 方法中的处理逻辑，如果确实要做一些处理，可以考虑做一次，缓存结果。</li>
-<li>选择合适的数据结构来承载数据，不同的数据结构对不同操作的开销是存在差异的。</li>
-<li>对于 rowHeight、sectionFooterHeight、sectionHeaderHeight 尽量使用常量。</li>
+<li>选择合适的数据结构来承载数据，不同的数据结构对不同操作的开销是存在差异的；</li>
+<li>如果 Cell 展示的内容来自网络，确保用异步加载的方式来获取数据，并且进行缓存，滚出可视范围的载入进程要 Cancel 掉；</li>
+<li>尽量减少 subview 的数量，减少渲染工作；</li>
+<li>异步获取数据：</li>
+<li>启用 GZIP 数据压缩；</li>
 </ul>
 <hr>
 <h2 id="写在最后">写在最后</h2><blockquote>
@@ -436,6 +434,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/10/the-notes-of-learning-of-arc/" rel="prev" title="《Objective-C 高级编程》读书笔记之 ARC">
+                《Objective-C 高级编程》读书笔记之 ARC <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -533,7 +535,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -550,7 +552,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -668,6 +670,10 @@
             
               <span class="links-of-author-item">
                 <a href="http://gudong.name/" target="_blank">咕咚</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://soledad.me/" target="_blank">蔡越</a>
               </span>
             
           

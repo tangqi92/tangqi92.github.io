@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2016-03-07T07:00:37.000Z</updated>
+  <updated>2016-04-13T09:08:58.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -15,11 +15,551 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[UICollectionView 学习笔记]]></title>
+    <link href="http://itangqi.me/2016/04/13/the-notes-of-learning-uicollectionview/"/>
+    <id>http://itangqi.me/2016/04/13/the-notes-of-learning-uicollectionview/</id>
+    <published>2016-04-12T16:00:00.000Z</published>
+    <updated>2016-04-13T09:08:58.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 <strong>UICollectionView</strong>。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="简介">简介</h2><p>首先看苹果官方文档 <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/" target="_blank" rel="external">UICollectionView Class Reference</a> 的介绍:</p>
+<blockquote>
+<p>The UICollectionView class manages an ordered collection of data items and presents them using customizable layouts. Collection views provide the same general function as table views except that a collection view is able to support more than just single-column layouts. Collection views support customizable layouts that can be used to implement multi-column grids, tiled layouts, circular layouts, and many more. You can even change the layout of a collection view dynamically if you want.</p>
+</blockquote>
+<p>一句话总结就是：UICollectionView 与 UITableView 相似，却提供了可自定义多列网格（Grild）的功能。</p>
+<hr>
+<h2 id="核心">核心</h2><ul>
+<li><p><strong>Cells</strong>：单元格，用于展示内容的主体</p>
+</li>
+<li><p><strong>Supplementary Views</strong>：追加视图，相当于 UITableView 中每个 Section 的 Header 或 Footer</p>
+</li>
+<li><p><strong>Decoration Views</strong>：装饰视图，用于装饰整个 UICollectionView</p>
+</li>
+</ul>
+<p>UICollectionView 最常见的使用场景，想必就是相册（照片墙）的实现与展示了，下面通过一张图来直观地认识 CollectionView 各部分的构成：</p>
+<p><img src="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/Art/uicollectionview_callouts.png" alt=""></p>
+<hr>
+<h2 id="实现">实现</h2><p>如果你在之前有了解及使用过 UITableView 的话，那么恭喜你，你将会快速上手 UICollectionView。</p>
+<h3 id="UICollectionViewDataSource">UICollectionViewDataSource</h3><p>UICollectionViewDataSource - 负责提供展示的数据，实现下面两个必须的委托方法，其实 UITableView 并无二意，所以在此不做过多介绍了。</p>
+<ul>
+<li><p><strong>numberOfItemsInSection</strong>：某个 section 里有多少个 item</p>
+</li>
+<li><p><strong>cellForItemAtIndexPath</strong>：对于某个位置应该显示什么样的 cell，里面会涉及到 cell 的复用，可参见 TableView</p>
+</li>
+</ul>
+<p>其实到这里，CollectionView 就可以正常显示了，对吧，就是这么简单：）</p>
+<h3 id="UICollectionViewDelegate">UICollectionViewDelegate</h3><p>UICollectionViewDelegate - 负责用户的交互、Cell 的外形，委托方法和 TableView 相似，可以选择性实现以下委托方法。</p>
+<ul>
+<li><p><strong>collectionView:shouldHighlightItemAtIndexPath</strong>：是否支持高亮？</p>
+</li>
+<li><p><strong>collectionView:didHighlightItemAtIndexPath</strong>：如果支持高亮，那么高亮；</p>
+</li>
+<li><p><strong>collectionView:shouldSelectItemAtIndexPath</strong>：询问是否可以被选中？</p>
+</li>
+<li><p><strong>collectionView:didUnhighlightItemAtIndexPath</strong>：如果支持高亮，那么现在取消高亮；</p>
+</li>
+<li><p><strong>collectionView:didSelectItemAtIndexPath</strong>：如果支持可以被选中，那么选中 cell；</p>
+</li>
+</ul>
+<p>下面再通过几张图来更加清晰地理解：</p>
+<p><img src="http://static.oschina.net/uploads/img/201312/09104249_WdaM.jpg" alt=""><br><img src="http://static.oschina.net/uploads/img/201312/09104249_oFzN.jpg" alt=""><br><img src="http://static.oschina.net/uploads/img/201312/09104249_WIyz.jpg" alt=""></p>
+<h3 id="UICollectionViewLayout">UICollectionViewLayout</h3><p>在布局上，与 UITableView 直接使用系统提供的样式不同，UICollectionView 使用的是 UICollectionViewLayout 来自定义布局样式。</p>
+<p>在苹果官方文档：<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/" target="_blank" rel="external">UICollectionViewLayout Class Reference</a> 中对其做了如下解释:</p>
+<blockquote>
+<p>The UICollectionViewLayout class is an abstract base class that you subclass and use to generate layout information for a collection view. The job of a layout object is to determine the placement of cells, supplementary views, and decoration views inside the collection view’s bounds and to report that information to the collection view when asked. The collection view then applies the provided layout information to the corresponding views so that they can be presented onscreen.</p>
+</blockquote>
+<p>这里做下简短的总结：</p>
+<ol>
+<li><p>UICollectionViewLayout 是一个抽象基类，你需要继承自他，来为 CollectionView 生成 Layout 信息。Layout 对象的作用是决定 Cells，Supplementary Views 和 Decoration Views 在 CollectionView 中的布局位置。当然啦，如果你不想折腾，苹果也贴心的为你准备了 UICollectionViewFlowLayout - 流水式布局效果。</p>
+</li>
+<li><p>UICollectionView 的显示效果几乎全部由 UICollectionViewLayout 负责，而真正存储着每一个 Cell 的位置、大小等属性的是 UICollectionViewLayoutAttributes 。每一个 Cell 对应着一个属于自己的 UICollectionViewLayoutAttributes，而 UICollectionViewLayout 正是利用 UICollectionViewLayoutAttributes 里存在的信息对每一个 Cell 进行布局。</p>
+</li>
+</ol>
+<p>下面通过一张图来了解 UICollectionView 的构成：</p>
+<p><img src="http://static.oschina.net/uploads/img/201312/09104250_0t6H.jpg" alt=""></p>
+<h2 id="总结">总结</h2><p>可以说 UICollectionView 是 iOS 开发中必不可少的 UIKit 控件之一。</p>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/" target="_blank" rel="external">UICollectionView Class Reference</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/" target="_blank" rel="external">UICollectionViewLayout Class Reference</a></li>
+<li><a href="http://www.appcoda.com/ios-programming-uicollectionview-tutorial/" target="_blank" rel="external">Create Grid Layout Using UICollectionView in iOS 6</a></li>
+<li><a href="http://my.oschina.net/sunqichao/blog/182623" target="_blank" rel="external">UICollectionView 使用 介绍</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 <strong>UICollectionView</strong>。</p>]]>
+    
+    </summary>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[《Objective-C 高级编程》读书笔记之 GCD]]></title>
+    <link href="http://itangqi.me/2016/03/15/the-notes-of-learning-of-gcd/"/>
+    <id>http://itangqi.me/2016/03/15/the-notes-of-learning-of-gcd/</id>
+    <published>2016-03-14T16:00:00.000Z</published>
+    <updated>2016-04-13T08:42:22.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="概念">概念</h2><p>Grand Central Dispatch (GCD) 是异步执行任务的技术之一。开发者只需要定义想执行的任务并追加到适当的 Dispatch Queue 中，GCD 就能生成必要的线程并计划执行任务。由于线程管理是作为系统的一部分来实现的，因此可统一管理，也可执行任务，这样就比以前的线程更有效率。</p>
+<p>以下摘自苹果的官方文档：</p>
+<blockquote>
+<p>Grand Central Dispatch (GCD) comprises language features, runtime libraries, and system enhancements that provide systemic, comprehensive improvements to the support for concurrent code execution on multicore hardware in iOS and OS X.</p>
+<p>The BSD subsystem, CoreFoundation, and Cocoa APIs have all been extended to use these enhancements to help both the system and your application to run faster, more efficiently, and with improved responsiveness. </p>
+</blockquote>
+<p>一句话总结就是：<strong>GCD 用我们难以置信的非常简洁的记述方法，实现了极为复杂繁琐的多线程编程，可以说这是一项划时代的技术。</strong></p>
+<hr>
+<h2 id="多线程编程">多线程编程</h2><p>在讲多线程之前，首先来复习下相关概念：</p>
+<ul>
+<li><p><strong>进程</strong>：一个具有一定独立功能的程序关于某个数据集合的一次运行活动，进程是系统进行资源分配和调度的一个独立单位，可以理解成一个运行中的应用程序。</p>
+</li>
+<li><p><strong>线程</strong>：进程的一个实体，是 CPU 调度和分派的基本单位。线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源(如程序计数器,一组寄存器和栈)，但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。</p>
+</li>
+<li><p><strong>上下文切换（Context Switch）</strong>：当一个进程中有多个线程来回切换时，Context Switch 用来记录执行状态，这样的进程和一般的多线程进程没有太大差别，但会产生一些额外的开销。</p>
+</li>
+</ul>
+<p>由于使用多线程的程序可以在某个线程和其他线程之间反复多次进行上下文切换，因此看上去就好像 1 个 CPU 核能够并列地执行多个线程一样。而且在具有多个 CPU 核的情况下，就不是「看上去像」了，而是真的提供了多个 CPU 核并行执行多个线程的技术。</p>
+<p>这种利用多线程编程的技术就被称为「多线程编程」。</p>
+<h3 id="多线程编程的问题">多线程编程的问题</h3><p>但是，多线程编程实际上是一种易发生各种问题的编程技术。比如多个线程更新相同的资源会导致数据的不一致（数据竞争）、停止等待事件的线程会导致多个线程相互持续等待（死锁）、使用太多线程会消耗大量内存等。如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-001.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-002.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-003.png" alt=""></p>
+<h3 id="多线程编程的优点">多线程编程的优点</h3><p>尽管极易发生各种问题，也应当使用多线程编程。这是为什么呢？因为使用多线程编程可以保证应用程序的响应性能。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-004.png" alt=""></p>
+<p>使用多线程编程，在执行长时间的处理时仍可保证用户界面的响应性能。</p>
+<p>GCD 大大简化了偏于复杂的多线程编程的实现。接下来我们就来看下 GCD 的 API。</p>
+<hr>
+<h2 id="GCD_的_API">GCD 的 API</h2><p>关于 GCD 相关 API 的详细讲解与使用案例，可以直接参见官方文档或者其他博客，本文仅对我在学习 GCD 过程中觉得难以理解的知识点进行简单总结。</p>
+<h3 id="Dispatch_Queue">Dispatch Queue</h3><p>首先回顾一下苹果官方对 GCD 的说明：<strong>开发者要做的只是定义想执行的任务并追加到适当的 Dispatch Queue 中。</strong></p>
+<p>那么「Dispatch Queue」是什么呢？</p>
+<p>如其名称所示，是执行处理的等待队列。应用程序编程人员通过 dispatch_async 函数等 API，在 Block 语法中记述想执行的处理并将其追加到 Dispatch Queue 中。<strong>Dispatch Queue</strong> 按照追加的顺序（先进先出 FIFO，First-In-First-Out）执行处理。</p>
+<p>GCD 提供两种 Dispatch Queue:</p>
+<table>
+<thead>
+<tr>
+<th>Dispatch Queue 的种类</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Serial Dispatch Queue</td>
+<td style="text-align:center">等待现在执行中处理结束</td>
+<td style="text-align:center">多个线程更新相同资源导致数据竞争时 </td>
+</tr>
+<tr>
+<td>Concurrent Dispatch Queue</td>
+<td style="text-align:center">不等待现在执行中处理结束</td>
+<td style="text-align:center">并行执行不发生数据竞争等问题的处理时</td>
+</tr>
+</tbody>
+</table>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-005.png" alt=""></p>
+<h3 id="dispatch_queue_create/dispatch_retain/dispatch_release">dispatch_queue_create/dispatch_retain/dispatch_release</h3><p>Dispatch Queue 也像 Objective-C 的引用计数式内存管理一样，需要通过 dispatch_retain 函数和 dispatch_release 函数的引用计数来管理内存。</p>
+<p><strong>如果你部署的最低目标低于 iOS 6.0 or Mac OS X 10.8</strong></p>
+<ul>
+<li>你应该自己管理 GCD 对象,使用 dispatch_retain/dispatch_release</li>
+</ul>
+<p><strong>如果你部署的最低目标是 iOS 6.0 or Mac OS X 10.8 或者更高</strong></p>
+<ul>
+<li>ARC 已经能够管理 GCD 对象了，这时候 GCD 对象就如同普通的 OC 对象一样，不用再 dispatch_retain/dispatch_release  </li>
+</ul>
+<h3 id="Main_Dispatch_Queue/Global_Dispatch_Queue">Main Dispatch Queue/Global Dispatch Queue</h3><p>实际上不用特意生成 Dispatch Queue 系统也会给我们提供几个，那就是 Main Dispatch Queue 和 Global Dispatch Queue：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th style="text-align:center">Dispatch Queue 的种类</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main Dispatch Queue</td>
+<td style="text-align:center">Serial Dispatch Queue</td>
+<td style="text-align:center">主线程执行</td>
+</tr>
+<tr>
+<td>Global Dispatch Queue（High Priority）</td>
+<td style="text-align:center">Concurrent Dispatch Queue</td>
+<td style="text-align:center">执行优先级：高（最高优先）</td>
+</tr>
+<tr>
+<td>Global Dispatch Queue（Default Priority）</td>
+<td style="text-align:center">Concurrent Dispatch Queue</td>
+<td style="text-align:center">执行优先级：默认</td>
+</tr>
+<tr>
+<td>Global Dispatch Queue（Low Priority）</td>
+<td style="text-align:center">Concurrent Dispatch Queue</td>
+<td style="text-align:center">执行优先级：低</td>
+</tr>
+<tr>
+<td>Global Dispatch Queue（Background Priority）</td>
+<td style="text-align:center">Concurrent Dispatch Queue</td>
+<td style="text-align:center">执行优先级：后台</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dispatch_set_target_queue">dispatch_set_target_queue</h3><p>将 Dispatch Queue 指定为 dispatch_set_target_queue 函数的参数，不仅可以变更 Dispatch Queue 的执行优先级。还可以作成 Dispatch Queue 的执行阶层。如果在多个 Serial Dispatch Queue 中用 dispatch_set_target_queue 函数指定目标为某一个 Serial Dispatch Queue，那么原先本应并行执行的多个 Serial Dispatch Queue，在目标 Serial Dispatch Queue 上只能同时执行一个处理。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-006.png" alt=""></p>
+<p>在必须将可不并行执行的处理追加到多个 Serial Dispatch Queue 中时，如果使用 dispatch_set_target_queue 函数将目标指定为某一个 Serial Dispatch Queue，即可防止处理并行执行。</p>
+<h3 id="dispatch_barrier_async">dispatch_barrier_async</h3><p>dispatch_barrier_async 函数会等待追加到 Concurrent Dispatch Queue 上的并行执行的处理全部结束后，再将指定的处理追加到该 Concurrent Dispatch Queue 中。然后在由 dispatch_barrier_async 函数追加的处理执行完毕后，Concurrent Dispatch Queue 才恢复为一般的动作，追加到该 Concurrent Dispatch Queue 的处理又开始并行执行。</p>
+<p>使用方法非常简单，如图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-007.png" alt=""></p>
+<h3 id="Dispatch_Semaphore">Dispatch Semaphore</h3><p>Dispatch Semaphore 是持有计数的信号，该计数是多线程编程中的计数类型信号。所谓信号，类似于过马路时常用的手旗。可以通过时举起手旗，不可通过时放下手旗。而 Dispatch Semaphore 中，使用计数来实现该功能。</p>
+<p>信号量的具体做法是：当信号计数大于 0 时，每条进来的线程使计数减 1，直到变为 0，变为 0 后其他的线程将进不来，处于等待状态；执行完任务的线程释放信号，使计数加 1，如此循环下去。</p>
+<hr>
+<h2 id="要点">要点</h2><ol>
+<li><p>多个 Serial Dispatch Queue 可并行执行，但生成过线程，就会消耗大量内存，引起大量的上下文切换，大幅度降低系统的响应性能</p>
+</li>
+<li><p>dispatch_afer 函数并不是在指定时间后执行处理，而只是在指定时间追加处理到 Dispatch Queue</p>
+</li>
+<li><p>无论向什么样的 Dispatch Queue 中追加处理，使用 Dispatch Group 都可监视这些处理执行的结束。一旦监测到所有处理执行结束，就可将结束的处理追加到 Dispatch Queue 中。这就是使用 Dispatch Group 的原因</p>
+</li>
+<li><p>关于 dispatch_sync，不得不提<strong>死锁</strong>，详情可参见：<a href="http://www.saitjr.com/ios/ios-gcd-deadlock.html" target="_blank" rel="external">GCD死锁</a> </p>
+</li>
+<li><p>Serial Dispatch Queue 与 Concurrent Dispatch Queue 都是遵循 FIFO 原则</p>
+</li>
+<li><p>dispatch_once 方法用 <code>dispatch_once_t</code> 来测试 Block 是否被执行过了。如果执行过了，那么就不在执行，<code>dispatch_once_t</code> 必须是全局或 static 变量</p>
+</li>
+<li><p>dispatch_create 函数生成的 Dispatch Queue 不管是 Serial Dispatch Queue 还是 Concurrent Dispatch Queue，都使用与默认优先级 Global Dispatch Queue 相同执行优先级的线程</p>
+</li>
+<li><p>并发与并行的区别：<a href="https://www.zhihu.com/question/33515481" target="_blank" rel="external">https://www.zhihu.com/question/33515481</a></p>
+</li>
+</ol>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">Grand Central Dispatch (GCD) Reference</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。</p>]]>
+    
+    </summary>
+    
+      <category term="GCD" scheme="http://itangqi.me/tags/GCD/"/>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[《Objective-C 高级编程》读书笔记之 Blocks]]></title>
+    <link href="http://itangqi.me/2016/03/13/the-notes-of-learning-of-blocks/"/>
+    <id>http://itangqi.me/2016/03/13/the-notes-of-learning-of-blocks/</id>
+    <published>2016-03-12T16:00:00.000Z</published>
+    <updated>2016-04-13T09:34:10.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>本文作为《Objective-C 高级编程》读书笔记的第二篇，给大家带来的是关于 Blocks 的知识点总结。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="概念">概念</h2><p>Blocks 是 C 语言的扩充功能，可以用一句话来表示 Blocks 的扩充功能：带有自动变量（局部变量）的匿名函数。（Blocks 是闭包在 OC 语言中的实现，并不是 iOS 独有的概念，在 C++、Java 等语言也有实现闭包，只是名称不同而已）</p>
+<hr>
+<h2 id="优势">优势</h2><ol>
+<li><p>可代替 Delegate 完成回调，而不需要像 Delegate 那样繁琐</p>
+</li>
+<li><p>在某些方面，可代替 selector（如 NSNotificationCenter 在 addObserver 的时候，可以使用 block，而不用单独定义方法）</p>
+</li>
+<li><p>延长对象的生命周期（Block 会自动持有对象）</p>
+</li>
+<li><p>提高代码的复用性和可读性</p>
+</li>
+<li><p>常用于：View 动画、GCD、网络异步请求</p>
+</li>
+</ol>
+<hr>
+<h2 id="语法">语法</h2><p>关于 Blocks 的语法，看下面一张图就可以啦：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/How%20Do%20I%20Declare%20A%20Block%20in%20Objective%20C%20.png" alt=""></p>
+<hr>
+<h2 id="Blocks_的实现">Blocks 的实现</h2><h3 id="Blocks_的数据结构">Blocks 的数据结构</h3><p><img src="http://www.galloway.me.uk/media/images/2013-05-26-a-look-inside-blocks-episode-3-block-copy/block_layout.png" alt=""></p>
+<p>对应的结构体定义如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> Block_descriptor &#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> reserved;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">int</span> size;</span><br><span class="line">    <span class="keyword">void</span> (*<span class="keyword">copy</span>)(<span class="keyword">void</span> *dst, <span class="keyword">void</span> *src);</span><br><span class="line">    <span class="keyword">void</span> (*dispose)(<span class="keyword">void</span> *);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> Block_layout &#123;</span><br><span class="line">    <span class="keyword">void</span> *isa;</span><br><span class="line">    <span class="keyword">int</span> flags;</span><br><span class="line">    <span class="keyword">int</span> reserved;</span><br><span class="line">    <span class="keyword">void</span> (*invoke)(<span class="keyword">void</span> *, ...);</span><br><span class="line">    <span class="keyword">struct</span> Block_descriptor *descriptor;</span><br><span class="line">    <span class="comment">/* Imported variables. */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>通过该图，我们可以知道，一个 Block 实例实际上由 6 部分构成：</p>
+<ol>
+<li><p><strong>isa 指针</strong>: 所有对象都有该指针，用于实现对象相关的功能</p>
+</li>
+<li><p><strong>flags</strong>: 用于按 bit 位表示一些 block 的附加信息，本文后面介绍 block copy 的实现代码可以看到对该变量的使用；</p>
+</li>
+<li><p><strong>reserved</strong>: 保留变量；</p>
+</li>
+<li><p><strong>invoke</strong>: 函数指针，指向具体的 block 实现的函数调用地址；</p>
+</li>
+<li><p><strong>descriptor</strong>: 表示该 block 的附加描述信息，主要是 size 大小，以及 copy 和 dispose 函数的指针；</p>
+</li>
+<li><p><strong>variables</strong>: capture 过来的变量，block 能够访问它外部的局部变量，就是因为将这些变量（或变量的地址）复制到了结构体中；</p>
+</li>
+</ol>
+<hr>
+<h2 id="Block_存储域">Block 存储域</h2><h3 id="Objective-C_中的_Stack_和_Heap">Objective-C 中的 Stack 和 Heap</h3><p>首先所有的 Objective-C 对象都是分配在 Heap 的。 在 OC 最典型的内存分配与初始化就是这样的：</p>
+<pre><code>NSObject *obj = <span class="comment">[<span class="comment">[NSObject alloc]</span> init]</span>;
+</code></pre><p>一个对象在 alloc 的时候，就在 Heap 分配了内存空间。</p>
+<p>Stack 对象通常有速度的优势，而且不会发生内存泄露问题。那么为什么 OC 的对象都是分配在 Heap 的呢？ 原因在于：</p>
+<ul>
+<li><p>Stack 对象的生命周期所导致的问题。例如一旦函数返回，则所在的 Stack Frame（栈帧）就会被销毁。那么此时返回的对象也会一并销毁。这个时候我们去 retain 这个对象是无效的。因为整个 Stack Frame 都已经被销毁了。简单而言，就是 Stack 对象的生命周期不适合 OC 的引用计数内存管理方法。</p>
+</li>
+<li><p>Stack 对象不够灵活，不具备足够的扩展性。创建时长度已经是固定的,而stack对象的拥有者也就是所在的 Stack Frame</p>
+</li>
+</ul>
+<h3 id="Block_类型">Block 类型</h3><p>应用程序的内存分配：</p>
+<p><img src="http://blogofzuoyebuluo.qiniudn.com/image_note57603_2.png" alt=""></p>
+<p>在 OC 中，一共有 3 种类型的 Block：</p>
+<h4 id="_NSConcreteGlobalBlock">_NSConcreteGlobalBlock</h4><p>_NSConcreteGlobalBlock：全局的静态 Block，不会访问任何外部变量。</p>
+<p><img src="http://blogofzuoyebuluo.qiniudn.com/image_note57603_3.png" alt=""></p>
+<h4 id="_NSConcreteStackBlock">_NSConcreteStackBlock</h4><p>_NSConcreteStackBlock：保存在栈中的 Block，当函数返回时会被销毁。（ARC 中系统实现了自动 copy, 将创建在栈上的 Block 自动拷贝到堆上，所以不存在此类型的 Block）</p>
+<h4 id="_NSConcreteMallocBlock">_NSConcreteMallocBlock</h4><p>_NSConcreteMallocBlock：保存在堆中的 Block，当引用计数为 0 时会被销毁。（即成为正常的 OC 对象）</p>
+<p><img src="http://blogofzuoyebuluo.qiniudn.com/image_note57603_4.png" alt=""></p>
+<hr>
+<h2 id="Block_循环引用">Block 循环引用</h2><p>如果在 Block 中使用附有 __strong 修饰符的对象类型自动变量，那么当 Block 从栈复制到堆时，该对象为 Block 所持有，于是便导致了循环引用的产生。</p>
+<p>如图所示：self 持有 Block，Block 持有 self，这正是循环引用。</p>
+<p><img src="http://blogofzuoyebuluo.qiniudn.com/image_note58470_2.png" alt=""></p>
+<h3 id="MRC">MRC</h3><p>在 MRC 下，使用 __block 说明符来避免 Block 中的循环引用。</p>
+<p>这是由于当 Block 从栈复制到堆时，若 Block 使用的变量为附有 <strong>block 说明符的 id 类型或对象类型的自动变量，不会被 retain；若 Block 使用的变量为没有 </strong>block 说明符的 id 类型或对象类型的自动变量，则被 retain；若 Block 使用的变量为没有 __block 说明符的 id 类型或对象类型的自动变量，则被 retain。</p>
+<h3 id="ARC">ARC</h3><p>在 ARC 下，为了避免这种情况发生，可以在变量声明时用 <strong>weak 修饰符修饰变量 self，让 block 不强引用 self，从而破除循环。iOS4 和 Snow Leopard 由于对 weak 的支持不够完全，可以用 </strong>unsafe_unretained 代替。</p>
+<p>使用 Block 成员变量避免循环引用：</p>
+<p><img src="http://blogofzuoyebuluo.qiniudn.com/image_note58470_3.png" alt=""></p>
+<h3 id="比较">比较</h3><p>下面对使用 <strong>block 变量避免循环引用的方法和使用 </strong>weak 修饰符及 __unsafe_unretained 修饰符避免循环引用的方法做个比较。</p>
+<h4 id="使用___block_变量的优点如下：">使用 __block 变量的优点如下：</h4><ul>
+<li>通过 <code>__block</code> 变量可控制对象的持有期间</li>
+<li><p>在不能使用 <code>__weak</code> 修饰符的环境中不使用 <code>__unsafe_unretained</code> 修饰符即可（不必担心<a href="https://en.wikipedia.org/wiki/Dangling_pointer" target="_blank" rel="external">悬垂指针</a>）</p>
+<p>  在执行 Block 时可动态地决定是否将 nil 或其他对象赋值在 <code>__block</code> 变量中。</p>
+</li>
+</ul>
+<h4 id="使用___block_变量的缺点如下：">使用 __block 变量的缺点如下：</h4><ul>
+<li><p>为避免循环引用必须执行 Block</p>
+<p>  存在执行了 Block 语法，却不执行 Block 的路径时，无法避免循环引用。若由于 Block 引发了循环引用时，根据 Block 的用途选择使用 <code>__block</code> 变量、<code>__weak</code> 修饰符或 <code>__unsafe_unretained</code> 修饰符来避免循环引用。</p>
+</li>
+</ul>
+<hr>
+<h2 id="要点">要点</h2><ol>
+<li><p>Block 执行的代码其实在编译的时候就已经准备好了</p>
+</li>
+<li><p>本身 Block 就是一个普通的 OC 对象。正因为它是对象，Block 可以被作为参数传递，可以作为返回值从一个方法返回，可以用来给变量赋值</p>
+</li>
+<li><p>__block 修饰符在 MRC 下不会进行引用计数加 1，而 ARC 下则会加 1</p>
+</li>
+<li><p>对于 Block 外的变量引用，Block 默认是将其复制到其数据结构中来实现访问的</p>
+</li>
+<li><p>对于用 __block 修饰的外部变量引用，Block 是复制其引用地址来实现访问的</p>
+</li>
+</ol>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html" target="_blank" rel="external">Working with Blocks</a></li>
+<li><a href="http://goshdarnblocksyntax.com/" target="_blank" rel="external">How Do I Declare A Block in Objective-C?</a></li>
+<li><a href="http://blog.devtang.com/2013/07/28/a-look-inside-blocks/" target="_blank" rel="external">谈Objective-C block的实现</a></li>
+<li><a href="https://github.com/100mango/zen/blob/master/Objective-C%20%E6%8B%BE%E9%81%97%EF%BC%9A%E4%BB%8EHeap%20and%20Stack%E5%88%B0Block%20/Objective-C%20%E6%8B%BE%E9%81%97%EF%BC%9A%E4%BB%8EHeap%20and%20Stack%E5%88%B0Block%20.md" target="_blank" rel="external">Objective-C 拾遗：从Heap and Stack到Block</a></li>
+<li><a href="https://www.zybuluo.com/MicroCai/note/51116" target="_blank" rel="external">block没那么难（一）：block的实现</a></li>
+<li><a href="http://tanqisen.github.io/blog/2013/04/19/gcd-block-cycle-retain/" target="_blank" rel="external">正确使用Block避免Cycle Retain和Crash</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>本文作为《Objective-C 高级编程》读书笔记的第二篇，给大家带来的是关于 Blocks 的知识点总结。</p>]]>
+    
+    </summary>
+    
+      <category term="Blocks" scheme="http://itangqi.me/tags/Blocks/"/>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[《Objective-C 高级编程》读书笔记之 ARC]]></title>
+    <link href="http://itangqi.me/2016/03/10/the-notes-of-learning-of-arc/"/>
+    <id>http://itangqi.me/2016/03/10/the-notes-of-learning-of-arc/</id>
+    <published>2016-03-09T16:00:00.000Z</published>
+    <updated>2016-04-13T09:36:30.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>本文作为《Objective-C 高级编程》读书笔记的第一篇，给大家带来的是关于 ARC（Automatic Reference Counting）自动引用计数的知识点总结。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="概念">概念</h2><p>顾名思义，ARC（Automatic Reference Counting）— 自动引用计数，是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方文档：</p>
+<blockquote>
+<p>Automatic Reference Counting (ARC) is a compiler feature that provides automatic memory management of Objective-C objects. Rather than having to think about retain and release operations, ARC allows you to concentrate on the interesting code, the object graphs, and the relationships between objects in your application.</p>
+</blockquote>
+<p>一句话总结就是：<strong>在 LLVM 编译器中设置 ARC 为有效状态，就无需再次键入 retain 或者是 release 代码。</strong></p>
+<hr>
+<h2 id="MRC">MRC</h2><p>在介绍 ARC 之前，不得不提 MRC (MannulReference Counting) — 手动引用计数，即指内存管理中对引用采取手动计数的技术。</p>
+<h3 id="引用计数">引用计数</h3><p>我们需要知道 Objective-C 采用的是引用计数式的内存管理方式，这一方式的特点是：</p>
+<ol>
+<li><p>自己生成的对象自己持有。比如：NSObject * __strong object = [NSObject alloc] init];</p>
+</li>
+<li><p>非自己生成的对象，自己也能持有。比如：NSMutableArray * __strong array = [NSMutableArray array];</p>
+</li>
+<li><p>不再需要自己持有的对象时释放</p>
+</li>
+<li><p>非自己持有的对象自己无法释放</p>
+</li>
+</ol>
+<p>具体可参见下表：</p>
+<table>
+<thead>
+<tr>
+<th>对象操作</th>
+<th style="text-align:center">OC 中对应的方法</th>
+<th style="text-align:center">对应的 retainCount 变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生成并持有对象</td>
+<td style="text-align:center">alloc/new/copy/mutableCopy等</td>
+<td style="text-align:center">+1</td>
+</tr>
+<tr>
+<td>持有对象</td>
+<td style="text-align:center">retain</td>
+<td style="text-align:center">+1</td>
+</tr>
+<tr>
+<td>释放对象</td>
+<td style="text-align:center">release</td>
+<td style="text-align:center">-1</td>
+</tr>
+<tr>
+<td>废弃对象</td>
+<td style="text-align:center">dealloc</td>
+<td style="text-align:center">-</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意：</strong>这些有关 OC 内存管理的方法，实际上不包括在该语言中，而是包含再 Cocoa 框架中用于 OS X、iOS 应用开发。Cocoa 框架中 Foundation 框架类库的 NSObject 类担负内存管理的职责。Objective-C 内存管理中的 alloc/retain/release/dealloc 方法分别指代 NSObject 类的 alloc 类方法、retain 实例方法、release 实例方法和 dealloc 实例方法。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-05.jpeg" alt="">(<a href="http://www.ituring.com.cn/minibook/745" target="_blank" rel="external">图片来自</a>)</p>
+<h3 id="alloc/retain/release/dealloc实现">alloc/retain/release/dealloc实现</h3><p>苹果的实现大概就是采用散列表（引用计数表）来管理引用计数，如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-06.jpeg" alt="">(<a href="http://www.ituring.com.cn/minibook/745" target="_blank" rel="external">图片来自</a>)</p>
+<p>通过引用计数表管理引用计数的好处如下：</p>
+<ol>
+<li>对用内存块的分配无需考虑内存块头部</li>
+<li>引用计数表各记录中存有内存块地址，可从各个记录追溯到各对象的内存块</li>
+</ol>
+<p>这里特别要说的是，第二条这一特性在调试时有着举足轻重的作用。即使出现故障导致对象占用的内存块损坏，但只要引用计数表没有被破坏，就能够确认各内存块的位置，如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-07.jpeg" alt="">(<a href="http://www.ituring.com.cn/minibook/745" target="_blank" rel="external">图片来自</a>)</p>
+<p>另外，在利用工具检测内存泄漏时，引用计数表的各记录也有助于检测各对象的持有者是否存在。</p>
+<hr>
+<h2 id="ARC">ARC</h2><p>当当当~~~今天的主角登场啦！！！</p>
+<p>实际上<strong>引用计数式内存管理</strong>的本质部分在 ARC 中并没有改变。就像<strong>自动引用计数</strong>这个名称表示的那样，ARC 只是自动地帮助我们处理<strong>引用计数</strong>的相关部分。</p>
+<h3 id="所有权修饰符">所有权修饰符</h3><p>Objective-C 编程中为了处理对象，可将变量类型定义为 id 类型或各种对象类型。</p>
+<p>所谓对象类型就是指向 NSObject 这样的 Objective-C 类的指针，例如 NSObject <em> 。id 类型用于隐藏对象类型的类名部分，相当于 C 语言中常用的 void </em> 。</p>
+<p>ARC 有效时，id 类型和对象类型同 C 语言其他类型不同，其类型上必须附加所有权修饰符。所有权修饰符一共有 4 种：</p>
+<ul>
+<li><code>__strong</code></li>
+<li><code>__weak</code></li>
+<li><code>__unsafe_unretained</code></li>
+<li><code>__autoreleasing</code></li>
+</ul>
+<p>说到变量所有权修饰符，有人可能会跟属性修饰符搞混，这里做一个对照关系小结：</p>
+<ul>
+<li><code>assign</code> 对应的所有权类型是 <code>__unsafe_unretained</code></li>
+<li><code>copy</code> 对应的所有权类型是 <code>__strong</code></li>
+<li><code>retain</code> 对应的所有权类型是 <code>__strong</code></li>
+<li><code>strong</code> 对应的所有权类型是 <code>__strong</code></li>
+<li><code>unsafe_unretained</code> 对应的所有权类型是 <code>__unsafe_unretained</code></li>
+<li><code>weak</code> 对应的所有权类型是 <code>__weak</code></li>
+</ul>
+<p>以上除了 <code>weak</code> 外，其他的属性修饰符在 MRC 模式下也是有效的。</p>
+<p>另外，<code>__strong</code>、<code>__weak</code>、<code>__autoreleasing</code> 修饰的自动变量会自动初始化为 nil。</p>
+<h4 id="__strong_修饰符">__strong 修饰符</h4><p><code>__strong</code> 表示强引用，对应定义 property 时用到的 <code>strong</code>。当对象没有任何一个强引用指向它时，它才会被释放。如果在声明引用时不加修饰符，那么引用将默认是强引用。当需要释放强引用指向的对象时，需要保证所有指向对象强引用置为 nil。<code>__strong</code> 修饰符是 id 类型和对象类型默认的所有权修饰符。</p>
+<h4 id="__weak_修饰符">__weak 修饰符</h4><p><code>__weak</code> 表示弱引用，对应定义 property 时用到的 <code>weak</code>。弱引用不会影响对象的释放，而当对象被释放时，所有指向它的弱引用都会自定被置为 nil，这样可以防止野指针。<code>__weak</code> 最常见的一个作用就是用来避免强引用循环。但是需要注意的是，<code>__weak</code> 修饰符只能用于 iOS 5 以上的版本，在 iOS 4 及更低的版本中使用 <code>__unsafe_unretained</code> 修饰符来代替。</p>
+<h5 id="循环引用">循环引用</h5><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-02.001.jpeg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-03.png" alt=""></p>
+<h5 id="__weak_实现">__weak 实现</h5><p>关于 runtime 如何实现 weak 属性，可参见：<a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%88%E4%B8%8A%EF%BC%89.md#8-runtime-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0-weak-%E5%B1%9E%E6%80%A7" target="_blank" rel="external">《招聘一个靠谱的 iOS》</a> 中的解答。</p>
+<h4 id="__unsafe_unretained_修饰符">__unsafe_unretained 修饰符</h4><p>ARC 是在 iOS 5 引入的，而 <code>__unsafe_unretained</code> 这个修饰符主要是为了在 ARC 刚发布时兼容 iOS 4 以及版本更低的系统，因为这些版本没有弱引用机制。这个修饰符在定义 property 时对应的是  <code>unsafe_unretained</code>。<code>__unsafe_unretained</code> 修饰的指针纯粹只是指向对象，没有任何额外的操作，不会去持有对象使得对象的 retainCount + 1。而在指向的对象被释放时依然原原本本地指向原来的对象地址，不会被自动置为 nil，所以成为了野指针，非常不安全。</p>
+<h4 id="__autoreleasing_修饰符">__autoreleasing 修饰符</h4><p>在 ARC 模式下，我们不能显示的使用 <code>autorelease</code> 方法了，但是 <code>autorelease</code> 的机制还是有效的，通过将对象赋给 <code>__autoreleasing</code> 修饰的变量就能达到在 MRC 模式下调用对象的 <code>autorelease</code> 方法同样的效果。</p>
+<p>也就是说可以理解为，在 ARC 有效时，用 @autoreleasepool 块替代 NSAutoreleasePool 类，用附有 <code>__autoreleasing</code> 修饰符的变量替代 <code>autorelease</code> 方法，如图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-04.001.png" alt=""></p>
+<p>在 ARC 模式下，显式的使用 <code>__autoreleasing</code> 的场景很少见，但是 autorelease 的机制却依然在很多地方默默起着作用。我们来看看这些场景：</p>
+<ol>
+<li>方法返回值</li>
+<li>访问 __weak 修饰的变量</li>
+<li>id 的指针或对象的指针(id *)</li>
+</ol>
+<p>关于使用场景的具体讲解，感兴趣的同学可以自学搜索。</p>
+<h5 id="Autorelease_Pool">Autorelease Pool</h5><p>在 ARC 下，我们并不需要手动调用 autorelease 有关的方法，甚至可以完全不知道 autorelease 的存在，就可以正确管理好内存。因为 Cocoa Touch 的 Runloop 中，每个 runloop circle 中系统都自动加入了 Autorelease Pool 的创建和释放。</p>
+<p>Autorelase Pool 提供了一种可以允许你向一个对象延迟发送 <code>release</code> 消息的机制。当你想放弃一个对象的所有权，同时又不希望这个对象立即被释放掉（例如在一个方法中返回一个对象时），Autorelease Pool 的作用就显现出来了。</p>
+<p>所谓的延迟发送 <code>release</code> 消息指的是，当我们把一个对象标记为 <code>autorelease</code> 时:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span>* str = [[[<span class="built_in">NSString</span> alloc] initWithString:<span class="string">@"hello"</span>] autorelease];</span><br></pre></td></tr></table></figure>
+<p>这个对象的 retainCount 会 + 1，但是并不会发生 release。当这段语句所处的 autoreleasepool 进行 drain 操作时，所有标记了 <code>autorelease</code> 的对象的 retainCount 会被 - 1。即 <code>release</code> 消息的发送被延迟到 pool 释放的时候了。</p>
+<p>在 ARC 环境下，苹果引入了 <code>@autoreleasepool</code> 语法，不再需要手动调用 <code>autorelease</code> 和 <code>drain</code> 等方法。</p>
+<h3 id="规则">规则</h3><p>在 ARC 有效的情况下编译源代码，必须遵守一定的规则。下面就是具体的 ARC 的规则：</p>
+<ol>
+<li><p>不能显式使用 retain/release/retainCount/autorelease</p>
+</li>
+<li><p>不能使用 NSAllocateObject/NSDeallocateObject</p>
+</li>
+<li><p>需要遵守内存管理的方法命名规则。在 ARC 模式和 MRC 模式下，以 alloc/new/copy/mutableCopy 开头的方法在返回对象时都必须返回给调用方所应当持有的对象。在 ARC 模式下，追加一条：以 init 开头的方法必须是实例方法并且必须要返回对象。返回的对象应为 id 类型或声明该方法的类的对象类型，或是该类的超类型或子类型。该返回的对象并不注册到 Autorelease Pool 中，基本上只是对 alloc 方法返回值的对象进行初始化处理并返回该对象。需要注意的是：- (void)initialize; 方法虽然是以 init 开头但是并不包含在上述规则中</p>
+</li>
+<li><p>不要显式调用 dealloc</p>
+</li>
+<li><p>使用 @autoreleasepool 块替代 NSAutoreleasePool</p>
+</li>
+<li><p>不能使用区域（NSZone）</p>
+</li>
+<li><p>对象型变量不能作为 C 语言结构体（struct/union）的成员</p>
+</li>
+<li><p>显式转换 id 和 void *</p>
+</li>
+</ol>
+<h3 id="Toll-Free_Bridge">Toll-Free Bridge</h3><blockquote>
+<p>There are a number of data types in the Core Foundation framework and the Foundation framework that can be used interchangeably. This capability, called toll-free bridging, means that you can use the same data type as the parameter to a Core Foundation function call or as the receiver of an Objective-C message. For example, NSLocale (see NSLocale Class Reference) is interchangeable with its Core Foundation counterpart, CFLocale (see CFLocale Reference). Therefore, in a method where you see an NSLocale * parameter, you can pass a CFLocaleRef, and in a function where you see a CFLocaleRef parameter, you can pass an NSLocale instance. You cast one type to the other to suppress compiler warnings, as illustrated in the following example.</p>
+</blockquote>
+<p>Toll-Free Briding 保证了在程序中，可以方便和谐的使用 Core Foundation 类型的对象和 Objective-C 类型的对象。</p>
+<p>在 MRC 时代，由于 Objective-C 类型的对象和 Core Foundation 类型的对象都是相同的 release 和 retain 操作规则，所以 Toll-Free Bridging 的使用比较简单，但是自从切换到 ARC 后，Objective-C 类型的对象内存管理规则改变了，而 Core Foundation 依然是之前的机制，换句话说，Core Foundation 不支持 ARC。</p>
+<p>这个时候就必须要要考虑一个问题了，在做 Core Foundation 与 Objective-C 类型转换的时候，用哪一种规则来管理对象的内存。显然，对于同一个对象，我们不能够同时用两种规则来管理，所以这里就必须要确定一件事情：哪些对象用 Objective-C（也就是 ARC）的规则，哪些对象用 Core Foundation 的规则（也就是 MRC）的规则。或者说要确定对象类型转换了之后，内存管理的 ownership 的改变。于是苹果在引入 ARC 之后对 Toll-Free Bridging 的操作也加入了对应的方法与修饰符，用来指明用哪种规则管理内存，或者说是内存管理权的归属。这些方法和修饰符分别是：</p>
+<ul>
+<li>__bridge（修饰符）</li>
+<li>__bridge_retained（修饰符） or CFBridgingRetain（函数）</li>
+<li>__bridge_transfer（修饰符） or CFBridgingRelease（函数）</li>
+</ul>
+<p>本文关于 Toll-Free Bridge 不做过多介绍，感兴趣的同学可以参见：<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html" target="_blank" rel="external">Toll-Free Bridge</a></p>
+<hr>
+<h2 id="要点">要点</h2><ol>
+<li><p>ARC 是编译器提供的机制，而不是 GC (Garbage Collection) 这种运行时提供的机制</p>
+</li>
+<li><p>autorelease 实例方法的本质就是调用 NSAutoreleasePool 对象的 addObject 类方法</p>
+</li>
+</ol>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html" target="_blank" rel="external">Objective-C Automatic Reference Counting (ARC)</a></li>
+<li><a href="https://developer.apple.com/library/ios/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html" target="_blank" rel="external">Transitioning to ARC Release Notes</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html#//apple_ref/doc/uid/10000011-SW1" target="_blank" rel="external">Advanced Memory Management Programming Guide</a></li>
+<li><a href="http://www.samirchen.com/ios-arc/" target="_blank" rel="external">iOS ARC 内存管理要点</a></li>
+<li><a href="https://hit-alibaba.github.io/interview/iOS/ObjC-Basic/MM.html" target="_blank" rel="external">Objective-C 中的内存分配</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>本文作为《Objective-C 高级编程》读书笔记的第一篇，给大家带来的是关于 ARC（Automatic Reference Counting）自动引用计数的知识点总结。</p>]]>
+    
+    </summary>
+    
+      <category term="ARC" scheme="http://itangqi.me/tags/ARC/"/>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[聊一聊 UITableView（三）]]></title>
     <link href="http://itangqi.me/2016/02/27/the-notes-of-learning-of-uitableview-three/"/>
     <id>http://itangqi.me/2016/02/27/the-notes-of-learning-of-uitableview-three/</id>
     <published>2016-02-26T16:00:00.000Z</published>
-    <updated>2016-03-07T07:00:37.000Z</updated>
+    <updated>2016-04-06T10:57:31.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
 <p>在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。</p>
 </blockquote>
@@ -70,13 +610,11 @@
 <h4 id="5-_尽量减少不必要的透明_View">5. 尽量减少不必要的透明 View</h4><p>透明图层对渲染性能会有一定的影响，系统必须将透明图层与下面的视图混合起来计算颜色，并绘制出来。减少透明图层并使用不透明的图层来替代它们，可以极大地提高渲染速度。</p>
 <h4 id="6-_优化touch事件传递">6. 优化touch事件传递</h4><p>把不需要接受 touch 的 view 的 <code>userInteractionEnabled</code> 设为 0 </p>
 <h4 id="7-_其他">7. 其他</h4><ul>
-<li>尽量避免渐变效果、图片拉伸和离屏渲染。</li>
-<li>如果 Cell 展示的内容来自网络，确保用异步加载的方式来获取数据，并且缓存服务器的 response。</li>
-<li>使用 shadowPath 来设置阴影效果。</li>
-<li>尽量减少 subview 的数量，对于 subview 较多并且样式多变的 Cell，可以考虑用异步绘制或重写 drawRect。</li>
-<li>尽量优化 - [UITableView tableView:cellForRowAtIndexPath:] 方法中的处理逻辑，如果确实要做一些处理，可以考虑做一次，缓存结果。</li>
-<li>选择合适的数据结构来承载数据，不同的数据结构对不同操作的开销是存在差异的。</li>
-<li>对于 rowHeight、sectionFooterHeight、sectionHeaderHeight 尽量使用常量。</li>
+<li>选择合适的数据结构来承载数据，不同的数据结构对不同操作的开销是存在差异的；</li>
+<li>如果 Cell 展示的内容来自网络，确保用异步加载的方式来获取数据，并且进行缓存，滚出可视范围的载入进程要 Cancel 掉；</li>
+<li>尽量减少 subview 的数量，减少渲染工作；</li>
+<li>异步获取数据：</li>
+<li>启用 GZIP 数据压缩；</li>
 </ul>
 <hr>
 <h2 id="写在最后">写在最后</h2><blockquote>
@@ -1383,29 +1921,6 @@
       <category term="Workflows" scheme="http://itangqi.me/tags/Workflows/"/>
     
       <category term="Mac" scheme="http://itangqi.me/categories/Mac/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[一切才刚刚开始]]></title>
-    <link href="http://itangqi.me/2015/01/01/everything-is-just-beginning/"/>
-    <id>http://itangqi.me/2015/01/01/everything-is-just-beginning/</id>
-    <published>2014-12-31T16:00:00.000Z</published>
-    <updated>2016-02-25T05:43:37.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="In_a_word">In a word</h2><blockquote>
-<p>Talk is cheap. Show me the code.</p>
-</blockquote>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="In_a_word">In a word</h2><blockquote>
-<p>Talk is cheap. Show me the code.</p>
-</blockquote>
-]]>
-    </summary>
-    
-      <category term="Goal" scheme="http://itangqi.me/tags/Goal/"/>
-    
-      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
     
   </entry>
   

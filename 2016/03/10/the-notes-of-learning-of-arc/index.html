@@ -1,0 +1,1070 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="ARC,Notes,iOS," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="前言本文作为《Objective-C 高级编程》读书笔记的第一篇，给大家带来的是关于 ARC（Automatic Reference Counting）自动引用计数的知识点总结。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Objective-C 高级编程》读书笔记之 ARC">
+<meta property="og:url" content="http://itangqi.me/2016/03/10/the-notes-of-learning-of-arc/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言本文作为《Objective-C 高级编程》读书笔记的第一篇，给大家带来的是关于 ARC（Automatic Reference Counting）自动引用计数的知识点总结。">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-05.jpeg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-06.jpeg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-07.jpeg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-02.001.jpeg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-03.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-04.001.png">
+<meta property="og:updated_time" content="2016-04-13T09:36:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《Objective-C 高级编程》读书笔记之 ARC">
+<meta name="twitter:description" content="前言本文作为《Objective-C 高级编程》读书笔记的第一篇，给大家带来的是关于 ARC（Automatic Reference Counting）自动引用计数的知识点总结。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 《Objective-C 高级编程》读书笔记之 ARC | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                《Objective-C 高级编程》读书笔记之 ARC
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-10T00:00:00+08:00" content="2016-03-10">
+              2016-03-10
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/03/10/the-notes-of-learning-of-arc/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/10/the-notes-of-learning-of-arc/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><p>本文作为《Objective-C 高级编程》读书笔记的第一篇，给大家带来的是关于 ARC（Automatic Reference Counting）自动引用计数的知识点总结。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="概念">概念</h2><p>顾名思义，ARC（Automatic Reference Counting）— 自动引用计数，是指内存管理中对引用采取自动计数的技术。以下摘自苹果的官方文档：</p>
+<blockquote>
+<p>Automatic Reference Counting (ARC) is a compiler feature that provides automatic memory management of Objective-C objects. Rather than having to think about retain and release operations, ARC allows you to concentrate on the interesting code, the object graphs, and the relationships between objects in your application.</p>
+</blockquote>
+<p>一句话总结就是：<strong>在 LLVM 编译器中设置 ARC 为有效状态，就无需再次键入 retain 或者是 release 代码。</strong></p>
+<hr>
+<h2 id="MRC">MRC</h2><p>在介绍 ARC 之前，不得不提 MRC (MannulReference Counting) — 手动引用计数，即指内存管理中对引用采取手动计数的技术。</p>
+<h3 id="引用计数">引用计数</h3><p>我们需要知道 Objective-C 采用的是引用计数式的内存管理方式，这一方式的特点是：</p>
+<ol>
+<li><p>自己生成的对象自己持有。比如：NSObject * __strong object = [NSObject alloc] init];</p>
+</li>
+<li><p>非自己生成的对象，自己也能持有。比如：NSMutableArray * __strong array = [NSMutableArray array];</p>
+</li>
+<li><p>不再需要自己持有的对象时释放</p>
+</li>
+<li><p>非自己持有的对象自己无法释放</p>
+</li>
+</ol>
+<p>具体可参见下表：</p>
+<table>
+<thead>
+<tr>
+<th>对象操作</th>
+<th style="text-align:center">OC 中对应的方法</th>
+<th style="text-align:center">对应的 retainCount 变化</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>生成并持有对象</td>
+<td style="text-align:center">alloc/new/copy/mutableCopy等</td>
+<td style="text-align:center">+1</td>
+</tr>
+<tr>
+<td>持有对象</td>
+<td style="text-align:center">retain</td>
+<td style="text-align:center">+1</td>
+</tr>
+<tr>
+<td>释放对象</td>
+<td style="text-align:center">release</td>
+<td style="text-align:center">-1</td>
+</tr>
+<tr>
+<td>废弃对象</td>
+<td style="text-align:center">dealloc</td>
+<td style="text-align:center">-</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意：</strong>这些有关 OC 内存管理的方法，实际上不包括在该语言中，而是包含再 Cocoa 框架中用于 OS X、iOS 应用开发。Cocoa 框架中 Foundation 框架类库的 NSObject 类担负内存管理的职责。Objective-C 内存管理中的 alloc/retain/release/dealloc 方法分别指代 NSObject 类的 alloc 类方法、retain 实例方法、release 实例方法和 dealloc 实例方法。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-05.jpeg" alt="">(<a href="http://www.ituring.com.cn/minibook/745" target="_blank" rel="external">图片来自</a>)</p>
+<h3 id="alloc/retain/release/dealloc实现">alloc/retain/release/dealloc实现</h3><p>苹果的实现大概就是采用散列表（引用计数表）来管理引用计数，如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-06.jpeg" alt="">(<a href="http://www.ituring.com.cn/minibook/745" target="_blank" rel="external">图片来自</a>)</p>
+<p>通过引用计数表管理引用计数的好处如下：</p>
+<ol>
+<li>对用内存块的分配无需考虑内存块头部</li>
+<li>引用计数表各记录中存有内存块地址，可从各个记录追溯到各对象的内存块</li>
+</ol>
+<p>这里特别要说的是，第二条这一特性在调试时有着举足轻重的作用。即使出现故障导致对象占用的内存块损坏，但只要引用计数表没有被破坏，就能够确认各内存块的位置，如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-07.jpeg" alt="">(<a href="http://www.ituring.com.cn/minibook/745" target="_blank" rel="external">图片来自</a>)</p>
+<p>另外，在利用工具检测内存泄漏时，引用计数表的各记录也有助于检测各对象的持有者是否存在。</p>
+<hr>
+<h2 id="ARC">ARC</h2><p>当当当~~~今天的主角登场啦！！！</p>
+<p>实际上<strong>引用计数式内存管理</strong>的本质部分在 ARC 中并没有改变。就像<strong>自动引用计数</strong>这个名称表示的那样，ARC 只是自动地帮助我们处理<strong>引用计数</strong>的相关部分。</p>
+<h3 id="所有权修饰符">所有权修饰符</h3><p>Objective-C 编程中为了处理对象，可将变量类型定义为 id 类型或各种对象类型。</p>
+<p>所谓对象类型就是指向 NSObject 这样的 Objective-C 类的指针，例如 NSObject <em> 。id 类型用于隐藏对象类型的类名部分，相当于 C 语言中常用的 void </em> 。</p>
+<p>ARC 有效时，id 类型和对象类型同 C 语言其他类型不同，其类型上必须附加所有权修饰符。所有权修饰符一共有 4 种：</p>
+<ul>
+<li><code>__strong</code></li>
+<li><code>__weak</code></li>
+<li><code>__unsafe_unretained</code></li>
+<li><code>__autoreleasing</code></li>
+</ul>
+<p>说到变量所有权修饰符，有人可能会跟属性修饰符搞混，这里做一个对照关系小结：</p>
+<ul>
+<li><code>assign</code> 对应的所有权类型是 <code>__unsafe_unretained</code></li>
+<li><code>copy</code> 对应的所有权类型是 <code>__strong</code></li>
+<li><code>retain</code> 对应的所有权类型是 <code>__strong</code></li>
+<li><code>strong</code> 对应的所有权类型是 <code>__strong</code></li>
+<li><code>unsafe_unretained</code> 对应的所有权类型是 <code>__unsafe_unretained</code></li>
+<li><code>weak</code> 对应的所有权类型是 <code>__weak</code></li>
+</ul>
+<p>以上除了 <code>weak</code> 外，其他的属性修饰符在 MRC 模式下也是有效的。</p>
+<p>另外，<code>__strong</code>、<code>__weak</code>、<code>__autoreleasing</code> 修饰的自动变量会自动初始化为 nil。</p>
+<h4 id="__strong_修饰符">__strong 修饰符</h4><p><code>__strong</code> 表示强引用，对应定义 property 时用到的 <code>strong</code>。当对象没有任何一个强引用指向它时，它才会被释放。如果在声明引用时不加修饰符，那么引用将默认是强引用。当需要释放强引用指向的对象时，需要保证所有指向对象强引用置为 nil。<code>__strong</code> 修饰符是 id 类型和对象类型默认的所有权修饰符。</p>
+<h4 id="__weak_修饰符">__weak 修饰符</h4><p><code>__weak</code> 表示弱引用，对应定义 property 时用到的 <code>weak</code>。弱引用不会影响对象的释放，而当对象被释放时，所有指向它的弱引用都会自定被置为 nil，这样可以防止野指针。<code>__weak</code> 最常见的一个作用就是用来避免强引用循环。但是需要注意的是，<code>__weak</code> 修饰符只能用于 iOS 5 以上的版本，在 iOS 4 及更低的版本中使用 <code>__unsafe_unretained</code> 修饰符来代替。</p>
+<h5 id="循环引用">循环引用</h5><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-02.001.jpeg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-03.png" alt=""></p>
+<h5 id="__weak_实现">__weak 实现</h5><p>关于 runtime 如何实现 weak 属性，可参见：<a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%88%E4%B8%8A%EF%BC%89.md#8-runtime-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0-weak-%E5%B1%9E%E6%80%A7" target="_blank" rel="external">《招聘一个靠谱的 iOS》</a> 中的解答。</p>
+<h4 id="__unsafe_unretained_修饰符">__unsafe_unretained 修饰符</h4><p>ARC 是在 iOS 5 引入的，而 <code>__unsafe_unretained</code> 这个修饰符主要是为了在 ARC 刚发布时兼容 iOS 4 以及版本更低的系统，因为这些版本没有弱引用机制。这个修饰符在定义 property 时对应的是  <code>unsafe_unretained</code>。<code>__unsafe_unretained</code> 修饰的指针纯粹只是指向对象，没有任何额外的操作，不会去持有对象使得对象的 retainCount + 1。而在指向的对象被释放时依然原原本本地指向原来的对象地址，不会被自动置为 nil，所以成为了野指针，非常不安全。</p>
+<h4 id="__autoreleasing_修饰符">__autoreleasing 修饰符</h4><p>在 ARC 模式下，我们不能显示的使用 <code>autorelease</code> 方法了，但是 <code>autorelease</code> 的机制还是有效的，通过将对象赋给 <code>__autoreleasing</code> 修饰的变量就能达到在 MRC 模式下调用对象的 <code>autorelease</code> 方法同样的效果。</p>
+<p>也就是说可以理解为，在 ARC 有效时，用 @autoreleasepool 块替代 NSAutoreleasePool 类，用附有 <code>__autoreleasing</code> 修饰符的变量替代 <code>autorelease</code> 方法，如图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-arc-04.001.png" alt=""></p>
+<p>在 ARC 模式下，显式的使用 <code>__autoreleasing</code> 的场景很少见，但是 autorelease 的机制却依然在很多地方默默起着作用。我们来看看这些场景：</p>
+<ol>
+<li>方法返回值</li>
+<li>访问 __weak 修饰的变量</li>
+<li>id 的指针或对象的指针(id *)</li>
+</ol>
+<p>关于使用场景的具体讲解，感兴趣的同学可以自学搜索。</p>
+<h5 id="Autorelease_Pool">Autorelease Pool</h5><p>在 ARC 下，我们并不需要手动调用 autorelease 有关的方法，甚至可以完全不知道 autorelease 的存在，就可以正确管理好内存。因为 Cocoa Touch 的 Runloop 中，每个 runloop circle 中系统都自动加入了 Autorelease Pool 的创建和释放。</p>
+<p>Autorelase Pool 提供了一种可以允许你向一个对象延迟发送 <code>release</code> 消息的机制。当你想放弃一个对象的所有权，同时又不希望这个对象立即被释放掉（例如在一个方法中返回一个对象时），Autorelease Pool 的作用就显现出来了。</p>
+<p>所谓的延迟发送 <code>release</code> 消息指的是，当我们把一个对象标记为 <code>autorelease</code> 时:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span>* str = [[[<span class="built_in">NSString</span> alloc] initWithString:<span class="string">@"hello"</span>] autorelease];</span><br></pre></td></tr></table></figure>
+<p>这个对象的 retainCount 会 + 1，但是并不会发生 release。当这段语句所处的 autoreleasepool 进行 drain 操作时，所有标记了 <code>autorelease</code> 的对象的 retainCount 会被 - 1。即 <code>release</code> 消息的发送被延迟到 pool 释放的时候了。</p>
+<p>在 ARC 环境下，苹果引入了 <code>@autoreleasepool</code> 语法，不再需要手动调用 <code>autorelease</code> 和 <code>drain</code> 等方法。</p>
+<h3 id="规则">规则</h3><p>在 ARC 有效的情况下编译源代码，必须遵守一定的规则。下面就是具体的 ARC 的规则：</p>
+<ol>
+<li><p>不能显式使用 retain/release/retainCount/autorelease</p>
+</li>
+<li><p>不能使用 NSAllocateObject/NSDeallocateObject</p>
+</li>
+<li><p>需要遵守内存管理的方法命名规则。在 ARC 模式和 MRC 模式下，以 alloc/new/copy/mutableCopy 开头的方法在返回对象时都必须返回给调用方所应当持有的对象。在 ARC 模式下，追加一条：以 init 开头的方法必须是实例方法并且必须要返回对象。返回的对象应为 id 类型或声明该方法的类的对象类型，或是该类的超类型或子类型。该返回的对象并不注册到 Autorelease Pool 中，基本上只是对 alloc 方法返回值的对象进行初始化处理并返回该对象。需要注意的是：- (void)initialize; 方法虽然是以 init 开头但是并不包含在上述规则中</p>
+</li>
+<li><p>不要显式调用 dealloc</p>
+</li>
+<li><p>使用 @autoreleasepool 块替代 NSAutoreleasePool</p>
+</li>
+<li><p>不能使用区域（NSZone）</p>
+</li>
+<li><p>对象型变量不能作为 C 语言结构体（struct/union）的成员</p>
+</li>
+<li><p>显式转换 id 和 void *</p>
+</li>
+</ol>
+<h3 id="Toll-Free_Bridge">Toll-Free Bridge</h3><blockquote>
+<p>There are a number of data types in the Core Foundation framework and the Foundation framework that can be used interchangeably. This capability, called toll-free bridging, means that you can use the same data type as the parameter to a Core Foundation function call or as the receiver of an Objective-C message. For example, NSLocale (see NSLocale Class Reference) is interchangeable with its Core Foundation counterpart, CFLocale (see CFLocale Reference). Therefore, in a method where you see an NSLocale * parameter, you can pass a CFLocaleRef, and in a function where you see a CFLocaleRef parameter, you can pass an NSLocale instance. You cast one type to the other to suppress compiler warnings, as illustrated in the following example.</p>
+</blockquote>
+<p>Toll-Free Briding 保证了在程序中，可以方便和谐的使用 Core Foundation 类型的对象和 Objective-C 类型的对象。</p>
+<p>在 MRC 时代，由于 Objective-C 类型的对象和 Core Foundation 类型的对象都是相同的 release 和 retain 操作规则，所以 Toll-Free Bridging 的使用比较简单，但是自从切换到 ARC 后，Objective-C 类型的对象内存管理规则改变了，而 Core Foundation 依然是之前的机制，换句话说，Core Foundation 不支持 ARC。</p>
+<p>这个时候就必须要要考虑一个问题了，在做 Core Foundation 与 Objective-C 类型转换的时候，用哪一种规则来管理对象的内存。显然，对于同一个对象，我们不能够同时用两种规则来管理，所以这里就必须要确定一件事情：哪些对象用 Objective-C（也就是 ARC）的规则，哪些对象用 Core Foundation 的规则（也就是 MRC）的规则。或者说要确定对象类型转换了之后，内存管理的 ownership 的改变。于是苹果在引入 ARC 之后对 Toll-Free Bridging 的操作也加入了对应的方法与修饰符，用来指明用哪种规则管理内存，或者说是内存管理权的归属。这些方法和修饰符分别是：</p>
+<ul>
+<li>__bridge（修饰符）</li>
+<li>__bridge_retained（修饰符） or CFBridgingRetain（函数）</li>
+<li>__bridge_transfer（修饰符） or CFBridgingRelease（函数）</li>
+</ul>
+<p>本文关于 Toll-Free Bridge 不做过多介绍，感兴趣的同学可以参见：<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaEncyclopedia/Toll-FreeBridgin/Toll-FreeBridgin.html" target="_blank" rel="external">Toll-Free Bridge</a></p>
+<hr>
+<h2 id="要点">要点</h2><ol>
+<li><p>ARC 是编译器提供的机制，而不是 GC (Garbage Collection) 这种运行时提供的机制</p>
+</li>
+<li><p>autorelease 实例方法的本质就是调用 NSAutoreleasePool 对象的 addObject 类方法</p>
+</li>
+</ol>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="http://clang.llvm.org/docs/AutomaticReferenceCounting.html" target="_blank" rel="external">Objective-C Automatic Reference Counting (ARC)</a></li>
+<li><a href="https://developer.apple.com/library/ios/releasenotes/ObjectiveC/RN-TransitioningToARC/Introduction/Introduction.html" target="_blank" rel="external">Transitioning to ARC Release Notes</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/MemoryMgmt.html#//apple_ref/doc/uid/10000011-SW1" target="_blank" rel="external">Advanced Memory Management Programming Guide</a></li>
+<li><a href="http://www.samirchen.com/ios-arc/" target="_blank" rel="external">iOS ARC 内存管理要点</a></li>
+<li><a href="https://hit-alibaba.github.io/interview/iOS/ObjC-Basic/MM.html" target="_blank" rel="external">Objective-C 中的内存分配</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ARC/" rel="tag">#ARC</a>
+          
+            <a href="/tags/Notes/" rel="tag">#Notes</a>
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/27/the-notes-of-learning-of-uitableview-three/" rel="next" title="聊一聊 UITableView（三）">
+                <i class="fa fa-chevron-left"></i> 聊一聊 UITableView（三）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/13/the-notes-of-learning-of-blocks/" rel="prev" title="《Objective-C 高级编程》读书笔记之 Blocks">
+                《Objective-C 高级编程》读书笔记之 Blocks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾的走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 知乎
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 豆瓣
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">小伙伴们</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://tikitoo.me/" target="_blank">安卓同学</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://lovinghuan.com/" target="_blank">poberWong</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.zhaiyifan.cn/" target="_blank">MarkZhai</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://yifeiyuan.me/" target="_blank">程序亦非猿</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://abner-nimengbo.cn/" target="_blank">阿布</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.easydone.cn/" target="_blank">Ailurus</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://wuxiaolong.me/" target="_blank">吴小龙同學</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://drakeet.me/" target="_blank">Drakeet</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.fangjie.info/" target="_blank">方杰</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://hujiaweibujidao.github.io/" target="_blank">五道口宅男</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://gudong.name/" target="_blank">咕咚</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://soledad.me/" target="_blank">蔡越</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MRC"><span class="nav-number">3.</span> <span class="nav-text">MRC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引用计数"><span class="nav-number">3.1.</span> <span class="nav-text">引用计数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alloc/retain/release/dealloc实现"><span class="nav-number">3.2.</span> <span class="nav-text">alloc/retain/release/dealloc实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARC"><span class="nav-number">4.</span> <span class="nav-text">ARC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#所有权修饰符"><span class="nav-number">4.1.</span> <span class="nav-text">所有权修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#__strong_修饰符"><span class="nav-number">4.1.1.</span> <span class="nav-text">__strong 修饰符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#__weak_修饰符"><span class="nav-number">4.1.2.</span> <span class="nav-text">__weak 修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#循环引用"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">循环引用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#__weak_实现"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">__weak 实现</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#__unsafe_unretained_修饰符"><span class="nav-number">4.1.3.</span> <span class="nav-text">__unsafe_unretained 修饰符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#__autoreleasing_修饰符"><span class="nav-number">4.1.4.</span> <span class="nav-text">__autoreleasing 修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Autorelease_Pool"><span class="nav-number">4.1.4.1.</span> <span class="nav-text">Autorelease Pool</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#规则"><span class="nav-number">4.2.</span> <span class="nav-text">规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Toll-Free_Bridge"><span class="nav-number">4.3.</span> <span class="nav-text">Toll-Free Bridge</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点"><span class="nav-number">5.</span> <span class="nav-text">要点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2016/03/10/the-notes-of-learning-of-arc/';
+      var disqus_title = '《Objective-C 高级编程》读书笔记之 ARC';
+      var disqus_url = 'http://itangqi.me/2016/03/10/the-notes-of-learning-of-arc/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>
