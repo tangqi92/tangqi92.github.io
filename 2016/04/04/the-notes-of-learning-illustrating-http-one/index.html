@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="GCD,Notes,iOS," />
+  <meta name="keywords" content="HTTP,Notes," />
 
 
 
@@ -59,23 +59,32 @@
 
 
 
-<meta name="description" content="前言本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。">
+<meta name="description" content="前言由于最近一段时间在找实习，所以陆陆续续面试了几家公司，可结果都跪了….
+总结失败的原因有很多，如果要进行个排名的话，网络一定能进前三。每每被面试官问到网络相关知识的时候，我都是一脸懵逼样，支支吾吾说不出个所以然。
+现在想想，做移动端也有些日子了，可网络知识这块居然只知胜少，究其原因就是自己不求上进，直到找工作的时候被现实打脸了才恍然醒悟。于是，痛定思痛，决定恶补下网络知识，一番 Google">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《Objective-C 高级编程》读书笔记之 GCD">
-<meta property="og:url" content="http://itangqi.me/2016/03/15/the-notes-of-learning-of-gcd/index.html">
+<meta property="og:title" content="《图解 HTTP》读书笔记（一）">
+<meta property="og:url" content="http://itangqi.me/2016/04/04/the-notes-of-learning-illustrating-http-one/index.html">
 <meta property="og:site_name" content="Qi Tang's Blog">
-<meta property="og:description" content="前言本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-001.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-002.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-003.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-004.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-005.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-006.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-007.png">
-<meta property="og:updated_time" content="2016-04-13T08:42:22.000Z">
+<meta property="og:description" content="前言由于最近一段时间在找实习，所以陆陆续续面试了几家公司，可结果都跪了….
+总结失败的原因有很多，如果要进行个排名的话，网络一定能进前三。每每被面试官问到网络相关知识的时候，我都是一脸懵逼样，支支吾吾说不出个所以然。
+现在想想，做移动端也有些日子了，可网络知识这块居然只知胜少，究其原因就是自己不求上进，直到找工作的时候被现实打脸了才恍然醒悟。于是，痛定思痛，决定恶补下网络知识，一番 Google">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-1.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-1.3.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-1.3.2.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-1.4.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-1.4.2.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-1.6.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-2.1.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-2.1.2.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-3.1.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-3.1.2.jpg">
+<meta property="og:updated_time" content="2016-04-19T08:59:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《Objective-C 高级编程》读书笔记之 GCD">
-<meta name="twitter:description" content="前言本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。">
+<meta name="twitter:title" content="《图解 HTTP》读书笔记（一）">
+<meta name="twitter:description" content="前言由于最近一段时间在找实习，所以陆陆续续面试了几家公司，可结果都跪了….
+总结失败的原因有很多，如果要进行个排名的话，网络一定能进前三。每每被面试官问到网络相关知识的时候，我都是一脸懵逼样，支支吾吾说不出个所以然。
+现在想想，做移动端也有些日子了，可网络知识这块居然只知胜少，究其原因就是自己不求上进，直到找工作的时候被现实打脸了才恍然醒悟。于是，痛定思痛，决定恶补下网络知识，一番 Google">
 
 
 
@@ -93,7 +102,7 @@
   };
 </script>
 
-  <title> 《Objective-C 高级编程》读书笔记之 GCD | Qi Tang's Blog </title>
+  <title> 《图解 HTTP》读书笔记（一） | Qi Tang's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +279,7 @@
             
             
               
-                《Objective-C 高级编程》读书笔记之 GCD
+                《图解 HTTP》读书笔记（一）
               
             
           </h1>
@@ -282,8 +291,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-15T00:00:00+08:00" content="2016-03-15">
-              2016-03-15
+            <time itemprop="dateCreated" datetime="2016-04-04T00:00:00+08:00" content="2016-04-04">
+              2016-04-04
             </time>
           </span>
 
@@ -296,8 +305,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
                   </a>
                 </span>
 
@@ -312,8 +321,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/15/the-notes-of-learning-of-gcd/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/15/the-notes-of-learning-of-gcd/" itemprop="commentsCount"></span>
+                <a href="/2016/04/04/the-notes-of-learning-illustrating-http-one/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/04/the-notes-of-learning-illustrating-http-one/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -334,139 +343,187 @@
       
 
       
-        <h2 id="前言">前言</h2><p>本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。</p>
+        <h2 id="前言">前言</h2><p>由于最近一段时间在找实习，所以陆陆续续面试了几家公司，可结果都跪了….</p>
+<p>总结失败的原因有很多，如果要进行个排名的话，<strong>网络</strong>一定能进前三。每每被面试官问到网络相关知识的时候，我都是一脸懵逼样，支支吾吾说不出个所以然。</p>
+<p>现在想想，做移动端也有些日子了，可网络知识这块居然只知胜少，究其原因就是自己不求上进，直到找工作的时候被现实打脸了才恍然醒悟。于是，痛定思痛，决定恶补下网络知识，一番 Google 后，决定以《图解 HTTP》作为入门书籍。当然好记性不如烂笔头，读书笔记是少不了的。</p>
 <a id="more"></a> 
 <hr>
-<h2 id="概念">概念</h2><p>Grand Central Dispatch (GCD) 是异步执行任务的技术之一。开发者只需要定义想执行的任务并追加到适当的 Dispatch Queue 中，GCD 就能生成必要的线程并计划执行任务。由于线程管理是作为系统的一部分来实现的，因此可统一管理，也可执行任务，这样就比以前的线程更有效率。</p>
-<p>以下摘自苹果的官方文档：</p>
-<blockquote>
-<p>Grand Central Dispatch (GCD) comprises language features, runtime libraries, and system enhancements that provide systemic, comprehensive improvements to the support for concurrent code execution on multicore hardware in iOS and OS X.</p>
-<p>The BSD subsystem, CoreFoundation, and Cocoa APIs have all been extended to use these enhancements to help both the system and your application to run faster, more efficiently, and with improved responsiveness. </p>
-</blockquote>
-<p>一句话总结就是：<strong>GCD 用我们难以置信的非常简洁的记述方法，实现了极为复杂繁琐的多线程编程，可以说这是一项划时代的技术。</strong></p>
-<hr>
-<h2 id="多线程编程">多线程编程</h2><p>在讲多线程之前，首先来复习下相关概念：</p>
+<h2 id="第_1_章_了解_Web_及网络基础">第 1 章 了解 Web 及网络基础</h2><h3 id="1-1_使用_HTTP_协议访问_Web">1.1  使用 HTTP 协议访问 Web</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.1.jpg" alt=""></p>
+<h4 id="1-1-1_从输入_URL_到页面加载完成的过程中都发生了什么事情？">1.1.1 从输入 URL 到页面加载完成的过程中都发生了什么事情？</h4><ol>
+<li>在浏览器里输入网址</li>
+<li>浏览器查找域名的 IP 地址</li>
+<li>浏览器给 Web 服务器发送一个 HTTP 请求</li>
+<li>Facebook 服务的永久重定向响应</li>
+<li>浏览器跟踪重定向地址</li>
+<li>服务器「处理」请求</li>
+<li>服务器发回一个 HTML 响应</li>
+<li>浏览器开始显示HTML</li>
+<li>浏览器发送获取嵌入在 HTML 中的对象</li>
+<li>浏览器发送异步（AJAX）请求</li>
+</ol>
+<p>详情参见：</p>
 <ul>
-<li><p><strong>进程</strong>：一个具有一定独立功能的程序关于某个数据集合的一次运行活动，进程是系统进行资源分配和调度的一个独立单位，可以理解成一个运行中的应用程序。</p>
+<li><a href="https://github.com/skyline75489/what-happens-when-zh_CN" target="_blank" rel="external">当···时发生了什么？</a></li>
+<li><a href="http://fex.baidu.com/blog/2014/05/what-happen/" target="_blank" rel="external">从输入 URL 到页面加载完成的过程中都发生了什么事情？</a></li>
+<li><a href="https://www.zhihu.com/question/34873227" target="_blank" rel="external">当在浏览器地址栏输入一个URL后回车，将会发生的事情？</a></li>
+</ul>
+<h3 id="1-2_HTTP_历史">1.2  HTTP 历史</h3><h4 id="1-2-1_HTTP_1-0_vs_HTTP_1-1">1.2.1  HTTP 1.0 vs HTTP 1.1</h4><ol>
+<li>可扩展性</li>
+<li>缓存</li>
+<li>带宽优化</li>
+<li>长连接</li>
+<li>消息传递</li>
+<li>Host 头域</li>
+<li>错误提示</li>
+<li>内容协商</li>
+</ol>
+<p>详情参见：</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/246859/http-1-0-vs-1-1" target="_blank" rel="external">HTTP 1.0 vs 1.1</a></li>
+<li><a href="http://blog.csdn.net/forgotaboutgirl/article/details/6936982" target="_blank" rel="external">HTTP/1.1与HTTP/1.0的区别</a></li>
+</ul>
+<h4 id="1-2-2_HTTP_2-0">1.2.2  HTTP 2.0</h4><ol>
+<li>二进制分帧</li>
+<li>首部压缩</li>
+<li>多路复用</li>
+<li>并行双向字节流的请求和响应</li>
+<li>请求优先级</li>
+<li>服务器推送</li>
+</ol>
+<p>详情参见：</p>
+<ul>
+<li><a href="https://www.zhihu.com/question/34074946" target="_blank" rel="external">HTTP/2.0 相比1.0有哪些重大改进？</a></li>
+<li><a href="http://www.alloyteam.com/2015/03/http2-0-di-qi-miao-ri-chang/" target="_blank" rel="external">HTTP 2.0 的奇妙日常</a></li>
+</ul>
+<h3 id="1-3_网络基础_TCP/IP">1.3  网络基础 TCP/IP</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.3.jpg" alt=""></p>
+<p>图：TCP/IP 是互联网相关的各类协议族的总称</p>
+<h4 id="1-3-1_TCP/IP_的分层管理">1.3.1 TCP/IP 的分层管理</h4><ul>
+<li><p>应用层：决定了向用户提供应用服务时通信的活动</p>
 </li>
-<li><p><strong>线程</strong>：进程的一个实体，是 CPU 调度和分派的基本单位。线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源(如程序计数器,一组寄存器和栈)，但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。</p>
+<li><p>传输层：对上层应用层，提供处于网络连接中的两台计算机之间的数据传输</p>
 </li>
-<li><p><strong>上下文切换（Context Switch）</strong>：当一个进程中有多个线程来回切换时，Context Switch 用来记录执行状态，这样的进程和一般的多线程进程没有太大差别，但会产生一些额外的开销。</p>
+<li><p>网络层（又名网络互连层）：用来处理在网络上流动的数据包</p>
+</li>
+<li><p>链路层（又名数据链路层，网络接口层）：用来处理连接网络的硬件部分</p>
 </li>
 </ul>
-<p>由于使用多线程的程序可以在某个线程和其他线程之间反复多次进行上下文切换，因此看上去就好像 1 个 CPU 核能够并列地执行多个线程一样。而且在具有多个 CPU 核的情况下，就不是「看上去像」了，而是真的提供了多个 CPU 核并行执行多个线程的技术。</p>
-<p>这种利用多线程编程的技术就被称为「多线程编程」。</p>
-<h3 id="多线程编程的问题">多线程编程的问题</h3><p>但是，多线程编程实际上是一种易发生各种问题的编程技术。比如多个线程更新相同的资源会导致数据的不一致（数据竞争）、停止等待事件的线程会导致多个线程相互持续等待（死锁）、使用太多线程会消耗大量内存等。如下图所示：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-001.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-002.png" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-003.png" alt=""></p>
-<h3 id="多线程编程的优点">多线程编程的优点</h3><p>尽管极易发生各种问题，也应当使用多线程编程。这是为什么呢？因为使用多线程编程可以保证应用程序的响应性能。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-004.png" alt=""></p>
-<p>使用多线程编程，在执行长时间的处理时仍可保证用户界面的响应性能。</p>
-<p>GCD 大大简化了偏于复杂的多线程编程的实现。接下来我们就来看下 GCD 的 API。</p>
-<hr>
-<h2 id="GCD_的_API">GCD 的 API</h2><p>关于 GCD 相关 API 的详细讲解与使用案例，可以直接参见官方文档或者其他博客，本文仅对我在学习 GCD 过程中觉得难以理解的知识点进行简单总结。</p>
-<h3 id="Dispatch_Queue">Dispatch Queue</h3><p>首先回顾一下苹果官方对 GCD 的说明：<strong>开发者要做的只是定义想执行的任务并追加到适当的 Dispatch Queue 中。</strong></p>
-<p>那么「Dispatch Queue」是什么呢？</p>
-<p>如其名称所示，是执行处理的等待队列。应用程序编程人员通过 dispatch_async 函数等 API，在 Block 语法中记述想执行的处理并将其追加到 Dispatch Queue 中。<strong>Dispatch Queue</strong> 按照追加的顺序（先进先出 FIFO，First-In-First-Out）执行处理。</p>
-<p>GCD 提供两种 Dispatch Queue:</p>
-<table>
-<thead>
-<tr>
-<th>Dispatch Queue 的种类</th>
-<th style="text-align:center">说明</th>
-<th style="text-align:center">使用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Serial Dispatch Queue</td>
-<td style="text-align:center">等待现在执行中处理结束</td>
-<td style="text-align:center">多个线程更新相同资源导致数据竞争时 </td>
-</tr>
-<tr>
-<td>Concurrent Dispatch Queue</td>
-<td style="text-align:center">不等待现在执行中处理结束</td>
-<td style="text-align:center">并行执行不发生数据竞争等问题的处理时</td>
-</tr>
-</tbody>
-</table>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-005.png" alt=""></p>
-<h3 id="dispatch_queue_create/dispatch_retain/dispatch_release">dispatch_queue_create/dispatch_retain/dispatch_release</h3><p>Dispatch Queue 也像 Objective-C 的引用计数式内存管理一样，需要通过 dispatch_retain 函数和 dispatch_release 函数的引用计数来管理内存。</p>
-<p><strong>如果你部署的最低目标低于 iOS 6.0 or Mac OS X 10.8</strong></p>
-<ul>
-<li>你应该自己管理 GCD 对象,使用 dispatch_retain/dispatch_release</li>
-</ul>
-<p><strong>如果你部署的最低目标是 iOS 6.0 or Mac OS X 10.8 或者更高</strong></p>
-<ul>
-<li>ARC 已经能够管理 GCD 对象了，这时候 GCD 对象就如同普通的 OC 对象一样，不用再 dispatch_retain/dispatch_release  </li>
-</ul>
-<h3 id="Main_Dispatch_Queue/Global_Dispatch_Queue">Main Dispatch Queue/Global Dispatch Queue</h3><p>实际上不用特意生成 Dispatch Queue 系统也会给我们提供几个，那就是 Main Dispatch Queue 和 Global Dispatch Queue：</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th style="text-align:center">Dispatch Queue 的种类</th>
-<th style="text-align:center">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Main Dispatch Queue</td>
-<td style="text-align:center">Serial Dispatch Queue</td>
-<td style="text-align:center">主线程执行</td>
-</tr>
-<tr>
-<td>Global Dispatch Queue（High Priority）</td>
-<td style="text-align:center">Concurrent Dispatch Queue</td>
-<td style="text-align:center">执行优先级：高（最高优先）</td>
-</tr>
-<tr>
-<td>Global Dispatch Queue（Default Priority）</td>
-<td style="text-align:center">Concurrent Dispatch Queue</td>
-<td style="text-align:center">执行优先级：默认</td>
-</tr>
-<tr>
-<td>Global Dispatch Queue（Low Priority）</td>
-<td style="text-align:center">Concurrent Dispatch Queue</td>
-<td style="text-align:center">执行优先级：低</td>
-</tr>
-<tr>
-<td>Global Dispatch Queue（Background Priority）</td>
-<td style="text-align:center">Concurrent Dispatch Queue</td>
-<td style="text-align:center">执行优先级：后台</td>
-</tr>
-</tbody>
-</table>
-<h3 id="dispatch_set_target_queue">dispatch_set_target_queue</h3><p>将 Dispatch Queue 指定为 dispatch_set_target_queue 函数的参数，不仅可以变更 Dispatch Queue 的执行优先级。还可以作成 Dispatch Queue 的执行阶层。如果在多个 Serial Dispatch Queue 中用 dispatch_set_target_queue 函数指定目标为某一个 Serial Dispatch Queue，那么原先本应并行执行的多个 Serial Dispatch Queue，在目标 Serial Dispatch Queue 上只能同时执行一个处理。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-006.png" alt=""></p>
-<p>在必须将可不并行执行的处理追加到多个 Serial Dispatch Queue 中时，如果使用 dispatch_set_target_queue 函数将目标指定为某一个 Serial Dispatch Queue，即可防止处理并行执行。</p>
-<h3 id="dispatch_barrier_async">dispatch_barrier_async</h3><p>dispatch_barrier_async 函数会等待追加到 Concurrent Dispatch Queue 上的并行执行的处理全部结束后，再将指定的处理追加到该 Concurrent Dispatch Queue 中。然后在由 dispatch_barrier_async 函数追加的处理执行完毕后，Concurrent Dispatch Queue 才恢复为一般的动作，追加到该 Concurrent Dispatch Queue 的处理又开始并行执行。</p>
-<p>使用方法非常简单，如图所示：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-gcd-007.png" alt=""></p>
-<h3 id="Dispatch_Semaphore">Dispatch Semaphore</h3><p>Dispatch Semaphore 是持有计数的信号，该计数是多线程编程中的计数类型信号。所谓信号，类似于过马路时常用的手旗。可以通过时举起手旗，不可通过时放下手旗。而 Dispatch Semaphore 中，使用计数来实现该功能。</p>
-<p>信号量的具体做法是：当信号计数大于 0 时，每条进来的线程使计数减 1，直到变为 0，变为 0 后其他的线程将进不来，处于等待状态；执行完任务的线程释放信号，使计数加 1，如此循环下去。</p>
-<hr>
-<h2 id="要点">要点</h2><ol>
-<li><p>多个 Serial Dispatch Queue 可并行执行，但生成过线程，就会消耗大量内存，引起大量的上下文切换，大幅度降低系统的响应性能</p>
+<h4 id="1-3-2_TCP/IP_通信传输流">1.3.2  TCP/IP 通信传输流</h4><p>利用 TCP/IP 协议族进行网络通信时，会通过分层顺序与对方进行通信。发送端从应用层往下走，接收端则往应用层往上走。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.3.2.jpg" alt=""></p>
+<p>发送端在层与层之间传输数据时，每经过一层时必定会被打上一个该层所属的首部信息。反之，接收端在层与层传输数据时，每经过一层时会把对应的首部消去。</p>
+<h3 id="1-4_与_HTTP_关系密切的协议：IP、TCP_和_DNS">1.4  与 HTTP 关系密切的协议：IP、TCP 和 DNS</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.4.1.jpg" alt=""></p>
+<h4 id="1-4-1_负责传输的_IP_协议">1.4.1  负责传输的 IP 协议</h4><p>在进行中转时，会利用下一站中转设备的 MAC 地址来搜索下一个中转目标。这时，会采用 ARP 协议（Address Resolution Protocol）。ARP 是一种用以解析地址的协议，根据通信方的 IP 地址就可以反查出对应的 MAC 地址。</p>
+<h4 id="1-4-2_确保可靠性的_TCP_协议">1.4.2  确保可靠性的 TCP 协议</h4><p>为了准确无误地将数据送达目标处，TCP 协议采用了三次握手（three-way handshaking）策略。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.4.2.jpg" alt=""></p>
+<h5 id="1-4-2-1_为何要三次握手">1.4.2.1  为何要三次握手</h5><ol>
+<li><p>为了防止已失效的连接请求报文段（上一个 TCP 连接）突然又传送到了服务端，因而产生错误（服务端白白等待）</p>
 </li>
-<li><p>dispatch_afer 函数并不是在指定时间后执行处理，而只是在指定时间追加处理到 Dispatch Queue</p>
-</li>
-<li><p>无论向什么样的 Dispatch Queue 中追加处理，使用 Dispatch Group 都可监视这些处理执行的结束。一旦监测到所有处理执行结束，就可将结束的处理追加到 Dispatch Queue 中。这就是使用 Dispatch Group 的原因</p>
-</li>
-<li><p>关于 dispatch_sync，不得不提<strong>死锁</strong>，详情可参见：<a href="http://www.saitjr.com/ios/ios-gcd-deadlock.html" target="_blank" rel="external">GCD死锁</a> </p>
-</li>
-<li><p>Serial Dispatch Queue 与 Concurrent Dispatch Queue 都是遵循 FIFO 原则</p>
-</li>
-<li><p>dispatch_once 方法用 <code>dispatch_once_t</code> 来测试 Block 是否被执行过了。如果执行过了，那么就不在执行，<code>dispatch_once_t</code> 必须是全局或 static 变量</p>
-</li>
-<li><p>dispatch_create 函数生成的 Dispatch Queue 不管是 Serial Dispatch Queue 还是 Concurrent Dispatch Queue，都使用与默认优先级 Global Dispatch Queue 相同执行优先级的线程</p>
-</li>
-<li><p>并发与并行的区别：<a href="https://www.zhihu.com/question/33515481" target="_blank" rel="external">https://www.zhihu.com/question/33515481</a></p>
+<li><p>也可假设想场景：两个人打电话</p>
 </li>
 </ol>
-<hr>
-<h2 id="参考">参考</h2><ul>
-<li><a href="https://developer.apple.com/library/ios/documentation/Performance/Reference/GCD_libdispatch_Ref/" target="_blank" rel="external">Grand Central Dispatch (GCD) Reference</a></li>
+<h5 id="1-4-2-2_为何要四次分手">1.4.2.2 为何要四次分手</h5><ol>
+<li><p>保证 TCP 协议的全双工连接能够可靠关闭</p>
+</li>
+<li><p>保证这次连接的重复数据段从网络中消失</p>
+</li>
+<li><p>TCP 连接是全双工的，这就意味着，当主机 1 发出 FIN 报文段时，只是表示主机 1 已经没有数据要发送了，但是，这个时候主机 1 还是可以接受来自主机 2 的数据；当主机 2 返回 ACK 报文段时，表示它已经知道主机 1 没有数据发送了，但是主机 2 还是可以发送数据到主机 1 的；当主机 2 也发送了 FIN 报文段时，这个时候就表示主机 2 也没有数据要发送了，就会告诉主机 1，我也没有数据要发送了，之后彼此就会愉快的中断这次 TCP 连接</p>
+</li>
+</ol>
+<p>详情参见：</p>
+<ul>
+<li><a href="http://www.jellythink.com/archives/705" target="_blank" rel="external">简析TCP的三次握手与四次分手</a></li>
 </ul>
+<h5 id="1-4-2-3_为什么最后还要等待两个时间周期呢？">1.4.2.3 为什么最后还要等待两个时间周期呢？</h5><h3 id="1-5_负责域名解析的_DNS_服务">1.5  负责域名解析的 DNS 服务</h3><p>DNS（Domain Name System）服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。</p>
+<h3 id="1-6_各种协议与_HTTP_协议的关系">1.6 各种协议与 HTTP 协议的关系</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.6.jpg" alt=""></p>
+<h3 id="1-7_URI_和_URL">1.7  URI 和 URL</h3><p>URI 用字符串标识某一互联网资源，而 URL 表示资源的地点（互联网上所处的位置）。<br>URL 是 URI 的子集。<br>区别就是 URI 定义资源，而 URL 不单定义这个资源，还定义了如何找到这个资源（既访问资源的方式）。</p>
+<p>详情参见：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/youmeng/p/4891788.html" target="_blank" rel="external">Http权威指南笔记(一) URI URL URN 关系</a></li>
+</ul>
+<hr>
+<h2 id="第_2_章_简单的_HTTP_协议">第 2 章  简单的 HTTP 协议</h2><h3 id="2-1_HTTP_请求和响应报文格式">2.1  HTTP 请求和响应报文格式</h3><p>HTTP 请求报文由请求行、请求头部、空行和请求包体 4 个部分组成，如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-2.1.1.jpg" alt=""></p>
+<p>HTTP 响应报文由状态行、响应头部、空行和响应包体 4 个部分组成，如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-2.1.2.jpg" alt=""></p>
+<p>详情参见：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/biyeymyhjob/archive/2012/07/28/2612910.html" target="_blank" rel="external">HTTP请求报文和HTTP响应报文</a></li>
+</ul>
+<h3 id="2-2_告知服务器意图的_HTTP_方法">2.2  告知服务器意图的 HTTP 方法</h3><p>表 2-1：HTTP/1.0 和 HTTP/1.1 支持的方法</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">支持的 HTTP 协议版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td style="text-align:center">获取资源</td>
+<td style="text-align:center">1.0、1.1</td>
+</tr>
+<tr>
+<td>POST</td>
+<td style="text-align:center">传输实体主体</td>
+<td style="text-align:center">1.0、1.1</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td style="text-align:center">传输文件</td>
+<td style="text-align:center">1.0、1.1</td>
+</tr>
+<tr>
+<td>HEAD</td>
+<td style="text-align:center">获得报文首部</td>
+<td style="text-align:center">1.0、1.1</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td style="text-align:center">删除文件</td>
+<td style="text-align:center">1.0、1.1</td>
+</tr>
+<tr>
+<td>OPTIONS</td>
+<td style="text-align:center">询问支持的方法</td>
+<td style="text-align:center">1.1</td>
+</tr>
+<tr>
+<td>TRACE</td>
+<td style="text-align:center">追踪路径</td>
+<td style="text-align:center">1.1</td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td style="text-align:center">要求用隧道协议连接代理</td>
+<td style="text-align:center">1.1</td>
+</tr>
+<tr>
+<td>LINK</td>
+<td style="text-align:center">建立和资源之间的联系</td>
+<td style="text-align:center">1.0</td>
+</tr>
+<tr>
+<td>UNLINK</td>
+<td style="text-align:center">断开连接关系</td>
+<td style="text-align:center">1.0</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="第_3_章_HTTP_报文内的_HTTP_信息">第 3 章  HTTP 报文内的 HTTP 信息</h2><h3 id="3-1_编码提升传输速率">3.1  编码提升传输速率</h3><h4 id="3-1-1_压缩传输的内容编码">3.1.1  压缩传输的内容编码</h4><p>内容编码指明应用在实体内容上的编码格式，并保持实体信息原样压缩。内容编码后的实体由客户端接收并负责解码。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-3.1.1.jpg" alt=""></p>
+<p>常用的内容编码有以下几种：</p>
+<ol>
+<li>gzip（GNU zip）</li>
+<li>compress（UNIX 系统的标准压缩）</li>
+<li>deflate（zlib）</li>
+<li>identity（不进行编码）</li>
+</ol>
+<h4 id="3-1-2_分割发送的分块传输编码">3.1.2  分割发送的分块传输编码</h4><p>在 HTTP 通信过程中，请求的编码实体资源尚未全部传输完成之前，浏览器无法显示请求页面。在传输大容量数据时，通过把数据分割成多块，能够让浏览器逐步显示页面。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-3.1.2.jpg" alt=""></p>
+<h3 id="3-2_获取部分内容的范围请求">3.2  获取部分内容的范围请求</h3><p>执行范围请求时，会用到首部字段 Range 来指定资源的 byte 范围。</p>
+<p>针对范围请求，响应会返回状态码为 206 Partial Content 的响应报文。另外，对于多重范围的范围请求，响应会在首部字段 Content-Type 标明 multipart/byteranges 后返回响应报文。</p>
 
       
     </div>
@@ -475,11 +532,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/GCD/" rel="tag">#GCD</a>
+            <a href="/tags/HTTP/" rel="tag">#HTTP</a>
           
             <a href="/tags/Notes/" rel="tag">#Notes</a>
-          
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
           
         </div>
       
@@ -488,15 +543,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/13/the-notes-of-learning-of-blocks/" rel="next" title="《Objective-C 高级编程》读书笔记之 Blocks">
-                <i class="fa fa-chevron-left"></i> 《Objective-C 高级编程》读书笔记之 Blocks
+              <a href="/2016/04/01/from-nsurlconnection-to-nsurlsession/" rel="next" title="从 NSURLConnection 到 NSURLSession">
+                <i class="fa fa-chevron-left"></i> 从 NSURLConnection 到 NSURLSession
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/13/the-notes-of-learning-uicollectionview/" rel="prev" title="UICollectionView 学习笔记">
+              <a href="/2016/04/19/the-notes-of-learning-uicollectionview/" rel="prev" title="UICollectionView 学习笔记">
                 UICollectionView 学习笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -596,7 +651,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -604,7 +659,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -613,7 +668,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -752,7 +807,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">2.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程编程"><span class="nav-number">3.</span> <span class="nav-text">多线程编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程编程的问题"><span class="nav-number">3.1.</span> <span class="nav-text">多线程编程的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程编程的优点"><span class="nav-number">3.2.</span> <span class="nav-text">多线程编程的优点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GCD_的_API"><span class="nav-number">4.</span> <span class="nav-text">GCD 的 API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dispatch_Queue"><span class="nav-number">4.1.</span> <span class="nav-text">Dispatch Queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dispatch_queue_create/dispatch_retain/dispatch_release"><span class="nav-number">4.2.</span> <span class="nav-text">dispatch_queue_create/dispatch_retain/dispatch_release</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Main_Dispatch_Queue/Global_Dispatch_Queue"><span class="nav-number">4.3.</span> <span class="nav-text">Main Dispatch Queue/Global Dispatch Queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dispatch_set_target_queue"><span class="nav-number">4.4.</span> <span class="nav-text">dispatch_set_target_queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dispatch_barrier_async"><span class="nav-number">4.5.</span> <span class="nav-text">dispatch_barrier_async</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dispatch_Semaphore"><span class="nav-number">4.6.</span> <span class="nav-text">Dispatch Semaphore</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点"><span class="nav-number">5.</span> <span class="nav-text">要点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第_1_章_了解_Web_及网络基础"><span class="nav-number">2.</span> <span class="nav-text">第 1 章 了解 Web 及网络基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1_使用_HTTP_协议访问_Web"><span class="nav-number">2.1.</span> <span class="nav-text">1.1  使用 HTTP 协议访问 Web</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1_从输入_URL_到页面加载完成的过程中都发生了什么事情？"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1.1 从输入 URL 到页面加载完成的过程中都发生了什么事情？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2_HTTP_历史"><span class="nav-number">2.2.</span> <span class="nav-text">1.2  HTTP 历史</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1_HTTP_1-0_vs_HTTP_1-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">1.2.1  HTTP 1.0 vs HTTP 1.1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2_HTTP_2-0"><span class="nav-number">2.2.2.</span> <span class="nav-text">1.2.2  HTTP 2.0</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3_网络基础_TCP/IP"><span class="nav-number">2.3.</span> <span class="nav-text">1.3  网络基础 TCP/IP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1_TCP/IP_的分层管理"><span class="nav-number">2.3.1.</span> <span class="nav-text">1.3.1 TCP/IP 的分层管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2_TCP/IP_通信传输流"><span class="nav-number">2.3.2.</span> <span class="nav-text">1.3.2  TCP/IP 通信传输流</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4_与_HTTP_关系密切的协议：IP、TCP_和_DNS"><span class="nav-number">2.4.</span> <span class="nav-text">1.4  与 HTTP 关系密切的协议：IP、TCP 和 DNS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1_负责传输的_IP_协议"><span class="nav-number">2.4.1.</span> <span class="nav-text">1.4.1  负责传输的 IP 协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-2_确保可靠性的_TCP_协议"><span class="nav-number">2.4.2.</span> <span class="nav-text">1.4.2  确保可靠性的 TCP 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-2-1_为何要三次握手"><span class="nav-number">2.4.2.1.</span> <span class="nav-text">1.4.2.1  为何要三次握手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-2-2_为何要四次分手"><span class="nav-number">2.4.2.2.</span> <span class="nav-text">1.4.2.2 为何要四次分手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4-2-3_为什么最后还要等待两个时间周期呢？"><span class="nav-number">2.4.2.3.</span> <span class="nav-text">1.4.2.3 为什么最后还要等待两个时间周期呢？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5_负责域名解析的_DNS_服务"><span class="nav-number">2.5.</span> <span class="nav-text">1.5  负责域名解析的 DNS 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6_各种协议与_HTTP_协议的关系"><span class="nav-number">2.6.</span> <span class="nav-text">1.6 各种协议与 HTTP 协议的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7_URI_和_URL"><span class="nav-number">2.7.</span> <span class="nav-text">1.7  URI 和 URL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第_2_章_简单的_HTTP_协议"><span class="nav-number">3.</span> <span class="nav-text">第 2 章  简单的 HTTP 协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1_HTTP_请求和响应报文格式"><span class="nav-number">3.1.</span> <span class="nav-text">2.1  HTTP 请求和响应报文格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2_告知服务器意图的_HTTP_方法"><span class="nav-number">3.2.</span> <span class="nav-text">2.2  告知服务器意图的 HTTP 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第_3_章_HTTP_报文内的_HTTP_信息"><span class="nav-number">4.</span> <span class="nav-text">第 3 章  HTTP 报文内的 HTTP 信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1_编码提升传输速率"><span class="nav-number">4.1.</span> <span class="nav-text">3.1  编码提升传输速率</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1_压缩传输的内容编码"><span class="nav-number">4.1.1.</span> <span class="nav-text">3.1.1  压缩传输的内容编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2_分割发送的分块传输编码"><span class="nav-number">4.1.2.</span> <span class="nav-text">3.1.2  分割发送的分块传输编码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2_获取部分内容的范围请求"><span class="nav-number">4.2.</span> <span class="nav-text">3.2  获取部分内容的范围请求</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
@@ -1017,9 +1072,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'tangqi92githubio';
-      var disqus_identifier = '2016/03/15/the-notes-of-learning-of-gcd/';
-      var disqus_title = '《Objective-C 高级编程》读书笔记之 GCD';
-      var disqus_url = 'http://itangqi.me/2016/03/15/the-notes-of-learning-of-gcd/';
+      var disqus_identifier = '2016/04/04/the-notes-of-learning-illustrating-http-one/';
+      var disqus_title = '《图解 HTTP》读书笔记（一）';
+      var disqus_url = 'http://itangqi.me/2016/04/04/the-notes-of-learning-illustrating-http-one/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

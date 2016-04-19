@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Notes,UITableView,UITableViewCell,iOS," />
+  <meta name="keywords" content="Notes,iOS," />
 
 
 
@@ -59,26 +59,21 @@
 
 
 
-<meta name="description" content="前言
-在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。
-
-前几天正好看了关于 AutoLayout 与 UITableViewCell 高度动态计算的文章，于是便在 SuperNote 上践行了所学的知识，并做了相关笔记的总结，在此与大家进行分享。">
+<meta name="description" content="前言最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 UICollectionView。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="聊一聊 UITableView（一）">
-<meta property="og:url" content="http://itangqi.me/2016/02/25/the-notes-of-learning-of-uitableview-one/index.html">
+<meta property="og:title" content="UICollectionView 学习笔记">
+<meta property="og:url" content="http://itangqi.me/2016/04/19/the-notes-of-learning-uicollectionview/index.html">
 <meta property="og:site_name" content="Qi Tang's Blog">
-<meta property="og:description" content="前言
-在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。
-
-前几天正好看了关于 AutoLayout 与 UITableViewCell 高度动态计算的文章，于是便在 SuperNote 上践行了所学的知识，并做了相关笔记的总结，在此与大家进行分享。">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-uitableviewcell-01.png">
-<meta property="og:updated_time" content="2016-03-07T05:42:56.000Z">
+<meta property="og:description" content="前言最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 UICollectionView。">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-001.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-002.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-003.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-004.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-005.jpg">
+<meta property="og:updated_time" content="2016-04-19T08:52:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="聊一聊 UITableView（一）">
-<meta name="twitter:description" content="前言
-在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。
-
-前几天正好看了关于 AutoLayout 与 UITableViewCell 高度动态计算的文章，于是便在 SuperNote 上践行了所学的知识，并做了相关笔记的总结，在此与大家进行分享。">
+<meta name="twitter:title" content="UICollectionView 学习笔记">
+<meta name="twitter:description" content="前言最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 UICollectionView。">
 
 
 
@@ -96,7 +91,7 @@
   };
 </script>
 
-  <title> 聊一聊 UITableView（一） | Qi Tang's Blog </title>
+  <title> UICollectionView 学习笔记 | Qi Tang's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -273,7 +268,7 @@
             
             
               
-                聊一聊 UITableView（一）
+                UICollectionView 学习笔记
               
             
           </h1>
@@ -285,8 +280,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-02-25T00:00:00+08:00" content="2016-02-25">
-              2016-02-25
+            <time itemprop="dateCreated" datetime="2016-04-19T00:00:00+08:00" content="2016-04-19">
+              2016-04-19
             </time>
           </span>
 
@@ -315,8 +310,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/02/25/the-notes-of-learning-of-uitableview-one/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/02/25/the-notes-of-learning-of-uitableview-one/" itemprop="commentsCount"></span>
+                <a href="/2016/04/19/the-notes-of-learning-uicollectionview/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/19/the-notes-of-learning-uicollectionview/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -337,42 +332,70 @@
       
 
       
-        <h2 id="前言">前言</h2><blockquote>
-<p>在本系列文章中，我将和大家聊一聊关于 UITableView 的种种，那些你知道的或者不知道的事。</p>
-</blockquote>
-<p>前几天正好看了关于 AutoLayout 与 UITableViewCell 高度动态计算的文章，于是便在 <a href="https://github.com/tangqi92/SuperNote" target="_blank" rel="external">SuperNote</a> 上践行了所学的知识，并做了相关笔记的总结，在此与大家进行分享。</p>
+        <h2 id="前言">前言</h2><p>最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 <strong>UICollectionView</strong>。</p>
 <a id="more"></a> 
 <hr>
-<h2 id="Auto_Layout">Auto Layout</h2><p>首先看官方文档<a href="https://developer.apple.com/library/prerelease/ios/documentation/UserExperience/Conceptual/AutolayoutPG/" target="_blank" rel="external">《Auto Layout Guide》</a>中关于 Auto Layout 的描述：</p>
+<h2 id="简介">简介</h2><p>首先看苹果官方文档 <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/" target="_blank" rel="external">UICollectionView Class Reference</a> 的介绍:</p>
 <blockquote>
-<p>Auto Layout dynamically calculates the size and position of all the views in your view hierarchy, based on constraints placed on those views. For example, you can constrain a button so that it is horizontally centered with an Image view and so that the button’s top edge always remains 8 points below the image’s bottom. If the image view’s size or position changes, the button’s position automatically adjusts to match.</p>
-<p>This constraint-based approach to design allows you to build user interfaces that dynamically respond to both internal and external changes.</p>
+<p>The UICollectionView class manages an ordered collection of data items and presents them using customizable layouts. Collection views provide the same general function as table views except that a collection view is able to support more than just single-column layouts. Collection views support customizable layouts that can be used to implement multi-column grids, tiled layouts, circular layouts, and many more. You can even change the layout of a collection view dynamically if you want.</p>
 </blockquote>
-<p>作为从 Android 阵营转过来的我，一路都是手撕页面布局的，当我面对要在 Storyboard 中拖拽各种约束时，我的内心是几乎是崩溃的（也许我该尝试下），直到我发现了 <a href="https://github.com/SnapKit/Masonry" target="_blank" rel="external">Masonry</a>，妈妈再也不用担心我写 Auto Layout 了。</p>
-<p>Masonry 老少皆宜，非常容易上手，具体的使用可参见<strong>里脊串</strong>的文章：</p>
-<ul>
-<li><a href="http://adad184.com/2014/09/28/use-masonry-to-quick-solve-autolayout/" target="_blank" rel="external">Masonry介绍与使用实践(快速上手Autolayout)</a></li>
-</ul>
+<p>一句话总结就是：<strong>UICollectionView 与 UITableView 相似，却提供了可自定义多列网格（Grild）的功能。</strong></p>
 <hr>
-<h2 id="UITableViewCell_重用机制">UITableViewCell 重用机制</h2><p>在讲 UITableViewCell 高度自适应前，首先简单介绍下 UITableViewCell 的重用机制：</p>
-<ul>
-<li><p>当用户滚动 UITableView 对象时，部分 UITableViewCell 对象会移出窗口。此时 UITableView 对象会将移出窗口的 UITableViewCell 对象放入 UITableViewCell <strong>对象池</strong>，等待重新利用。当 UITableView 对象要求数据源返回某个 UITableViewCell 对象时，数据源可以先查看对象池。如果有未使用的 UITableViewCell 对象，就可以用<strong>新的数据</strong>配置这个 UITableViewCell 对象，然后将其返回给 UITableView 对象，从而避免创建新对象。</p>
+<h2 id="核心">核心</h2><ul>
+<li><p><strong>Cells</strong>：单元格，用于展示内容的主体</p>
 </li>
-<li><p>这里还有一个问题：因为有时需要创建 UITableViewCell 的<strong>子类</strong>，用于实现特定的外观或特性，所以 UITableView 对象可能会拥有<strong>不同类型</strong>的 UITableViewCell 对象。如果 UITableViewCell 对象池中的对象创建自不同的子类，那么 UITableView 对象就有可能得到错误类型的 UITableViewCell 对象。鉴于上述原因，必须确保 UITableView 对象能够得到指定类型的 UITableViewCell 对象，这样才能确定返回的对象会拥有哪些属性和方法。</p>
+<li><p><strong>Supplementary Views</strong>：追加视图，相当于 UITableView 中每个 Section 的 Header 或 Footer</p>
 </li>
-<li><p>从 UITableViewCell 对象池获取对象时，无须关心取回的是否是某个特定的对象，因为无论取回的是哪个对象，都要重新设置数据。真正要关心的是取回的对象是否是某个<strong>特定</strong>的类型。每个 UITableViewCell 对象都有一个类型为 NSString 的 <strong>reuseIdentifier</strong> 属性。当数据源向 UITableView 对象获取可重用的 UITableViewCell 对象时，可传入一个字符串并要求 UITableView 对象返回相应的 UITableViewCell 对象，这些 UITableViewCell 对象的 reuseIdentifier 属性必须和传入的字符串相同。按照约定，应该将 UITableViewCell 或者 UITableViewCell 子类的类名用作 reuseIdentifier。</p>
+<li><p><strong>Decoration Views</strong>：装饰视图，用于装饰整个 UICollectionView</p>
 </li>
 </ul>
-<p>上面讲得那么啰嗦，不如直接看下面的图： </p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-of-uitableviewcell-01.png" alt=""></p>
-<p>情况 A: 所有 Cell 具有相同的类型</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> *  实现数据绑定</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="comment">// 根据标识符 identifier 从重用队列中取出一个 cell</span></span><br><span class="line">    NoteListCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellReuseIdentifier];</span><br><span class="line">    <span class="comment">// 由于一开始重用队列是空的，所以取出的 cell 也是空的，if(!cell) 条件成立，就会去执行 &#123;&#125; 内的代码</span></span><br><span class="line">    <span class="keyword">if</span> (!cell) &#123;</span><br><span class="line">    	<span class="comment">// 创建 UITableViewCellStyleDefault类型的 cell，并将其标识为 identifier（@”cell”），这样一个 cell 就创建完成了</span></span><br><span class="line">        cell = [[NoteListCell alloc] initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span> reuseIdentifier:kCellReuseIdentifier];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 绑定指定数据</span></span><br><span class="line">    VNNote *note = [<span class="keyword">self</span><span class="variable">.dataSource</span> objectAtIndex:indexPath<span class="variable">.row</span>];</span><br><span class="line">    note<span class="variable">.index</span> = indexPath<span class="variable">.row</span>;</span><br><span class="line">    [cell updateWithNote:note];</span><br><span class="line">    <span class="comment">// Make sure the constraints have been added to this cell, since it may have just been created from scratch</span></span><br><span class="line">    [cell setNeedsUpdateConstraints];</span><br><span class="line">    [cell updateConstraintsIfNeeded];</span><br><span class="line">    <span class="keyword">return</span> cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>情况 B: 具有多种类型的 Cell</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSString</span> *cellIdentifier;</span><br><span class="line">    <span class="built_in">UITableViewCellStyle</span> cellStyle;</span><br><span class="line">    <span class="keyword">switch</span> ((indexPath<span class="variable">.row</span> + <span class="number">1</span>)%<span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:&#123;</span><br><span class="line">            <span class="comment">//有标题和副标题，可选图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Subtitle Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleSubtitle</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:&#123;</span><br><span class="line">            <span class="comment">//左边文字左对齐，右边文字右对齐，可选的图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Value1 Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleValue1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:&#123;</span><br><span class="line">            <span class="comment">//左边文字右对齐，蓝色字体。右边文字左对齐，黑色。没有图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Value2 Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleValue2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:&#123;</span><br><span class="line">            <span class="comment">//有标题，没有副标题，可选的图片</span></span><br><span class="line">            cellIdentifier = <span class="string">@"Default Style"</span>;</span><br><span class="line">            cellStyle = <span class="built_in">UITableViewCellStyleDefault</span>;</span><br><span class="line">        &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">NSInteger</span> times = <span class="number">0</span>;</span><br><span class="line">    <span class="built_in">UITableViewCell</span> *myCell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];</span><br><span class="line">    <span class="keyword">if</span> (!myCell) &#123;</span><br><span class="line">        myCell = [[<span class="built_in">UITableViewCell</span> alloc] initWithStyle:cellStyle reuseIdentifier:cellIdentifier];</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"创建%d次"</span>,++times);</span><br><span class="line">    &#125;</span><br><span class="line">    myCell<span class="variable">.textLabel</span><span class="variable">.text</span> = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"第%d行%@"</span>,indexPath<span class="variable">.row</span>+<span class="number">1</span>, cellIdentifier];</span><br><span class="line">    myCell<span class="variable">.detailTextLabel</span><span class="variable">.text</span> = <span class="string">@"Subtitle Text"</span>;</span><br><span class="line">    <span class="keyword">if</span> (indexPath<span class="variable">.row</span> &gt; <span class="number">3</span>) &#123;</span><br><span class="line">        myCell<span class="variable">.imageView</span><span class="variable">.image</span> = [<span class="built_in">UIImage</span> imageNamed:<span class="string">@"smile.png"</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> myCell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>未完待续……</p>
+<p>UICollectionView 最常见的使用场景，想必就是相册（照片墙）的实现与展示了，下面通过一张图来直观地认识 CollectionView 各部分的构成：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-001.png" alt=""></p>
 <hr>
+<h2 id="实现">实现</h2><p>如果你在之前有了解及使用过 UITableView 的话，那么恭喜你，你将会快速上手 UICollectionView。</p>
+<h3 id="UICollectionViewDataSource">UICollectionViewDataSource</h3><p>UICollectionViewDataSource - 负责提供展示的数据，实现下面两个必须的委托方法，其实 UITableView 并无二意，所以在此不做过多介绍了。</p>
+<ul>
+<li><p><strong>numberOfItemsInSection</strong>：某个 section 里有多少个 item</p>
+</li>
+<li><p><strong>cellForItemAtIndexPath</strong>：对于某个位置应该显示什么样的 cell，里面会涉及到 cell 的复用，可参见 TableView</p>
+</li>
+</ul>
+<p>其实到这里，CollectionView 就可以正常显示了，对吧，就是这么简单：）</p>
+<h3 id="UICollectionViewDelegate">UICollectionViewDelegate</h3><p>UICollectionViewDelegate - 负责用户的交互、Cell 的外形，委托方法和 TableView 相似，可以选择性实现以下委托方法。</p>
+<ul>
+<li><p><strong>collectionView:shouldHighlightItemAtIndexPath</strong>：是否支持高亮？</p>
+</li>
+<li><p><strong>collectionView:didHighlightItemAtIndexPath</strong>：如果支持高亮，那么高亮；</p>
+</li>
+<li><p><strong>collectionView:shouldSelectItemAtIndexPath</strong>：询问是否可以被选中？</p>
+</li>
+<li><p><strong>collectionView:didUnhighlightItemAtIndexPath</strong>：如果支持高亮，那么现在取消高亮；</p>
+</li>
+<li><p><strong>collectionView:didSelectItemAtIndexPath</strong>：如果支持可以被选中，那么选中 cell；</p>
+</li>
+</ul>
+<p>下面再通过几张图来更加清晰地理解：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-002.jpg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-003.jpg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-004.jpg" alt=""></p>
+<h3 id="UICollectionViewLayout">UICollectionViewLayout</h3><p>在布局上，与 UITableView 直接使用系统提供的样式不同，UICollectionView 使用的是 UICollectionViewLayout 来自定义布局样式。</p>
+<p>在苹果官方文档：<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/" target="_blank" rel="external">UICollectionViewLayout Class Reference</a> 中对其做了如下解释:</p>
+<blockquote>
+<p>The UICollectionViewLayout class is an abstract base class that you subclass and use to generate layout information for a collection view. The job of a layout object is to determine the placement of cells, supplementary views, and decoration views inside the collection view’s bounds and to report that information to the collection view when asked. The collection view then applies the provided layout information to the corresponding views so that they can be presented onscreen.</p>
+</blockquote>
+<p>这里做下简短的总结：</p>
+<ol>
+<li><p>UICollectionViewLayout 是一个抽象基类，你需要继承自他，来为 CollectionView 生成 Layout 信息。Layout 对象的作用是决定 Cells，Supplementary Views 和 Decoration Views 在 CollectionView 中的布局位置。当然啦，如果你不想折腾，苹果也贴心的为你准备了 UICollectionViewFlowLayout - 流水式布局效果。</p>
+</li>
+<li><p>UICollectionView 的显示效果几乎全部由 UICollectionViewLayout 负责，而真正存储着每一个 Cell 的位置、大小等属性的是 UICollectionViewLayoutAttributes 。每一个 Cell 对应着一个属于自己的 UICollectionViewLayoutAttributes，而 UICollectionViewLayout 正是利用 UICollectionViewLayoutAttributes 里存在的信息对每一个 Cell 进行布局。</p>
+</li>
+</ol>
+<p>下面通过一张图来了解 UICollectionView 的构成：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-005.jpg" alt=""></p>
+<h2 id="总结">总结</h2><p>可以说 UICollectionView 是 iOS 开发中必不可少的 UIKit 控件之一。</p>
 <h2 id="参考">参考</h2><ul>
-<li><a href="http://sharonhu1990.github.io/2015/10/28/%E6%B5%85%E6%9E%90UITableViewCell%E9%87%8D%E7%94%A8%E6%9C%BA%E5%88%B6/" target="_blank" rel="external">浅析UITableViewCell重用机制</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/" target="_blank" rel="external">UICollectionView Class Reference</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/" target="_blank" rel="external">UICollectionViewLayout Class Reference</a></li>
+<li><a href="http://www.appcoda.com/ios-programming-uicollectionview-tutorial/" target="_blank" rel="external">Create Grid Layout Using UICollectionView in iOS 6</a></li>
+<li><a href="http://my.oschina.net/sunqichao/blog/182623" target="_blank" rel="external">UICollectionView 使用 介绍</a></li>
 </ul>
 
       
@@ -384,10 +407,6 @@
           
             <a href="/tags/Notes/" rel="tag">#Notes</a>
           
-            <a href="/tags/UITableView/" rel="tag">#UITableView</a>
-          
-            <a href="/tags/UITableViewCell/" rel="tag">#UITableViewCell</a>
-          
             <a href="/tags/iOS/" rel="tag">#iOS</a>
           
         </div>
@@ -397,17 +416,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/02/18/the-notes-of-learning-text-kit/" rel="next" title="Text Kit 学习笔记">
-                <i class="fa fa-chevron-left"></i> Text Kit 学习笔记
+              <a href="/2016/04/04/the-notes-of-learning-illustrating-http-one/" rel="next" title="《图解 HTTP》读书笔记（一）">
+                <i class="fa fa-chevron-left"></i> 《图解 HTTP》读书笔记（一）
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/02/26/the-notes-of-learning-of-uitableview-two/" rel="prev" title="聊一聊 UITableView（二）">
-                聊一聊 UITableView（二） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -505,7 +520,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">26</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -513,7 +528,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -522,7 +537,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -661,7 +676,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Auto_Layout"><span class="nav-number">2.</span> <span class="nav-text">Auto Layout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UITableViewCell_重用机制"><span class="nav-number">3.</span> <span class="nav-text">UITableViewCell 重用机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心"><span class="nav-number">3.</span> <span class="nav-text">核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionViewDataSource"><span class="nav-number">4.1.</span> <span class="nav-text">UICollectionViewDataSource</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionViewDelegate"><span class="nav-number">4.2.</span> <span class="nav-text">UICollectionViewDelegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionViewLayout"><span class="nav-number">4.3.</span> <span class="nav-text">UICollectionViewLayout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
@@ -926,9 +941,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'tangqi92githubio';
-      var disqus_identifier = '2016/02/25/the-notes-of-learning-of-uitableview-one/';
-      var disqus_title = '聊一聊 UITableView（一）';
-      var disqus_url = 'http://itangqi.me/2016/02/25/the-notes-of-learning-of-uitableview-one/';
+      var disqus_identifier = '2016/04/19/the-notes-of-learning-uicollectionview/';
+      var disqus_title = 'UICollectionView 学习笔记';
+      var disqus_url = 'http://itangqi.me/2016/04/19/the-notes-of-learning-uicollectionview/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
