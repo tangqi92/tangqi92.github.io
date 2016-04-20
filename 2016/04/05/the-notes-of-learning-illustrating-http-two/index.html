@@ -1,0 +1,1307 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="HTTP,Notes," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="第 4 章 返回结果的 HTTP 状态码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《图解 HTTP》读书笔记（二）">
+<meta property="og:url" content="http://itangqi.me/2016/04/05/the-notes-of-learning-illustrating-http-two/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="第 4 章 返回结果的 HTTP 状态码">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-4.1.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-5.2.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-5.2.2.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-5.2.3.jpg">
+<meta property="og:updated_time" content="2016-04-20T02:27:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="《图解 HTTP》读书笔记（二）">
+<meta name="twitter:description" content="第 4 章 返回结果的 HTTP 状态码">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 《图解 HTTP》读书笔记（二） | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                《图解 HTTP》读书笔记（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-05T00:00:00+08:00" content="2016-04-05">
+              2016-04-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/05/the-notes-of-learning-illustrating-http-two/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/05/the-notes-of-learning-illustrating-http-two/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="第_4_章_返回结果的_HTTP_状态码">第 4 章 返回结果的 HTTP 状态码</h2><a id="more"></a> 
+<h3 id="4-1_状态码告知从服务器端返回的请求结果">4.1  状态码告知从服务器端返回的请求结果</h3><p>状态码的职责是当客户端向服务器端发送请求时，描述返回的请求结果。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-4.1.1.jpg" alt=""></p>
+<p>数字中的第一位定义了响应类别，后两位无分类。响应类别有以下 5 种：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">类别</th>
+<th style="text-align:center">原因短语</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1XX</td>
+<td style="text-align:center">Informational（信息性状态码）</td>
+<td style="text-align:center">接收的请求正在处理</td>
+</tr>
+<tr>
+<td style="text-align:center">2XX</td>
+<td style="text-align:center">Success（成功状态码）</td>
+<td style="text-align:center">请求正常处理完毕</td>
+</tr>
+<tr>
+<td style="text-align:center">3XX</td>
+<td style="text-align:center">Redirection（重定向状态码）</td>
+<td style="text-align:center">需求进行附加操作以完成请求</td>
+</tr>
+<tr>
+<td style="text-align:center">4XX</td>
+<td style="text-align:center">Client Error（客户端错误状态码）</td>
+<td style="text-align:center">服务器无法处理请求</td>
+</tr>
+<tr>
+<td style="text-align:center">5XX</td>
+<td style="text-align:center">Server Error（服务器错误状态码）</td>
+<td style="text-align:center">服务器处理请求出错</td>
+</tr>
+</tbody>
+</table>
+<p>只要遵守状态码类别的定义，即使改变 <a href="https://datatracker.ietf.org/doc/rfc2616/" target="_blank" rel="external">RFC2616</a> 中定义的状态码，或服务器端自行创建状态码都没问题。</p>
+<h4 id="2XX_成功">2XX 成功</h4><p>200 OK：表示从客户端发来的请求在服务器端被正常处理了</p>
+<p>204 No Content：请求处理成功，但是没有资源返回</p>
+<p>206 Partial Content：请求处理成功，返回部分内容，响应报文中包含 Content-Range 指定范围的实体内容</p>
+<h4 id="3XX_重定向">3XX 重定向</h4><p>301 Moved Permanently：永久性重定向</p>
+<p>302 Found：临时性重定向</p>
+<p>303 See Other：表示请求的资源存在着另一个 URL，应使用 GET 方法定向获取请求的资源</p>
+<p>304 Not Modified：表示请求的资源没有改变，可以使用客户端上未过期的资源</p>
+<p>307 Temporary Redirect：临时性重定向，不会从 POST 变成 GET</p>
+<h4 id="4XX_客户端错误">4XX 客户端错误</h4><p>400 Bad Request：表示请求报文中存在语法错误</p>
+<p>401 Unauthorized：表示发送的请求需要有通过 HTTP 认证</p>
+<p>403 Forbidden：表示请求资源的访问被服务器拒绝了</p>
+<p>404 Not Found：表示服务器上没有请求的资源</p>
+<h4 id="5XX_服务器错误">5XX 服务器错误</h4><p>500 Internal Server Error：表示服务器在执行请求时发生了错误</p>
+<p>503 Service Unavailable：表示服务器暂时处于超负载或者正在进行停机维护，现在无法处理请求</p>
+<hr>
+<h2 id="第_5_章_与_HTTP_协作的_Web_服务器">第 5 章 与 HTTP 协作的 Web 服务器</h2><h3 id="5-1_用单台虚拟主机实现多个域名">5.1  用单台虚拟主机实现多个域名</h3><p>HTTP / 1.1 规范允许一台 HTTP 服务器搭建多个 Web 站点。这是利用虚拟主机（Virtual Host，又称虚拟服务器）的功能。</p>
+<p>在互联网上，域名通过 DNS 服务映射到 IP 地址之后访问目标网站。可见，当请求发送到服务器时，已经是以 IP 地址形式访问了。所以，当一台托管了两个域名的服务器接收到请求时就需要弄清楚究竟要访问哪个域名。<br>在相同的 IP 地址下，由于虚拟主机可以寄存多个不同主机名和域名的 Web 网站，因此在发送 HTTP 请求时，必须在 Host 首部内完整指定主机名或域名的 URI。</p>
+<h3 id="5-2_通信数据转发程序：代理、网关、隧道">5.2 通信数据转发程序：代理、网关、隧道</h3><h4 id="5-2-1_代理">5.2.1 代理</h4><p>代理是一种有转发功能的应用程序，它扮演了位于服务器和客户端“中间人”的角色，接收由客户端发送的请求并转发给服务器，同时也接收服务器返回的响应并转发给客户端。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-5.2.1.jpg" alt=""></p>
+<p>每次通过代理服务器转发请求或响应式，会追加写入via首部信息。</p>
+<p>使用代理服务器的理由有：利用缓存技术（稍后讲解）减少网络带宽的流量，组织内部针对特定网站的访问控制，以获取访问日志为主要目的，等等。</p>
+<p>代理有多种使用方法，按两种基准分类。一种是是否使用缓存，另一种是是否会修改报文：</p>
+<ul>
+<li>缓存代理：代理转发响应时，缓存代理会预先将资源的副本（缓存）保存在代理服务器上</li>
+<li>透明代理：转发请求或响应时，不对报文做任何加工的代理类型被称为透明代理。反之，对 报文内容进行加工的代理被成为非透明代理</li>
+</ul>
+<h4 id="5-2-2_网关">5.2.2 网关</h4><p>网关是转发其他服务器通信数据的服务器，接收从客户端发送来的请求时，它就像自己拥有资源的源服务器一样对请求进行处理。有时客户端可能都不会察觉，自己的通信目标是一个网关。 </p>
+<p>网关的工作机制和代理十分相似。而网关能使通信线路上的服务器提供非 HTTP 协议服务。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-5.2.2.jpg" alt=""></p>
+<h4 id="5-2-3_隧道">5.2.3 隧道</h4><p>隧道是在相隔甚远的客户端和服务器两者之间进行中转，并保持双方通信连接的应用程序。</p>
+<p>隧道本身不会去解析 HTTP 请求。请求保持原样中转给之后的服务器。隧道会在通信双方断开连接时结束。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-5.2.3.jpg" alt=""></p>
+<h3 id="5-3_保存资源的缓存">5.3 保存资源的缓存</h3><p>缓存是指代理服务器或客户端本地磁盘内保存的资源副本。利用缓存可减少对源服务器的访问，节省通信流量和时间。</p>
+<p>缓存服务器是代理服务器的一种。当代理转发从服务器返回的响应时，代理服务器将会保存一份资源的副本。</p>
+<p>缓存服务器的优势在于利用缓存可避免多次从源服务器转发资源。因此客户端可就近从缓存服务器上获取资源，而源服务器也不必多次处理相同的请求了。</p>
+<h4 id="5-3-1_缓存的有效期限">5.3.1 缓存的有效期限</h4><p>对于缓存服务器和客户端浏览器，当判定缓存过期或客户端要求，会向源服务器确认资源的有效性。若失效，浏览器会再次请求新资源。</p>
+<h4 id="5-3-2_客户端的缓存">5.3.2 客户端的缓存</h4><p>缓存不仅可以存在于缓存服务器内，还可以存在客户端浏览器中。以 Internet Explorer 程序为例，把客户端缓存称为临时网络文件（Temporary Internet File）。</p>
+<hr>
+<h2 id="第_6_章_HTTP_首部">第 6 章 HTTP 首部</h2><h3 id="6-1_HTTP_首部字段">6.1 HTTP 首部字段</h3><h4 id="6-1-1_HTTP_首部字段传递重要信息">6.1.1 HTTP 首部字段传递重要信息</h4><p>使用首部字段是为了给浏览器和服务器提供报文主体大小、所使用的语言、认证信息等内容。</p>
+<h4 id="6-1-2_4_种_HTTP_首部字段类型">6.1.2 4 种 HTTP 首部字段类型</h4><ol>
+<li>通用首部字段（General Header Fields）</li>
+<li>请求首部字段（Request Header Fields）</li>
+<li>响应首部字段（Response Header Fields）</li>
+<li>实体首部字段（Entity Header Fields）</li>
+</ol>
+<h4 id="6-1-3_HTTP_/_1-1_首部字段一览">6.1.3 HTTP / 1.1 首部字段一览</h4><p><strong>通用首部字段</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Cache-Control</td>
+<td style="text-align:center">控制缓存的行为</td>
+</tr>
+<tr>
+<td style="text-align:center">Connection</td>
+<td style="text-align:center">逐跳首部、连接的管理</td>
+</tr>
+<tr>
+<td style="text-align:center">Date</td>
+<td style="text-align:center">创建报文日期时间</td>
+</tr>
+<tr>
+<td style="text-align:center">Pragma</td>
+<td style="text-align:center">报文指令</td>
+</tr>
+<tr>
+<td style="text-align:center">Trailer</td>
+<td style="text-align:center">报文末端的首部一览</td>
+</tr>
+<tr>
+<td style="text-align:center">Transfer-Encoding</td>
+<td style="text-align:center">指定报文主体的传输编码方式</td>
+</tr>
+<tr>
+<td style="text-align:center">Upgrade</td>
+<td style="text-align:center">升级为其他协议</td>
+</tr>
+<tr>
+<td style="text-align:center">Via</td>
+<td style="text-align:center">代理服务器的相关信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Warning</td>
+<td style="text-align:center">错误通知</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Cache-Control 的 no-cache 指令代表不缓存过期的资源，而不是不缓存。no-store 才是真正不进行缓存。</li>
+<li>Connection 首部字段的值为 close 时，代表服务器想明确断开连接（HTTP / 1.1默认都是持久连接）</li>
+</ol>
+<p><strong>请求首部字段</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accept</td>
+<td style="text-align:center">用户代理可处理的媒体类型</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Charset</td>
+<td style="text-align:center">优先的字符集</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Encoding</td>
+<td style="text-align:center">优先的内容编码</td>
+</tr>
+<tr>
+<td style="text-align:center">Accept-Language</td>
+<td style="text-align:center">优先的语言</td>
+</tr>
+<tr>
+<td style="text-align:center">Authorization</td>
+<td style="text-align:center">Web 认证信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Expect</td>
+<td style="text-align:center">期待服务器的特定行为</td>
+</tr>
+<tr>
+<td style="text-align:center">From</td>
+<td style="text-align:center">用户的电子邮件地址</td>
+</tr>
+<tr>
+<td style="text-align:center">Host</td>
+<td style="text-align:center">请求资源所在服务器</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Match</td>
+<td style="text-align:center">比较实体标记（ETag）</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Modified-Since</td>
+<td style="text-align:center">比较资源的更新时间</td>
+</tr>
+<tr>
+<td style="text-align:center">If-None-Match</td>
+<td style="text-align:center">比较实体标记（与If-Match相反）</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Range</td>
+<td style="text-align:center">资源未更新时发送实体 Byte 的范围请求</td>
+</tr>
+<tr>
+<td style="text-align:center">If-Unmodified-Since</td>
+<td style="text-align:center">比较资源的更新时间（与 If-Modified-Since 相反）</td>
+</tr>
+<tr>
+<td style="text-align:center">Max-Forwards</td>
+<td style="text-align:center">最大传输逐跳数</td>
+</tr>
+<tr>
+<td style="text-align:center">Proxy-Authorization</td>
+<td style="text-align:center">代理服务器要求客户端的认真信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Range</td>
+<td style="text-align:center">实体的字节范围请求</td>
+</tr>
+<tr>
+<td style="text-align:center">Referer</td>
+<td style="text-align:center">对请求中 URI 的原始获取方</td>
+</tr>
+<tr>
+<td style="text-align:center">TE</td>
+<td style="text-align:center">传输编码的优先级</td>
+</tr>
+<tr>
+<td style="text-align:center">User-Agent</td>
+<td style="text-align:center">HTTP 客户端程序的信息</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>该表的 Accept* 字段都可以指定权重 q 值（0-1）。当服务器提供多种内容时，将会首先返回权重最高的</li>
+<li>If-xxx 请求首部字段都称为条件请求，服务器接收到附带条件的请求后，只有判断指定条件为真时，才回执行请求</li>
+<li>Referer 的正确拼写应该是 Referrer。当直接在浏览器的地址栏输入 URI 时，或处于安全考虑时，可不发该首部字段</li>
+</ol>
+<p><strong>响应首部字段</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Accept-Ranges</td>
+<td style="text-align:center">是否接受字节范围请求</td>
+</tr>
+<tr>
+<td style="text-align:center">Age</td>
+<td style="text-align:center">推算资源创建经过时间</td>
+</tr>
+<tr>
+<td style="text-align:center">ETag</td>
+<td style="text-align:center">资源的匹配信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Location</td>
+<td style="text-align:center">令客户端重定向至指定的 URI</td>
+</tr>
+<tr>
+<td style="text-align:center">Proxy-Authentication</td>
+<td style="text-align:center">代理服务器对客户端的认证信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Retry-After</td>
+<td style="text-align:center">对再次发起请求的时机要求</td>
+</tr>
+<tr>
+<td style="text-align:center">Server</td>
+<td style="text-align:center">HTTP 服务器的安装信息</td>
+</tr>
+<tr>
+<td style="text-align:center">Vary</td>
+<td style="text-align:center">代理服务器缓存的管理信息</td>
+</tr>
+<tr>
+<td style="text-align:center">WWW-Authenticate</td>
+<td style="text-align:center">服务器对客户端的认证信息</td>
+</tr>
+</tbody>
+</table>
+<p>几乎所有浏览器在接收到包含首部字段 Location 的响应后，都会强制性地尝试对已提示的重定向资源的访问。</p>
+<p><strong>实体首部字段</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Allow</td>
+<td style="text-align:center">资源可支持的 HTTP 方法</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Encoding</td>
+<td style="text-align:center">实体主体适用的编码方式</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Language</td>
+<td style="text-align:center">实体主体的自然语言</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Length</td>
+<td style="text-align:center">实体主体的大小（单位：字节）</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Location</td>
+<td style="text-align:center">替代对应资源的 URI</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-MD5</td>
+<td style="text-align:center">实体主体的报文摘要</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Range</td>
+<td style="text-align:center">实体主体的位置范围</td>
+</tr>
+<tr>
+<td style="text-align:center">Content-Type</td>
+<td style="text-align:center">实体主体的媒体类型</td>
+</tr>
+<tr>
+<td style="text-align:center">Expires</td>
+<td style="text-align:center">实体主体过期的日期时间</td>
+</tr>
+<tr>
+<td style="text-align:center">Last-Modified</td>
+<td style="text-align:center">资源的最后修改日期时间</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cookie 相关首部字段</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">首部字段名</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">首部类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Set-Cookie</td>
+<td style="text-align:center">服务器端返回给客户端存储的 Cookie 信息</td>
+<td style="text-align:center">响应首部字段</td>
+</tr>
+<tr>
+<td style="text-align:center">Cookie</td>
+<td style="text-align:center">客户端向服务器端发送 Cookie 信息</td>
+<td style="text-align:center">请求首部字段</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Set-Cookie 字段的属性</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">NAME=VALUE</td>
+<td style="text-align:center">赋予 Cookie 的名称和其值（必须项）</td>
+</tr>
+<tr>
+<td style="text-align:center">expires=DATE</td>
+<td style="text-align:center">Cookie 的有效期（若不明确指定则默认为浏览器关闭前为止）</td>
+</tr>
+<tr>
+<td style="text-align:center">path=Path</td>
+<td style="text-align:center">将服务器上的文件目录作为 Cookie 的适用对象（若不指定则默认为文档所在的文件目录）</td>
+</tr>
+<tr>
+<td style="text-align:center">domain=域名</td>
+<td style="text-align:center">作为 Cookie 适用对象的域名（若不指定则默认为创建 Cookie 的服务器的域名）</td>
+</tr>
+<tr>
+<td style="text-align:center">Secure</td>
+<td style="text-align:center">仅在 HTTPS 安全通信时才会发送 Cookie</td>
+</tr>
+<tr>
+<td style="text-align:center">HttpOnly</td>
+<td style="text-align:center">加以限制，使 Cookie 不能被 JavaScript 脚本访问</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>expires：一旦 Cookie 从服务器端发送至客户端，服务器端就不存在可以显示删除 Cookie 的方法。但可通过覆盖已过期的 Cookie，实现对客户端 Cookie 的实质性删除操作</li>
+<li>path：用来指定 cookie 被发送到服务器的哪一个目录路径下（即被服务器哪个路径接收 cookie），其中”/“指的是站点根目录，可在同一台服务器（即使有多个应用）内共享该 cookie</li>
+</ol>
+<p><strong>其他首部字段</strong></p>
+<ul>
+<li>X-Frame-Options</li>
+<li>X-XSS-Protection</li>
+<li>DNT</li>
+<li>P3P</li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag">#HTTP</a>
+          
+            <a href="/tags/Notes/" rel="tag">#Notes</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/04/the-notes-of-learning-illustrating-http-one/" rel="next" title="《图解 HTTP》读书笔记（一）">
+                <i class="fa fa-chevron-left"></i> 《图解 HTTP》读书笔记（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/19/the-notes-of-learning-uicollectionview/" rel="prev" title="UICollectionView 学习笔记">
+                UICollectionView 学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾的走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">44</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 知乎
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 豆瓣
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">小伙伴们</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://tikitoo.me/" target="_blank">安卓同学</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://lovinghuan.com/" target="_blank">poberWong</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.zhaiyifan.cn/" target="_blank">MarkZhai</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://yifeiyuan.me/" target="_blank">程序亦非猿</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://abner-nimengbo.cn/" target="_blank">阿布</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.easydone.cn/" target="_blank">Ailurus</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://wuxiaolong.me/" target="_blank">吴小龙同學</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://drakeet.me/" target="_blank">Drakeet</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.fangjie.info/" target="_blank">方杰</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://hujiaweibujidao.github.io/" target="_blank">五道口宅男</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://gudong.name/" target="_blank">咕咚</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://soledad.me/" target="_blank">蔡越</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第_4_章_返回结果的_HTTP_状态码"><span class="nav-number">1.</span> <span class="nav-text">第 4 章 返回结果的 HTTP 状态码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1_状态码告知从服务器端返回的请求结果"><span class="nav-number">1.1.</span> <span class="nav-text">4.1  状态码告知从服务器端返回的请求结果</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2XX_成功"><span class="nav-number">1.1.1.</span> <span class="nav-text">2XX 成功</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3XX_重定向"><span class="nav-number">1.1.2.</span> <span class="nav-text">3XX 重定向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4XX_客户端错误"><span class="nav-number">1.1.3.</span> <span class="nav-text">4XX 客户端错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5XX_服务器错误"><span class="nav-number">1.1.4.</span> <span class="nav-text">5XX 服务器错误</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第_5_章_与_HTTP_协作的_Web_服务器"><span class="nav-number">2.</span> <span class="nav-text">第 5 章 与 HTTP 协作的 Web 服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1_用单台虚拟主机实现多个域名"><span class="nav-number">2.1.</span> <span class="nav-text">5.1  用单台虚拟主机实现多个域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2_通信数据转发程序：代理、网关、隧道"><span class="nav-number">2.2.</span> <span class="nav-text">5.2 通信数据转发程序：代理、网关、隧道</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1_代理"><span class="nav-number">2.2.1.</span> <span class="nav-text">5.2.1 代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2_网关"><span class="nav-number">2.2.2.</span> <span class="nav-text">5.2.2 网关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-3_隧道"><span class="nav-number">2.2.3.</span> <span class="nav-text">5.2.3 隧道</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3_保存资源的缓存"><span class="nav-number">2.3.</span> <span class="nav-text">5.3 保存资源的缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-1_缓存的有效期限"><span class="nav-number">2.3.1.</span> <span class="nav-text">5.3.1 缓存的有效期限</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-2_客户端的缓存"><span class="nav-number">2.3.2.</span> <span class="nav-text">5.3.2 客户端的缓存</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第_6_章_HTTP_首部"><span class="nav-number">3.</span> <span class="nav-text">第 6 章 HTTP 首部</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1_HTTP_首部字段"><span class="nav-number">3.1.</span> <span class="nav-text">6.1 HTTP 首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-1_HTTP_首部字段传递重要信息"><span class="nav-number">3.1.1.</span> <span class="nav-text">6.1.1 HTTP 首部字段传递重要信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-2_4_种_HTTP_首部字段类型"><span class="nav-number">3.1.2.</span> <span class="nav-text">6.1.2 4 种 HTTP 首部字段类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-3_HTTP_/_1-1_首部字段一览"><span class="nav-number">3.1.3.</span> <span class="nav-text">6.1.3 HTTP / 1.1 首部字段一览</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2016/04/05/the-notes-of-learning-illustrating-http-two/';
+      var disqus_title = '《图解 HTTP》读书笔记（二）';
+      var disqus_url = 'http://itangqi.me/2016/04/05/the-notes-of-learning-illustrating-http-two/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>
