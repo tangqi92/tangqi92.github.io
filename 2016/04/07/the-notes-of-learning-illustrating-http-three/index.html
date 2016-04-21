@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Notes,iOS," />
+  <meta name="keywords" content="HTTP,Notes," />
 
 
 
@@ -59,21 +59,32 @@
 
 
 
-<meta name="description" content="前言最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 UICollectionView。">
+<meta name="description" content="第 7 章 确保 Web 安全的 HTTPS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="UICollectionView 学习笔记">
-<meta property="og:url" content="http://itangqi.me/2016/04/19/the-notes-of-learning-uicollectionview/index.html">
+<meta property="og:title" content="《图解 HTTP》读书笔记（三）">
+<meta property="og:url" content="http://itangqi.me/2016/04/07/the-notes-of-learning-illustrating-http-three/index.html">
 <meta property="og:site_name" content="Qi Tang's Blog">
-<meta property="og:description" content="前言最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 UICollectionView。">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-001.png">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-002.jpg">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-003.jpg">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-004.jpg">
-<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-005.jpg">
-<meta property="og:updated_time" content="2016-04-19T08:52:18.000Z">
+<meta property="og:description" content="第 7 章 确保 Web 安全的 HTTPS">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.2.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.3.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.4.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.1.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.2.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.2.2.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.2.3.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.3.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.4.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.4.2.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.4.3.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-8.1.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-8.2.jpg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/http-8.3.jpg">
+<meta property="og:updated_time" content="2016-04-21T05:06:48.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="UICollectionView 学习笔记">
-<meta name="twitter:description" content="前言最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 UICollectionView。">
+<meta name="twitter:title" content="《图解 HTTP》读书笔记（三）">
+<meta name="twitter:description" content="第 7 章 确保 Web 安全的 HTTPS">
 
 
 
@@ -91,7 +102,7 @@
   };
 </script>
 
-  <title> UICollectionView 学习笔记 | Qi Tang's Blog </title>
+  <title> 《图解 HTTP》读书笔记（三） | Qi Tang's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -268,7 +279,7 @@
             
             
               
-                UICollectionView 学习笔记
+                《图解 HTTP》读书笔记（三）
               
             
           </h1>
@@ -280,8 +291,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-19T00:00:00+08:00" content="2016-04-19">
-              2016-04-19
+            <time itemprop="dateCreated" datetime="2016-04-07T00:00:00+08:00" content="2016-04-07">
+              2016-04-07
             </time>
           </span>
 
@@ -294,8 +305,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
                   </a>
                 </span>
 
@@ -310,8 +321,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/04/19/the-notes-of-learning-uicollectionview/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/19/the-notes-of-learning-uicollectionview/" itemprop="commentsCount"></span>
+                <a href="/2016/04/07/the-notes-of-learning-illustrating-http-three/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/07/the-notes-of-learning-illustrating-http-three/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -332,71 +343,102 @@
       
 
       
-        <h2 id="前言">前言</h2><p>最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 <strong>UICollectionView</strong>。</p>
-<a id="more"></a> 
-<hr>
-<h2 id="简介">简介</h2><p>首先看苹果官方文档 <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/" target="_blank" rel="external">UICollectionView Class Reference</a> 的介绍:</p>
-<blockquote>
-<p>The UICollectionView class manages an ordered collection of data items and presents them using customizable layouts. Collection views provide the same general function as table views except that a collection view is able to support more than just single-column layouts. Collection views support customizable layouts that can be used to implement multi-column grids, tiled layouts, circular layouts, and many more. You can even change the layout of a collection view dynamically if you want.</p>
-</blockquote>
-<p>一句话总结就是：<strong>UICollectionView 与 UITableView 相似，却提供了可自定义多列网格（Grild）的功能。</strong></p>
-<hr>
-<h2 id="核心">核心</h2><ul>
-<li><p><strong>Cells</strong>：单元格，用于展示内容的主体</p>
-</li>
-<li><p><strong>Supplementary Views</strong>：追加视图，相当于 UITableView 中每个 Section 的 Header 或 Footer</p>
-</li>
-<li><p><strong>Decoration Views</strong>：装饰视图，用于装饰整个 UICollectionView</p>
-</li>
-</ul>
-<p>UICollectionView 最常见的使用场景，想必就是相册（照片墙）的实现与展示了，下面通过一张图来直观地认识 CollectionView 各部分的构成：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-001.png" alt=""></p>
-<hr>
-<h2 id="实现">实现</h2><p>如果你在之前有了解及使用过 UITableView 的话，那么恭喜你，你将会快速上手 UICollectionView。</p>
-<h3 id="UICollectionViewDataSource">UICollectionViewDataSource</h3><p>UICollectionViewDataSource - 负责提供展示的数据，实现下面两个必须的委托方法，其实 UITableView 并无二意，所以在此不做过多介绍了。</p>
-<ul>
-<li><p><strong>numberOfItemsInSection</strong>：某个 section 里有多少个 item</p>
-</li>
-<li><p><strong>cellForItemAtIndexPath</strong>：对于某个位置应该显示什么样的 cell，里面会涉及到 cell 的复用，可参见 TableView</p>
-</li>
-</ul>
-<p>其实到这里，CollectionView 就可以正常显示了，对吧，就是这么简单：）</p>
-<h3 id="UICollectionViewDelegate">UICollectionViewDelegate</h3><p>UICollectionViewDelegate - 负责用户的交互、Cell 的外形，委托方法和 TableView 相似，可以选择性实现以下委托方法。</p>
-<ul>
-<li><p><strong>collectionView:shouldHighlightItemAtIndexPath</strong>：是否支持高亮？</p>
-</li>
-<li><p><strong>collectionView:didHighlightItemAtIndexPath</strong>：如果支持高亮，那么高亮；</p>
-</li>
-<li><p><strong>collectionView:shouldSelectItemAtIndexPath</strong>：询问是否可以被选中？</p>
-</li>
-<li><p><strong>collectionView:didUnhighlightItemAtIndexPath</strong>：如果支持高亮，那么现在取消高亮；</p>
-</li>
-<li><p><strong>collectionView:didSelectItemAtIndexPath</strong>：如果支持可以被选中，那么选中 cell；</p>
-</li>
-</ul>
-<p>下面再通过几张图来更加清晰地理解：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-002.jpg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-003.jpg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-004.jpg" alt=""></p>
-<h3 id="UICollectionViewLayout">UICollectionViewLayout</h3><p>在布局上，与 UITableView 直接使用系统提供的样式不同，UICollectionView 使用的是 UICollectionViewLayout 来自定义布局样式。</p>
-<p>在苹果官方文档：<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/" target="_blank" rel="external">UICollectionViewLayout Class Reference</a> 中对其做了如下解释:</p>
-<blockquote>
-<p>The UICollectionViewLayout class is an abstract base class that you subclass and use to generate layout information for a collection view. The job of a layout object is to determine the placement of cells, supplementary views, and decoration views inside the collection view’s bounds and to report that information to the collection view when asked. The collection view then applies the provided layout information to the corresponding views so that they can be presented onscreen.</p>
-</blockquote>
-<p>这里做下简短的总结：</p>
+        <h2 id="第_7_章_确保_Web_安全的_HTTPS">第 7 章 确保 Web 安全的 HTTPS</h2><a id="more"></a> 
+<h3 id="7-1_HTTP_的缺点">7.1 HTTP 的缺点</h3><h4 id="7-1-1_通信使用明文（不加密），内容可能会被窃听">7.1.1 通信使用明文（不加密），内容可能会被窃听</h4><h5 id="TCP/IP_是可能被窃听的网络">TCP/IP 是可能被窃听的网络</h5><p>这是因为，按 TCP/IP 协议族的工作机制，通信内容在所有的通信线路上都有可能遭到窥视。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.1.jpg" alt=""></p>
+<h5 id="加密处理防止被窃听">加密处理防止被窃听</h5><p><strong>1. 通信的加密</strong></p>
+<p>一种方式就是将通信加密。HTTP 协议中没有加密机制，但可以通过和 SSL（Secure Socket Layer，安全套接层）或 TLS（Transport Layer Security，安全层传输协议）的组合使用，加密 HTTP 的通信内容。</p>
+<p>用 SSL 建立安全通信线路之后，就可以在这条线路上进行 HTTP 通信了。与 SSL 组合使用的 HTTP 被称为 HTTPS（HTTP Secure，超文本传输安全协议）或 HTTP over SSL。</p>
+<p><strong>2. 内容加密</strong></p>
+<p>由于 HTTP 协议中没有加密机制，那么就对 HTTP 协议传输的内容本身加密。即把 HTTP 报文里所含的内容进行加密处理。</p>
+<p>在这种情况下，客户端需要对 HTTP 报文进行加密处理后再发送请求。</p>
+<p>有一点必须引起注意，由于该方式不同于 SSL 或 TLS 将整个通信线路加密处理，所以内容仍有被篡改的风险。稍后我们会加以说明。</p>
+<h4 id="7-1-2_不验证通信方的身份，因此有可能遭遇伪装">7.1.2 不验证通信方的身份，因此有可能遭遇伪装</h4><p><strong>1. 任何人都可发起请求</strong></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.2.jpg" alt=""></p>
+<p>HTTP 协议的实现本身非常简单，不论是谁发送过来的请求都会返回响应，因此不确认通信方，会存在以下各种隐患：</p>
 <ol>
-<li><p>UICollectionViewLayout 是一个抽象基类，你需要继承自他，来为 CollectionView 生成 Layout 信息。Layout 对象的作用是决定 Cells，Supplementary Views 和 Decoration Views 在 CollectionView 中的布局位置。当然啦，如果你不想折腾，苹果也贴心的为你准备了 UICollectionViewFlowLayout - 流水式布局效果。</p>
+<li><p>无法确定请求发送至目标的 Web 服务器是否是按真实意图返回响应的那台服务器。有可能是已伪装的 Web 服务器</p>
 </li>
-<li><p>UICollectionView 的显示效果几乎全部由 UICollectionViewLayout 负责，而真正存储着每一个 Cell 的位置、大小等属性的是 UICollectionViewLayoutAttributes 。每一个 Cell 对应着一个属于自己的 UICollectionViewLayoutAttributes，而 UICollectionViewLayout 正是利用 UICollectionViewLayoutAttributes 里存在的信息对每一个 Cell 进行布局。</p>
+<li><p>无法确定响应返回到的客户端是否是按真实意图接收响应的那个客户端。有可能是已伪装的客户端</p>
+</li>
+<li><p>无法确定正在通信的对方是否具备访问权限。因为某些 Web 服务器上保存着重要的信息，只想发给特定用户通信的权限</p>
+</li>
+<li><p>无法判定请求是来自何方、出自谁手</p>
+</li>
+<li><p>即使是无意义的请求也会照单全收。无法阻止海量请求下的 DoS 攻击（Denial of Service，拒绝服务攻击）</p>
 </li>
 </ol>
-<p>下面通过一张图来了解 UICollectionView 的构成：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-005.jpg" alt=""></p>
-<h2 id="总结">总结</h2><p>可以说 UICollectionView 是 iOS 开发中必不可少的 UIKit 控件之一。</p>
-<h2 id="参考">参考</h2><ul>
-<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/" target="_blank" rel="external">UICollectionView Class Reference</a></li>
-<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/" target="_blank" rel="external">UICollectionViewLayout Class Reference</a></li>
-<li><a href="http://www.appcoda.com/ios-programming-uicollectionview-tutorial/" target="_blank" rel="external">Create Grid Layout Using UICollectionView in iOS 6</a></li>
-<li><a href="http://my.oschina.net/sunqichao/blog/182623" target="_blank" rel="external">UICollectionView 使用 介绍</a></li>
+<p><strong>2. 查明对手的证书</strong></p>
+<p>如果使用 SSL 则可以。SSL 不仅提供加密处理，而且还使用了一种被称为<strong>证书</strong>的手段，可用于确定方。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.3.jpg" alt=""></p>
+<h4 id="7-1-3_无法证明报文的完整性，所以有可能已遭篡改">7.1.3 无法证明报文的完整性，所以有可能已遭篡改</h4><p>所谓完整性是指信息的准确度。若无法证明其完整性，通常也就意味着无法判断信息是否准确。</p>
+<p><strong>1. 接收到的内容可能有误</strong></p>
+<p>像这样，请求或响应在传输途中，遭攻击者拦截并篡改内容的攻击称为中间人攻击（Man-in-the-Middle attack，MITM）。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.4.jpg" alt=""></p>
+<p><strong>2. 如何防止篡改</strong></p>
+<p>虽然有使用 HTTP 协议确定报文完整性的方法，但事实上并不便捷、可靠。其中常用的是 MD5 和 SHA-1 等散列值校验的方法，以及用来确认文件的数字签名方法。</p>
+<p>可惜的是，用这些方法也依然无法百分百保证确认结果正确。因为 PGP 和 MD5 本身被改写的话，用户是没有办法意识到的。</p>
+<p>为了有效防止这些弊端，有必要使用 HTTPS。</p>
+<h3 id="7-2_HTTP_+_加密_+_认证_+_完整性保护_=_HTTPS">7.2 HTTP + 加密 + 认证 + 完整性保护 = HTTPS</h3><h4 id="7-2-1_HTTPS_是身披_SSL_外壳的_HTTP">7.2.1 HTTPS 是身披 SSL 外壳的 HTTP</h4><p>通常，HTTP 直接和 TCP 通信。当使用 SSL 时，则演变成先和 SSL 通信，再由 SSL 和 TCP 通信了。简言之，所谓 HTTPS，其实就是身披 SSL 协议这层外壳的 HTTP。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.1.jpg" alt=""></p>
+<p>在采用 SSL 后，HTTP 就拥有了 HTTPS 的<strong>加密</strong>、<strong>证书</strong>和<strong>完整性保护</strong>这些功能。</p>
+<p>SSL 是独立于 HTTP 的协议，所以不光是 HTTP 协议，其他运行在应用层的 SMTP 和 Telnet 等协议均可配合 SSL（Secure Socket Layer） 协议使用。可以说 SSL 是当今世界上应用最为广泛的网络安全技术。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.1.1.jpg" alt=""></p>
+<h4 id="7-2-2_相互交换密钥的公开密钥加密技术">7.2.2 相互交换密钥的公开密钥加密技术</h4><p>SSL 采用一种叫做公开密钥加密（Public-key cryptography）的加密处理方式。</p>
+<p>近代的加密方法中加密算法是公开的，而密钥却是保密的。通过这种方式得以保持加密方法的安全性。</p>
+<p><strong>1. 共享密钥加密的困境</strong></p>
+<p>加密和解密同用一个密钥的方式称为共享密钥加密（Common key crypto system），也被叫做对称密钥加密。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.2.1.jpg" alt=""></p>
+<p>以共享密钥方式加密时必须将密钥也发给对方。可究竟怎样才能安全地转交？在互联网上转发密钥时，如果通信被监听那么密钥就可会落入攻击者之手，同时也就失去了加密的意义。另外还得设法安全地保管接收到的密钥。</p>
+<p><strong>2. 使用两把密钥的公开密钥加密</strong></p>
+<p>公开密钥加密使用一对非对称的密钥。一把叫做私有密钥（private key），另一把叫做公开密钥（public key）。顾名思义，私有密钥不能让其他任何人知道，而公开密钥则可以随意发布，任何人都可以获得。</p>
+<p>使用公开密钥加密方式，发送密文的一方使用对方的公开密钥进行加密处理，对方收到被加密的信息后，再使用自己的私有密钥进行解密。利用这种方式，不需要发送用来解密的私有密钥，也不必担心密钥被攻击者窃听而盗走。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.2.2.jpg" alt=""></p>
+<p><strong>3. HTTPS 采用混合加密机制</strong></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.2.3.jpg" alt=""></p>
+<h4 id="7-2-3_证明公开密钥正确性的证书">7.2.3 证明公开密钥正确性的证书</h4><p>遗憾的是，公开密钥加密方式还是存在一些问题的。那就是无法证明公开密钥本身就是货真价实的公开密钥。比如，正准备和某台服务器建立公开密钥加密方式下的通信时，如何证明收到的公开密钥就是原本预想的那台服务器发行的公开密钥。或许在公开密钥传输途中，真正的公开密钥已经被攻击者替换掉了。</p>
+<p>为了解决上述问题，可以使用由数字证书认证机构（CA，Certificate Authority）和其相关机关颁发的公开密钥证书。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.3.jpg" alt=""></p>
+<p><strong>1. 可证明组织真实性的 EV SSL 证书</strong></p>
+<p><strong>2. 用以确定客户端的客户端证书</strong></p>
+<p><strong>3. 认证机构信誉第一</strong></p>
+<p><strong>4. 自由认证机构颁发的证书称为自签名证书</strong></p>
+<h4 id="7-2-4_HTTPS_的安全通信机制">7.2.4 HTTPS 的安全通信机制</h4><p>为了更好地理解 HTTPS，我们来观察一下 HTTPS 的通信步骤：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.4.1.jpg" alt=""></p>
+<p>在以上流程中，应用层发送数据时会附加一种叫做 MAC（Message Authentication Code）的报文摘要。MAC 能够查知报文是否遭到篡改，从而保护报文的完整性。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.4.2.jpg" alt=""></p>
+<p><strong>1. SSL 和 TLS</strong></p>
+<p>SSL 技术最初是由浏览器开发商网景通信公司率先倡导的，开发过 SSL3.0 之前的版本。目前主导权已转移到 IETF（Internet Engineering Task Force，Internet 工程任务组）的手中。</p>
+<p>IETF 以 SSL3.0 为基准，后又制定了 TLS1.0、TLS1.1 和 TLS1.2。TSL 是以 SSL 为原型开发的协议，有时会统一称该协议为 SSL。当前主流的版本是 SSL3.0 和 TLS1.0。</p>
+<p><strong>2. SSL 速度慢吗</strong></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.4.3.jpg" alt=""></p>
+<p>SSL 的慢分两种。一种是指通信慢。另一种是指由于大量消耗 CPU 及内存等资源，导致处理速度变慢。</p>
+<hr>
+<h2 id="第_8_章_确认访问用户身份的认证">第 8 章 确认访问用户身份的认证</h2><h3 id="8-1_何为认证">8.1 何为认证</h3><p><strong>HTTP/1.1 使用的认证方式如下所示：</strong></p>
+<ol>
+<li>BASIC 认证（基本认证）</li>
+<li>DIGEST  认证（摘要认证）</li>
+<li>SSL 客户端认证</li>
+<li>FormBase 认证（基于表单认证）</li>
+</ol>
+<p>此外，还有 Windows 统一认证（Keberos 认证、NTLM 认证）</p>
+<h3 id="8-2_BASIC_认证">8.2 BASIC 认证</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-8.1.jpg" alt=""></p>
+<p>BASIC 采用 Base64 编码方式，但这并不是加密处理。</p>
+<p>详情参见：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/xqxacm/p/4886299.html" target="_blank" rel="external">浅谈Base64编码算法</a></li>
+<li><a href="https://nieyong.github.io/wiki_web/BASE64%E7%BC%96%E7%A0%81%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8.html" target="_blank" rel="external">BASE64编码原理及应用</a></li>
+<li><a href="https://segmentfault.com/q/1010000000801988" target="_blank" rel="external">为什么有的代码要用 base64 进行编码？</a></li>
+<li><a href="http://blog.xiayf.cn/2016/01/24/base64-encoding/" target="_blank" rel="external">Base64编码原理与应用</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2008/06/base64.html" target="_blank" rel="external">Base64笔记</a></li>
 </ul>
+<h3 id="8-3_DIGEST_认证">8.3 DIGEST 认证</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-8.2.jpg" alt=""></p>
+<p>DIGEST 认证提供了高于 BASIC 认证的安全等级，但是和 HTTPS 的客户端认证相比仍旧很弱。DIGEST 认证提供防止密码被窃听的保护机制，但并不存在防止用户伪装的保护机制。</p>
+<h3 id="8-4_SSL_客户端认证">8.4 SSL 客户端认证</h3><p>SSL 客户端认证是借由 HTTPS 的客户端证书完成认证的方式。凭借客户端证书（在 HTTPS 一章已讲解）认证，服务器可确认访问是否来自已登录的客户端。</p>
+<p>在多数情况下，SSL 客户端认证不会仅依靠证书完成认证，一般会和基于表单认证（稍后讲解）组合形成一种双因素认证（Two-factor authentication）来使用。所谓双因素认证就是指，认证过程中不仅需要密码这一个因素，还需要申请认证者提供其他持有信息，从而作为另一个因素，与其组合使用的认证方式。</p>
+<h3 id="8-5_基于表单认证">8.5 基于表单认证</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-8.3.jpg" alt=""></p>
+<p>基于表单认证本身是通过服务器端的 Web 应用，将客户端发送过来的用户 ID 和密码与之前登录过的信息做匹配来进行认证的。</p>
+<p>但鉴于 HTTP 是无状态协议，之前已认证成功的用户状态无法通过协议层面保存下来。即，无法实现状态管理，因此即使当该用户下一次继续访问，也无法区分他与其他的用户。于是我们会使用 Cookie 来管理 Session，以弥补 HTTP 协议中不存在的状态管理功能。”</p>
 
       
     </div>
@@ -405,9 +447,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Notes/" rel="tag">#Notes</a>
+            <a href="/tags/HTTP/" rel="tag">#HTTP</a>
           
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
+            <a href="/tags/Notes/" rel="tag">#Notes</a>
           
         </div>
       
@@ -423,6 +465,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/21/the-notes-of-learning-uicollectionview/" rel="prev" title="UICollectionView 学习笔记">
+                UICollectionView 学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -520,7 +566,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -676,7 +722,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心"><span class="nav-number">3.</span> <span class="nav-text">核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionViewDataSource"><span class="nav-number">4.1.</span> <span class="nav-text">UICollectionViewDataSource</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionViewDelegate"><span class="nav-number">4.2.</span> <span class="nav-text">UICollectionViewDelegate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UICollectionViewLayout"><span class="nav-number">4.3.</span> <span class="nav-text">UICollectionViewLayout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第_7_章_确保_Web_安全的_HTTPS"><span class="nav-number">1.</span> <span class="nav-text">第 7 章 确保 Web 安全的 HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1_HTTP_的缺点"><span class="nav-number">1.1.</span> <span class="nav-text">7.1 HTTP 的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-1_通信使用明文（不加密），内容可能会被窃听"><span class="nav-number">1.1.1.</span> <span class="nav-text">7.1.1 通信使用明文（不加密），内容可能会被窃听</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TCP/IP_是可能被窃听的网络"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">TCP/IP 是可能被窃听的网络</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#加密处理防止被窃听"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">加密处理防止被窃听</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-2_不验证通信方的身份，因此有可能遭遇伪装"><span class="nav-number">1.1.2.</span> <span class="nav-text">7.1.2 不验证通信方的身份，因此有可能遭遇伪装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-3_无法证明报文的完整性，所以有可能已遭篡改"><span class="nav-number">1.1.3.</span> <span class="nav-text">7.1.3 无法证明报文的完整性，所以有可能已遭篡改</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2_HTTP_+_加密_+_认证_+_完整性保护_=_HTTPS"><span class="nav-number">1.2.</span> <span class="nav-text">7.2 HTTP + 加密 + 认证 + 完整性保护 = HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-1_HTTPS_是身披_SSL_外壳的_HTTP"><span class="nav-number">1.2.1.</span> <span class="nav-text">7.2.1 HTTPS 是身披 SSL 外壳的 HTTP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-2_相互交换密钥的公开密钥加密技术"><span class="nav-number">1.2.2.</span> <span class="nav-text">7.2.2 相互交换密钥的公开密钥加密技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-3_证明公开密钥正确性的证书"><span class="nav-number">1.2.3.</span> <span class="nav-text">7.2.3 证明公开密钥正确性的证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-4_HTTPS_的安全通信机制"><span class="nav-number">1.2.4.</span> <span class="nav-text">7.2.4 HTTPS 的安全通信机制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第_8_章_确认访问用户身份的认证"><span class="nav-number">2.</span> <span class="nav-text">第 8 章 确认访问用户身份的认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1_何为认证"><span class="nav-number">2.1.</span> <span class="nav-text">8.1 何为认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2_BASIC_认证"><span class="nav-number">2.2.</span> <span class="nav-text">8.2 BASIC 认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-3_DIGEST_认证"><span class="nav-number">2.3.</span> <span class="nav-text">8.3 DIGEST 认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-4_SSL_客户端认证"><span class="nav-number">2.4.</span> <span class="nav-text">8.4 SSL 客户端认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-5_基于表单认证"><span class="nav-number">2.5.</span> <span class="nav-text">8.5 基于表单认证</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
@@ -941,9 +987,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'tangqi92githubio';
-      var disqus_identifier = '2016/04/19/the-notes-of-learning-uicollectionview/';
-      var disqus_title = 'UICollectionView 学习笔记';
-      var disqus_url = 'http://itangqi.me/2016/04/19/the-notes-of-learning-uicollectionview/';
+      var disqus_identifier = '2016/04/07/the-notes-of-learning-illustrating-http-three/';
+      var disqus_title = '《图解 HTTP》读书笔记（三）';
+      var disqus_url = 'http://itangqi.me/2016/04/07/the-notes-of-learning-illustrating-http-three/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');

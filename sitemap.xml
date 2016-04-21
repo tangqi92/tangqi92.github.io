@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/2016/04/21/the-notes-of-learning-uicollectionview/</loc>
+    <lastmod>2016-04-21T05:06:55.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/04/07/the-notes-of-learning-illustrating-http-three/</loc>
+    <lastmod>2016-04-21T05:06:48.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/2016/04/05/the-notes-of-learning-illustrating-http-two/</loc>
     <lastmod>2016-04-20T02:27:59.000Z</lastmod>
   </url>
@@ -14,11 +24,6 @@
   <url>
     <loc>http://itangqi.me/2016/04/01/from-nsurlconnection-to-nsurlsession/</loc>
     <lastmod>2016-04-19T08:53:53.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/04/19/the-notes-of-learning-uicollectionview/</loc>
-    <lastmod>2016-04-19T08:52:18.000Z</lastmod>
   </url>
   
   <url>
