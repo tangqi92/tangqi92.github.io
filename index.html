@@ -383,6 +383,123 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/15/autorelease-pool-in-ios/" itemprop="url">
+                  iOS 中的 Autorelease Pool
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-15T00:00:00+08:00" content="2016-04-15">
+              2016-04-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/15/autorelease-pool-in-ios/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/15/autorelease-pool-in-ios/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言">前言</h2><p>Objective-C 对象的生命周期取决于其引用计数。在 Objective-C 的引用计数架构中，有一项特性叫做 Autorelease Pool（自动释放池）。释放对象有两种方式：</p>
+<ol>
+<li>调用 <code>release</code> 方法，使其保留计数立即减 1 </li>
+<li>调用 <code>autorelease</code> 方法，将其加入 Autorelease Pool 中</li>
+</ol>
+<p>Autorelease Pool 用于存放那些需要在稍后某个时刻释放的对象。当 Pool drain（清空）时，系统会向其中的对象发送 <code>release</code> 消息。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/15/autorelease-pool-in-ios/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/14/the-first-meet-with-runloop/" itemprop="url">
                   初识 Run Loop
                 </a>
@@ -1058,8 +1175,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/03/21/the-notes-of-learning-sdwebimage-two/" itemprop="url">
-                  SDWebImage 源码阅读笔记（二）
+                <a class="post-title-link" href="/2016/03/24/the-notes-of-learning-sdwebimage-four/" itemprop="url">
+                  SDWebImage 源码阅读笔记（四）
                 </a>
               
             
@@ -1072,8 +1189,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-21T00:00:00+08:00" content="2016-03-21">
-              2016-03-21
+            <time itemprop="dateCreated" datetime="2016-03-24T00:00:00+08:00" content="2016-03-24">
+              2016-03-24
             </time>
           </span>
 
@@ -1102,8 +1219,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/21/the-notes-of-learning-sdwebimage-two/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/21/the-notes-of-learning-sdwebimage-two/" itemprop="commentsCount"></span>
+                <a href="/2016/03/24/the-notes-of-learning-sdwebimage-four/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/24/the-notes-of-learning-sdwebimage-four/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1125,11 +1242,9 @@
 
       
         
-          <h2 id="前言">前言</h2><p>我们在第一篇文章<a href="">《SDWebImage 源码阅读笔记（一）》</a>中，已经了解到，当我们调用</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[cell<span class="variable">.imageView</span> sd_setImageWithURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://www.domain.com/path/to/image.jpg"</span>]</span><br><span class="line">                  placeholderImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"placeholder.png"</span>]];</span><br></pre></td></tr></table></figure>
-<p>时，其实是通过 <code>SDWebImageManager</code> 类进行协调，调用 <code>SDImageCache</code> 与 <code>SDWebImageDownloader</code> 来实现图片的缓存查询与网络下载的。那么今天在第二篇中，就让我们来对 <code>SDImageCache</code> 一探究竟吧：）</p>
+          <h2 id="前言">前言</h2><p>关于 SDWebImage 整体的架构可以参见下图：</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/21/the-notes-of-learning-sdwebimage-two/#more" rel="contents">
+            <a class="btn" href="/2016/03/24/the-notes-of-learning-sdwebimage-four/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1172,8 +1287,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/03/19/the-notes-of-learning-sdwebimage-one/" itemprop="url">
-                  SDWebImage 源码阅读笔记（一）
+                <a class="post-title-link" href="/2016/03/23/the-notes-of-learning-sdwebimage-three/" itemprop="url">
+                  SDWebImage 源码阅读笔记（三）
                 </a>
               
             
@@ -1186,8 +1301,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-19T00:00:00+08:00" content="2016-03-19">
-              2016-03-19
+            <time itemprop="dateCreated" datetime="2016-03-23T00:00:00+08:00" content="2016-03-23">
+              2016-03-23
             </time>
           </span>
 
@@ -1216,8 +1331,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/03/19/the-notes-of-learning-sdwebimage-one/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/19/the-notes-of-learning-sdwebimage-one/" itemprop="commentsCount"></span>
+                <a href="/2016/03/23/the-notes-of-learning-sdwebimage-three/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/23/the-notes-of-learning-sdwebimage-three/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1239,123 +1354,9 @@
 
       
         
-          <h2 id="前言">前言</h2><p>说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，不过仅仅停留在简单的调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。</p>
-<p>如今转投 iOS 怀抱的我，决定将阅读优秀项目的源码作为学习的一部分，而且是带着<strong>疑问</strong>去阅读。由于在项目中使用及考虑到 SDWebImage 的普及程度，其顺理成章的成为了我第一个阅读的项目。</p>
-<p>话不多说，让我们开始吧！</p>
+          <h2 id="前言">前言</h2><p>不知不觉，我们已经通过前面两篇文章的介绍（<a href="http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/">我是链接=;=</a>），对 SDWebImage 的工作流程有了较为清晰的认识，那么，今天就让我们把重点放在 <code>SDWebImageDownloader</code> 上，它到底做了哪些工作？又有哪些奇淫技巧？别着急，你慢慢往下看：）</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/19/the-notes-of-learning-sdwebimage-one/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/03/15/the-notes-of-learning-gcd/" itemprop="url">
-                  《Objective-C 高级编程》读书笔记之 GCD
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-15T00:00:00+08:00" content="2016-03-15">
-              2016-03-15
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/03/15/the-notes-of-learning-gcd/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/03/15/the-notes-of-learning-gcd/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言">前言</h2><p>本文作为《Objective-C 高级编程》读书笔记的第三篇，也是最后一篇，给大家带来的是关于 Grand Central Dispatch (GCD) 的知识点总结。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/03/15/the-notes-of-learning-gcd/#more" rel="contents">
+            <a class="btn" href="/2016/03/23/the-notes-of-learning-sdwebimage-three/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1382,7 +1383,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1423,7 +1424,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">29</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1440,7 +1441,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

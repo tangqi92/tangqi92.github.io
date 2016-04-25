@@ -100,6 +100,170 @@
   </entry>
   
   <entry>
+    <title><![CDATA[iOS 中的 Autorelease Pool]]></title>
+    <link href="http://itangqi.me/2016/04/15/autorelease-pool-in-ios/"/>
+    <id>http://itangqi.me/2016/04/15/autorelease-pool-in-ios/</id>
+    <published>2016-04-14T16:00:00.000Z</published>
+    <updated>2016-04-24T06:22:57.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>Objective-C 对象的生命周期取决于其引用计数。在 Objective-C 的引用计数架构中，有一项特性叫做 Autorelease Pool（自动释放池）。释放对象有两种方式：</p>
+<ol>
+<li>调用 <code>release</code> 方法，使其保留计数立即减 1 </li>
+<li>调用 <code>autorelease</code> 方法，将其加入 Autorelease Pool 中</li>
+</ol>
+<p>Autorelease Pool 用于存放那些需要在稍后某个时刻释放的对象。当 Pool drain（清空）时，系统会向其中的对象发送 <code>release</code> 消息。</p>
+<a id="more"></a>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-01.jpg" alt=""></p>
+<hr>
+<h2 id="详解">详解</h2><p>创建 Autorelease Pool 所使用语法如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line"></span><br><span class="line">true<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果在没有创建 Autorelease Pool 的情况下给对象发送 <code>autorelease</code> 消息，那么控制台会输出这样一条信息：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__<span class="built_in">NSAutoreleaseNoPool</span>(): Object <span class="number">0x350270</span> of class <span class="built_in">NSCFString</span> autoreleased with no pool <span class="keyword">in</span> place - just leaking - <span class="keyword">break</span> on objc_ autoreleaseNoPool() to debug</span><br></pre></td></tr></table></figure>
+<p>而然，一般情况下无须担心 Autorelease Pool 的创建问题。Mac OS X  与 iOS 应用程序分别运行于 Cocoa 及 Cocoa Touch 环境中。系统会自动创建一些线程，比如主线程或者是 GCD 机制中的线程，这些线程默认都有 Autorelease Pool，每次执行 Event Loop（事件循环）时，就会将其清空。因此，不需要自己来创建。</p>
+<p>通常只有一个地方需要创建 Autorelease Pool，那就是在 <code>main</code> 函数里，我们用 Autorelease Pool  来包裹应用程序的入口点。比如说，iOS 程序的 <code>main</code> 函数经常这样写：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">true<span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">true    <span class="keyword">return</span> <span class="built_in">UIApplicationMain</span>(argc, argv, <span class="literal">nil</span>, <span class="built_in">NSStringFromClass</span>([AppDelegate class]));</span><br><span class="line">true&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实从技术角度看，不是非得有个 <code>@autoreleasepool {}</code> 才行。因为块的末尾恰好就是应用程序的终止处，而此时操作系统会把程序所占的全部内存都释放掉。虽说如此，但是如果不写这个块的话，那么由 <code>UIApplicationMain</code> 函数所自动释放的那些对象，就没有 Autorelease Pool 可以容纳了，于是系统会发出警告信息来表明这一情况。所以说，这个池可以理解成最外围捕捉全部自动释放对象所用的池。</p>
+<hr>
+<h2 id="示例">示例</h2><p>下面这段代码中的花括号定义了 Autorelease Pool 的范围。Autorelease Pool 于 <code>{</code>（左花括号）处创建，并于对应的 <code>}</code>（右花括号）处自动清空。位于 Autorelease Pool 范围内的对象，将在此范围末尾处收到 <code>release</code> 消息。Autorelease Pool 可以嵌套。系统在自动释放对象时，会把它放到最内层的池里。比如说：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">    <span class="built_in">NSString</span> *string = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"1 = %i"</span>, <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">NSNumber</span> *number = [<span class="built_in">NSNumber</span> numberWithInt:<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本例中有两个对象，它们都由类的工厂方法所创建，这样创建出来的对象会自动释放。<code>NSString</code> 对象放在外围的 Autorelease Pool 中，而 <code>NSNumber</code> 对象则放在里层的 Autorelease Pool 中。将 Autorelease Pool 嵌套使用的好处是，可以借此控制应用程序的<strong>内存峰值（high-memory waterline）</strong>，使其不致过高。</p>
+<p>考虑下面这段代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</span><br><span class="line">    [<span class="keyword">self</span> doSomethingWithInt:i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果 <code>doSomethingWithInt:</code> 方法要创建临时对象，那么这些对象很可能会放在 Autorelease Pool 里。比方说，它们可能是一些临时字符串。但是，即便这些对象在调用完方法之后就不再使用了，它们也依然处于]存活状态，因为目前还在 Autorelease Pool 里，等待系统稍后将其释放并回收。然而，<strong>Autorelease Pool 要等到线程执行下一个事件循环时才会清空。</strong>这就意味着在执行 for 循环时，会持续有新的对象创建出来，并加入 Autorelease Pool 中。所有这种对象都要等 for 循环执行完才会释放。这样一来，在执行 for 循环时，应用程序所占内存量就会持续上涨，而等到所有临时对象都释放之后，内存量又会突然下降。</p>
+<hr>
+<h2 id="实现原理">实现原理</h2><h3 id="AutoreleasePoolPage">AutoreleasePoolPage</h3><p>ARC 下，我们使用 <code>@autoreleasepool {}</code> 来使用一个 Autorelease Pool，随后编译器将其改写成下面的样子：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *context = objc_autoreleasePoolPush();</span><br><span class="line"><span class="comment">// &#123;&#125;中的代码</span></span><br><span class="line">objc_autoreleasePoolPop(context);</span><br></pre></td></tr></table></figure>
+<p>而这两个函数都是对 <code>AutoreleasePoolPage</code> 的简单封装，所以自动释放机制的核心就在于这个类。</p>
+<p><code>AutoreleasePoolPage</code> 是一个 C++ 实现的类：</p>
+<ol>
+<li>Autorelease Pool 并没有单独的结构，而是由若干个 <code>AutoreleasePoolPage</code> 以<strong>双向链表</strong>的形式组合而成（分别对应结构中的 parent 指针和 child 指针）</li>
+<li>Autorelease Pool 是按线程一一对应的（结构中的 thread 指针指向当前线程）</li>
+<li><code>AutoreleasePoolPage</code> 每个对象会开辟 4096 字节内存（也就是虚拟内存一页的大小），除了上面的实例变量所占空间，剩下的空间全部用来储存 autorelease 对象的地址</li>
+<li>上面的 id *next 指针作为游标指向栈顶最新 add 进来的 autorelease 对象的下一个位置</li>
+<li>一个 <code>AutoreleasePoolPage</code> 的空间被占满时，会新建一个 <code>AutoreleasePoolPage</code> 对象，连接链表，后来的 autorelease 对象在新的 Page 加入</li>
+</ol>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-02.jpg" alt=""></p>
+<ul>
+<li><code>magic</code> 用来校验 <code>AutoreleasePoolPage</code> 的结构是否完整</li>
+<li><code>next</code> 指向最新添加的 autoreleased 对象的下一个位置，初始化时指向 begin() </li>
+<li><code>thread</code> 指向当前线程</li>
+<li><code>parent</code> 指向父结点，第一个结点的 parent 值为 nil </li>
+<li><code>child</code> 指向子结点，最后一个结点的 child 值为 nil </li>
+<li><code>depth</code> 代表深度，从 0 开始，往后递增 1</li>
+<li><code>hiwat</code> 代表 high water mark </li>
+</ul>
+<p>另外，当 next == begin() 时，表示 <code>AutoreleasePoolPage</code> 为空；当 next == end() 时，表示 <code>AutoreleasePoolPage</code> 已满。</p>
+<p>所以，若当前线程中只有一个 <code>AutoreleasePoolPage</code> 对象，并记录了很多 autorelease 对象地址时内存如下图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-03.jpg" alt=""></p>
+<p>图中的情况，这一页再加入一个 autorelease 对象就要满了（也就是 next 指针马上指向栈顶），这时就要执行上面说的操作，建立下一页 Page 对象，与这一页链表连接完成后，新 Page 的 next 指针被初始化在栈底（ begin 的位置），然后继续向栈顶添加新对象。</p>
+<p>所以，向一个对象发送 <code>autorelease</code> 消息，就是将这个对象加入到当前 <code>AutoreleasePoolPage</code> 的栈顶 next 指针指向的位置</p>
+<h3 id="释放时机">释放时机</h3><p>每当进行一次 <code>objc_autoreleasePoolPush</code> 调用时，Runtime 向当前的 <code>AutoreleasePoolPage</code>中 add 进一个<strong>哨兵对象（POOL_SENTINEL）</strong>，值为 0（也就是个 nil），那么这一个 page 就变成了下面的样子：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-04.jpg" alt=""></p>
+<p><code>objc_autoreleasePoolPush</code> 的返回值正是这个哨兵对象的地址，被 <code>objc_autoreleasePoolPop</code>（哨兵对象）作为入参，于是：</p>
+<ol>
+<li>根据传入的哨兵对象地址找到哨兵对象所处的 Page</li>
+<li>在当前 Page 中，将晚于哨兵对象插入的所有 autorelease 对象都发送一次 <code>release</code> 消息，并向回移动next指针到正确位置</li>
+<li>补充 2：从最新加入的对象一直向前清理，可以向前跨越若干个 Page，直到哨兵所在的 Page</li>
+</ol>
+<p>刚才的 <code>objc_autoreleasePoolPop</code> 执行后，最终变成了下面的样子：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-05.jpg" alt=""></p>
+<hr>
+<h2 id="@autoreleasepool_{}">@autoreleasepool {}</h2><p>我们使用 <code>clang -rewrite-objc</code> 命令将下面的 Objective-C 代码重写成 C++ 代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将会得到以下输出结果（只保留了相关代码）：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> __declspec(dllimport) <span class="keyword">void</span> * objc_autoreleasePoolPush(<span class="keyword">void</span>);</span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> __declspec(dllimport) <span class="keyword">void</span> objc_autoreleasePoolPop(<span class="keyword">void</span> *);</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __AtAutoreleasePool &#123;</span><br><span class="line">  __AtAutoreleasePool() &#123;atautoreleasepoolobj = objc_autoreleasePoolPush();&#125;</span><br><span class="line">  ~__AtAutoreleasePool() &#123;objc_autoreleasePoolPop(atautoreleasepoolobj);&#125;</span><br><span class="line">  <span class="keyword">void</span> * atautoreleasepoolobj;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* @autoreleasepool */</span> &#123; __AtAutoreleasePool __autoreleasepool;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>苹果通过声明一个 <code>__AtAutoreleasePool</code> 类型的局部变量 <code>__autoreleasepool</code> 来实现 <code>@autoreleasepool {}</code>。当声明 <code>__autoreleasepool</code> 变量时，构造函数 <code>__AtAutoreleasePool()</code> 被调用，即执行 <code>atautoreleasepoolobj = objc_autoreleasePoolPush();</code>；当出了当前作用域时，析构函数 <code>~__AtAutoreleasePool()</code> 被调用，即执行 <code>objc_autoreleasePoolPop(atautoreleasepoolobj);</code>。也就是说 <code>@autoreleasepool {}</code> 的实现代码可以进一步简化如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @autoreleasepool */</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> *atautoreleasepoolobj = objc_autoreleasePoolPush();</span><br><span class="line">    <span class="comment">// 用户代码，所有接收到 autorelease 消息的对象会被添加到这个 Autorelease Pool 中</span></span><br><span class="line">    objc_autoreleasePoolPop(atautoreleasepoolobj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，单个 Autorelease Pool 的运行过程可以简单地理解为 <code>objc_autoreleasePoolPush()</code>、<code>[obj autorelease]</code> 和 <code>objc_autoreleasePoolPop(void *)</code> 三个过程。</p>
+<h3 id="push_操作">push 操作</h3><p>上面提到的 <code>objc_autoreleasePoolPush()</code> 函数本质上就是调用的 <code>AutoreleasePoolPage</code> 的 <code>push</code> 函数：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *</span><br><span class="line">objc_autoreleasePoolPush(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (UseGC) <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">return</span> AutoreleasePoolPage::push();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，我们接下来看看 <code>AutoreleasePoolPage</code> 的 <code>push</code> 函数的作用和执行过程。一个 <code>push</code> 操作其实就是创建一个新的 Autorelease Pool，对应 <code>AutoreleasePoolPage</code> 的具体实现就是往 <code>AutoreleasePoolPage</code> 中的 <code>next</code> 位置插入一个 <strong>POOL_SENTINEL</strong>（哨兵对象），并且返回插入的 <code>POOL_SENTINEL</code> 的内存地址。这个地址也就是我们前面提到的 pool token ，在执行 <code>pop</code> 操作的时候作为函数的入参：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> *push()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">id</span> *dest = autoreleaseFast(POOL_SENTINEL);</span><br><span class="line">    assert(*dest == POOL_SENTINEL);</span><br><span class="line">    <span class="keyword">return</span> dest;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>push</code> 函数通过调用 <code>autoreleaseFast</code> 函数来执行具体的插入操作：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">id</span> *autoreleaseFast(<span class="keyword">id</span> obj)</span><br><span class="line">&#123;</span><br><span class="line">    AutoreleasePoolPage *page = hotPage();</span><br><span class="line">    <span class="keyword">if</span> (page &amp;&amp; !page-&gt;full()) &#123;</span><br><span class="line">        <span class="keyword">return</span> page-&gt;add(obj);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (page) &#123;</span><br><span class="line">        <span class="keyword">return</span> autoreleaseFullPage(obj, page);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> autoreleaseNoPage(obj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>autoreleaseFast</code> 函数在执行一个具体的插入操作时，分别对三种情况进行了不同的处理：</p>
+<ol>
+<li>当前 Page 存在且没有满时，直接将对象添加到当前 Page 中，即 next 指向的位置</li>
+<li>当前 Page 存在且已满时，创建一个新的 Page ，并将对象添加到新创建的 Page 中</li>
+<li>当前 Page 不存在时，即还没有 Page 时，创建第一个 Page ，并将对象添加到新创建的 Page 中</li>
+</ol>
+<p>每调用一次 <code>push</code> 操作就会创建一个新的 Autorelease Pool，即往 <code>AutoreleasePoolPage</code> 中插入一个 <code>POOL_SENTINEL</code>，并且返回插入的 <code>POOL_SENTINEL</code> 的内存地址。</p>
+<h3 id="autorelease_操作">autorelease 操作</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)autorelease &#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="keyword">id</span>)<span class="keyword">self</span>)-&gt;rootAutorelease();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过查看 <code>((id)self)-&gt;rootAutorelease()</code> 的方法调用，我们发现最终调用的就是  <code>AutoreleasePoolPage</code> 的 <code>autorelease</code> 函数：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((noinline,used))</span><br><span class="line"><span class="keyword">id</span></span><br><span class="line">objc_object::rootAutorelease2()</span><br><span class="line">&#123;</span><br><span class="line">    assert(!isTaggedPointer());</span><br><span class="line">    <span class="keyword">return</span> AutoreleasePoolPage::autorelease((<span class="keyword">id</span>)<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>AutoreleasePoolPage</code> 的 <code>autorelease</code> 函数的实现对我们来说就比较容量理解了，它跟 <code>push</code> 操作的实现非常相似。只不过 <code>push</code> 操作插入的是一个 <code>POOL_SENTINEL</code>，而 <code>autorelease</code> 操作插入的是一个具体的 autoreleased 对象：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">id</span> autorelease(<span class="keyword">id</span> obj)</span><br><span class="line">&#123;</span><br><span class="line">    assert(obj);</span><br><span class="line">    assert(!obj-&gt;isTaggedPointer());</span><br><span class="line">    <span class="keyword">id</span> *dest __unused = autoreleaseFast(obj);</span><br><span class="line">    assert(!dest  ||  *dest == obj);</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="pop_操作">pop 操作</h3><p>同理，前面提到的 <code>objc_autoreleasePoolPop(void *)</code> 函数本质上也是调用的  <code>AutoreleasePoolPage</code> 的 <code>pop</code> 函数：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">objc_autoreleasePoolPop(<span class="keyword">void</span> *ctxt)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (UseGC) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// fixme rdar://9167170</span></span><br><span class="line">    <span class="keyword">if</span> (!ctxt) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    AutoreleasePoolPage::pop(ctxt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>pop</code> 函数的入参就是 <code>push</code> 函数的返回值，也就是 <code>POOL_SENTINEL</code> 的内存地址，即 pool token。当执行 <code>pop</code> 操作时，内存地址在 pool token 之后的所有 autoreleased 对象都会被 release。直到 pool token 所在 Page 的 next 指向 pool token 为止。</p>
+<p>下面是某个线程的 Autorelease Pool 堆栈的内存结构图，在这个 Autorelease Pool 堆栈中总共有两个 <code>POOL_SENTINEL</code>，即有两个 Autorelease Pool。该堆栈由三个 <code>AutoreleasePoolPage</code> 结点组成，第一个 <code>AutoreleasePoolPage</code> 结点为 <code>coldPage()</code>，最后一个 <code>AutoreleasePoolPage</code> 结点为 <code>hotPage()</code>。其中，前两个结点已经满了，最后一个结点中保存了最新添加的 autoreleased 对象 <code>objr3</code> 的内存地址：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-06.png" alt=""></p>
+<p>此时，如果执行 <code>pop(token1)</code> 操作，那么该 Autorelease Pool 堆栈的内存结构将会变成如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-07.png" alt=""></p>
+<hr>
+<h2 id="总结">总结</h2><p>这种情况不甚理想，尤其当循环长度无法预知的情况下更是如此。比方说，要从数据库中读出许多对象。代码可能会这么写：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *databaseRecords = <span class="comment">/* ... */</span>;</span><br><span class="line"><span class="built_in">NSMutableArray</span> *people = [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">NSDictionary</span> *record <span class="keyword">in</span> databaseRecords) &#123;</span><br><span class="line">    EOCPerson *person = [[EOCPerson alloc] initWithRecord:record];</span><br><span class="line">    [people addObject:person];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>EOCPerson</code> 的初始化函数也许会像上列那样，再创建出一些临时对象。若记录有很多条，则内存中也会有很多不必要的临时对象，它们本来应该提早回收的。增加一个 Autorelease Pool 即可解决此问题。如果把循环内的代码包裹在 <code>@autoreleasepool {}</code> 中，那么在循环中自动释放的对象就会放在这个 Pool，而不是线程的主池里面。例如：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *databaseRecords = <span class="comment">/* ... */</span>;</span><br><span class="line"><span class="built_in">NSMutableArray</span> *people = [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">NSDictionary</span> *record <span class="keyword">in</span> databaseRecords) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        EOCPerson *person = [[EOCPerson alloc] initWithRecord:record];</span><br><span class="line">        [people addObject:person]; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>加上这个 Autorelease Pool 之后，应用程序在执行循环时的内存峰值就会降低，不再像原来那么高了。内存峰值（high-memory waterline）是指应用程序在某个特定时间段内的最大内存用量（highest memory footprint）。新增的 <code>@autoreleasepool {}</code> 可以减少这个峰值，因为系统会在块的末尾把某些对象回收掉。而刚才提到的那种临时对象，就在回收之列。</p>
+<p>是否应该用池来优化效率，完全取决于具体的应用程序。首先得监控内存用量，判断其中有没有需要解决的问题，如果没有完成这一步，那就别急着优化。尽管 <code>@autoreleasepool {}</code> 的开销不太大，但毕竟还是有的，所以尽量不要建立额外的 Autorelease Pool。</p>
+<h3 id="MRC_vs-_ARC">MRC vs. ARC</h3><p>如果在 ARC 出现之前就写过 Objective-C 程序，那么可能还记得有种老式写法，就是使用 <code>NSAutoreleasePool</code> 对象。这个特殊的对象与普通对象不同，它专门用来表示 Autorelease Pool，就像新语法中的 <code>@autoreleasepool {}</code> 一样。但是这种写法并不会在每次执行 for 循环时都清空池，此对象更为重量级，通常用来创建那种偶尔需要清空的池，比方说：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *databaseRecords = <span class="comment">/* ... */</span>;</span><br><span class="line"><span class="built_in">NSMutableArray</span> *people = [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line"><span class="built_in">NSAutoreleasePool</span> *pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init];</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">NSDictionary</span> *record <span class="keyword">in</span> databaseRecords) &#123;</span><br><span class="line">    EOCPerson *person = [[EOCPerson alloc] initWithRecord:record];</span><br><span class="line">    [people addObject:person];</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// Drain the pool only every 10 cycles</span></span><br><span class="line">    <span class="keyword">if</span> (++i == <span class="number">10</span>) &#123;</span><br><span class="line">        [pool drain];</span><br><span class="line">        i = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">// Also drain at the end in case the loop is not a multiple of 10</span></span><br><span class="line">[pool drain];</span><br></pre></td></tr></table></figure>
+<p>现在不需要再这样写代码了。采用随着 ARC 所引入的新语法，可以创建出更为轻量级的 Autorelease Pool。原来所写的代码可能会每执行 n 次循环清空一次 Autorelease Pool，现在可以改用 <code>@autoreleasepool {}</code> 把 for 循环中的语句包起来，这样的话，每次执行循环时都会建立并清空 Autorelease Pool。</p>
+<p><code>@autoreleasepool {}</code> 语法还有个好处：每个 Autorelease Pool 均有其范围，可以避免无意间误用了那些在清空池后已为系统所回收的对象。比方说，考虑下面这段采用旧式写法的代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSAutoreleasePool</span> *pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init];</span><br><span class="line"><span class="keyword">id</span> object = [<span class="keyword">self</span> createObject];</span><br><span class="line">[pool drain];</span><br><span class="line">[<span class="keyword">self</span> useObject:object];</span><br></pre></td></tr></table></figure>
+<p>这样写虽然稍显夸张，但却能说明问题。调用 <code>useObject:</code> 方法时所传入的那个对象，可能已经为系统所回收了。同样的代码改用新式写法就变成了：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">    <span class="keyword">id</span> object = [<span class="keyword">self</span> createObject];</span><br><span class="line">&#125;</span><br><span class="line">[<span class="keyword">self</span> useObject:object];</span><br></pre></td></tr></table></figure>
+<p>这次根本就无法编译，因为 object 变量出了 Autorelease Pool 的外围后就不可用了，所以在调用 <code>useObject:</code> 方法时不能用它做参数。</p>
+<h3 id="NSThread、NSRunLoop_和_NSAutoreleasePool">NSThread、NSRunLoop 和 NSAutoreleasePool</h3><p>根据苹果官方文档中对 <code>NSRunLoop</code> 的描述，我们可以知道每一个线程，包括主线程，都会拥有一个专属的 <code>NSRunLoop</code> 对象，并且会在有需要的时候自动创建。</p>
+<p>在主线程的 <code>NSRunLoop</code> 对象（在系统级别的其他线程中应该也是如此，比如通过 <code>dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)</code> 获取到的线程）的每个（事件循环）Event Loop 开始前，系统会自动创建一个 Autorelease Pool ，并在 Event Loop 结束时 drain 。</p>
+<p>另外，<code>NSAutoreleasePool</code> 中还提到，每一个线程都会维护自己的 Autorelease Pool 堆栈。换句话说 Autorelease Pool 是与线程紧密相关的，每一个 Autorelease Pool 只对应一个线程。</p>
+<p>弄清楚 <code>NSThread</code>、<code>NSRunLoop</code> 和 <code>NSAutoreleasePool</code> 三者之间的关系可以帮助我们从整体上了解 Objective-C 的内存管理机制</p>
+<h3 id="使用场景">使用场景</h3><ol>
+<li>你编写是命令行工具的代码，而不是基于 UI 框架的代码</li>
+<li>你需要写一个循环，里面会创建很多临时的对象<ul>
+<li>这时候你可以在循环内部的代码块里使用一个 <code>@autoreleasepool {}</code>，这样这些对象就能在一次迭代完成后被释放掉。这种方式可以降低内存最大占用</li>
+</ul>
+</li>
+<li>当你大量使用辅助线程<ul>
+<li>你需要在线程的任务代码中创建自己的 <code>@autoreleasepool {}</code></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="要点">要点</h2><ol>
+<li>Autorelease Pool 排布在栈中，对象收到 <code>autorelease</code> 消息后，系统将其放入最顶端的池里。</li>
+<li>合理运用 Autorelease Pool，可降低应用程序的内存峰值。</li>
+<li><code>@autoreleasepool {}</code> 这种新式写法能创建出更为轻便的 Autorelease Pool。</li>
+</ol>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://book.douban.com/subject/25829244/" target="_blank" rel="external">Effective Objective-C 2.0</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html#//apple_ref/doc/uid/20000047-CJBFBEDI" target="_blank" rel="external">Using Autorelease Pool Blocks</a></li>
+<li><a href="http://blog.sunnyxx.com/2014/10/15/behind-autorelease/" target="_blank" rel="external">黑幕背后的Autorelease</a></li>
+<li><a href="http://blog.leichunfeng.com/blog/2015/05/31/objective-c-autorelease-pool-implementation-principle/" target="_blank" rel="external">Objective-C Autorelease Pool 的实现原理</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>Objective-C 对象的生命周期取决于其引用计数。在 Objective-C 的引用计数架构中，有一项特性叫做 Autorelease Pool（自动释放池）。释放对象有两种方式：</p>
+<ol>
+<li>调用 <code>release</code> 方法，使其保留计数立即减 1 </li>
+<li>调用 <code>autorelease</code> 方法，将其加入 Autorelease Pool 中</li>
+</ol>
+<p>Autorelease Pool 用于存放那些需要在稍后某个时刻释放的对象。当 Pool drain（清空）时，系统会向其中的对象发送 <code>release</code> 消息。</p>]]>
+    
+    </summary>
+    
+      <category term="Autorelease Pool" scheme="http://itangqi.me/tags/Autorelease-Pool/"/>
+    
+      <category term="Memory Management" scheme="http://itangqi.me/tags/Memory-Management/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[初识 Run Loop]]></title>
     <link href="http://itangqi.me/2016/04/14/the-first-meet-with-runloop/"/>
     <id>http://itangqi.me/2016/04/14/the-first-meet-with-runloop/</id>
@@ -1310,6 +1474,175 @@
   </entry>
   
   <entry>
+    <title><![CDATA[SDWebImage 源码阅读笔记（四）]]></title>
+    <link href="http://itangqi.me/2016/03/24/the-notes-of-learning-sdwebimage-four/"/>
+    <id>http://itangqi.me/2016/03/24/the-notes-of-learning-sdwebimage-four/</id>
+    <published>2016-03-23T16:00:00.000Z</published>
+    <updated>2016-04-25T14:31:57.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>关于 SDWebImage 整体的架构可以参见下图：</p>
+<a id="more"></a> 
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-sdwebimage-four-01.jpeg" alt=""></p>
+<p>作为《SDWebImage 源码阅读笔记》系列文章的完结篇，最后想给大家列举几个拓展的知识点（也不知道有用没用=；=）。</p>
+<hr>
+<h2 id="WebP">WebP</h2><p>SDWebImage 有一特性便是支持 WebP，那 WebP 又是何方神圣呢？</p>
+<p>WebP 是由 Google 推出的一种支持有损压缩和无损压缩的图片文件格式，派生自图像编码格式 VP8。根据 Google 的测试，无损压缩后的 WebP 比 PNG 文件少了 45％ 的文件大小，即使这些 PNG 文件经过其他压缩工具压缩之后，WebP 还是可以减少 28％ 的文件大小。</p>
+<p>项目主页：<a href="https://developers.google.com/speed/webp/" target="_blank" rel="external">https://developers.google.com/speed/webp/</a></p>
+<hr>
+<h2 id="NSURLCache">NSURLCache</h2><h3 id="GET_网络请求缓存">GET 网络请求缓存</h3><p>首先要知道，POST 请求不能被缓存，只有 GET 请求能被缓存。因为从数学的角度来讲，GET 的结果是<code>幂等</code>的，就好像字典里的 key 与 value 就是幂等的，而 POST <code>不幂等</code> 。缓存的思路就是将查询的参数组成的值作为 key ，对应结果作为 value。从这个意义上说，一个文件的资源链接，也叫 GET 请求。</p>
+<h3 id="80%_的缓存需求：两行代码就可满足">80% 的缓存需求：两行代码就可满足</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSURLCache</span> *urlCache = [[<span class="built_in">NSURLCache</span> alloc] initWithMemoryCapacity:<span class="number">4</span> * <span class="number">1024</span> * <span class="number">1024</span> diskCapacity:<span class="number">20</span> * <span class="number">1024</span> * <span class="number">1024</span> diskPath:<span class="literal">nil</span>];  </span><br><span class="line">[<span class="built_in">NSURLCache</span> setSharedURLCache:urlCache];</span><br></pre></td></tr></table></figure>
+<p>不过呢：</p>
+<p><strong>SDWebImage 中默认是不使用 <code>NSURLCache</code> 的，取而代之是使用自己实现的缓存逻辑….</strong></p>
+<p><strong>而网络库方面大名鼎鼎的 <a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a> 则正是使用的 NSURLCache。</strong></p>
+<p>至于孰优孰劣也就仁者见仁智者见智了。</p>
+<p>更多详情：</p>
+<ul>
+<li><a href="https://github.com/ChenYilong/ParseSourceCodeStudy/blob/master/02_Parse%E7%9A%84%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E4%B8%8E%E7%A6%BB%E7%BA%BF%E5%AD%98%E5%82%A8/iOS%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E6%89%AB%E7%9B%B2%E7%AF%87.md" target="_blank" rel="external">iOS网络缓存扫盲篇</a></li>
+<li><a href="http://www.cnblogs.com/madpanda/p/4700741.html" target="_blank" rel="external">iOS网络——NSURLCache设置网络请求缓存</a></li>
+<li><a href="https://github.com/rs/SDWebImage/wiki/How-is-SDWebImage-better-than-X%3F" target="_blank" rel="external">How is SDWebImage better than X?</a></li>
+</ul>
+<hr>
+<h2 id="LRU">LRU</h2><p>在<a href="http://itangqi.me/2016/03/21/the-notes-of-learning-sdwebimage-two/">《SDWebImage 源码阅读笔记（二）》</a>中，我们知道，SDWebImage 的图片清理机制（磁盘）是，删除过期时间的缓存（每次一半的递归来移除那些过早的文件）。</p>
+<p>在一次面试中，面试官问及是否可以提供其他的淘汰策略时，我提到了 LRU（近期最少使用算法），不过当要求说出算法的具体实现时，自己又懵逼了……</p>
+<p>下面是来自 SDWebImage 的文档页截图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/CocoaDocs.org%20%20%20SDWebImage%20Referethe-notes-of-learning-sdwebimage-four-02.png" alt=""></p>
+<p>可以看出，LRU 是没错的，下面就来关心下如何设计吧：</p>
+<p>LRU 的典型实现是 Hash Map + Doubly Linked List，双向链表用于存储数据结点，并且它是按照结点最近被使用的时间来存储的。如果一个结点被访问了，我们有理由相信它在接下来的一段时间被访问的概率要大于其它结点。于是，我们把它放到双向链表的头部。当我们往双向链表里插入一个结点，我们也有可能很快就会使用到它，同样把它插入到头部。我们使用这种方式不断地调整着双向链表，链表尾部的结点自然也就是最近一段时间，最久没有使用到的结点。那么，当我们的 Cache 满了，需要替换掉的就是双向链表中最后的那个结点（不是尾结点，头尾结点不存储实际内容）。</p>
+<p>哈希表的作用是什么呢？如果没有哈希表，我们要访问某个结点，就需要顺序地一个个找，时间复杂度是O(n)。使用哈希表可以让我们在 O(1) 的时间找到想要访问的结点，或者返回未找到。</p>
+<p>更多详情：</p>
+<ul>
+<li><a href="http://www.hawstein.com/posts/lru-cache-impl.html" target="_blank" rel="external">如何用C++实现一个LRU Cache</a></li>
+<li><a href="http://www.yufengof.com/2015/11/18/lru-and-linkedhashmap-source-code/" target="_blank" rel="external">剖析LRU算法及LinkedHashMap源码实现机制</a></li>
+</ul>
+<p>关于 iOS 中 Cache 的设计，推荐阅读 ibireme 的 <a href="http://blog.ibireme.com/2015/10/26/yycache/" target="_blank" rel="external">YYCache 设计思路</a> </p>
+<hr>
+<h2 id="图片解码">图片解码</h2><blockquote>
+<p>当你用 UIImage 或 CGImageSource 的那几个方法创建图片时，图片数据并不会立刻解码。图片设置到 UIImageView 或者 CALayer.contents 中去，并且 CALayer 被提交到 GPU 前，CGImage 中的数据才会得到解码。这一步是发生在主线程的，并且不可避免。如果想要绕开这个机制，常见的做法是在后台线程先把图片绘制到 CGBitmapContext 中，然后从 Bitmap 直接创建图片。目前常见的网络图片库都自带这个功能。</p>
+</blockquote>
+<p>上段文字引用自 ibireme 的 <a href="http://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/" target="_blank" rel="external">iOS 保持界面流畅的技巧</a></p>
+<p>而在 SDWebImage 中也的确将图片的解码放在了子线程中完成，目的就是为了提示读取缓存的效率。</p>
+<hr>
+<h2 id="总结">总结</h2><p>下面是对 SDWebImage 中涉及的技术点进行简短的总结：</p>
+<ol>
+<li><p><code>NSCache</code> 类：以 key-value 的形式进行存储，实现内存缓存</p>
+</li>
+<li><p>图片缓存清理策略：如果所有缓存文件的总大小超过这一大小，则会按照文件最后修改时间的逆序，以每次一半的递归来移除那些过早的文件，直到缓存的实际大小小于我们设置的最大使用空间</p>
+</li>
+<li><p>对图片的解压缩操作：具体操作可以查看 SDWebImageDecoder.m 中 <code>+decodedImageWithImage</code> 方法的实现</p>
+</li>
+<li><p><code>dispatch_barrier_sync</code> 函数：该方法用于对操作设置屏幕，确保在执行完任务后才会执行后续操作，该方法常用于确保类的线程安全性操作</p>
+</li>
+<li><p><code>NSOperation</code> 与 <code>NSOperationQueue</code> 相结合：实现多线程并发操作，可实现取消任务、设置依赖关系、设置最大并发数等</p>
+</li>
+<li><p><code>NSMutableURLRequest</code> 与 <code>NSURLConnection</code> 相结合：实现网络请求与下载</p>
+</li>
+<li><p><code>Run Loop</code>：保证子线程进不断处理操作</p>
+</li>
+</ol>
+<p>呼……总算写完了，不用想也知道有很多不足，感谢你阅读的同时也欢迎你指正不到之处：）</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>关于 SDWebImage 整体的架构可以参见下图：</p>]]>
+    
+    </summary>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="SDWebImage" scheme="http://itangqi.me/tags/SDWebImage/"/>
+    
+      <category term="Source code" scheme="http://itangqi.me/tags/Source-code/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[SDWebImage 源码阅读笔记（三）]]></title>
+    <link href="http://itangqi.me/2016/03/23/the-notes-of-learning-sdwebimage-three/"/>
+    <id>http://itangqi.me/2016/03/23/the-notes-of-learning-sdwebimage-three/</id>
+    <published>2016-03-22T16:00:00.000Z</published>
+    <updated>2016-04-25T10:52:04.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>不知不觉，我们已经通过前面两篇文章的介绍（<a href="http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/">我是链接=;=</a>），对 SDWebImage 的工作流程有了较为清晰的认识，那么，今天就让我们把重点放在 <code>SDWebImageDownloader</code> 上，它到底做了哪些工作？又有哪些奇淫技巧？别着急，你慢慢往下看：）</p>
+<a id="more"></a> 
+<hr>
+<h2 id="SDWebImageDownloaderOptions">SDWebImageDownloaderOptions</h2><p>在切入正题前，我们有必要来了解下 <code>SDWebImageDownloaderOptions</code>。</p>
+<p>在下载的过程中，程序会根据设置的不同的下载选项，而执行不同的操作。下载选项由枚举 <code>SDWebImageDownloaderOptions</code> 定义，具体如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, SDWebImageDownloaderOptions) &#123;</span><br><span class="line">    SDWebImageDownloaderLowPriority = <span class="number">1</span> &lt;&lt; <span class="number">0</span>,</span><br><span class="line">    SDWebImageDownloaderProgressiveDownload = <span class="number">1</span> &lt;&lt; <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 默认情况下请求不使用 NSURLCache，如果设置该选项，则以默认的缓存策略来使用 NSURLCache</span></span><br><span class="line">    SDWebImageDownloaderUse<span class="built_in">NSURLCache</span> = <span class="number">1</span> &lt;&lt; <span class="number">2</span>,</span><br><span class="line"></span><br><span class="line">true<span class="comment">// 如果从 NSURLCache 缓存中读取图片，则使用 nil 作为参数来调用图片下载完成时 block </span></span><br><span class="line">    SDWebImageDownloaderIgnoreCachedResponse = <span class="number">1</span> &lt;&lt; <span class="number">3</span>,</span><br><span class="line"></span><br><span class="line">true<span class="comment">// 在 iOS 4+ 系统上，允许程序进入后台后继续下载图片。该操作通过向系统申请额外的时间来完成后台下载。如果后台任务终止，则操作会被取消 </span></span><br><span class="line">    SDWebImageDownloaderContinueInBackground = <span class="number">1</span> &lt;&lt; <span class="number">4</span>,</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 通过设置 NSMutableURLRequest.HTTPShouldHandleCookies = YES 来处理存储在 NSHTTPCookieStore 中的 cookie </span></span><br><span class="line">    SDWebImageDownloaderHandleCookies = <span class="number">1</span> &lt;&lt; <span class="number">5</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 允许不受信任的 SSL 证书，主要用于测试目的</span></span><br><span class="line">    SDWebImageDownloaderAllowInvalidSSLCertificates = <span class="number">1</span> &lt;&lt; <span class="number">6</span>,</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 将图片下载放到高优先级队列中  </span></span><br><span class="line">    SDWebImageDownloaderHighPriority = <span class="number">1</span> &lt;&lt; <span class="number">7</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>SDWebImage 的下载操作是按一定顺序来处理的，它定义了两种下载顺序，如下所示：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, SDWebImageDownloaderExecutionOrder) &#123;</span><br><span class="line">  <span class="comment">// 以队列的方式，按照先进先出的顺序下载，这是默认的下载顺序</span></span><br><span class="line">  SDWebImageDownloaderFIFOExecutionOrder,</span><br><span class="line">  <span class="comment">// 以栈的方式，按照后进先出的顺序下载</span></span><br><span class="line">  SDWebImageDownloaderLIFOExecutionOrder</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="NSOperation_&amp;_NSOperationQueue">NSOperation &amp; NSOperationQueue</h2><p>什么？还不让我看下载的具体代码！！！</p>
+<p>嘻嘻，不要急嘛，俗话说「心急吃不了热豆腐」，再容我向你介绍下 <code>NSOperation</code> 与 <code>NSOperationQueue</code>：</p>
+<ul>
+<li><p><code>NSOperation</code> 是一个抽象类，你可以用它来封装一个任务的相关代码和数据。因为它是个抽象类，所以你不能直接使用它，而是需要继承并实现其子类或者使用系统内置的两个子类（<code>NSInvocationOperation</code> 和 <code>NSBlockOperation</code>）来执行实际的线程任务</p>
+</li>
+<li><p><code>NSOperationQueue</code> 类管理着一组 <code>NSOperation</code> 对象的执行，当一个 operation 对象被加入到队列后，它会始终保留在队列中，直到它已经明确的被取消或者完成执行任务。Operations 在队列内（但尚未执行），它们是根据优先级和互相依赖进行组织的，相应的去执行。一个应用可以创建多个操作队列（operation queues）并提交操作（operations）到其中任何一个中</p>
+</li>
+</ul>
+<p>SDWebImageDownloader 下载管理器是一个单例类，它主要负责图片的下载操作的管理。图片的下载是放在一个 <code>NSOperationQueue</code> 操作队列中来完成的，其声明如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (<span class="keyword">strong</span>, <span class="keyword">nonatomic</span>) <span class="built_in">NSOperationQueue</span> *downloadQueue;</span><br></pre></td></tr></table></figure>
+<p>默认情况下，队列最大并发数是 6。如果需要的话，我们可以通过 <code>SDWebImageDownloader</code> 类的 <code>maxConcurrentDownloads</code> 属性来修改。</p>
+<p>所有下载操作的网络响应序列化处理是放在一个自定义的并行调度队列中来处理的，其声明及定义如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span> (SDDispatchQueueSetterSementics, <span class="keyword">nonatomic</span>) <span class="built_in">dispatch_queue_t</span> barrierQueue;  </span><br><span class="line">- (<span class="keyword">id</span>)init &#123;  </span><br><span class="line">  <span class="keyword">if</span> ((<span class="keyword">self</span> = [<span class="keyword">super</span> init])) &#123;  </span><br><span class="line">    ...  </span><br><span class="line">    _barrierQueue = dispatch_queue_create(<span class="string">"com.hackemist.SDWebImageDownloaderBarrierQueue"</span>, DISPATCH_QUEUE_CONCURRENT);  </span><br><span class="line">    ...  </span><br><span class="line">  &#125;  </span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">self</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="downloadImageWithURL:">downloadImageWithURL:</h2><p>哇靠，又是 <code>downloadImageWithURL:</code>，这是什么鬼？</p>
+<p>整个下载管理器对于下载请求的管理都是放在 <code>downloadImageWithURL:options:progress:completed:</code> 方法里面来处理的，而该方法又调用了 <code>addProgressCallback:andCompletedBlock:forURL:createCallback:</code> 方法来将请求的信息存入管理器中，同时在创建回调的 block 中创建新的操作，配置之后将其放入 downloadQueue 操作队列中，最后方法返回新创建的操作，具体实现如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span> addProgressCallback:progressBlock andCompletedBlock:completedBlock forURL:url createCallback:^&#123;  </span><br><span class="line">    ...  </span><br><span class="line">    <span class="comment">// 创建请求对象，并根据 options 参数设置其属性  </span></span><br><span class="line">    <span class="comment">// 为了避免潜在的重复缓存（NSURLCache + SDImageCache），如果没有明确告知需要缓存，则禁用图片请求的缓存操作  </span></span><br><span class="line">    <span class="built_in">NSMutableURLRequest</span> *request = [[<span class="built_in">NSMutableURLRequest</span> alloc] initWithURL:url cachePolicy:(options &amp; SDWebImageDownloaderUse<span class="built_in">NSURLCache</span> ? <span class="built_in">NSURLRequestUseProtocolCachePolicy</span> : <span class="built_in">NSURLRequestReloadIgnoringLocalCacheData</span>) timeoutInterval:timeoutInterval];  </span><br><span class="line">    ...  </span><br><span class="line">    <span class="comment">// 创建 SDWebImageDownloaderOperation 操作对象，并进行配置  </span></span><br><span class="line">    <span class="comment">// 配置信息包括是否需要认证、优先级  </span></span><br><span class="line">    operation = [[wself<span class="variable">.operationClass</span> alloc] initWithRequest:request  </span><br><span class="line">                              options:options  </span><br><span class="line">                             progress:^(<span class="built_in">NSInteger</span> receivedSize, <span class="built_in">NSInteger</span> expectedSize) &#123;  </span><br><span class="line">                               <span class="comment">// 从管理器的 callbacksForURL 中找出该 URL 所有的进度处理回调并调用  </span></span><br><span class="line">                               ...  </span><br><span class="line">                               <span class="keyword">for</span> (<span class="built_in">NSDictionary</span> *callbacks <span class="keyword">in</span> callbacksForURL) &#123;  </span><br><span class="line">                                 SDWebImageDownloaderProgressBlock callback = callbacks[kProgressCallbackKey];  </span><br><span class="line">                                 <span class="keyword">if</span> (callback) callback(receivedSize, expectedSize);  </span><br><span class="line">                               &#125;  </span><br><span class="line">                             &#125;  </span><br><span class="line">                            completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *error, <span class="built_in">BOOL</span> finished) &#123;  </span><br><span class="line">                               <span class="comment">// 从管理器的 callbacksForURL 中找出该 URL 所有的完成处理回调并调用  </span></span><br><span class="line">                               <span class="comment">// 如果 finished 为 YES，则将该 url 对应的回调信息从 URLCallbacks 中删除  </span></span><br><span class="line">                              ...  </span><br><span class="line">                              <span class="keyword">if</span> (finished) &#123;  </span><br><span class="line">                                [sself removeCallbacksForURL:url];  </span><br><span class="line">                              &#125;  </span><br><span class="line">                              <span class="keyword">for</span> (<span class="built_in">NSDictionary</span> *callbacks <span class="keyword">in</span> callbacksForURL) &#123;  </span><br><span class="line">                                SDWebImageDownloaderCompletedBlock callback = callbacks[kCompletedCallbackKey];  </span><br><span class="line">                                <span class="keyword">if</span> (callback) callback(image, data, error, finished);  </span><br><span class="line">                              &#125;  </span><br><span class="line">                            &#125;  </span><br><span class="line">                            cancelled:^&#123;  </span><br><span class="line">                              <span class="comment">// 取消操作将该 url 对应的回调信息从 URLCallbacks 中删除  </span></span><br><span class="line">                              SDWebImageDownloader *sself = wself;  </span><br><span class="line">                              <span class="keyword">if</span> (!sself) <span class="keyword">return</span>;  </span><br><span class="line">                              [sself removeCallbacksForURL:url];  </span><br><span class="line">                            &#125;];  </span><br><span class="line">    ...  </span><br><span class="line">    <span class="comment">// 将操作加入到操作队列 downloadQueue 中  </span></span><br><span class="line">    <span class="comment">// 如果是 LIFO 顺序，则将新的操作作为原队列中最后一个操作的依赖，然后将新操作设置为最后一个操作  </span></span><br><span class="line">    [wself<span class="variable">.downloadQueue</span> addOperation:operation];  </span><br><span class="line">    <span class="keyword">if</span> (wself<span class="variable">.executionOrder</span> == SDWebImageDownloaderLIFOExecutionOrder) &#123;  </span><br><span class="line">      [wself<span class="variable">.lastAddedOperation</span> addDependency:operation];  </span><br><span class="line">      wself<span class="variable">.lastAddedOperation</span> = operation;  </span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;];</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="addProgressCallback:">addProgressCallback:</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)addProgressCallback:(SDWebImageDownloaderProgressBlock)progressBlock andCompletedBlock:(SDWebImageDownloaderCompletedBlock)completedBlock forURL:(<span class="built_in">NSURL</span> *)url createCallback:(SDWebImageNoParamsBlock)createCallback &#123;</span><br><span class="line">    <span class="keyword">if</span> (url == <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (completedBlock != <span class="literal">nil</span>) &#123;</span><br><span class="line">            completedBlock(<span class="literal">nil</span>, <span class="literal">nil</span>, <span class="literal">nil</span>, <span class="literal">NO</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">true </span><br><span class="line">true<span class="comment">// 以 dispatch_barrier_sync 操作来保证同一时间只有一个线程能对 URLCallbacks 进行操作</span></span><br><span class="line">    dispatch_barrier_sync(<span class="keyword">self</span><span class="variable">.barrierQueue</span>, ^&#123;</span><br><span class="line">        <span class="built_in">BOOL</span> first = <span class="literal">NO</span>;</span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">self</span><span class="variable">.URLCallbacks</span>[url]) &#123;</span><br><span class="line">            <span class="keyword">self</span><span class="variable">.URLCallbacks</span>[url] = [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line">            first = <span class="literal">YES</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 处理同一 URL 的同步下载请求的单个下载</span></span><br><span class="line">        <span class="built_in">NSMutableArray</span> *callbacksForURL = <span class="keyword">self</span><span class="variable">.URLCallbacks</span>[url];</span><br><span class="line">        <span class="built_in">NSMutableDictionary</span> *callbacks = [<span class="built_in">NSMutableDictionary</span> new];</span><br><span class="line">        <span class="keyword">if</span> (progressBlock) callbacks[kProgressCallbackKey] = [progressBlock <span class="keyword">copy</span>];</span><br><span class="line">        <span class="keyword">if</span> (completedBlock) callbacks[kCompletedCallbackKey] = [completedBlock <span class="keyword">copy</span>];</span><br><span class="line">        [callbacksForURL addObject:callbacks];</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.URLCallbacks</span>[url] = callbacksForURL;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (first) &#123;</span><br><span class="line">            createCallback();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>方法会先查看这个 url 是否有对应的 callback，使用的是 downloader 持有的一个字典 <code>URLCallbacks</code>。</p>
+<p>如果是第一次添加回调的话，就会执行 first = YES，这个赋值非常的关键，因为 first 不为 YES 那么 HTTP 请求就不会被初始化，图片也无法被获取。</p>
+<p>然后，在这个方法中会重新修正在 <code>URLCallbacks</code> 中存储的回调块。</p>
+<p>如果是第一次添加回调块，那么就会直接运行这个 createCallback 这个 block，而这个 block，就是我们在前一个方法 <code>downloadImageWithURL:options:progress:completed:</code> 中传入的回调块：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SDWebImageDownloader</span></span><br><span class="line"><span class="comment">// downloadImageWithURL:options:progress:completed: #4</span></span><br><span class="line">[<span class="keyword">self</span> addProgressCallback:progressBlock andCompletedBlock:completedBlock forURL:url createCallback:^&#123; ... &#125;];</span><br></pre></td></tr></table></figure>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-sdwebimage-three-01.png" alt=""><a href="http://www.cnblogs.com/polobymulberry/p/5017995.html" target="_blank" rel="external">图片来自</a></p>
+<hr>
+<h2 id="SDWebImageDownloaderOperation">SDWebImageDownloaderOperation</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)start &#123;</span><br><span class="line">    <span class="keyword">@synchronized</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">    	<span class="comment">// 管理下载状态，如果已取消，则重置当前下载并设置完成状态为 YES </span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.isCancelled</span>) &#123;</span><br><span class="line">            <span class="keyword">self</span><span class="variable">.finished</span> = <span class="literal">YES</span>;</span><br><span class="line">            [<span class="keyword">self</span> reset];</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#if TARGET_OS_IPHONE &amp;&amp; __IPHONE_OS_VERSION_MAX_ALLOWED &gt;= __IPHONE_4_0</span></span><br><span class="line">        Class <span class="built_in">UIApplicationClass</span> = <span class="built_in">NSClassFromString</span>(<span class="string">@"UIApplication"</span>);</span><br><span class="line">        <span class="built_in">BOOL</span> hasApplication = <span class="built_in">UIApplicationClass</span> &amp;&amp; [<span class="built_in">UIApplicationClass</span> respondsToSelector:<span class="keyword">@selector</span>(sharedApplication)];</span><br><span class="line">        <span class="comment">// 开启后台下载</span></span><br><span class="line">        <span class="keyword">if</span> (hasApplication &amp;&amp; [<span class="keyword">self</span> shouldContinueWhenAppEntersBackground]) &#123;</span><br><span class="line">            __<span class="keyword">weak</span> __typeof__ (<span class="keyword">self</span>) wself = <span class="keyword">self</span>;</span><br><span class="line">            <span class="built_in">UIApplication</span> * app = [<span class="built_in">UIApplicationClass</span> performSelector:<span class="keyword">@selector</span>(sharedApplication)];</span><br><span class="line">            <span class="keyword">self</span><span class="variable">.backgroundTaskId</span> = [app beginBackgroundTaskWithExpirationHandler:^&#123;</span><br><span class="line">                __<span class="keyword">strong</span> __<span class="keyword">typeof</span> (wself) sself = wself;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (sself) &#123;</span><br><span class="line">                    [sself cancel];</span><br><span class="line"></span><br><span class="line">                    [app endBackgroundTask:sself<span class="variable">.backgroundTaskId</span>];</span><br><span class="line">                    sself<span class="variable">.backgroundTaskId</span> = <span class="built_in">UIBackgroundTaskInvalid</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125;</span><br><span class="line"><span class="preprocessor">#endif</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">self</span><span class="variable">.executing</span> = <span class="literal">YES</span>;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.connection</span> = [[<span class="built_in">NSURLConnection</span> alloc] initWithRequest:<span class="keyword">self</span><span class="variable">.request</span> delegate:<span class="keyword">self</span> startImmediately:<span class="literal">NO</span>];</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.thread</span> = [<span class="built_in">NSThread</span> currentThread];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.connection</span> start];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.connection</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.progressBlock</span>) &#123;</span><br><span class="line">            <span class="keyword">self</span><span class="variable">.progressBlock</span>(<span class="number">0</span>, <span class="built_in">NSURLResponseUnknownLength</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 在主线程发通知</span></span><br><span class="line">        <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">            [[<span class="built_in">NSNotificationCenter</span> defaultCenter] postNotificationName:SDWebImageDownloadStartNotification object:<span class="keyword">self</span>];</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (floor(<span class="built_in">NSFoundationVersionNumber</span>) &lt;= <span class="built_in">NSFoundationVersionNumber_iOS_5_1</span>) &#123;</span><br><span class="line">            <span class="built_in">CFRunLoopRunInMode</span>(k<span class="built_in">CFRunLoopDefaultMode</span>, <span class="number">10</span>, <span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">        	<span class="comment">// 在默认模式下运行当前 Run Loop，直到调用 CFRunLoopStop 停止运行</span></span><br><span class="line">            <span class="built_in">CFRunLoopRun</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="keyword">self</span><span class="variable">.isFinished</span>) &#123;</span><br><span class="line">            [<span class="keyword">self</span><span class="variable">.connection</span> cancel];</span><br><span class="line">            [<span class="keyword">self</span> connection:<span class="keyword">self</span><span class="variable">.connection</span> didFailWithError:[<span class="built_in">NSError</span> errorWithDomain:<span class="built_in">NSURLErrorDomain</span> code:<span class="built_in">NSURLErrorTimedOut</span> userInfo:@&#123;<span class="built_in">NSURLErrorFailingURLErrorKey</span> : <span class="keyword">self</span><span class="variable">.request</span><span class="variable">.URL</span>&#125;]];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.completedBlock</span>) &#123;</span><br><span class="line">            <span class="keyword">self</span><span class="variable">.completedBlock</span>(<span class="literal">nil</span>, <span class="literal">nil</span>, [<span class="built_in">NSError</span> errorWithDomain:<span class="built_in">NSURLErrorDomain</span> code:<span class="number">0</span> userInfo:@&#123;<span class="built_in">NSLocalizedDescriptionKey</span> : <span class="string">@"Connection can't be initialized"</span>&#125;], <span class="literal">YES</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#if TARGET_OS_IPHONE &amp;&amp; __IPHONE_OS_VERSION_MAX_ALLOWED &gt;= __IPHONE_4_0</span></span><br><span class="line">    Class <span class="built_in">UIApplicationClass</span> = <span class="built_in">NSClassFromString</span>(<span class="string">@"UIApplication"</span>);</span><br><span class="line">    <span class="keyword">if</span>(!<span class="built_in">UIApplicationClass</span> || ![<span class="built_in">UIApplicationClass</span> respondsToSelector:<span class="keyword">@selector</span>(sharedApplication)]) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.backgroundTaskId</span> != <span class="built_in">UIBackgroundTaskInvalid</span>) &#123;</span><br><span class="line">        <span class="built_in">UIApplication</span> * app = [<span class="built_in">UIApplication</span> performSelector:<span class="keyword">@selector</span>(sharedApplication)];</span><br><span class="line">        [app endBackgroundTask:<span class="keyword">self</span><span class="variable">.backgroundTaskId</span>];</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.backgroundTaskId</span> = <span class="built_in">UIBackgroundTaskInvalid</span>;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="preprocessor">#endif</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个类就是处理 HTTP 请求，URL 连接的类，当这个类的实例被加入队列之后，<code>start</code> 方法就会被调用， 而 <code>start</code> 方法首先就会产生一个 <code>NSURLConnection</code>。</p>
+<p><strong>广告时间：）</strong></p>
+<p>如果你对 <code>NSURLConnection</code> 不了解，可以先看下我的文章：<a href="http://itangqi.me/2016/04/01/from-nsurlconnection-to-nsurlsession/#more">从 NSURLConnection 到 NSURLSession</a></p>
+<p>————————————————————-华丽的分割线——————————————————————————</p>
+<p>在 <code>start</code> 方法调用之后，就是 <code>NSURLConnectionDataDelegate</code> 中代理方法的调用：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveResponse:(<span class="built_in">NSURLResponse</span> *)response;</span><br><span class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveResponse:(<span class="built_in">NSURLResponse</span> *)response;</span><br><span class="line">- (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)aConnection;</span><br></pre></td></tr></table></figure>
+<p>在这三个代理方法中的前两个会不停回调 <code>progressBlock</code> 来提示下载的进度。</p>
+<p>而最后一个代理方法会在图片下载完成之后调用 <code>completionBlock</code> 来完成最后 UIImageView.image 的更新。</p>
+<p>而这里调用的 <code>progressBlock</code>、<code>completionBlock</code>、<code>cancelBlock</code> 都是在之前存储在 <code>URLCallbacks</code> 字典中的。</p>
+<hr>
+<h2 id="didReceiveData：">didReceiveData：</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveData:(<span class="built_in">NSData</span> *)data &#123;</span><br><span class="line">true<span class="comment">// 附加数据 </span></span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.imageData</span> appendData:data];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((<span class="keyword">self</span><span class="variable">.options</span> &amp; SDWebImageDownloaderProgressiveDownload) &amp;&amp; <span class="keyword">self</span><span class="variable">.expectedSize</span> &gt; <span class="number">0</span> &amp;&amp; <span class="keyword">self</span><span class="variable">.completedBlock</span>) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 获取已下载数据总大小 </span></span><br><span class="line">        <span class="keyword">const</span> <span class="built_in">NSInteger</span> totalSize = <span class="keyword">self</span><span class="variable">.imageData</span><span class="variable">.length</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 更新数据源，我们需要传入所有数据，而不仅仅是新数据 </span></span><br><span class="line">        <span class="built_in">CGImageSourceRef</span> imageSource = <span class="built_in">CGImageSourceCreateWithData</span>((__bridge <span class="built_in">CFDataRef</span>)<span class="keyword">self</span><span class="variable">.imageData</span>, <span class="literal">NULL</span>);</span><br><span class="line">truetruetrue<span class="comment">// 首次获取到数据时，从这些数据中获取图片的长、宽、方向属性值  </span></span><br><span class="line">        <span class="keyword">if</span> (width + height == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="built_in">CFDictionaryRef</span> properties = <span class="built_in">CGImageSourceCopyPropertiesAtIndex</span>(imageSource, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br><span class="line">            <span class="keyword">if</span> (properties) &#123;</span><br><span class="line">                <span class="built_in">NSInteger</span> orientationValue = -<span class="number">1</span>;</span><br><span class="line">                <span class="built_in">CFTypeRef</span> val = <span class="built_in">CFDictionaryGetValue</span>(properties, k<span class="built_in">CGImagePropertyPixelHeight</span>);</span><br><span class="line">                <span class="keyword">if</span> (val) <span class="built_in">CFNumberGetValue</span>(val, k<span class="built_in">CFNumberLongType</span>, &amp;height);</span><br><span class="line">                val = <span class="built_in">CFDictionaryGetValue</span>(properties, k<span class="built_in">CGImagePropertyPixelWidth</span>);</span><br><span class="line">                <span class="keyword">if</span> (val) <span class="built_in">CFNumberGetValue</span>(val, k<span class="built_in">CFNumberLongType</span>, &amp;width);</span><br><span class="line">                val = <span class="built_in">CFDictionaryGetValue</span>(properties, k<span class="built_in">CGImagePropertyOrientation</span>);</span><br><span class="line">                <span class="keyword">if</span> (val) <span class="built_in">CFNumberGetValue</span>(val, k<span class="built_in">CFNumberNSIntegerType</span>, &amp;orientationValue);</span><br><span class="line">                <span class="built_in">CFRelease</span>(properties);</span><br><span class="line"></span><br><span class="line">              	<span class="comment">// 当绘制到 Core Graphics 时，我们会丢失方向信息，这意味着有时候由initWithCGIImage 创建的图片的方向会不对，所以在这边我们先保存这个信息并在后面使用</span></span><br><span class="line">                orientation = [[<span class="keyword">self</span> class] orientationFromPropertyValue:(orientationValue == -<span class="number">1</span> ? <span class="number">1</span> : orientationValue)];</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">truetrue<span class="comment">// 图片还未下载完成  </span></span><br><span class="line">        <span class="keyword">if</span> (width + height &gt; <span class="number">0</span> &amp;&amp; totalSize &lt; <span class="keyword">self</span><span class="variable">.expectedSize</span>) &#123;</span><br><span class="line">            <span class="comment">// 使用现有的数据创建图片对象，如果数据中存有多张图片，则取第一张 </span></span><br><span class="line">            <span class="built_in">CGImageRef</span> partialImageRef = <span class="built_in">CGImageSourceCreateImageAtIndex</span>(imageSource, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#ifdef TARGET_OS_IPHONE</span></span><br><span class="line">            <span class="comment">// 适用于 iOS 变形图像的解决方案。我的理解是由于 iOS 只支持 RGB 颜色空间，所以在此对下载下来的图片做个颜色空间转换处理</span></span><br><span class="line">            <span class="keyword">if</span> (partialImageRef) &#123;</span><br><span class="line">                <span class="keyword">const</span> size_t partialHeight = <span class="built_in">CGImageGetHeight</span>(partialImageRef);</span><br><span class="line">                <span class="built_in">CGColorSpaceRef</span> colorSpace = <span class="built_in">CGColorSpaceCreateDeviceRGB</span>();</span><br><span class="line">                <span class="built_in">CGContextRef</span> bmContext = <span class="built_in">CGBitmapContextCreate</span>(<span class="literal">NULL</span>, width, height, <span class="number">8</span>, width * <span class="number">4</span>, colorSpace, k<span class="built_in">CGBitmapByteOrderDefault</span> | k<span class="built_in">CGImageAlphaPremultipliedFirst</span>);</span><br><span class="line">                <span class="built_in">CGColorSpaceRelease</span>(colorSpace);</span><br><span class="line">                <span class="keyword">if</span> (bmContext) &#123;</span><br><span class="line">                    <span class="built_in">CGContextDrawImage</span>(bmContext, (<span class="built_in">CGRect</span>)&#123;<span class="variable">.origin</span><span class="variable">.x</span> = <span class="number">0.0</span>f, <span class="variable">.origin</span><span class="variable">.y</span> = <span class="number">0.0</span>f, <span class="variable">.size</span><span class="variable">.width</span> = width, <span class="variable">.size</span><span class="variable">.height</span> = partialHeight&#125;, partialImageRef);</span><br><span class="line">                    <span class="built_in">CGImageRelease</span>(partialImageRef);</span><br><span class="line">                    partialImageRef = <span class="built_in">CGBitmapContextCreateImage</span>(bmContext);</span><br><span class="line">                    <span class="built_in">CGContextRelease</span>(bmContext);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">CGImageRelease</span>(partialImageRef);</span><br><span class="line">                    partialImageRef = <span class="literal">nil</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="preprocessor">#endif</span></span><br><span class="line">truetruetrue<span class="comment">// 对图片进行缩放、解码操作 </span></span><br><span class="line">            <span class="keyword">if</span> (partialImageRef) &#123;</span><br><span class="line">                <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> imageWith<span class="built_in">CGImage</span>:partialImageRef scale:<span class="number">1</span> orientation:orientation];</span><br><span class="line">                <span class="built_in">NSString</span> *key = [[SDWebImageManager sharedManager] cacheKeyForURL:<span class="keyword">self</span><span class="variable">.request</span><span class="variable">.URL</span>];</span><br><span class="line">                <span class="built_in">UIImage</span> *scaledImage = [<span class="keyword">self</span> scaledImageForKey:key image:image];</span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.shouldDecompressImages</span>) &#123;</span><br><span class="line">                    image = [<span class="built_in">UIImage</span> decodedImageWithImage:scaledImage];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    image = scaledImage;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="built_in">CGImageRelease</span>(partialImageRef);</span><br><span class="line">                dispatch_main_sync_safe(^&#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.completedBlock</span>) &#123;</span><br><span class="line">                        <span class="keyword">self</span><span class="variable">.completedBlock</span>(image, <span class="literal">nil</span>, <span class="literal">nil</span>, <span class="literal">NO</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">CFRelease</span>(imageSource);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.progressBlock</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.progressBlock</span>(<span class="keyword">self</span><span class="variable">.imageData</span><span class="variable">.length</span>, <span class="keyword">self</span><span class="variable">.expectedSize</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该方法的主要任务是接收数据。每次接收到数据时，都会用现有的数据创建一个 CGImageSourceRef 对象以做处理。在首次获取到数据时（width+height==0）会从这些包含图像信息的数据中取出图像的长、宽、方向等信息以备使用。而后在图片下载完成之前，会使用 CGImageSourceRef 对象创建一个图片对象，经过缩放、解压缩操作后生成一个 UIImage 对象供完成回调使用。当然，在这个方法中还需要处理的就是进度信息。如果我们有设置进度回调的话，就调用这个进度回调以处理当前图片的下载进度。</p>
+<hr>
+<h2 id="要点">要点</h2><ol>
+<li>通知的接收所在的线程是基于发送通知所在的线程，如果通知是在主线程发出的，通知的接收也是在主线程，如果通知的发送是在子线程，通知的接收也是在子线程。（如果想回主线程，可使用 <code>dispatch_async(dispatch_get_main_queue(), ^</code>）</li>
+</ol>
+<p>关于 SDWebImage 的整体分析就到这里啦，我会在终结篇：<a href="">SDWebImage 源码阅读笔记（四）</a>中对某些知识点进行扩展，感兴趣的同学不妨去瞅瞅呗！</p>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="http://cocoadocs.org/docsets/SDWebImage/3.7.5/" target="_blank" rel="external">CocoaDocs - SDWebImage</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSCache_Class/" target="_blank" rel="external">NSCache Class Reference</a></li>
+<li><a href="http://www.jianshu.com/p/c07df06c60be" target="_blank" rel="external">SDWebImage源码剖析（－）</a></li>
+<li><a href="http://blog.csdn.net/xubinlxb/article/details/51136805" target="_blank" rel="external">SDWebImage源码解析（一）</a></li>
+<li><a href="http://draveness.me/ios-yuan-dai-ma-jie-xi-sdwebimage/" target="_blank" rel="external">iOS 源代码分析—-SDWebImage</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>不知不觉，我们已经通过前面两篇文章的介绍（<a href="http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/">我是链接=;=</a>），对 SDWebImage 的工作流程有了较为清晰的认识，那么，今天就让我们把重点放在 <code>SDWebImageDownloader</code> 上，它到底做了哪些工作？又有哪些奇淫技巧？别着急，你慢慢往下看：）</p>]]>
+    
+    </summary>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="SDWebImage" scheme="http://itangqi.me/tags/SDWebImage/"/>
+    
+      <category term="Source code" scheme="http://itangqi.me/tags/Source-code/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[SDWebImage 源码阅读笔记（二）]]></title>
     <link href="http://itangqi.me/2016/03/21/the-notes-of-learning-sdwebimage-two/"/>
     <id>http://itangqi.me/2016/03/21/the-notes-of-learning-sdwebimage-two/</id>
@@ -2347,282 +2680,6 @@
       <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
     
       <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[Bye 2015, Hi 2016]]></title>
-    <link href="http://itangqi.me/2015/12/25/bye2015-hi2016/"/>
-    <id>http://itangqi.me/2015/12/25/bye2015-hi2016/</id>
-    <published>2015-12-24T16:00:00.000Z</published>
-    <updated>2016-02-25T05:44:11.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
-<p>世上哪有终点？什么时候你走不动了，倒下了，那里才是终点。—— 今何在《西游日记》</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="考研">考研</h2><p>2015 年 3 月 25 日，当我接到录取通知电话的那一刻，压在我心底的所有，顷刻间都释然了。</p>
-<p>喜悦的心情只持续了片刻吧，我脑海中的思绪便飘回到了 2014 年。</p>
-<p>那年是我第一次考研，考试前，几乎所有认识我的人，都认为我考上是铁板钉钉的事，而对我而言，我不但要求自己要考上而且还要考第一。可想而知，正是这样的心态导致了我在考场上的心态失衡，而最终的结果便是以我彻彻底底地失败告终。</p>
-<p>没错，不愿就此放弃，确切的说，不愿就此否定自己的我选择了二战。由于时间尚早，加之马上面临毕业的我不愿再向家人伸手要钱了，所以我选择立马工作来作为那段时间的过度。</p>
-<p>于是……</p>
-<p>思绪不知不觉又飘了回来，此时的我还在北信源南京研发中心，回想过去的一年，整个移动开发团队由最初的 3 人扩展到现在的 10 人。感谢已经离职的大飞哥，正是你当时的赏识让我有幸加入，尽管当时你已经提出离职，还是尽职尽责地带着我们几个新人熟悉项目并帮助我们快速提升技术；感谢团队现在的老大王总和姚总，你们为人非常和蔼平易敬人，会尽一切努力为团队的利益着想；感谢一起共事过的小伙伴们，没有你们，我真的无法在在职的情况下完成考研的复习，是你们给了我支持与信任。</p>
-<p>对我而言，考研是一种历练，而过程远远大于结果。</p>
-<h2 id="跳槽">跳槽</h2><p>2015 年 5 月 6 日，在面试结束后，我当场便收到了 FriendMedia 的 Offer，像这样一个小而美且工程师文化浓厚的团队，正是我梦寐以求想要加入的。与此同时，我也到了和北信源说再见的时候了。</p>
-<p>舒适的工作环境，扁平化的管理模式，聪明且有激情的同事，富有挑战性的工作，在 FM 的每一天都充满着压力但却快速的成长着。</p>
-<p>入职后我便由师哥带着参与到公司核心产品的开发，由于能力有限，我的工作从实现界面 UI 开始，看似简单的工作内容，实践起来却总会遇到各种各样的问题。放到之前，我会索性告诉领导这个做不了，但现在我却是加班加点想尽办法去实现，我想正是因为归属感吧。</p>
-<p>由于界面的改版得到了师哥和老总的认可，我得到了完成下一版本某关键功能的开发任务，由于是创业公司，我们奉行快速迭代，可要在短时间内完成，对于当时的我来说，是非常具有挑战性的。最终，尽管我为此熬了好几个夜，也没能在 Deadline 前百分百完成任务。事后，师哥帮我填了坑，王总则教会了我将来在面对此类问题时，一定要及时向大家提出，埋头苦干不是解决问题的办法。</p>
-<p>虽然公司不大，但每一个人都是独挡一面的能手，而当时的我却似乎在拖大家的后腿，无形的压力与内疚充斥着我每天的工作，但公司或者说王总的包容却坚定我要努力证明自己的价值。恰巧此时公司有一个国外的外包项目需要改版升级，由于师哥要接着负责公司自己的产品，这个外包项目便顺理成章的由我来完成。</p>
-<p>庆幸的是，改版过程相对顺利，我在预定的时间内完成了任务，期间我的能力也得到了迅速的提升，我能对一个项目有较为完整的把控。可此时，时间也悄悄来到了 8 月下旬。</p>
-<p>短暂却充实的三个月很快就结束了，我也到了不得不和 FM 说再见的时候了。在这里，我结识了一群聪明且又友爱的伙伴们；在这里，我体会到了创业公司的激情与不易；在这里，我一步步走向了 Android 开发的正轨。感谢 FM 带给我的一切，愿你的未来一帆风顺。</p>
-<h2 id="重返校园">重返校园</h2><p>2015 年 8 月 31 日，我正式成为东大软院的一名研究僧。从大专到本三再到重点本科，一路走来，我从未想证明给任何人看，我只是单纯的不信邪，我始终坚信着我可以。</p>
-<p>正是因为之前的工作经历，让我比其他应届的同学有着更为清晰的自我认识与更为明确的职业规划，对于选择明年就出去实习的我而言，我很清楚其实留给我的时间不多了。</p>
-<p>回首过去的四个月，<strong>开源</strong> 与 <strong>iOS</strong> 不得不提。</p>
-<p>开学以来，陆续开源了 BuildingBlocks、 Android-Tips 与 WaveLoadingView 三个项目，因为开源，我认识了许多志同道合的朋友们（大牛们）；因为开源，我意识到自己的付出是有价值的；因为开源，我不断向她汲取着知识的同时也分享着成果。我很庆幸能叩响开源的这扇大门，得以让我能见识到开源世界的种种美好，这些带给我的快乐与满足，要远远比收集到的星星数与粉丝数重要的多得多。</p>
-<p>而转战 iOS，则是再一次从了自己的内心，即使周围的很多人都不理解，即使现在很多人说 iOS 市场已经饱和，在这里，我不想过多的探讨 iOS 与 Android 的孰优孰劣，亦或是未来的前景如何，但我知道，我只是单纯的选择了一件自己更喜欢的事情去做，对我而言就够了。我的一个 iOS 项目现在也接近尾声了，期待开源的那一天吧。</p>
-<p>除此之外，我还在努力地夯实基础与扩充技术栈，从数据结构到算法再到前端最后到设计，每接触到一个新领域，总能有发现新大陆般的喜悦与激动。</p>
-<h2 id="<2016>"><2016></2016></h2><p>下一站会是哪里？我会遇到怎样的人？还会经历哪些磨砺？– 我不知道，但我很期待！</p>
-<h2 id="书单列表">书单列表</h2><ol>
-<li><a href="http://book.douban.com/subject/1770782/" target="_blank" rel="external">追风筝的人</a></li>
-<li><a href="http://book.douban.com/subject/10763902/" target="_blank" rel="external">偷影子的人</a></li>
-<li><a href="http://book.douban.com/subject/25850737/" target="_blank" rel="external">想得美</a></li>
-<li><a href="http://book.douban.com/subject/26183838/" target="_blank" rel="external">我想看到的世界</a></li>
-<li><a href="http://book.douban.com/subject/26266755/" target="_blank" rel="external">塔利班</a></li>
-<li><a href="http://book.douban.com/subject/26613294/" target="_blank" rel="external">Objective-C编程(第2版)</a></li>
-<li><a href="http://book.douban.com/subject/26287812/" target="_blank" rel="external">iOS编程（第4版）</a></li>
-<li><a href="http://book.douban.com/subject/26287173/" target="_blank" rel="external">iOS开发进阶</a></li>
-<li><a href="http://book.douban.com/subject/25752357/" target="_blank" rel="external">Head First HTML与CSS(第2版)</a></li>
-</ol>
-<h2 id="Podcast_列表">Podcast 列表</h2><ol>
-<li><a href="https://ipn.li/itgonglun/" target="_blank" rel="external">IT 公论</a></li>
-<li><a href="https://ipn.li/kernelpanic/" target="_blank" rel="external">内核恐慌</a></li>
-<li><a href="http://teahour.fm/" target="_blank" rel="external">Teahour</a></li>
-<li><a href="https://ipn.li/xuanmei/" target="_blank" rel="external">选·美</a></li>
-</ol>
-<h2 id="推荐利器">推荐利器</h2><p><a href="https://getpocket.com" target="_blank" rel="external">Pocket</a></p>
-<h2 id="无主题">无主题</h2><blockquote>
-<p>感谢过去一年我所经历的事，感谢过去一年我所遇到的人，感谢过去一年我所收获和失去的情感。</p>
-</blockquote>
-]]></content>
-    <summary type="html">
-    <![CDATA[<blockquote>
-<p>世上哪有终点？什么时候你走不动了，倒下了，那里才是终点。—— 今何在《西游日记》</p>
-</blockquote>]]>
-    
-    </summary>
-    
-      <category term="Review" scheme="http://itangqi.me/tags/Review/"/>
-    
-      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
-    
-      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[WaveLoadingView - 水波加载]]></title>
-    <link href="http://itangqi.me/2015/12/15/waveloadingview/"/>
-    <id>http://itangqi.me/2015/12/15/waveloadingview/</id>
-    <published>2015-12-14T16:00:00.000Z</published>
-    <updated>2016-02-25T05:42:36.000Z</updated>
-    <content type="html"><![CDATA[<blockquote>
-<p><strong>WaveLoadingView</strong> - An Android library that provides a realistic wave-loading effect.</p>
-</blockquote>
-<a id="more"></a>
-<hr>
-<h2 id="Sample">Sample</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/waveloadingview.png" alt="sample" title="sample" width="400" height="680"></p>
-<hr>
-<h2 id="Usage">Usage</h2><p><strong>For a working implementation of this project see the <code>sample/</code> folder.</strong></p>
-<h3 id="Step_1">Step 1</h3><p>Include the library as a local library project or add the dependency in your build.gradle.</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">    <span class="keyword">compile</span> <span class="string">'me.itangqi.waveloadingview:library:0.2.0'</span></span><br><span class="line">    <span class="comment">// I have uploaded v0.2.0 on 2016-02-17, if it doesn't take effect or your </span></span><br><span class="line">    <span class="comment">// gradle cannot find it in maven central, you may try v0.1.5. </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 
-<p>Or</p>
-<p>Import the library, then add it to your /settings.gradle and /app/build.gradle. If you don’t know how to do this, you can read my blog for help.</p>
-<h3 id="Step_2">Step 2</h3><p>Include the WaveLoadingView widget in your layout. And you can customize it like this.</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;me.itangqi.waveloadingview.WaveLoadingView</span><br><span class="line">    android:id=<span class="string">"@+id/waveLoadingView"</span></span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_borderColor=<span class="string">"@color/colorAccent"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_borderWidth=<span class="string">"3dp"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_progressValue=<span class="string">"40"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_shapeType=<span class="string">"circle"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleBottom=<span class="string">"Bottom Title"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleBottomColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleBottomSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleCenter=<span class="string">"Center Title"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleCenterColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleCenterSize=<span class="string">"24sp"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleTop=<span class="string">"Top Title"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleTopColor=<span class="string">"@color/colorPrimaryText"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_titleTopSize=<span class="string">"20sp"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_waveAmplitude=<span class="string">"70"</span></span><br><span class="line">    <span class="keyword">app</span>:wlv_waveColor=<span class="string">"@color/colorAccent"</span>/&gt;</span><br></pre></td></tr></table></figure> 
-<h3 id="Step_3">Step 3</h3><p>You can write some animation codes to the callbacks such as setOnCheckedChangeListener, onProgressChanged, etc in your Activity.</p>
-<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">WaveLoadingView mWaveLoadingView = (WaveLoadingView) findViewById(R.id.waveLoadingView)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setShapeType(WaveLoadingView.ShapeType.CIRCLE)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setTopTitle("Top Title")<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setCenterTitleColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBottomTitleSize(18)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setProgressValue(80)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderWidth(10)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setAmplitudeRatio(60)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setWaveColor(Color.GRAY)<span class="comment">;</span></span><br><span class="line">truemWaveLoadingView.setBorderColor(Color.GRAY)<span class="comment">;</span></span><br></pre></td></tr></table></figure> 
-<h2 id="Customization">Customization</h2><p>Do what you what :)</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">format</th>
-<th style="text-align:center">description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">wlv_borderWidth</td>
-<td style="text-align:center">dimension</td>
-<td style="text-align:center">set border width, default is 0</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_borderColor</td>
-<td style="text-align:center">color</td>
-<td style="text-align:center">set border color</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_progressValue</td>
-<td style="text-align:center">integer</td>
-<td style="text-align:center">set progress value, default is 50</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_shapeType</td>
-<td style="text-align:center">enum</td>
-<td style="text-align:center">set shape type, default is circle</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_waveColor</td>
-<td style="text-align:center">color</td>
-<td style="text-align:center">set wave color</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_waveAmplitude</td>
-<td style="text-align:center">float</td>
-<td style="text-align:center">set wave amplitude</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_titleTopSize</td>
-<td style="text-align:center">dimension</td>
-<td style="text-align:center">set top title size, default is 18 </td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_titleCenterSize</td>
-<td style="text-align:center">dimension</td>
-<td style="text-align:center">set center title size, default is 22</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_titleBottomSize</td>
-<td style="text-align:center">dimension</td>
-<td style="text-align:center">set bottom size, default is 18</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_titleTopColor</td>
-<td style="text-align:center">color</td>
-<td style="text-align:center">set top title color</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_titleCenterColor</td>
-<td style="text-align:center">color</td>
-<td style="text-align:center">set center title color </td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_titleBottomColor</td>
-<td style="text-align:center">color</td>
-<td style="text-align:center">set bottom title color </td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_titleTop</td>
-<td style="text-align:center">string</td>
-<td style="text-align:center">set top title content, default is null</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_titleCenter</td>
-<td style="text-align:center">string</td>
-<td style="text-align:center">set center title content, default is null</td>
-</tr>
-<tr>
-<td style="text-align:center">wlv_titleBottom</td>
-<td style="text-align:center">string</td>
-<td style="text-align:center">set bottom title content, default is null</td>
-</tr>
-</tbody>
-</table>
-<p><strong>All attributes have their respective getters and setters to change them at runtime.</strong></p>
-<h2 id="Change_Log">Change Log</h2><h3 id="0-2-0_(2016-02-17)">0.2.0 (2016-02-17)</h3><h4 id="Implemented_enhancements:">Implemented enhancements:</h4><ul>
-<li>Prefix the attributes with “wlv”</li>
-</ul>
-<h4 id="Fixed_bugs:">Fixed bugs:</h4><ul>
-<li>setProgressValue() increase doesn’t conform to logic <a href="https://github.com/tangqi92/WaveLoadingView/issues/8" target="_blank" rel="external">#8</a></li>
-</ul>
-<h4 id="Update:">Update:</h4><ul>
-<li>Update <code>build.gradle</code></li>
-<li>Update Sample</li>
-</ul>
-<h3 id="0-1-5_(2016-01-14)">0.1.5 (2016-01-14)</h3><h4 id="Fixed_bugs:-1">Fixed bugs:</h4><ul>
-<li>IllegalArgumentException: width and height must be &gt; 0 while loading Bitmap from View <a href="https://github.com/tangqi92/WaveLoadingView/issues/6" target="_blank" rel="external">#6</a></li>
-</ul>
-<h3 id="0-1-4_(2015-12-17)">0.1.4 (2015-12-17)</h3><h4 id="Fixed_bugs:-2">Fixed bugs:</h4><ul>
-<li>setProgressValue() doesn’t change the value of mProgressValue <a href="https://github.com/tangqi92/WaveLoadingView/issues/4" target="_blank" rel="external">#4</a></li>
-</ul>
-<h3 id="0-1-3">0.1.3</h3><h4 id="Fixed_bugs:-3">Fixed bugs:</h4><ul>
-<li>Attribute “borderWidth” has already been defined <a href="https://github.com/tangqi92/WaveLoadingView/issues/2" target="_blank" rel="external">#2</a></li>
-</ul>
-<h2 id="Demo">Demo</h2><p><a href="https://github.com/tangqi92/WaveLoadingView/releases/download/v0.1.2/sample-release-unsigned.apk" target="_blank" rel="external">Download</a></p>
-<h2 id="Community">Community</h2><p>Looking for contributors, feel free to fork !</p>
-<p>Tell me if you’re using my library in your application, I’ll share it in this README.</p>
-<h2 id="Thanks">Thanks</h2><p>Inspired by </p>
-<ul>
-<li><a href="https://github.com/gelitenight/WaveView" target="_blank" rel="external">WaveView</a> created by <a href="https://github.com/gelitenight" target="_blank" rel="external">gelitenight</a></li>
-<li><a href="https://github.com/lopspower/CircularFillableLoaders" target="_blank" rel="external">CircularFillableLoaders</a> created by <a href="https://github.com/lopspower" target="_blank" rel="external">lopspower</a></li>
-</ul>
-<h2 id="License">License</h2><p>Apache 2.0 </p>
-<hr>
-<h2 id="期待与你成为朋友">期待与你成为朋友</h2><ul>
-<li>Weibo: <a href="http://weibo.com/qiktang" target="_blank" rel="external">汤奇V</a>  </li>
-<li>GitHub: <a href="https://github.com/tangqi92" target="_blank" rel="external">tangqi92</a></li>
-<li>Blog: <a href="http://itangqi.me/">http://itangqi.me</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<blockquote>
-<p><strong>WaveLoadingView</strong> - An Android library that provides a realistic wave-loading effect.</p>
-</blockquote>]]>
-    
-    </summary>
-    
-      <category term="Library" scheme="http://itangqi.me/tags/Library/"/>
-    
-      <category term="Loading" scheme="http://itangqi.me/tags/Loading/"/>
-    
-      <category term="View" scheme="http://itangqi.me/tags/View/"/>
-    
-      <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[回归·日记]]></title>
-    <link href="http://itangqi.me/2015/11/02/comeback-diary/"/>
-    <id>http://itangqi.me/2015/11/02/comeback-diary/</id>
-    <published>2015-11-01T16:00:00.000Z</published>
-    <updated>2016-02-25T05:44:01.000Z</updated>
-    <content type="html"><![CDATA[<h3 id="2015年8月21日">2015年8月21日</h3><p>这一天，我结束了在 <a href="http://friendmedia.com/" target="_blank" rel="external">FriendMedia</a> 三个月短暂却又充实的工作。在这里，我结识了一群聪明且又友爱的伙伴；在这里，我体会到了创业公司的激情与不易；在这里，我一步步走向了 Android 开发的正轨。感谢 FM 给我的一切，愿你的未来一帆风顺。</p>
-<p>离职回到家后，由于身体的原因，我逼迫自己休息了一个星期，上午睡个懒觉，下午看看综艺节目，饭后出门散个步，晚上陪老妈扯会家常。让自己慢下来，不看技术文档与满屏的代码，享受与家人在一起的悠闲时光，我很珍惜，真的。</p>
-<a id="more"></a> 
-<hr>
-<h3 id="2015年8月31日">2015年8月31日</h3><p>这一天，我成为了 <a href="http://www.seu.edu.cn/" target="_blank" rel="external">东南大学</a> 软件学院的一名研究僧。从 <a href="http://www.ccit.js.cn/" target="_blank" rel="external">常信</a> 到 <a href="http://cxxy.seu.edu.cn/" target="_blank" rel="external">成贤</a> 再到 <a href="http://www.seu.edu.cn/" target="_blank" rel="external">东大</a>，从大专到本三再到重点本科，一路走来，我从未想证明给任何人看，我只是单纯的「不信邪」，我始终坚信「我可以」。</p>
-<p>我心里清楚，从报到的那一刻起，之前所取得的就已经成为过去。而想想下一个目标，既感到鸭梨山大又是那么的激动人心呢。在经历 FM 的历练过后，我对自己未来的职业发展有了更清晰的认识，研究生的日子更多的是靠自己规划，而我也正按着计划一步步的进行着。</p>
-<hr>
-<h3 id="2015年9月4日">2015年9月4日</h3><p>这一天，<a href="https://github.com/tangqi92/BuildingBlocks" target="_blank" rel="external">BuildingBlocks - 积木</a> 开源了，第一个正儿八经写的小应用，之后便是以每两周一个小版本的速度进行迭代，目标是持续更新到V1.0。</p>
-<hr>
-<h3 id="2015年9月14日">2015年9月14日</h3><p>这一天，<a href="https://github.com/tangqi92/Android-Tips" target="_blank" rel="external">Android-Tips 填坑手册</a> 开源了，原本只想作为备份书签使用，却意外地收获了大家的支持，Star 数远远超出了自己的预期，4天内就突破了1K。</p>
-<p>随着项目得到越来越多人的关注，无形中也鞭策着自己不断前进。在接下来的一个月的时间里，我大部分时间都在进行版本的更新。真心感谢开源，让我不断进步的同时，也认识了许多志同道合的好友们。</p>
-<hr>
-<h3 id="2015年10月8日">2015年10月8日</h3><p>这一天，闲不下来的我，决定扩充自己的技能树。</p>
-<p>首先是<strong>设计</strong>，初衷就是想给自己将来的应用画个漂亮的图标，于是参考 <a href="http://www.zhihu.com/question/23421455" target="_blank" rel="external">有没有 Sketch 相关的教程或者素材下载？</a> 问题下的答案，进行 Sketch 的学习与使用。</p>
-<p>其次是<strong>前端</strong>，参考 <a href="http://www.zhihu.com/question/19809484" target="_blank" rel="external">有哪些关于前端开发技术（HTML、CSS 和 JavaScript 等）的值得推荐的书籍？</a> 问题下的答案，买了本 <a href="http://book.douban.com/subject/25752357/" target="_blank" rel="external">Head First HTML与CSS（第2版）</a> 就开始了，然后跟着慕课网 <a href="http://www.imooc.com/course/programdetail/pid/32" target="_blank" rel="external">Web前端工程师</a> 的课程学习。</p>
-<p>接下来是<strong>算法</strong>，参考 <a href="http://www.zhihu.com/question/19981544" target="_blank" rel="external">怎样学算法？</a> 问题下的答案，买了本 <a href="http://book.douban.com/subject/10432347/" target="_blank" rel="external">算法</a> 并跟着 coursera 上配套教学视频 <a href="https://www.coursera.org/course/algs4partI" target="_blank" rel="external">算法，第一部分</a> 进行学习。 计划每天刷 <a href="https://leetcode.com/" target="_blank" rel="external">LeetCode</a>，并在 GitHub 上记录<a href="https://github.com/tangqi92/LeetCode" target="_blank" rel="external">解题的思路与答案</a>。</p>
-<p>最后，作为一名伪文艺青年，怎能不涉猎文学书籍，期间看完了<a href="http://book.douban.com/subject/26266755/" target="_blank" rel="external">塔利班</a>，现在正看着<a href="http://book.douban.com/subject/24380577/" target="_blank" rel="external">平凡的世界</a>。</p>
-<hr>
-<h3 id="2015年11月2日">2015年11月2日</h3><p>今天，是我<strong>回归</strong>的日子。</p>
-<p>其实很多人不知道，在过去的两年多时间里，我经历了太多太多，我收获了许多，但也失去了许多，过去的经历教会了我成长。</p>
-<p>今天是我停药的第7天，在饱受胃病折磨的一年时间里，我的斗志与激情正一点点被消磨，心有余而力不足的感觉糟透了，很多时候，我想做的更多更好，但自己的身体却不容许我全身心的投入进去。</p>
-<p>但一切都会过去不是吗？我一直在等今天，等我的胃病痊愈，等我找回那个充满干劲的自己，我想，就是现在了。</p>
-<p>是的，我回来了！</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h3 id="2015年8月21日">2015年8月21日</h3><p>这一天，我结束了在 <a href="http://friendmedia.com/">FriendMedia</a> 三个月短暂却又充实的工作。在这里，我结识了一群聪明且又友爱的伙伴；在这里，我体会到了创业公司的激情与不易；在这里，我一步步走向了 Android 开发的正轨。感谢 FM 给我的一切，愿你的未来一帆风顺。</p>
-<p>离职回到家后，由于身体的原因，我逼迫自己休息了一个星期，上午睡个懒觉，下午看看综艺节目，饭后出门散个步，晚上陪老妈扯会家常。让自己慢下来，不看技术文档与满屏的代码，享受与家人在一起的悠闲时光，我很珍惜，真的。</p>]]>
-    
-    </summary>
-    
-      <category term="Comeback" scheme="http://itangqi.me/tags/Comeback/"/>
-    
-      <category term="Diary" scheme="http://itangqi.me/tags/Diary/"/>
-    
-      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
-    
-      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
     
   </entry>
   
