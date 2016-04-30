@@ -1,0 +1,1005 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Event Delivery,Event Type,Responder Chain,Responder Object,iOS," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="前言今天看到一道面试题：UIWindow 与 UIView 有何区别？
+关于问题的答案，你可以自行 Google。要说这篇文章的由来，是因为答案中说到：UIWindow 管理和协调着事件的分发，这一点引起了我的疑问。
+那么，在 iOS 中，事件分发机制的概念与具体的流程是怎么样子的呢？如果你之前也未曾了解，亦或是一知半解，不如今天就和我一起学习下事件分发机制吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探 iOS 事件分发机制">
+<meta property="og:url" content="http://itangqi.me/2016/04/18/the-first-meet-with-event-delivery/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言今天看到一道面试题：UIWindow 与 UIView 有何区别？
+关于问题的答案，你可以自行 Google。要说这篇文章的由来，是因为答案中说到：UIWindow 管理和协调着事件的分发，这一点引起了我的疑问。
+那么，在 iOS 中，事件分发机制的概念与具体的流程是怎么样子的呢？如果你之前也未曾了解，亦或是一知半解，不如今天就和我一起学习下事件分发机制吧！">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-01.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-02.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-03.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-04.png">
+<meta property="og:updated_time" content="2016-04-30T12:38:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初探 iOS 事件分发机制">
+<meta name="twitter:description" content="前言今天看到一道面试题：UIWindow 与 UIView 有何区别？
+关于问题的答案，你可以自行 Google。要说这篇文章的由来，是因为答案中说到：UIWindow 管理和协调着事件的分发，这一点引起了我的疑问。
+那么，在 iOS 中，事件分发机制的概念与具体的流程是怎么样子的呢？如果你之前也未曾了解，亦或是一知半解，不如今天就和我一起学习下事件分发机制吧！">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 初探 iOS 事件分发机制 | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+        <li class="menu-item menu-item-search">
+          <a href="#" class="st-search-show-outputs">
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                初探 iOS 事件分发机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-18T00:00:00+08:00" content="2016-04-18">
+              2016-04-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/04/18/the-first-meet-with-event-delivery/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/04/18/the-first-meet-with-event-delivery/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><p>今天看到一道面试题：<code>UIWindow</code> 与 <code>UIView</code> 有何区别？</p>
+<p>关于问题的答案，你可以自行 Google。要说这篇文章的由来，是因为答案中说到：<strong>UIWindow 管理和协调着事件的分发</strong>，这一点引起了我的疑问。</p>
+<p>那么，在 iOS 中，事件分发机制的概念与具体的流程是怎么样子的呢？如果你之前也未曾了解，亦或是一知半解，不如今天就和我一起学习下事件分发机制吧！</p>
+<a id="more"></a>
+<hr>
+<h2 id="UIEvent">UIEvent</h2><p><code>UIEvent</code> 表示用户交互的事件对象，在其类文件中，我们可以看到有一个枚举类型的属性  <code>UIEventType</code>，这个属性表示了当前的响应事件类型（Event Type）：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  UIEvent.h</span></span><br><span class="line"><span class="comment">//  UIKit</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2005-2015 Apple Inc. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UIEventType</span> type</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UIEventType</span>) &#123;</span><br><span class="line">    <span class="built_in">UIEventTypeTouches</span>,</span><br><span class="line">    <span class="built_in">UIEventTypeMotion</span>,</span><br><span class="line">    <span class="built_in">UIEventTypeRemoteControl</span>,</span><br><span class="line">    <span class="built_in">UIEventTypePresses</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">9</span>_0),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>触控事件（UIEventTypeTouches）：单点、多点触控以及各种手势操作；</li>
+<li>传感器事件（UIEventTypeMotion）：重力、加速度传感器等；</li>
+<li>远程控制事件（UIEventTypeRemoteControl）：远程遥控 iOS 设备多媒体播放等；</li>
+<li>按压事件（UIEventTypePresses）：3D Touch（iOS 9）；</li>
+</ol>
+<p>本文主要针对 Touch events 的分发进行讲解。</p>
+<hr>
+<h2 id="UITouch">UITouch</h2><p><code>UITouch</code> 表示单个点击，其类文件中，我们同样可以看到有一个枚举类型的属性 <code>UITouchPhase</code>，这个属性是用来表示当前点击的状态：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UITouchPhase</span> phase;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">UITouchPhase</span>,<span class="built_in">UITouchPhase</span>&#123;</span><br><span class="line">    <span class="built_in">NSTouchPhaseBegin</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseMoved</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseStationary</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseEnded</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseCanceled</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这些状态包括点击开始、移动、停止不动、结束和取消五个状态。</p>
+<p>每次点击发生的时候，点击对象都放在一个集合中传入 <code>UIResponder</code> 的回调方法中，我们通过集合中对象获取用户点击的位置。</p>
+<h3 id="UITouch_方法">UITouch 方法</h3><p>可以通过以下方法获取用户点击的位置：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取点击坐标点</span></span><br><span class="line">-(<span class="built_in">CGPoint</span>) locationInView:(<span class="built_in">UIView</span> *)view;</span><br><span class="line"><span class="comment">//获取上个点击位置的坐标点</span></span><br><span class="line">-(<span class="built_in">CGPoint</span>) previousLocationInView:(<span class="built_in">UIView</span> *)view;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Responder_Object">Responder Object</h2><p>Responder Object（响应者对象）是能够响应并处理事件的对象，是构成 Responder Chain（响应链）和事件传递链的节点。</p>
+<p>在 iOS 中，只有 <code>UIResponder</code>类的子类才能响应事件，而我们熟知的 <code>UIApplication</code>/<code>UIView</code>/<code>UIViewController</code> 都是 <code>UIResponder</code> 的子类，<code>UIResponder</code> 声明了用于处理事件的接口，并定义了默认的行为：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesMoved:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesEnded:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesCancelled:(nullable <span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br></pre></td></tr></table></figure>
+<p>这四个方法分别处理触摸开始事件、触摸移动事件、触摸终止事件、以及触摸跟踪取消事件。</p>
+<p>再来看下 <code>UIResponder</code> 的继承链：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-01.png" alt=""></p>
+<h3 id="First_Responder">First Responder</h3><p>First Responder（第一响应者）用于第一个接收事件，通常情况下，第一响应者是一个视图对象。</p>
+<p>一个对象可以通过以下操作成为第一响应者：</p>
+<ol>
+<li>重写 <code>canBecomeFirstResponder</code> 方法，并返回 <code>YES</code></li>
+<li>接收 <code>becomeFirstResponder</code> 消息，如果必要，一个对象可以给自己发这个消息</li>
+</ol>
+<h3 id="要点">要点</h3><ol>
+<li><code>CALayer</code> 不是 <code>UIResponder</code> 的子类，这说明 <code>CALayer</code> 无法响应事件，这也是 <code>UIView</code> 与 <code>CALayer</code> 的重要区别之一</li>
+</ol>
+<hr>
+<h2 id="Responder_Chain">Responder Chain</h2><p>当一个事件发生时，如果 First Responder 不进行处理，事件就会继续往下传递，被下个 Responder 接收，如果下个 Responder 仍不处理，又会被下下个 Responder 接收……直到一个 Responder 处理了事件或者没有 Responder 了。这些 Responder 按照传递次序连接起来的链条就构成了 Responder Chain（响应者链）。</p>
+<p>下图直观地反应了事件传递的流程：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-02.png" alt=""></p>
+<p>从图中可以看到，响应者链有以下特点：</p>
+<ol>
+<li><p>响应者链通常是由 initial view 开始</p>
+</li>
+<li><p>UIView 的 <code>nextResponder</code> 是它的 Super View；如果 UIView 已经是其所在的 UIViewController 的 Top View，那么 UIView 的 <code>nextResponder</code> 就是 UIViewController</p>
+</li>
+<li><p>UIViewController 如果有 Super ViewController，那么它的 <code>nextResponder</code> 为其 Super ViewController 最表层的 View；如果没有，那么它的 <code>nextResponder</code> 就是 UIWindow</p>
+</li>
+<li><p>UIWindow 的 contentView 指向 UIApplication，将其作为 <code>nextResponder</code></p>
+</li>
+<li><p>UIApplication 是一个响应者链的终点，它的 <code>nextResponder</code> 指向 AppDelegate（文档中说是 nil，如果有同学有明确的答案请告知），整个 Responder Chain 结束</p>
+</li>
+</ol>
+<p><strong>需要说明是</strong>：如果当前的 Responder 不处理事件，并希望将其传递给 <code>nextResponder</code> 时，需要手动编写代码，才会继续往下传递，否则事件会被废弃：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span> *)touches withEvent:(<span class="built_in">UIEvent</span> *)event</span><br><span class="line">&#123;  </span><br><span class="line">    <span class="comment">// 将事件传递给 nextResponder</span></span><br><span class="line">    <span class="keyword">id</span> theNextResponder = [<span class="keyword">self</span> nextResponder];</span><br><span class="line">    [theNextResponder touchesBegan:touches withEvent:event];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="要点-1">要点</h3><ol>
+<li><code>UIResponder</code> 本身是不会去存储或者设置 <code>nextResponder</code> 的，所谓的 <code>nextResponder</code> 都是子类去实现的</li>
+</ol>
+<hr>
+<h2 id="Hit-Test_View_&amp;_Hit-Testing">Hit-Test View &amp; Hit-Testing</h2><p><strong>Hit-Test View</strong>：当用户与触摸屏产生交互时，硬件就会探测到物理接触并且通知操作系统。操作系统就会创建相应的事件，并将其传递给当前正在运行的应用程序的事件队列。然后这个事件会被事件循环传递给优先响应对象，既 Hit-Test View</p>
+<p><strong>Hit-Testing</strong>：Hit-Test View 就是事件被触发时和用户交互的对象，寻找 Hit-Test View 的过程就叫做 Hit-Testing</p>
+<p>在 <code>UIView</code> 中定义了如下两个函数：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  UIView.h</span></span><br><span class="line"><span class="comment">//  UIKit</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2005-2015 Apple Inc. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line">- (nullable <span class="built_in">UIView</span> *)hitTest:(<span class="built_in">CGPoint</span>)point withEvent:(nullable <span class="built_in">UIEvent</span> *)event;   <span class="comment">// recursively calls -pointInside:withEvent:. point is in the receiver's coordinate system</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(nullable <span class="built_in">UIEvent</span> *)event;   <span class="comment">// default returns YES if point is in bounds</span></span><br></pre></td></tr></table></figure>
+<p>系统先调用 <code>pointInSide: WithEvent:</code> 判断当前视图以及这些视图的子视图是否能接收这次点击事件，然后在调用 <code>hitTest: withEvent:</code> 依次获取处理这个事件的所有视图对象，在获取所有的可处理事件对象后，开始调用这些对象的 touches 回调方法。</p>
+<p>下面通过两张图来观察：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-03.png" alt=""><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">图片来自</a></p>
+<p>UIWindow 有一个 MianVIew，MainView 里面有三个 Sub View：View A、View B、View C，他们各自有两个 Sub View，他们层级关系是：View A 在最下面，View B 中间，View C 最上(按照 <code>addSubview</code> 的顺序)，其中 View A 和 View B 有一部分重叠。如果手指在 View B.1 和 View A.2 重叠的上面点击，按照上面说的递归方式，顺序如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-04.png" alt=""><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">图片来自</a></p>
+<p>递归是向界面的根节点 UIWindow 发送 <code>hitTest:withEvent:</code> 消息开始的，从这个消息返回的是一个 UIView，也就是手指当前位置最前面的那个 Hittest View。当向 UIWindow 发送 <code>hitTest:withEvent:</code> 消息时，<code>hitTest:withEvent:</code> 里面所做的事，就是判断当前的点击位置是否在 Window 里面，如果在则遍历 Window 的 Subview 然后依次对 Subview 发送 <code>hitTest:withEvent:</code> 消息（注意这里给 Subview 发送消息是根据当前 Subview 的 index 顺序，index 越大就越先被访问）。如果当前的 point 没有在 View 上面，那么这个 View 的 Subview 也就不会被遍历了。当事件遍历到了 View B.1，发现 point 在 View B.1 里面，并且 View B.1 没有 Subview，那么他就是我们要找的 Hittest View 了，找到之后就会一路返回直到根节点，而 View B 之后的 View A 也不会被遍历了。</p>
+<hr>
+<h2 id="总结">总结</h2><p>所以关于事件的链有两条：事件的<strong>响应链</strong>；Hit-Testing 时事件的<strong>传递链</strong>。</p>
+<p><strong>事件响应链</strong>：由离用户最近的 View 向系统传递：<br>initial view –&gt; Super View –&gt; …… –&gt; View Controller –&gt; Window –&gt; Application –&gt; AppDelegate</p>
+<p><strong>事件传递链</strong>：由系统向离用户最近的 View 传递：<br>UIKit –&gt; active app’s event queue –&gt; Window –&gt; Root View –&gt; …… –&gt; Lowest View</p>
+<p>具体的应用可以参见：<a href="http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE.html" target="_blank" rel="external">事件传递响应链</a></p>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/EventHandling/Conceptual/EventHandlingiPhoneOS/multitouch_background/multitouch_background.html" target="_blank" rel="external">Event Handling Guide for iOS</a></li>
+<li><a href="http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE.html" target="_blank" rel="external">事件传递响应链</a></li>
+<li><a href="https://www.zybuluo.com/MicroCai/note/66142" target="_blank" rel="external">iOS Events and Responder Chain</a></li>
+<li><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">深入浅出iOS事件机制</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Event-Delivery/" rel="tag">#Event Delivery</a>
+          
+            <a href="/tags/Event-Type/" rel="tag">#Event Type</a>
+          
+            <a href="/tags/Responder-Chain/" rel="tag">#Responder Chain</a>
+          
+            <a href="/tags/Responder-Object/" rel="tag">#Responder Object</a>
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/15/autorelease-pool-in-ios/" rel="next" title="iOS 中的 Autorelease Pool">
+                <i class="fa fa-chevron-left"></i> iOS 中的 Autorelease Pool
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/21/the-notes-of-learning-uicollectionview/" rel="prev" title="UICollectionView 学习笔记">
+                UICollectionView 学习笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾的走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 知乎
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 豆瓣
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">小伙伴们</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://tikitoo.me/" target="_blank">安卓同学</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://lovinghuan.com/" target="_blank">poberWong</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.zhaiyifan.cn/" target="_blank">MarkZhai</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://yifeiyuan.me/" target="_blank">程序亦非猿</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://abner-nimengbo.cn/" target="_blank">阿布</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.easydone.cn/" target="_blank">Ailurus</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://wuxiaolong.me/" target="_blank">吴小龙同學</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://drakeet.me/" target="_blank">Drakeet</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.fangjie.info/" target="_blank">方杰</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://hujiaweibujidao.github.io/" target="_blank">五道口宅男</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://gudong.name/" target="_blank">咕咚</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://soledad.me/" target="_blank">蔡越</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UIEvent"><span class="nav-number">2.</span> <span class="nav-text">UIEvent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UITouch"><span class="nav-number">3.</span> <span class="nav-text">UITouch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UITouch_方法"><span class="nav-number">3.1.</span> <span class="nav-text">UITouch 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Responder_Object"><span class="nav-number">4.</span> <span class="nav-text">Responder Object</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#First_Responder"><span class="nav-number">4.1.</span> <span class="nav-text">First Responder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#要点"><span class="nav-number">4.2.</span> <span class="nav-text">要点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Responder_Chain"><span class="nav-number">5.</span> <span class="nav-text">Responder Chain</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#要点-1"><span class="nav-number">5.1.</span> <span class="nav-text">要点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hit-Test_View_&_Hit-Testing"><span class="nav-number">6.</span> <span class="nav-text">Hit-Test View & Hit-Testing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2016/04/18/the-first-meet-with-event-delivery/';
+      var disqus_title = '初探 iOS 事件分发机制';
+      var disqus_url = 'http://itangqi.me/2016/04/18/the-first-meet-with-event-delivery/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>

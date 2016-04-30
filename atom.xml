@@ -100,6 +100,116 @@
   </entry>
   
   <entry>
+    <title><![CDATA[初探 iOS 事件分发机制]]></title>
+    <link href="http://itangqi.me/2016/04/18/the-first-meet-with-event-delivery/"/>
+    <id>http://itangqi.me/2016/04/18/the-first-meet-with-event-delivery/</id>
+    <published>2016-04-17T16:00:00.000Z</published>
+    <updated>2016-04-30T12:38:53.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>今天看到一道面试题：<code>UIWindow</code> 与 <code>UIView</code> 有何区别？</p>
+<p>关于问题的答案，你可以自行 Google。要说这篇文章的由来，是因为答案中说到：<strong>UIWindow 管理和协调着事件的分发</strong>，这一点引起了我的疑问。</p>
+<p>那么，在 iOS 中，事件分发机制的概念与具体的流程是怎么样子的呢？如果你之前也未曾了解，亦或是一知半解，不如今天就和我一起学习下事件分发机制吧！</p>
+<a id="more"></a>
+<hr>
+<h2 id="UIEvent">UIEvent</h2><p><code>UIEvent</code> 表示用户交互的事件对象，在其类文件中，我们可以看到有一个枚举类型的属性  <code>UIEventType</code>，这个属性表示了当前的响应事件类型（Event Type）：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  UIEvent.h</span></span><br><span class="line"><span class="comment">//  UIKit</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2005-2015 Apple Inc. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UIEventType</span> type</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UIEventType</span>) &#123;</span><br><span class="line">    <span class="built_in">UIEventTypeTouches</span>,</span><br><span class="line">    <span class="built_in">UIEventTypeMotion</span>,</span><br><span class="line">    <span class="built_in">UIEventTypeRemoteControl</span>,</span><br><span class="line">    <span class="built_in">UIEventTypePresses</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">9</span>_0),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>触控事件（UIEventTypeTouches）：单点、多点触控以及各种手势操作；</li>
+<li>传感器事件（UIEventTypeMotion）：重力、加速度传感器等；</li>
+<li>远程控制事件（UIEventTypeRemoteControl）：远程遥控 iOS 设备多媒体播放等；</li>
+<li>按压事件（UIEventTypePresses）：3D Touch（iOS 9）；</li>
+</ol>
+<p>本文主要针对 Touch events 的分发进行讲解。</p>
+<hr>
+<h2 id="UITouch">UITouch</h2><p><code>UITouch</code> 表示单个点击，其类文件中，我们同样可以看到有一个枚举类型的属性 <code>UITouchPhase</code>，这个属性是用来表示当前点击的状态：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UITouchPhase</span> phase;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">UITouchPhase</span>,<span class="built_in">UITouchPhase</span>&#123;</span><br><span class="line">    <span class="built_in">NSTouchPhaseBegin</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseMoved</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseStationary</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseEnded</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseCanceled</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这些状态包括点击开始、移动、停止不动、结束和取消五个状态。</p>
+<p>每次点击发生的时候，点击对象都放在一个集合中传入 <code>UIResponder</code> 的回调方法中，我们通过集合中对象获取用户点击的位置。</p>
+<h3 id="UITouch_方法">UITouch 方法</h3><p>可以通过以下方法获取用户点击的位置：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取点击坐标点</span></span><br><span class="line">-(<span class="built_in">CGPoint</span>) locationInView:(<span class="built_in">UIView</span> *)view;</span><br><span class="line"><span class="comment">//获取上个点击位置的坐标点</span></span><br><span class="line">-(<span class="built_in">CGPoint</span>) previousLocationInView:(<span class="built_in">UIView</span> *)view;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Responder_Object">Responder Object</h2><p>Responder Object（响应者对象）是能够响应并处理事件的对象，是构成 Responder Chain（响应链）和事件传递链的节点。</p>
+<p>在 iOS 中，只有 <code>UIResponder</code>类的子类才能响应事件，而我们熟知的 <code>UIApplication</code>/<code>UIView</code>/<code>UIViewController</code> 都是 <code>UIResponder</code> 的子类，<code>UIResponder</code> 声明了用于处理事件的接口，并定义了默认的行为：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesMoved:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesEnded:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesCancelled:(nullable <span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br></pre></td></tr></table></figure>
+<p>这四个方法分别处理触摸开始事件、触摸移动事件、触摸终止事件、以及触摸跟踪取消事件。</p>
+<p>再来看下 <code>UIResponder</code> 的继承链：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-01.png" alt=""></p>
+<h3 id="First_Responder">First Responder</h3><p>First Responder（第一响应者）用于第一个接收事件，通常情况下，第一响应者是一个视图对象。</p>
+<p>一个对象可以通过以下操作成为第一响应者：</p>
+<ol>
+<li>重写 <code>canBecomeFirstResponder</code> 方法，并返回 <code>YES</code></li>
+<li>接收 <code>becomeFirstResponder</code> 消息，如果必要，一个对象可以给自己发这个消息</li>
+</ol>
+<h3 id="要点">要点</h3><ol>
+<li><code>CALayer</code> 不是 <code>UIResponder</code> 的子类，这说明 <code>CALayer</code> 无法响应事件，这也是 <code>UIView</code> 与 <code>CALayer</code> 的重要区别之一</li>
+</ol>
+<hr>
+<h2 id="Responder_Chain">Responder Chain</h2><p>当一个事件发生时，如果 First Responder 不进行处理，事件就会继续往下传递，被下个 Responder 接收，如果下个 Responder 仍不处理，又会被下下个 Responder 接收……直到一个 Responder 处理了事件或者没有 Responder 了。这些 Responder 按照传递次序连接起来的链条就构成了 Responder Chain（响应者链）。</p>
+<p>下图直观地反应了事件传递的流程：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-02.png" alt=""></p>
+<p>从图中可以看到，响应者链有以下特点：</p>
+<ol>
+<li><p>响应者链通常是由 initial view 开始</p>
+</li>
+<li><p>UIView 的 <code>nextResponder</code> 是它的 Super View；如果 UIView 已经是其所在的 UIViewController 的 Top View，那么 UIView 的 <code>nextResponder</code> 就是 UIViewController</p>
+</li>
+<li><p>UIViewController 如果有 Super ViewController，那么它的 <code>nextResponder</code> 为其 Super ViewController 最表层的 View；如果没有，那么它的 <code>nextResponder</code> 就是 UIWindow</p>
+</li>
+<li><p>UIWindow 的 contentView 指向 UIApplication，将其作为 <code>nextResponder</code></p>
+</li>
+<li><p>UIApplication 是一个响应者链的终点，它的 <code>nextResponder</code> 指向 AppDelegate（文档中说是 nil，如果有同学有明确的答案请告知），整个 Responder Chain 结束</p>
+</li>
+</ol>
+<p><strong>需要说明是</strong>：如果当前的 Responder 不处理事件，并希望将其传递给 <code>nextResponder</code> 时，需要手动编写代码，才会继续往下传递，否则事件会被废弃：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span> *)touches withEvent:(<span class="built_in">UIEvent</span> *)event</span><br><span class="line">&#123;  </span><br><span class="line">    <span class="comment">// 将事件传递给 nextResponder</span></span><br><span class="line">    <span class="keyword">id</span> theNextResponder = [<span class="keyword">self</span> nextResponder];</span><br><span class="line">    [theNextResponder touchesBegan:touches withEvent:event];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="要点-1">要点</h3><ol>
+<li><code>UIResponder</code> 本身是不会去存储或者设置 <code>nextResponder</code> 的，所谓的 <code>nextResponder</code> 都是子类去实现的</li>
+</ol>
+<hr>
+<h2 id="Hit-Test_View_&amp;_Hit-Testing">Hit-Test View &amp; Hit-Testing</h2><p><strong>Hit-Test View</strong>：当用户与触摸屏产生交互时，硬件就会探测到物理接触并且通知操作系统。操作系统就会创建相应的事件，并将其传递给当前正在运行的应用程序的事件队列。然后这个事件会被事件循环传递给优先响应对象，既 Hit-Test View</p>
+<p><strong>Hit-Testing</strong>：Hit-Test View 就是事件被触发时和用户交互的对象，寻找 Hit-Test View 的过程就叫做 Hit-Testing</p>
+<p>在 <code>UIView</code> 中定义了如下两个函数：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  UIView.h</span></span><br><span class="line"><span class="comment">//  UIKit</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2005-2015 Apple Inc. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line">- (nullable <span class="built_in">UIView</span> *)hitTest:(<span class="built_in">CGPoint</span>)point withEvent:(nullable <span class="built_in">UIEvent</span> *)event;   <span class="comment">// recursively calls -pointInside:withEvent:. point is in the receiver's coordinate system</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(nullable <span class="built_in">UIEvent</span> *)event;   <span class="comment">// default returns YES if point is in bounds</span></span><br></pre></td></tr></table></figure>
+<p>系统先调用 <code>pointInSide: WithEvent:</code> 判断当前视图以及这些视图的子视图是否能接收这次点击事件，然后在调用 <code>hitTest: withEvent:</code> 依次获取处理这个事件的所有视图对象，在获取所有的可处理事件对象后，开始调用这些对象的 touches 回调方法。</p>
+<p>下面通过两张图来观察：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-03.png" alt=""><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">图片来自</a></p>
+<p>UIWindow 有一个 MianVIew，MainView 里面有三个 Sub View：View A、View B、View C，他们各自有两个 Sub View，他们层级关系是：View A 在最下面，View B 中间，View C 最上(按照 <code>addSubview</code> 的顺序)，其中 View A 和 View B 有一部分重叠。如果手指在 View B.1 和 View A.2 重叠的上面点击，按照上面说的递归方式，顺序如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-04.png" alt=""><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">图片来自</a></p>
+<p>递归是向界面的根节点 UIWindow 发送 <code>hitTest:withEvent:</code> 消息开始的，从这个消息返回的是一个 UIView，也就是手指当前位置最前面的那个 Hittest View。当向 UIWindow 发送 <code>hitTest:withEvent:</code> 消息时，<code>hitTest:withEvent:</code> 里面所做的事，就是判断当前的点击位置是否在 Window 里面，如果在则遍历 Window 的 Subview 然后依次对 Subview 发送 <code>hitTest:withEvent:</code> 消息（注意这里给 Subview 发送消息是根据当前 Subview 的 index 顺序，index 越大就越先被访问）。如果当前的 point 没有在 View 上面，那么这个 View 的 Subview 也就不会被遍历了。当事件遍历到了 View B.1，发现 point 在 View B.1 里面，并且 View B.1 没有 Subview，那么他就是我们要找的 Hittest View 了，找到之后就会一路返回直到根节点，而 View B 之后的 View A 也不会被遍历了。</p>
+<hr>
+<h2 id="总结">总结</h2><p>所以关于事件的链有两条：事件的<strong>响应链</strong>；Hit-Testing 时事件的<strong>传递链</strong>。</p>
+<p><strong>事件响应链</strong>：由离用户最近的 View 向系统传递：<br>initial view –&gt; Super View –&gt; …… –&gt; View Controller –&gt; Window –&gt; Application –&gt; AppDelegate</p>
+<p><strong>事件传递链</strong>：由系统向离用户最近的 View 传递：<br>UIKit –&gt; active app’s event queue –&gt; Window –&gt; Root View –&gt; …… –&gt; Lowest View</p>
+<p>具体的应用可以参见：<a href="http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE.html" target="_blank" rel="external">事件传递响应链</a></p>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/EventHandling/Conceptual/EventHandlingiPhoneOS/multitouch_background/multitouch_background.html" target="_blank" rel="external">Event Handling Guide for iOS</a></li>
+<li><a href="http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE.html" target="_blank" rel="external">事件传递响应链</a></li>
+<li><a href="https://www.zybuluo.com/MicroCai/note/66142" target="_blank" rel="external">iOS Events and Responder Chain</a></li>
+<li><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">深入浅出iOS事件机制</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>今天看到一道面试题：<code>UIWindow</code> 与 <code>UIView</code> 有何区别？</p>
+<p>关于问题的答案，你可以自行 Google。要说这篇文章的由来，是因为答案中说到：<strong>UIWindow 管理和协调着事件的分发</strong>，这一点引起了我的疑问。</p>
+<p>那么，在 iOS 中，事件分发机制的概念与具体的流程是怎么样子的呢？如果你之前也未曾了解，亦或是一知半解，不如今天就和我一起学习下事件分发机制吧！</p>]]>
+    
+    </summary>
+    
+      <category term="Event Delivery" scheme="http://itangqi.me/tags/Event-Delivery/"/>
+    
+      <category term="Event Type" scheme="http://itangqi.me/tags/Event-Type/"/>
+    
+      <category term="Responder Chain" scheme="http://itangqi.me/tags/Responder-Chain/"/>
+    
+      <category term="Responder Object" scheme="http://itangqi.me/tags/Responder-Object/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[iOS 中的 Autorelease Pool]]></title>
     <link href="http://itangqi.me/2016/04/15/autorelease-pool-in-ios/"/>
     <id>http://itangqi.me/2016/04/15/autorelease-pool-in-ios/</id>
@@ -2602,80 +2712,6 @@
     </summary>
     
       <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
-    
-      <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
-    
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[自学 iOS 开发之旅]]></title>
-    <link href="http://itangqi.me/2016/02/08/the-journey-of-learning-ios/"/>
-    <id>http://itangqi.me/2016/02/08/the-journey-of-learning-ios/</id>
-    <published>2016-02-07T16:00:00.000Z</published>
-    <updated>2016-04-19T08:41:13.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
-<p>不知不觉，学习 iOS 开发已经有 3 个多月的时间了，我想，也是时候写篇文章作为总结与回顾了吧。</p>
-</blockquote>
-<a id="more"></a> 
-<p>我相信，很多人都会有这样的经历：每当他在学习一门新语言时，都会阅读许多 <strong>XXX 自学必备资源</strong> 这类的文章，然后一股脑地买下推荐的书，收藏推荐的网站，下载推荐的视频，订阅推荐的邮箱，注册推荐的论坛等等，当时那个热血沸腾劲，心中一定默默地告诉自己：「来吧，我 XXX 要大干一场了！」</p>
-<p>然而现实却是：在经过几天的热血过后，你会发现其实你并没有那么多精力与时间去学习去消化那么多资料，一方面的确是因为你时间有限，另一方面更因为并不是所有的都适合现阶段的你。一段时间过，你会发现有些收藏的网站你始终未打开过，有些订阅的邮件你从未阅读过，有些下载的视频你从未看过。</p>
-<p>所以，凡事都不能心急与贪多，稳扎稳打方能在学习的道路上越走越远。文中所列出的资料（均以时间为顺序排列），都是到目前为止我所学习过的，并且我会定期更新文章，记录我一步步从小白到<strong>大牛</strong>的心路历程（真是不要脸啊！）。</p>
-<hr>
-<h2 id="书籍">书籍</h2><p><strong>1. <a href="http://book.douban.com/subject/19962787/" target="_blank" rel="external">Objective-C 编程</a></strong></p>
-<p>  本书首先从基本的编程概念讲起（变量、条件语句、循环结构等），接着用浅显易懂的语言讲解 Objective-C 和 Foundation 的知识，包括 Objective-C 的基本语法、 Foundation 常用类 、内存管理、常用设计模式等。—— 本书内容浅显易懂，比较适合作为 OC 的入门书籍。</p>
-<p><strong>2. <a href="http://book.douban.com/subject/26287812/" target="_blank" rel="external">iOS 编程（第4版）</a></strong></p>
-<p>  本书涵盖了开发 iOS 应用的方方面面：从 Objective-C 基础知识到新增加的语言特性；从 AppKit 库到常见的 Cocoa 设计模式；从 Xcode 技巧到 Instruments 等。—— 本书手把手带你一步步完成一个完整的 iOS 应用，随着章节的深入，循序渐进地不断完善与优化，让你深切体会到开发一款应用所需了解的方方面面。</p>
-<p><strong>3. <a href="http://book.douban.com/subject/26287173/" target="_blank" rel="external">iOS 开发进阶</a></strong></p>
-<p>  本书分工具、实践、理论三大部分：第一部分介绍 iOS 开发的常用工具；第二部分介绍 iOS 开发中的一些常见的实践经验；第三部分介绍 iOS 开发中涉及的原理。—— 本书中绝大部分内容都能在作者的博客中找到，所谓「进阶」，我想作者更多的是在抛砖引玉吧。</p>
-<p><strong>4. <a href="http://book.douban.com/subject/24284008/" target="_blank" rel="external">Objective-C 基础教程</a></strong></p>
-<p>  本书全面系统地讲述了 Objective-C 的基础知识和面向对象编程的重要概念，结合实例介绍了 Cocoa 工具包的优秀特性及框架，以及继承、复合、对象初始化、类别、协议、内存管理和源文件组织等重要编程技术。—— 本想作为 OC 的进阶书籍阅读，但并没有预期中好。</p>
-<p><strong>5. <a href="http://book.douban.com/subject/19967897/" target="_blank" rel="external">Objective-C 程序设计</a></strong></p>
-<p>  本书是针对初学者编写的一个完整又循序渐进的 Objective-C 语言权威入门。阅读本书，不需要先学过 C 语言或其他面向对象语言。本书包含许多详细且实用的范例，用来告诉你如何在实践中运用Objective-C。本书完整展示如何利用 Foundation framework 所提供的丰富自带类库 (Library of classes)，并对 iOS 程序设计原理有所讲解。—— 与《Objective-C 编程》同样作为入门书籍，内容相对前者详实许多。</p>
-<p><strong>6. <a href="http://book.douban.com/subject/24720270/" target="_blank" rel="external">Objective-C 高级编程</a></strong></p>
-<p>  本书主要介绍 iOS 与 OS X 多线程和内存管理, 深入破析了苹果官方公布的源代码, 告诉你一些苹果公司官方文档中不会出现的知识。—— 真正的 OC 进阶书籍，满满的干货，值得反复阅读。</p>
-<p><strong>7. <a href="http://book.douban.com/subject/25829244/" target="_blank" rel="external">Effective Objective-C 2.0</a></strong></p>
-<p>  本书从语法、接口与 API 设计、内存管理、框架等 7 大方面总结和探讨了 Objective-C 编程中 52 个鲜为人知和容易被忽视的特性与陷阱。书中包含大量实用范例代码，为编写易于理解、便于维护、易于扩展和高效的 Objective-C  应用提供了解决方案。—— Effective 系列为进阶必备之书，但我认为应该在有一定的项目经验后回过头来阅读，才更能体会其中的精髓。</p>
-<p><strong>8. <a href="http://producter.io/" target="_blank" rel="external">Producer</a> by <a href="http://weibo.com/kevinzhow" target="_blank" rel="external">周楷雯Kevin</a></strong></p>
-<p>  本书主要涵盖了：设计原理、原型，动效，交互设计、iOS 开发与营销，这四个部分，以 <strong>小记</strong> 作为例子，完整的还原了一款产品从想法到编码，再到上架，以及营销的全过程。 —— 它会作为叩响你成为独立开发者大门的敲门砖。</p>
-<p><strong>9. <a href="https://gumroad.com/l/JnWS" target="_blank" rel="external">A GUIDE TO IOS ANIMATION</a> by <a href="http://weibo.com/imapplegeeker" target="_blank" rel="external">KITTEN-YANG</a></strong></p>
-<p>  动画小王子的力作 —— 如何你想学习动画，那么就选它作为入门吧。</p>
-<hr>
-<h2 id="视频">视频</h2><p><strong>1. <a href="https://itunes.apple.com/us/course/developing-ios-7-apps-for/id733644550" target="_blank" rel="external">Developing iOS 7 Apps for iPhone and iPad</a></strong></p>
-<p>目前唯一看过的视频教程，老爷子讲得非常棒，如果你想学习 Swift ，可以搜索其相应的课程。我是一边看视频一边将课上所讲的例子都手敲实现了一遍，最后对 iOS 开发有了较全面的了解。</p>
-<p><strong>2. <a href="https://developer.apple.com/videos/" target="_blank" rel="external">WWDC Session</a></strong></p>
-<p>苹果自家的视频，内容相当多，计划之后空下来按系列来看。</p>
-<hr>
-<h2 id="开源项目">开源项目</h2><p><strong>1. <a href="https://github.com/dsxNiubility/SXNews" target="_blank" rel="external">SXNews</a></strong></p>
-<p>  精仿网易新闻客户端 —— 学习 Android 时第一个仿写的应用便是网易新闻。</p>
-<p><strong>2. <a href="https://github.com/hshpy/HPYZhiHuDaily" target="_blank" rel="external">HPYZhiHuDailly</a></strong></p>
-<p>  采用 MVVM 的 OC 版知乎客户端 —— 第一个 Android 开源项目便是仿写知乎。</p>
-<p><strong>3. <a href="https://github.com/liaojinxing/Voice2Note" target="_blank" rel="external">Voice2Note</a></strong></p>
-<p>  懒人笔记客户端 —— 第一个完整的 iOS 应用便是以此为基础进行修修改改的。</p>
-<p><strong>4. <a href="https://github.com/meilbn/MyOne-iOS" target="_blank" rel="external">MyOne</a></strong></p>
-<p>  精仿「一个」iOS 客户端 —— 代码规范，难度适中，非常适合拿来当做练手的项目。目前希望能将其剩余未完成的功能完成。</p>
-<p><strong>5. <a href="https://github.com/Coding/Coding-iOS" target="_blank" rel="external">Coding</a></strong></p>
-<p>  Coding 官方 iOS 客户端 —— 官方源码，编写规范，文档较完整，且不断更新中，是个进阶学习的项目。</p>
-<hr>
-<h2 id="博客">博客</h2><p><strong>1. <a href="https://www.objc.io/" target="_blank" rel="external">objc</a></strong></p>
-<pre><code>objc<span class="class">.io</span> 国外一个定期发布关于 Objective-c 的最佳实践以及进阶技术的网站，基本上是每月一期，每期关注一个技术主题，围绕这个主题，有几篇文章涉及到本主题的不同方面。
-</code></pre><p>当然，我订阅了许多国内外大牛的技术博客，但是我觉得，如果不是系列性的文章，我更喜欢<strong>通过 Google 搜索关键字来快速寻找出最符合我当下要求的文章来阅读学习</strong>。</p>
-<hr>
-<h2 id="其他">其他</h2><p><strong><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%88%E4%B8%8A%EF%BC%89.md" target="_blank" rel="external">《招聘一个靠谱的 iOS》面试题参考答案</a></strong></p>
-<p>  面试题来自 <a href="http://weibo.com/u/1364395395" target="_blank" rel="external">微博@我就叫Sunny怎么了</a> 的博文<a href="http://blog.sunnyxx.com/2015/07/04/ios-interview/" target="_blank" rel="external">《招聘一个靠谱的 iOS》</a>，其中共 55 题，除第 1 题为纠错题外，其他 54 道均为简答题，答案为 <a href="http://weibo.com/luohanchenyilong/" target="_blank" rel="external">微博@iOS程序犭袁</a> 整理。—— 由于有年后进行实习生面试的计划，所以，我每天都会来看上两题。当然，即使你不为面试，这里的题目也可以作为检验你学习成果的一个有效方法。</p>
-<blockquote>
-<p>未完待续……</p>
-</blockquote>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="前言">前言</h2><blockquote>
-<p>不知不觉，学习 iOS 开发已经有 3 个多月的时间了，我想，也是时候写篇文章作为总结与回顾了吧。</p>
-</blockquote>]]>
-    
-    </summary>
-    
-      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
     
       <category term="iOS" scheme="http://itangqi.me/tags/iOS/"/>
     
