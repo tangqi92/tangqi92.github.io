@@ -2,6 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/2016/03/21/the-notes-of-learning-sdwebimage-two/</loc>
+    <lastmod>2016-05-10T07:24:57.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/23/the-notes-of-learning-sdwebimage-three/</loc>
+    <lastmod>2016-05-10T07:23:54.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/28/the-notes-of-learning-nsoperation/</loc>
+    <lastmod>2016-05-10T07:14:21.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/04/15/autorelease-pool-in-ios/</loc>
+    <lastmod>2016-05-10T07:10:01.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/</loc>
+    <lastmod>2016-05-10T05:35:42.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/2016/04/18/the-first-meet-with-event-delivery/</loc>
     <lastmod>2016-04-30T12:38:53.000Z</lastmod>
   </url>
@@ -9,16 +34,6 @@
   <url>
     <loc>http://itangqi.me/2016/03/24/the-notes-of-learning-sdwebimage-four/</loc>
     <lastmod>2016-04-25T14:31:57.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/23/the-notes-of-learning-sdwebimage-three/</loc>
-    <lastmod>2016-04-25T10:52:04.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/04/15/autorelease-pool-in-ios/</loc>
-    <lastmod>2016-04-24T06:22:57.000Z</lastmod>
   </url>
   
   <url>
@@ -52,11 +67,6 @@
   </url>
   
   <url>
-    <loc>http://itangqi.me/2016/03/28/the-notes-of-learning-nsoperation/</loc>
-    <lastmod>2016-04-19T08:48:26.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://itangqi.me/2016/02/18/the-notes-of-learning-text-kit/</loc>
     <lastmod>2016-04-19T08:45:43.000Z</lastmod>
   </url>
@@ -64,16 +74,6 @@
   <url>
     <loc>http://itangqi.me/2016/02/08/the-journey-of-learning-ios/</loc>
     <lastmod>2016-04-19T08:41:13.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/21/the-notes-of-learning-sdwebimage-two/</loc>
-    <lastmod>2016-04-19T08:30:11.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/</loc>
-    <lastmod>2016-04-19T08:29:54.000Z</lastmod>
   </url>
   
   <url>
