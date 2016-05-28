@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion">
+<html class="theme-next mist use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="NSURLConnection,NSURLSession,Networking,iOS," />
+  <meta name="keywords" content="NSURLConnection,NSURLSession,Networking," />
 
 
 
@@ -70,7 +70,7 @@
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/from-nsurlconnection-to-nsurlsession-003.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/from-nsurlconnection-to-nsurlsession-002.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/from-nsurlconnection-to-nsurlsession-001.png">
-<meta property="og:updated_time" content="2016-04-19T08:53:53.000Z">
+<meta property="og:updated_time" content="2016-05-28T03:50:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从 NSURLConnection 到 NSURLSession">
 <meta name="twitter:description" content="前言现如今的移动应用开发，网络模块几乎成了标配。如果你是早期 iOS 开发者的话，那么你对 NSURLConnection一定不会陌生。但其操作起来有许多不便，这也使得大家更愿意使用第三方库的解决方案，比如大名鼎鼎的 AFNetworking 你一定有所耳闻。正是因为这一点，苹果随着 iOS 7 的发布，也为开发者带来了改进后的原生网络库支持，那就是 NSURLSession。
@@ -81,7 +81,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Pisces',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -204,15 +204,6 @@
 
       
       
-      
-        <li class="menu-item menu-item-search">
-          <a href="#" class="st-search-show-outputs">
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
       
     </ul>
   
@@ -370,7 +361,8 @@
 <p>注意，上面的 request 应为 <code>NSMutableURLRequest</code>，即可变类型。（使用 POST 请求的话，那么就必须的使用 <code>NSMutableURLRequest</code>）</p>
 <h4 id="NSURLConnection-1">NSURLConnection</h4><p>使用 <code>NSURLConnection</code> 发送请求，通过返回 <code>NSURLResponse</code> 实例和 <code>NSError</code> 实例分析结果，接受服务器返回数据。</p>
 <p><code>NSURLConnection</code> 默认的请求类型为 GET，下面分异步和同步介绍 GET 的使用（POST 会在 <code>NSURLSession</code> 中介绍）。</p>
-<h5 id="异步请求">异步请求</h5><p>异步是指：在发送请求之后，一边在子线程中接收返回数据，一边执行之后的代码，当返回数据接收完毕后，采用回调的方式通知主线程做处理。同时，异步请求有两种实现方式。</p>
+<p><strong>异步请求</strong></p>
+<p>异步是指：在发送请求之后，一边在子线程中接收返回数据，一边执行之后的代码，当返回数据接收完毕后，采用回调的方式通知主线程做处理。同时，异步请求有两种实现方式。</p>
 <p>1.使用 block：</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">NSURLConnection</span> sendAsynchronousRequest:request queue:[[<span class="built_in">NSOperationQueue</span> alloc] init] completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *connectionError) &#123;</span><br><span class="line">    <span class="comment">// 有的时候，服务器访问正常，但是会没有数据</span></span><br><span class="line">    <span class="comment">// 以下的 if 是比较标准的错误处理代码</span></span><br><span class="line">    <span class="keyword">if</span> (connectionError != <span class="literal">nil</span> || data == <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="comment">//给用户的提示信息</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"网络不给力"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
 <p>参数说明如下：</p>
@@ -396,7 +388,8 @@
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSURL</span> * url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://itangqi.me"</span>];</span><br><span class="line"><span class="built_in">NSURLRequest</span> * request = [<span class="built_in">NSURLRequest</span> requestWithURL:url];</span><br><span class="line">[<span class="built_in">NSURLConnection</span> connectionWithRequest:request delegate:<span class="keyword">self</span>];</span><br></pre></td></tr></table></figure>
 <p>使用代理可以监测下载过程：</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveResponse:(<span class="built_in">NSURLResponse</span> *)response &#123;</span><br><span class="line">    <span class="comment">// 开始接收数据</span></span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveData:(<span class="built_in">NSData</span> *)data &#123;</span><br><span class="line">    <span class="comment">// 正在接收数据(会调用多次)</span></span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didFailWithError:(<span class="built_in">NSError</span> *)error &#123;</span><br><span class="line">    <span class="comment">// 接收数据失败</span></span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection &#123;</span><br><span class="line">    <span class="comment">// 接收数据完成(成功|失败)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="同步">同步</h5><p>同步是指：数据的请求在主线程来执行，一旦发送同步请求，直至服务器返回数据完成，才可以进行下一步操作，而网络数据加载需要一个时间过程，这样的话就会堵塞主线程，当然这种使用场景很少。</p>
+<p><strong>同步</strong></p>
+<p>同步是指：数据的请求在主线程来执行，一旦发送同步请求，直至服务器返回数据完成，才可以进行下一步操作，而网络数据加载需要一个时间过程，这样的话就会堵塞主线程，当然这种使用场景很少。</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同步请求，代码会阻塞在这里一直等待服务器返回，如果 data 为 nil 则请求失败，当获取少量数据时可以使用此方法。</span></span><br><span class="line"><span class="comment">// request 参数同上。</span></span><br><span class="line"><span class="built_in">NSData</span> *data = [<span class="built_in">NSURLConnection</span> sendSynchronousRequest:request returningResponse:<span class="literal">nil</span> error:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure>
 <hr>
 <h2 id="NSURLSession">NSURLSession</h2><p>不管怎样，<code>NSURLConnection</code> 作为网络基础架构，已经服务了成千上万的 iOS 和 Mac OS 程序，并且做的还算相当不错。但是这些年，一些用例——尤其是在 iPhone 和 iPad 上面——已经对 <code>NSURLConnection</code> 的几个核心概念提出了挑战，让苹果有理由对它进行重构。</p>
@@ -492,8 +485,6 @@
             <a href="/tags/NSURLSession/" rel="tag">#NSURLSession</a>
           
             <a href="/tags/Networking/" rel="tag">#Networking</a>
-          
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
           
         </div>
       
@@ -610,7 +601,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -627,7 +618,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -766,7 +757,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSURLConnection"><span class="nav-number">2.</span> <span class="nav-text">NSURLConnection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用步骤"><span class="nav-number">2.1.</span> <span class="nav-text">使用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概览"><span class="nav-number">2.1.1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURL"><span class="nav-number">2.1.2.</span> <span class="nav-text">NSURL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLRequest"><span class="nav-number">2.1.3.</span> <span class="nav-text">NSURLRequest</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLConnection-1"><span class="nav-number">2.1.4.</span> <span class="nav-text">NSURLConnection</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#异步请求"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">异步请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#同步"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">同步</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSURLSession"><span class="nav-number">3.</span> <span class="nav-text">NSURLSession</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概览-1"><span class="nav-number">3.1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sessions"><span class="nav-number">3.2.</span> <span class="nav-text">Sessions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSURLSessionTask"><span class="nav-number">3.3.</span> <span class="nav-text">NSURLSessionTask</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLSessionDataTask_POST"><span class="nav-number">3.3.1.</span> <span class="nav-text">NSURLSessionDataTask POST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLSessionDataDelegate_代理方法"><span class="nav-number">3.3.2.</span> <span class="nav-text">NSURLSessionDataDelegate 代理方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSURLSessionConfiguration"><span class="nav-number">3.4.</span> <span class="nav-text">NSURLSessionConfiguration</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS_9"><span class="nav-number">4.</span> <span class="nav-text">iOS 9</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSURLConnection_vs-_NSURLSession"><span class="nav-number">5.</span> <span class="nav-text">NSURLConnection vs. NSURLSession</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点"><span class="nav-number">6.</span> <span class="nav-text">要点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSURLConnection"><span class="nav-number">2.</span> <span class="nav-text">NSURLConnection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用步骤"><span class="nav-number">2.1.</span> <span class="nav-text">使用步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概览"><span class="nav-number">2.1.1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURL"><span class="nav-number">2.1.2.</span> <span class="nav-text">NSURL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLRequest"><span class="nav-number">2.1.3.</span> <span class="nav-text">NSURLRequest</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLConnection-1"><span class="nav-number">2.1.4.</span> <span class="nav-text">NSURLConnection</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSURLSession"><span class="nav-number">3.</span> <span class="nav-text">NSURLSession</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概览-1"><span class="nav-number">3.1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sessions"><span class="nav-number">3.2.</span> <span class="nav-text">Sessions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSURLSessionTask"><span class="nav-number">3.3.</span> <span class="nav-text">NSURLSessionTask</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLSessionDataTask_POST"><span class="nav-number">3.3.1.</span> <span class="nav-text">NSURLSessionDataTask POST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSURLSessionDataDelegate_代理方法"><span class="nav-number">3.3.2.</span> <span class="nav-text">NSURLSessionDataDelegate 代理方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSURLSessionConfiguration"><span class="nav-number">3.4.</span> <span class="nav-text">NSURLSessionConfiguration</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iOS_9"><span class="nav-number">4.</span> <span class="nav-text">iOS 9</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSURLConnection_vs-_NSURLSession"><span class="nav-number">5.</span> <span class="nav-text">NSURLConnection vs. NSURLSession</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要点"><span class="nav-number">6.</span> <span class="nav-text">要点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
@@ -802,7 +793,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
+    NexT.Mist
   </a>
 </div>
 
@@ -845,13 +836,6 @@
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
-
-
 
   
   

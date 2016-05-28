@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion">
+<html class="theme-next mist use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="NSRunLoop,Run Loop,iOS," />
+  <meta name="keywords" content="NSRunLoop,Run Loop," />
 
 
 
@@ -75,7 +75,7 @@
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-runloops-04.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-runloops-05.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-runloops-06.png">
-<meta property="og:updated_time" content="2016-04-23T05:46:11.000Z">
+<meta property="og:updated_time" content="2016-05-28T08:30:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初识 Run Loop">
 <meta name="twitter:description" content="前言在学习完内存管理与多线程的知识后，我又将目光瞄向了 Run Loop，不过受限于现阶段的能力，我在查阅了大量资料后，对于 Run Loop 的理解仍然非常浅显，所以本文绝大多数的内容，是参照网上大牛们的文章进行总结的。当然啦，我也希望在不久的将来，对于 Run Loop 能有更多自己的观点与总结。">
@@ -85,7 +85,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Pisces',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -208,15 +208,6 @@
 
       
       
-      
-        <li class="menu-item menu-item-search">
-          <a href="#" class="st-search-show-outputs">
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
       
     </ul>
   
@@ -389,7 +380,7 @@
 <hr>
 <h2 id="Run_Loop_的_Mode">Run Loop 的 Mode</h2><p>Run Loop Mode 是指要被监听的事件源（包括 Input sources 和 Timer sources）的集合 + 要被通知的 run-loop observers 的集合。每一次运行自己的 Run Loop 时，都需要显示或者隐示的指定其运行于哪一种 Mode。在设置 Run Loop Mode 后，你的 Run Loop 会自动过滤和其他 Mode 相关的事件源，而只监视和当前设置 Mode 相关的源（通知相关的观察者）。大多数时候，Run Loop 都是运行在系统定义的默认模式上。</p>
 <p>首先我们可以看一下 App 启动后 Run Loop 的状态：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CFRunLoop &#123;&#10;    current mode = kCFRunLoopDefaultMode&#10;    common modes = &#123;&#10;        UITrackingRunLoopMode&#10;        kCFRunLoopDefaultMode&#10;    &#125;&#10; &#10;    common mode items = &#123;&#10; &#10;        // source0 (manual)&#10;        CFRunLoopSource &#123;order =-1, &#123;&#10;            callout = _UIApplicationHandleEventQueue&#125;&#125;&#10;        CFRunLoopSource &#123;order =-1, &#123;&#10;            callout = PurpleEventSignalCallback &#125;&#125;&#10;        CFRunLoopSource &#123;order = 0, &#123;&#10;            callout = FBSSerialQueueRunLoopSourceHandler&#125;&#125;&#10; &#10;        // source1 (mach port)&#10;        CFRunLoopSource &#123;order = 0,  &#123;port = 17923&#125;&#125;&#10;        CFRunLoopSource &#123;order = 0,  &#123;port = 12039&#125;&#125;&#10;        CFRunLoopSource &#123;order = 0,  &#123;port = 16647&#125;&#125;&#10;        CFRunLoopSource &#123;order =-1, &#123;&#10;            callout = PurpleEventCallback&#125;&#125;&#10;        CFRunLoopSource &#123;order = 0, &#123;port = 2407,&#10;            callout = _ZL20notify_port_callbackP12__CFMachPortPvlS1_&#125;&#125;&#10;        CFRunLoopSource &#123;order = 0, &#123;port = 1c03,&#10;            callout = __IOHIDEventSystemClientAvailabilityCallback&#125;&#125;&#10;        CFRunLoopSource &#123;order = 0, &#123;port = 1b03,&#10;            callout = __IOHIDEventSystemClientQueueCallback&#125;&#125;&#10;        CFRunLoopSource &#123;order = 1, &#123;port = 1903,&#10;            callout = __IOMIGMachPortPortCallback&#125;&#125;&#10; &#10;        // Ovserver&#10;        CFRunLoopObserver &#123;order = -2147483647, activities = 0x1, // Entry&#10;            callout = _wrapRunLoopWithAutoreleasePoolHandler&#125;&#10;        CFRunLoopObserver &#123;order = 0, activities = 0x20,          // BeforeWaiting&#10;            callout = _UIGestureRecognizerUpdateObserver&#125;&#10;        CFRunLoopObserver &#123;order = 1999000, activities = 0xa0,    // BeforeWaiting | Exit&#10;            callout = _afterCACommitHandler&#125;&#10;        CFRunLoopObserver &#123;order = 2000000, activities = 0xa0,    // BeforeWaiting | Exit&#10;            callout = _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv&#125;&#10;        CFRunLoopObserver &#123;order = 2147483647, activities = 0xa0, // BeforeWaiting | Exit&#10;            callout = _wrapRunLoopWithAutoreleasePoolHandler&#125;&#10; &#10;        // Timer&#10;        CFRunLoopTimer &#123;firing = No, interval = 3.1536e+09, tolerance = 0,&#10;            next fire date = 453098071 (-4421.76019 @ 96223387169499),&#10;            callout = _ZN2CAL14timer_callbackEP16__CFRunLoopTimerPv (QuartzCore.framework)&#125;&#10;    &#125;,&#10; &#10;    modes &#65309; &#123;&#10;        CFRunLoopMode  &#123;&#10;            sources0 =  &#123; /* same as &#39;common mode items&#39; */ &#125;,&#10;            sources1 =  &#123; /* same as &#39;common mode items&#39; */ &#125;,&#10;            observers = &#123; /* same as &#39;common mode items&#39; */ &#125;,&#10;            timers =    &#123; /* same as &#39;common mode items&#39; */ &#125;,&#10;        &#125;,&#10; &#10;        CFRunLoopMode  &#123;&#10;            sources0 =  &#123; /* same as &#39;common mode items&#39; */ &#125;,&#10;            sources1 =  &#123; /* same as &#39;common mode items&#39; */ &#125;,&#10;            observers = &#123; /* same as &#39;common mode items&#39; */ &#125;,&#10;            timers =    &#123; /* same as &#39;common mode items&#39; */ &#125;,&#10;        &#125;,&#10; &#10;        CFRunLoopMode  &#123;&#10;            sources0 = &#123;&#10;                CFRunLoopSource &#123;order = 0, &#123;&#10;                    callout = FBSSerialQueueRunLoopSourceHandler&#125;&#125;&#10;            &#125;,&#10;            sources1 = (null),&#10;            observers = &#123;&#10;                CFRunLoopObserver &#62;&#123;activities = 0xa0, order = 2000000,&#10;                    callout = _ZN2CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv&#125;&#10;            )&#125;,&#10;            timers = (null),&#10;        &#125;,&#10; &#10;        CFRunLoopMode  &#123;&#10;            sources0 = &#123;&#10;                CFRunLoopSource &#123;order = -1, &#123;&#10;                    callout = PurpleEventSignalCallback&#125;&#125;&#10;            &#125;,&#10;            sources1 = &#123;&#10;                CFRunLoopSource &#123;order = -1, &#123;&#10;                    callout = PurpleEventCallback&#125;&#125;&#10;            &#125;,&#10;            observers = (null),&#10;            timers = (null),&#10;        &#125;,&#10;        &#10;        CFRunLoopMode  &#123;&#10;            sources0 = (null),&#10;            sources1 = (null),&#10;            observers = (null),&#10;            timers = (null),&#10;        &#125;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">CFRunLoop</span> &#123;</span><br><span class="line">    current mode = k<span class="built_in">CFRunLoopDefaultMode</span></span><br><span class="line">    common modes = &#123;</span><br><span class="line">        <span class="built_in">UITrackingRunLoopMode</span></span><br><span class="line">        k<span class="built_in">CFRunLoopDefaultMode</span></span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    common mode items = &#123;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">// source0 (manual)</span></span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order =-<span class="number">1</span>, &#123;</span><br><span class="line">            callout = _<span class="built_in">UIApplicationHandleEventQueue</span>&#125;&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order =-<span class="number">1</span>, &#123;</span><br><span class="line">            callout = PurpleEventSignalCallback &#125;&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order = <span class="number">0</span>, &#123;</span><br><span class="line">            callout = FBSSerialQueueRunLoopSourceHandler&#125;&#125;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">// source1 (mach port)</span></span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order = <span class="number">0</span>,  &#123;port = <span class="number">17923</span>&#125;&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order = <span class="number">0</span>,  &#123;port = <span class="number">12039</span>&#125;&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order = <span class="number">0</span>,  &#123;port = <span class="number">16647</span>&#125;&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order =-<span class="number">1</span>, &#123;</span><br><span class="line">            callout = PurpleEventCallback&#125;&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order = <span class="number">0</span>, &#123;port = <span class="number">2407</span>,</span><br><span class="line">            callout = _ZL20notify_port_callbackP12__<span class="built_in">CFMachPortPvlS1_</span>&#125;&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order = <span class="number">0</span>, &#123;port = <span class="number">1</span>c03,</span><br><span class="line">            callout = __IOHIDEventSystemClientAvailabilityCallback&#125;&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order = <span class="number">0</span>, &#123;port = <span class="number">1</span>b03,</span><br><span class="line">            callout = __IOHIDEventSystemClientQueueCallback&#125;&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopSource</span> &#123;order = <span class="number">1</span>, &#123;port = <span class="number">1903</span>,</span><br><span class="line">            callout = __IOMIGMachPortPortCallback&#125;&#125;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">// Ovserver</span></span><br><span class="line">        <span class="built_in">CFRunLoopObserver</span> &#123;order = -<span class="number">2147483647</span>, activities = <span class="number">0x1</span>, <span class="comment">// Entry</span></span><br><span class="line">            callout = _wrapRunLoopWithAutoreleasePoolHandler&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopObserver</span> &#123;order = <span class="number">0</span>, activities = <span class="number">0x20</span>,          <span class="comment">// BeforeWaiting</span></span><br><span class="line">            callout = _<span class="built_in">UIGestureRecognizerUpdateObserver</span>&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopObserver</span> &#123;order = <span class="number">1999000</span>, activities = <span class="number">0xa0</span>,    <span class="comment">// BeforeWaiting | Exit</span></span><br><span class="line">            callout = _after<span class="built_in">CACommitHandler</span>&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopObserver</span> &#123;order = <span class="number">2000000</span>, activities = <span class="number">0xa0</span>,    <span class="comment">// BeforeWaiting | Exit</span></span><br><span class="line">            callout = _ZN2<span class="built_in">CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv</span>&#125;</span><br><span class="line">        <span class="built_in">CFRunLoopObserver</span> &#123;order = <span class="number">2147483647</span>, activities = <span class="number">0xa0</span>, <span class="comment">// BeforeWaiting | Exit</span></span><br><span class="line">            callout = _wrapRunLoopWithAutoreleasePoolHandler&#125;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">// Timer</span></span><br><span class="line">        <span class="built_in">CFRunLoopTimer</span> &#123;firing = No, interval = <span class="number">3.1536e+09</span>, tolerance = <span class="number">0</span>,</span><br><span class="line">            next fire date = <span class="number">453098071</span> (-<span class="number">4421.76019</span> @ <span class="number">96223387169499</span>),</span><br><span class="line">            callout = _ZN2<span class="built_in">CAL14timer_callbackEP16__CFRunLoopTimerPv</span> (QuartzCore<span class="variable">.framework</span>)&#125;</span><br><span class="line">    &#125;,</span><br><span class="line"> </span><br><span class="line">    modes ＝ &#123;</span><br><span class="line">        <span class="built_in">CFRunLoopMode</span>  &#123;</span><br><span class="line">            sources0 =  &#123; <span class="comment">/* same as 'common mode items' */</span> &#125;,</span><br><span class="line">            sources1 =  &#123; <span class="comment">/* same as 'common mode items' */</span> &#125;,</span><br><span class="line">            observers = &#123; <span class="comment">/* same as 'common mode items' */</span> &#125;,</span><br><span class="line">            timers =    &#123; <span class="comment">/* same as 'common mode items' */</span> &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line"> </span><br><span class="line">        <span class="built_in">CFRunLoopMode</span>  &#123;</span><br><span class="line">            sources0 =  &#123; <span class="comment">/* same as 'common mode items' */</span> &#125;,</span><br><span class="line">            sources1 =  &#123; <span class="comment">/* same as 'common mode items' */</span> &#125;,</span><br><span class="line">            observers = &#123; <span class="comment">/* same as 'common mode items' */</span> &#125;,</span><br><span class="line">            timers =    &#123; <span class="comment">/* same as 'common mode items' */</span> &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line"> </span><br><span class="line">        <span class="built_in">CFRunLoopMode</span>  &#123;</span><br><span class="line">            sources0 = &#123;</span><br><span class="line">                <span class="built_in">CFRunLoopSource</span> &#123;order = <span class="number">0</span>, &#123;</span><br><span class="line">                    callout = FBSSerialQueueRunLoopSourceHandler&#125;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            sources1 = (null),</span><br><span class="line">            observers = &#123;</span><br><span class="line">                <span class="built_in">CFRunLoopObserver</span> &gt;&#123;activities = <span class="number">0xa0</span>, order = <span class="number">2000000</span>,</span><br><span class="line">                    callout = _ZN2<span class="built_in">CA11Transaction17observer_callbackEP19__CFRunLoopObservermPv</span>&#125;</span><br><span class="line">            )&#125;,</span><br><span class="line">            timers = (null),</span><br><span class="line">        &#125;,</span><br><span class="line"> </span><br><span class="line">        <span class="built_in">CFRunLoopMode</span>  &#123;</span><br><span class="line">            sources0 = &#123;</span><br><span class="line">                <span class="built_in">CFRunLoopSource</span> &#123;order = -<span class="number">1</span>, &#123;</span><br><span class="line">                    callout = PurpleEventSignalCallback&#125;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            sources1 = &#123;</span><br><span class="line">                <span class="built_in">CFRunLoopSource</span> &#123;order = -<span class="number">1</span>, &#123;</span><br><span class="line">                    callout = PurpleEventCallback&#125;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            observers = (null),</span><br><span class="line">            timers = (null),</span><br><span class="line">        &#125;,</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">CFRunLoopMode</span>  &#123;</span><br><span class="line">            sources0 = (null),</span><br><span class="line">            sources1 = (null),</span><br><span class="line">            observers = (null),</span><br><span class="line">            timers = (null),</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们可以看到，系统默认注册了 5 个 Mode：</p>
 <ol>
 <li>kCFRunLoopDefaultMode：App的默认 Mode，通常主线程是在这个 Mode 下运行的</li>
@@ -512,8 +503,6 @@
           
             <a href="/tags/Run-Loop/" rel="tag">#Run Loop</a>
           
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
-          
         </div>
       
 
@@ -629,7 +618,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -646,7 +635,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -821,7 +810,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
+    NexT.Mist
   </a>
 </div>
 
@@ -864,13 +853,6 @@
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
-
-
 
   
   

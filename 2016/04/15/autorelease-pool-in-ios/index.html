@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion">
+<html class="theme-next mist use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Autorelease Pool,Memory Management,iOS," />
+  <meta name="keywords" content="Autorelease Pool,Memory Management," />
 
 
 
@@ -82,7 +82,7 @@ Autorelease Pool 用于存放那些需要在稍后某个时刻释">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-05.jpg">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-06.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-07.png">
-<meta property="og:updated_time" content="2016-05-10T07:10:01.000Z">
+<meta property="og:updated_time" content="2016-05-28T08:36:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 中的 Autorelease Pool">
 <meta name="twitter:description" content="前言Objective-C 对象的生命周期取决于其引用计数。在 Objective-C 的引用计数架构中，有一项特性叫做 Autorelease Pool（自动释放池）。释放对象有两种方式：
@@ -97,7 +97,7 @@ Autorelease Pool 用于存放那些需要在稍后某个时刻释">
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Pisces',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -220,15 +220,6 @@ Autorelease Pool 用于存放那些需要在稍后某个时刻释">
 
       
       
-      
-        <li class="menu-item menu-item-search">
-          <a href="#" class="st-search-show-outputs">
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
       
     </ul>
   
@@ -474,11 +465,11 @@ Autorelease Pool 用于存放那些需要在稍后某个时刻释">
 </li>
 </ol>
 <hr>
-<h2 id="要点">要点</h2><ol>
+<h2 id="要点">要点</h2><ul>
 <li>Autorelease Pool 排布在栈中，对象收到 <code>autorelease</code> 消息后，系统将其放入最顶端的池里。</li>
 <li>合理运用 Autorelease Pool，可降低应用程序的内存峰值。</li>
 <li><code>@autoreleasepool {}</code> 这种新式写法能创建出更为轻便的 Autorelease Pool。</li>
-</ol>
+</ul>
 <hr>
 <h2 id="参考">参考</h2><ul>
 <li><a href="https://book.douban.com/subject/25829244/" target="_blank" rel="external">Effective Objective-C 2.0</a></li>
@@ -497,8 +488,6 @@ Autorelease Pool 用于存放那些需要在稍后某个时刻释">
             <a href="/tags/Autorelease-Pool/" rel="tag">#Autorelease Pool</a>
           
             <a href="/tags/Memory-Management/" rel="tag">#Memory Management</a>
-          
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
           
         </div>
       
@@ -615,7 +604,7 @@ Autorelease Pool 用于存放那些需要在稍后某个时刻释">
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -632,7 +621,7 @@ Autorelease Pool 用于存放那些需要在稍后某个时刻释">
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -807,7 +796,7 @@ Autorelease Pool 用于存放那些需要在稍后某个时刻释">
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
+    NexT.Mist
   </a>
 </div>
 
@@ -850,13 +839,6 @@ Autorelease Pool 用于存放那些需要在稍后某个时刻释">
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
-
-
 
   
   

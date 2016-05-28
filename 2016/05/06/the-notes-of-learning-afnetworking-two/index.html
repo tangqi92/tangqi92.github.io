@@ -1,0 +1,967 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AFNetworking,Notes,Source Code," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="前言首先，我们来看一下 AFNetworking 框架中主要涉及到了哪些类：
+NSURLSession
+
+AFURLSessionManager
+AFHTTPSessionManager">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AFNetworking 3.0 源码阅读笔记（二）">
+<meta property="og:url" content="http://itangqi.me/2016/05/06/the-notes-of-learning-afnetworking-two/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言首先，我们来看一下 AFNetworking 框架中主要涉及到了哪些类：
+NSURLSession
+
+AFURLSessionManager
+AFHTTPSessionManager">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-afnetworking-two-01.png">
+<meta property="og:updated_time" content="2016-05-28T07:30:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AFNetworking 3.0 源码阅读笔记（二）">
+<meta name="twitter:description" content="前言首先，我们来看一下 AFNetworking 框架中主要涉及到了哪些类：
+NSURLSession
+
+AFURLSessionManager
+AFHTTPSessionManager">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> AFNetworking 3.0 源码阅读笔记（二） | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                AFNetworking 3.0 源码阅读笔记（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-06T00:00:00+08:00" content="2016-05-06">
+              2016-05-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/06/the-notes-of-learning-afnetworking-two/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/05/06/the-notes-of-learning-afnetworking-two/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><p>首先，我们来看一下 AFNetworking 框架中主要涉及到了哪些类：</p>
+<p><strong>NSURLSession</strong></p>
+<ul>
+<li><code>AFURLSessionManager</code></li>
+<li><code>AFHTTPSessionManager</code></li>
+</ul>
+<a id="more"></a>
+<p><strong>序列化</strong></p>
+<ul>
+<li><code>AFURLRequestSerialization</code></li>
+<li><code>AFURLResponseSerialization</code></li>
+</ul>
+<p><strong>附加功能</strong></p>
+<ul>
+<li><code>AFSecurityPolicy</code></li>
+<li><code>AFNetworkReachabilityManager</code></li>
+</ul>
+<!-- more -->
+<p>下面，通过一张图来直观地感受下 AF 架构的设计：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-afnetworking-two-01.png" alt=""></p>
+<hr>
+<h2 id="AFHTTPSessionManager">AFHTTPSessionManager</h2><blockquote>
+<p><code>AFHTTPSessionManager</code> is a subclass of <code>AFURLSessionManager</code> with convenience methods for making HTTP requests. When a <code>baseURL</code> is provided, requests made with the <code>GET</code> / <code>POST</code> / et al. convenience methods can be made with relative paths.</p>
+</blockquote>
+<p>一句话总结：<code>AFHTTPSessionManager</code> 继承于 <code>AFURLSessionManager</code>，并提供了方便的 HTTP 请求方法。</p>
+<p>下面，我们通过一段实际代码来感受下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"https://api.app.net/"</span>]];</span><br><span class="line">[sessionManager GET:<span class="string">@"stream/0/posts/stream/global"</span> parameters:<span class="literal">nil</span> success:^(<span class="built_in">NSURLSessionDataTask</span> * _Nonnull task, <span class="keyword">id</span>  _Nonnull responseObject) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"请求成功---%@"</span>, responseObject);</span><br><span class="line">    &#125; failure:^(<span class="built_in">NSURLSessionDataTask</span> * _Nullable task, <span class="built_in">NSError</span> * _Nonnull error) &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"请求失败---%@"</span>, error);</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>通过上面短短几行代码，我们便完成了 GET 请求，有木有很简单！现在是不是很想知道其背后蕴藏的玄机呢？别急，下面就让我们一起来探一探究竟。</p>
+<hr>
+<h2 id="调用栈">调用栈</h2><h3 id="initWithBaseURL:">initWithBaseURL:</h3><p>首先，我们来探一探 <code>AFHTTPSessionManager</code> 初始化方法 <code>- initWithBaseURL:</code> 的调用栈：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AFHTTPSessionManager *sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"https://api.app.net/"</span>]];</span><br></pre></td></tr></table></figure>
+<p>我们一路「Command + 左键」，可以归纳出如下结果：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- [AFHTTPSessionManager initWithBaseURL:]</span><br><span class="line">    - [AFHTTPSessionManager initWithBaseURL:sessionConfiguration:]</span><br><span class="line">        - [AFURLSessionManager initWithSessionConfiguration:]</span><br><span class="line">            - [<span class="built_in">NSURLSession</span> sessionWithConfiguration:delegate:delegateQueue:]</span><br><span class="line">            - [AFJSONResponseSerializer serializer] <span class="comment">// 负责序列化响应</span></span><br><span class="line">            - [AFSecurityPolicy defaultPolicy] <span class="comment">// 负责身份认证</span></span><br><span class="line">            - [AFNetworkReachabilityManager sharedManager] <span class="comment">// 查看网络连接情况</span></span><br><span class="line">        - [AFHTTPRequestSerializer serializer] <span class="comment">// 负责序列化请求</span></span><br><span class="line">        - [AFJSONResponseSerializer serializer] <span class="comment">// 负责序列化响应</span></span><br></pre></td></tr></table></figure>
+<p>从这个初始化方法的调用栈，我们可以非常清晰地了解这个框架的结构：</p>
+<ul>
+<li>其中 <code>AFURLSessionManager</code> 是 <code>AFHTTPSessionManager</code> 的父类</li>
+<li><code>AFURLSessionManager</code> 负责生成 <code>NSURLSession</code> 的实例，管理 <code>AFSecurityPolicy</code> 和 <code>AFNetworkReachabilityManager</code>，来保证请求的安全和查看网络连接情况，它有一个 <code>AFJSONResponseSerializer</code> 的实例来序列化 HTTP 响应</li>
+<li><code>AFHTTPSessionManager</code> 有着<strong>自己的</strong> <code>AFHTTPRequestSerializer</code> 和 <code>AFJSONResponseSerializer</code> 来管理请求和响应的序列化，同时<strong>依赖父类提供的接口</strong>保证安全、监控网络状态，实现发出 HTTP 请求这一核心功能</li>
+</ul>
+<h4 id="baseURL">baseURL</h4><p>关于 <code>baseURL</code> 一开始我是有点迷糊的，不过源代码中有如下注释：</p>
+<blockquote>
+<p>For HTTP convenience methods, the request serializer constructs URLs from the path relative to the <code>-baseURL</code>, using <code>NSURL +URLWithString:relativeToURL:</code>, when provided. If <code>baseURL</code> is <code>nil</code>, <code>path</code> needs to resolve to a valid <code>NSURL</code> object using <code>NSURL +URLWithString:</code>.</p>
+</blockquote>
+<p>并举例进行了说明：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSURL</span> *baseURL = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://example.com/v1/"</span>];</span><br><span class="line">[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"foo"</span> relativeToURL:baseURL];                  <span class="comment">// http://example.com/v1/foo</span></span><br><span class="line">[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"foo?bar=baz"</span> relativeToURL:baseURL];          <span class="comment">// http://example.com/v1/foo?bar=baz</span></span><br><span class="line">[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"/foo"</span> relativeToURL:baseURL];                 <span class="comment">// http://example.com/foo</span></span><br><span class="line">[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"foo/"</span> relativeToURL:baseURL];                 <span class="comment">// http://example.com/v1/foo</span></span><br><span class="line">[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"/foo/"</span> relativeToURL:baseURL];                <span class="comment">// http://example.com/foo/</span></span><br><span class="line">[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://example2.com/"</span> relativeToURL:baseURL]; <span class="comment">// http://example2.com/</span></span><br></pre></td></tr></table></figure>
+<p>所以，<code>baseURL</code> 为访问的基路径如：<a href="https://api.app.net/，" target="_blank" rel="external">https://api.app.net/，</a> path 是跟在基路径之后的部分路径，如：stream/0/posts/stream/global（因为 AFNetworking 的访问方式才这样划分）。</p>
+<h3 id="GET:parameters:process:success:failure:">GET:parameters:process:success:failure:</h3><p>初始化方法很好地揭示了 AFNetworking 整个框架的架构，接下来我们要通过分析另一个方法 <code>- GET:parameters:process:success:failure:</code> 的调用栈，看一下 HTTP 请求是如何发出的：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- [AFHTTPSessionManager GET:parameters:process:success:failure:]</span><br><span class="line">    - [AFHTTPSessionManager dataTaskWithHTTPMethod:parameters:uploadProgress:downloadProgress:success:failure:] <span class="comment">// 返回 NSURLSessionDataTask #1</span></span><br><span class="line">        - [AFHTTPRequestSerializer requestWithMethod:URLString:parameters:error:] <span class="comment">// 返回 NSMutableURLRequest</span></span><br><span class="line">        - [AFURLSessionManager dataTaskWithRequest:uploadProgress:downloadProgress:completionHandler:] <span class="comment">// 返回 NSURLSessionDataTask #2</span></span><br><span class="line">            - [<span class="built_in">NSURLSession</span> dataTaskWithRequest:] <span class="comment">// 返回 NSURLSessionDataTask #3</span></span><br><span class="line">            - [AFURLSessionManager addDelegateForDataTask:uploadProgress:downloadProgress:completionHandler:]</span><br><span class="line">                - [AFURLSessionManagerTaskDelegate init]</span><br><span class="line">                - [AFURLSessionManager setDelegate:forTask:]</span><br><span class="line">    - [<span class="built_in">NSURLSessionDataTask</span> resume]</span><br></pre></td></tr></table></figure>
+<p>在这里 <code>#1</code> <code>#2</code> <code>#3</code> 处返回的是同一个 data task，我们可以看到，在 <code>#3</code> 处调用的方法 <code>- [NSURLSession dataTaskWithRequest:]</code> 和只使用 <code>NSURLSession</code> 发出 HTTP 请求时调用的方法 <code>- [NSURLSession dataTaskWithRequest:completionHandler:]</code> 差不多。在这个地方返回 data task 之后，我们再调用 <code>- resume</code> 方法执行请求，并在某些事件执行时通知代理 <code>AFURLSessionManagerTaskDelegate</code>。</p>
+<p>我们在第一篇文章中已经说明过，AFNetworking 3.0 既是在 <code>NSURLSession</code> 之上的高度封装，并提供更加简洁易用的 API。从调用栈的结果来看，将使我们的理解更加清晰。</p>
+<hr>
+<h2 id="循环引用">循环引用</h2><p>关于在使用 AFNetworking 的过程中出现循环引用的问题，我并没有在实际开发中遇到过（其实我丫的根本就没写过几行代码好嘛（ ＴДＴ）），我是在浏览相关文章时发现这个问题的，所以在此提及一下：</p>
+<ul>
+<li><a href="https://github.com/AFNetworking/AFNetworking/issues/2149#issuecomment-46842747" target="_blank" rel="external">AFHTTPSessionManager subclass not deallocating - retain cycle?</a></li>
+<li><a href="https://github.com/AFNetworking/AFNetworking/issues/3116" target="_blank" rel="external">AFHTTPSessionManager and AFURLSessionManager never deallocated</a></li>
+<li><a href="https://github.com/AFNetworking/AFNetworking/issues/2767" target="_blank" rel="external">block retain cycle in AFUrLSessionManager init method</a></li>
+</ul>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://github.com/Draveness/iOS-Source-Code-Analyze/blob/master/AFNetworking/AFNetworking%20%E6%A6%82%E8%BF%B0%EF%BC%88%E4%B8%80%EF%BC%89.md" target="_blank" rel="external">AFNetworking 概述（一）</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AFNetworking/" rel="tag">#AFNetworking</a>
+          
+            <a href="/tags/Notes/" rel="tag">#Notes</a>
+          
+            <a href="/tags/Source-Code/" rel="tag">#Source Code</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/05/the-notes-of-learning-afnetworking-one/" rel="next" title="AFNetworking 3.0 源码阅读笔记（一）">
+                <i class="fa fa-chevron-left"></i> AFNetworking 3.0 源码阅读笔记（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/09/the-notes-of-learning-afnetworking-three/" rel="prev" title="AFNetworking 3.0 源码阅读笔记（三）">
+                AFNetworking 3.0 源码阅读笔记（三） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾的走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 知乎
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 豆瓣
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">小伙伴们</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://tikitoo.me/" target="_blank">安卓同学</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://lovinghuan.com/" target="_blank">poberWong</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.zhaiyifan.cn/" target="_blank">MarkZhai</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://yifeiyuan.me/" target="_blank">程序亦非猿</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://abner-nimengbo.cn/" target="_blank">阿布</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.easydone.cn/" target="_blank">Ailurus</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://wuxiaolong.me/" target="_blank">吴小龙同學</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://drakeet.me/" target="_blank">Drakeet</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.fangjie.info/" target="_blank">方杰</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://hujiaweibujidao.github.io/" target="_blank">五道口宅男</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://gudong.name/" target="_blank">咕咚</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://soledad.me/" target="_blank">蔡越</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AFHTTPSessionManager"><span class="nav-number">2.</span> <span class="nav-text">AFHTTPSessionManager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用栈"><span class="nav-number">3.</span> <span class="nav-text">调用栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#initWithBaseURL:"><span class="nav-number">3.1.</span> <span class="nav-text">initWithBaseURL:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#baseURL"><span class="nav-number">3.1.1.</span> <span class="nav-text">baseURL</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET:parameters:process:success:failure:"><span class="nav-number">3.2.</span> <span class="nav-text">GET:parameters:process:success:failure:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#循环引用"><span class="nav-number">4.</span> <span class="nav-text">循环引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2016/05/06/the-notes-of-learning-afnetworking-two/';
+      var disqus_title = 'AFNetworking 3.0 源码阅读笔记（二）';
+      var disqus_url = 'http://itangqi.me/2016/05/06/the-notes-of-learning-afnetworking-two/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>

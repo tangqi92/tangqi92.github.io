@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion">
+<html class="theme-next mist use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Notes,SDWebImage,Source code,iOS," />
+  <meta name="keywords" content="Notes,SDWebImage,Source Code," />
 
 
 
@@ -66,7 +66,7 @@
 <meta property="og:site_name" content="Qi Tang's Blog">
 <meta property="og:description" content="前言不知不觉，我们已经通过前面两篇文章的介绍（我是链接=;=），对 SDWebImage 的工作流程有了较为清晰的认识，那么，今天就让我们把重点放在 SDWebImageDownloader 上，它到底做了哪些工作？又有哪些奇淫技巧？别着急，你慢慢往下看：）">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-sdwebimage-three-01.png">
-<meta property="og:updated_time" content="2016-05-10T07:23:54.000Z">
+<meta property="og:updated_time" content="2016-05-28T07:43:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage 源码阅读笔记（三）">
 <meta name="twitter:description" content="前言不知不觉，我们已经通过前面两篇文章的介绍（我是链接=;=），对 SDWebImage 的工作流程有了较为清晰的认识，那么，今天就让我们把重点放在 SDWebImageDownloader 上，它到底做了哪些工作？又有哪些奇淫技巧？别着急，你慢慢往下看：）">
@@ -76,7 +76,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Pisces',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -199,15 +199,6 @@
 
       
       
-      
-        <li class="menu-item menu-item-search">
-          <a href="#" class="st-search-show-outputs">
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
       
     </ul>
   
@@ -333,7 +324,7 @@
 <hr>
 <h2 id="SDWebImageDownloaderOptions">SDWebImageDownloaderOptions</h2><p>在切入正题前，我们有必要来了解下 <code>SDWebImageDownloaderOptions</code>。</p>
 <p>在下载的过程中，程序会根据设置的不同的下载选项，而执行不同的操作。下载选项由枚举 <code>SDWebImageDownloaderOptions</code> 定义，具体如下：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, SDWebImageDownloaderOptions) &#123;</span><br><span class="line">    SDWebImageDownloaderLowPriority = <span class="number">1</span> &lt;&lt; <span class="number">0</span>,</span><br><span class="line">    SDWebImageDownloaderProgressiveDownload = <span class="number">1</span> &lt;&lt; <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 默认情况下请求不使用 NSURLCache，如果设置该选项，则以默认的缓存策略来使用 NSURLCache</span></span><br><span class="line">    SDWebImageDownloaderUse<span class="built_in">NSURLCache</span> = <span class="number">1</span> &lt;&lt; <span class="number">2</span>,</span><br><span class="line"></span><br><span class="line">true<span class="comment">// 如果从 NSURLCache 缓存中读取图片，则使用 nil 作为参数来调用图片下载完成时 block </span></span><br><span class="line">    SDWebImageDownloaderIgnoreCachedResponse = <span class="number">1</span> &lt;&lt; <span class="number">3</span>,</span><br><span class="line"></span><br><span class="line">true<span class="comment">// 在 iOS 4+ 系统上，允许程序进入后台后继续下载图片。该操作通过向系统申请额外的时间来完成后台下载。如果后台任务终止，则操作会被取消 </span></span><br><span class="line">    SDWebImageDownloaderContinueInBackground = <span class="number">1</span> &lt;&lt; <span class="number">4</span>,</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 通过设置 NSMutableURLRequest.HTTPShouldHandleCookies = YES 来处理存储在 NSHTTPCookieStore 中的 cookie </span></span><br><span class="line">    SDWebImageDownloaderHandleCookies = <span class="number">1</span> &lt;&lt; <span class="number">5</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 允许不受信任的 SSL 证书，主要用于测试目的</span></span><br><span class="line">    SDWebImageDownloaderAllowInvalidSSLCertificates = <span class="number">1</span> &lt;&lt; <span class="number">6</span>,</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 将图片下载放到高优先级队列中  </span></span><br><span class="line">    SDWebImageDownloaderHighPriority = <span class="number">1</span> &lt;&lt; <span class="number">7</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_OPTIONS</span>(<span class="built_in">NSUInteger</span>, SDWebImageDownloaderOptions) &#123;</span><br><span class="line">    SDWebImageDownloaderLowPriority = <span class="number">1</span> &lt;&lt; <span class="number">0</span>,</span><br><span class="line">    SDWebImageDownloaderProgressiveDownload = <span class="number">1</span> &lt;&lt; <span class="number">1</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 默认情况下请求不使用 NSURLCache，如果设置该选项，则以默认的缓存策略来使用 NSURLCache</span></span><br><span class="line">    SDWebImageDownloaderUse<span class="built_in">NSURLCache</span> = <span class="number">1</span> &lt;&lt; <span class="number">2</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 如果从 NSURLCache 缓存中读取图片，则使用 nil 作为参数来调用图片下载完成时 block </span></span><br><span class="line">    SDWebImageDownloaderIgnoreCachedResponse = <span class="number">1</span> &lt;&lt; <span class="number">3</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在 iOS 4+ 系统上，允许程序进入后台后继续下载图片。该操作通过向系统申请额外的时间来完成后台下载。如果后台任务终止，则操作会被取消 </span></span><br><span class="line">    SDWebImageDownloaderContinueInBackground = <span class="number">1</span> &lt;&lt; <span class="number">4</span>,</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 通过设置 NSMutableURLRequest.HTTPShouldHandleCookies = YES 来处理存储在 NSHTTPCookieStore 中的 cookie </span></span><br><span class="line">    SDWebImageDownloaderHandleCookies = <span class="number">1</span> &lt;&lt; <span class="number">5</span>,</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 允许不受信任的 SSL 证书，主要用于测试目的</span></span><br><span class="line">    SDWebImageDownloaderAllowInvalidSSLCertificates = <span class="number">1</span> &lt;&lt; <span class="number">6</span>,</span><br><span class="line"></span><br><span class="line">  	<span class="comment">// 将图片下载放到高优先级队列中  </span></span><br><span class="line">    SDWebImageDownloaderHighPriority = <span class="number">1</span> &lt;&lt; <span class="number">7</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>SDWebImage 的下载操作是按一定顺序来处理的，它定义了两种下载顺序，如下所示：</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, SDWebImageDownloaderExecutionOrder) &#123;</span><br><span class="line">  <span class="comment">// 以队列的方式，按照先进先出的顺序下载，这是默认的下载顺序</span></span><br><span class="line">  SDWebImageDownloaderFIFOExecutionOrder,</span><br><span class="line">  <span class="comment">// 以栈的方式，按照后进先出的顺序下载</span></span><br><span class="line">  SDWebImageDownloaderLIFOExecutionOrder</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <hr>
@@ -401,9 +392,7 @@
           
             <a href="/tags/SDWebImage/" rel="tag">#SDWebImage</a>
           
-            <a href="/tags/Source-code/" rel="tag">#Source code</a>
-          
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
+            <a href="/tags/Source-Code/" rel="tag">#Source Code</a>
           
         </div>
       
@@ -520,7 +509,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -537,7 +526,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -712,7 +701,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
+    NexT.Mist
   </a>
 </div>
 
@@ -755,13 +744,6 @@
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
-
-
 
   
   

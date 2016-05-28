@@ -1,0 +1,971 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="AFNetworking,Notes,Source Code," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="前言通过前面的文章，我们已经知道 AFNetworking 是对 NSURLSession 的封装，也了解它是如何发出请求的，在这里我们对发出请求以及接收响应的过程进行序列化，这涉及到两个模块：
+
+AFURLResponseSerialization
+AFURLRequestSerialization
+
+前者是处理响应的模块，将请求返回的数据解析成对应的格式。而后者的主要作用是修改请求（主要是 H">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AFNetworking 3.0 源码阅读笔记（四）">
+<meta property="og:url" content="http://itangqi.me/2016/05/13/the-notes-of-learning-afnetworking-four/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言通过前面的文章，我们已经知道 AFNetworking 是对 NSURLSession 的封装，也了解它是如何发出请求的，在这里我们对发出请求以及接收响应的过程进行序列化，这涉及到两个模块：
+
+AFURLResponseSerialization
+AFURLRequestSerialization
+
+前者是处理响应的模块，将请求返回的数据解析成对应的格式。而后者的主要作用是修改请求（主要是 H">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-afnetworking-four-02.png">
+<meta property="og:updated_time" content="2016-05-28T07:40:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AFNetworking 3.0 源码阅读笔记（四）">
+<meta name="twitter:description" content="前言通过前面的文章，我们已经知道 AFNetworking 是对 NSURLSession 的封装，也了解它是如何发出请求的，在这里我们对发出请求以及接收响应的过程进行序列化，这涉及到两个模块：
+
+AFURLResponseSerialization
+AFURLRequestSerialization
+
+前者是处理响应的模块，将请求返回的数据解析成对应的格式。而后者的主要作用是修改请求（主要是 H">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> AFNetworking 3.0 源码阅读笔记（四） | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                AFNetworking 3.0 源码阅读笔记（四）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-13T00:00:00+08:00" content="2016-05-13">
+              2016-05-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/13/the-notes-of-learning-afnetworking-four/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/05/13/the-notes-of-learning-afnetworking-four/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><p>通过前面的文章，我们已经知道 <code>AFNetworking</code> 是对 <code>NSURLSession</code> 的封装，也了解它是如何发出请求的，在这里我们<strong>对发出请求以及接收响应的过程</strong>进行序列化，这涉及到两个<strong>模块</strong>：</p>
+<ul>
+<li><a href="#afurlresponseserialization">AFURLResponseSerialization</a></li>
+<li><a href="#afurlrequestserialization">AFURLRequestSerialization</a></li>
+</ul>
+<p>前者是处理响应的模块，将请求返回的数据解析成对应的格式。而后者的主要作用是修改请求（主要是 HTTP 请求）的头部，提供了一些语义明确的接口设置 HTTP 头部字段。</p>
+<p>我们首先会对 <code>AFURLResponseSerialization</code> 进行简单的介绍，因为这个模块使用在 <code>AFURLSessionManager</code> 也就是核心类中，而后者 <code>AFURLRequestSerialization</code> 主要用于 <code>AFHTTPSessionManager</code> 中，因为它主要用于<strong>修改 HTTP 头部</strong>。</p>
+<a id="more"></a>
+<hr>
+<h2 id="AFURLResponseSerialization">AFURLResponseSerialization</h2><p>在了解模块中类的具体实现之前，先看一下模块的结构图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-afnetworking-four-02.png" alt=""></p>
+<p><code>AFURLResponseSerialization</code> 定义为协议，且协议的内容非常简单，只有一个必须实现的方法：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">AFURLResponseSerialization</span> &lt;<span class="title">NSObject</span>, <span class="title">NSSecureCoding</span>, <span class="title">NSCopying</span>&gt;</span></span><br><span class="line"></span><br><span class="line">- (nullable <span class="keyword">id</span>)responseObjectForResponse:(nullable <span class="built_in">NSURLResponse</span> *)response</span><br><span class="line">                           data:(nullable <span class="built_in">NSData</span> *)data</span><br><span class="line">                          error:(<span class="built_in">NSError</span> * _Nullable __autoreleasing *)error <span class="built_in">NS_SWIFT_NOTHROW</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>遵循该协议的类同时也要遵循 NSObject、NSSecureCoding 和 NSCopying 这三个协议，以实现 Objective-C 对象的基本行为、安全编码以及拷贝。</p>
+<p><strong>注</strong>：</p>
+<ol>
+<li>模块中的所有类都遵循 <code>AFURLResponseSerialization</code> 协议</li>
+<li><code>AFHTTPResponseSerializer</code> 为模块中最终要的根类</li>
+</ol>
+<h3 id="AFHTTPResponseSerializer">AFHTTPResponseSerializer</h3><p>下面我们对模块中最重要的根类，也就是 <code>AFHTTPResponseSerializer</code> 的实现进行分析。它是在 <code>AFURLResponseSerialization</code> 模块中最基本的类（因为 <code>AFURLResponseSerialization</code> 只是一个协议）</p>
+<h4 id="初始化">初始化</h4><p>首先，依然从实例化方法入手：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)serializer &#123;</span><br><span class="line">    <span class="keyword">return</span> [[<span class="keyword">self</span> alloc] init];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.stringEncoding</span> = <span class="built_in">NSUTF8StringEncoding</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.acceptableStatusCodes</span> = [<span class="built_in">NSIndexSet</span> indexSetWithIndexesInRange:<span class="built_in">NSMakeRange</span>(<span class="number">200</span>, <span class="number">100</span>)];</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.acceptableContentTypes</span> = <span class="literal">nil</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为是对 HTTP 响应进行序列化，所以这里设置了 <code>stringEncoding</code> 为 <code>NSUTF8StringEncoding</code> 而且没有对接收的内容类型加以限制。</p>
+<p>将 <code>acceptableStatusCodes</code> 设置为从 200 到 299 之间的状态码, 因为只有这些状态码表示<strong>获得了有效的响应</strong>。</p>
+<p><strong>补充</strong>：<a href="https://zh.wikipedia.org/wiki/HTTP%E7%8A%B6%E6%80%81%E7%A0%81" target="_blank" rel="external">HTTP状态码</a></p>
+<h4 id="验证响应的有效性">验证响应的有效性</h4><p><code>AFHTTPResponseSerializer</code> 中方法的实现最长，并且最重要的就是 <code>- [AFHTTPResponseSerializer validateResponse:data:error:]</code>：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)validateResponse:(<span class="built_in">NSHTTPURLResponse</span> *)response</span><br><span class="line">                    data:(<span class="built_in">NSData</span> *)data</span><br><span class="line">                   error:(<span class="built_in">NSError</span> * __autoreleasing *)error</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">BOOL</span> responseIsValid = <span class="literal">YES</span>;</span><br><span class="line">    <span class="built_in">NSError</span> *validationError = <span class="literal">nil</span>;</span><br><span class="line">    <span class="comment">// 简单的为空判断和类型判断，注意如果 response 为空或类型不对，反而 responseValid 为 YES</span></span><br><span class="line">    <span class="keyword">if</span> (response &amp;&amp; [response isKindOfClass:[<span class="built_in">NSHTTPURLResponse</span> class]]) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.acceptableContentTypes</span> &amp;&amp; ![<span class="keyword">self</span><span class="variable">.acceptableContentTypes</span> containsObject:[response MIMEType]]) &#123;</span><br><span class="line">truetruetrue<span class="preprocessor">#1: 返回内容类型无效</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.acceptableStatusCodes</span> &amp;&amp; ![<span class="keyword">self</span><span class="variable">.acceptableStatusCodes</span> containsIndex:(<span class="built_in">NSUInteger</span>)response<span class="variable">.statusCode</span>] &amp;&amp; [response URL]) &#123;</span><br><span class="line">truetruetrue<span class="preprocessor">#2: 返回状态码无效</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (error &amp;&amp; !responseIsValid) &#123;</span><br><span class="line">        *error = validationError;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> responseIsValid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个方法根据在初始化方法中初始化的属性 <code>acceptableContentTypes</code> 和 <code>acceptableStatusCodes</code> 来判断当前响应是否有效。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ([data length] &gt; <span class="number">0</span> &amp;&amp; [response URL]) &#123;</span><br><span class="line">    <span class="built_in">NSMutableDictionary</span> *mutableUserInfo = [@&#123;</span><br><span class="line">                                              <span class="built_in">NSLocalizedDescriptionKey</span>: [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedStringFromTable</span>(<span class="string">@"Request failed: unacceptable content-type: %@"</span>, <span class="string">@"AFNetworking"</span>, <span class="literal">nil</span>), [response MIMEType]],</span><br><span class="line">                                              <span class="built_in">NSURLErrorFailingURLErrorKey</span>:[response URL],</span><br><span class="line">                                              AFNetworkingOperationFailingURLResponseErrorKey: response,</span><br><span class="line">                                            &#125; mutableCopy];</span><br><span class="line">    <span class="keyword">if</span> (data) &#123;</span><br><span class="line">        mutableUserInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    validationError = AFErrorWithUnderlyingError([<span class="built_in">NSError</span> errorWithDomain:AFURLResponseSerializationErrorDomain code:<span class="built_in">NSURLErrorCannotDecodeContentData</span> userInfo:mutableUserInfo], validationError);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">responseIsValid = <span class="literal">NO</span>;</span><br></pre></td></tr></table></figure>
+<p>其中第一、二部分的代码非常相似，出现错误时通过 <code>AFErrorWithUnderlyingError</code> 生成格式化之后的错误，最后设置 <code>responseIsValid</code>。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSMutableDictionary</span> *mutableUserInfo = [@&#123;</span><br><span class="line">                                   <span class="built_in">NSLocalizedDescriptionKey</span>: [<span class="built_in">NSString</span> stringWithFormat:<span class="built_in">NSLocalizedStringFromTable</span>(<span class="string">@"Request failed: %@ (%ld)"</span>, <span class="string">@"AFNetworking"</span>, <span class="literal">nil</span>), [<span class="built_in">NSHTTPURLResponse</span> localizedStringForStatusCode:response<span class="variable">.statusCode</span>], (<span class="keyword">long</span>)response<span class="variable">.statusCode</span>],</span><br><span class="line">                                   <span class="built_in">NSURLErrorFailingURLErrorKey</span>:[response URL],</span><br><span class="line">                                   AFNetworkingOperationFailingURLResponseErrorKey: response,</span><br><span class="line">                           &#125; mutableCopy];</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (data) &#123;</span><br><span class="line">    mutableUserInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] = data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">validationError = AFErrorWithUnderlyingError([<span class="built_in">NSError</span> errorWithDomain:AFURLResponseSerializationErrorDomain code:<span class="built_in">NSURLErrorBadServerResponse</span> userInfo:mutableUserInfo], validationError);</span><br><span class="line"></span><br><span class="line">responseIsValid = <span class="literal">NO</span>;</span><br></pre></td></tr></table></figure>
+<p>第二部分的代码讲解略。</p>
+<h4 id="协议的实现">协议的实现</h4><p>主要看 <code>AFURLResponseSerialization</code> 协议的实现：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)responseObjectForResponse:(<span class="built_in">NSURLResponse</span> *)response</span><br><span class="line">                           data:(<span class="built_in">NSData</span> *)data</span><br><span class="line">                          error:(<span class="built_in">NSError</span> *__autoreleasing *)error</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="keyword">self</span> validateResponse:(<span class="built_in">NSHTTPURLResponse</span> *)response data:data error:error];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用上面的方法对响应进行验证，然后返回数据，并没有复杂的逻辑。</p>
+<h3 id="AFJSONResponseSerializer">AFJSONResponseSerializer</h3><p>接下来，看一下 <code>AFJSONResponseSerializer</code> 这个继承自 <code>AFHTTPResponseSerializer</code> 类的实现。</p>
+<p>初始化方法只是在调用父类的初始化方法之后更新了 <code>acceptableContentTypes</code> 属性：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- (instancetype)init &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.acceptableContentTypes</span> = [<span class="built_in">NSSet</span> setWithObjects:<span class="string">@"application/json"</span>, <span class="string">@"text/json"</span>, <span class="string">@"text/javascript"</span>, <span class="literal">nil</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="协议的实现-1">协议的实现</h4><p>这个类中与父类差别最大的就是对 <code>AFURLResponseSerialization</code> 协议的实现。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)responseObjectForResponse:(<span class="built_in">NSURLResponse</span> *)response</span><br><span class="line">                           data:(<span class="built_in">NSData</span> *)data</span><br><span class="line">                          error:(<span class="built_in">NSError</span> *__autoreleasing *)error</span><br><span class="line">&#123;</span><br><span class="line">    <span class="preprocessor">#1: 验证请求</span></span><br><span class="line"></span><br><span class="line">    <span class="preprocessor">#2: 解决一个由只包含一个空格的响应引起的 bug, 略</span></span><br><span class="line"></span><br><span class="line">    <span class="preprocessor">#3: 序列化 JSON</span></span><br><span class="line">true</span><br><span class="line">    <span class="preprocessor">#4: 移除 JSON 中的 null</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (error) &#123;</span><br><span class="line">        *error = AFErrorWithUnderlyingError(serializationError, *error);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> responseObject;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>验证请求的有效性</p>
+ <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (![<span class="keyword">self</span> validateResponse:(<span class="built_in">NSHTTPURLResponse</span> *)response data:data error:error]) &#123;</span><br><span class="line">     <span class="keyword">if</span> (!error || AFErrorOrUnderlyingErrorHasCodeInDomain(*error, <span class="built_in">NSURLErrorCannotDecodeContentData</span>, AFURLResponseSerializationErrorDomain)) &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解决一个空格引起的 bug，见 <a href="https://github.com/rails/rails/issues/1742" target="_blank" rel="external">https://github.com/rails/rails/issues/1742</a></p>
+</li>
+<li><p>序列化 JSON</p>
+ <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">id</span> responseObject = <span class="literal">nil</span>;</span><br><span class="line">  <span class="built_in">NSError</span> *serializationError = <span class="literal">nil</span>;</span><br><span class="line">  <span class="comment">// Workaround for behavior of Rails to return a single space for `head :ok` (a workaround for a bug in Safari), which is not interpreted as valid input by NSJSONSerialization.</span></span><br><span class="line">  <span class="comment">// See https://github.com/rails/rails/issues/1742</span></span><br><span class="line">  <span class="built_in">BOOL</span> isSpace = [data isEqualToData:[<span class="built_in">NSData</span> dataWithBytes:<span class="string">" "</span> length:<span class="number">1</span>]];</span><br><span class="line">  <span class="keyword">if</span> (data<span class="variable">.length</span> &gt; <span class="number">0</span> &amp;&amp; !isSpace) &#123;</span><br><span class="line">      responseObject = [<span class="built_in">NSJSONSerialization</span> JSONObjectWithData:data options:<span class="keyword">self</span><span class="variable">.readingOptions</span> error:&amp;serializationError];</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>移除 JSON 中的 null</p>
+ <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">true<span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.removesKeysWithNullValues</span> &amp;&amp; responseObject) &#123;</span><br><span class="line">true    responseObject = AFJSONObjectByRemovingKeysWithNullValues(responseObject, <span class="keyword">self</span><span class="variable">.readingOptions</span>);</span><br><span class="line">true&#125;</span><br><span class="line">true``` </span><br><span class="line"></span><br><span class="line">其中移除 JSON 中 null 的函数 `AFJSONObjectByRemovingKeysWithNullValues` 是一个递归调用的函数：</span><br><span class="line"></span><br><span class="line">```objectivec</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">id</span> AFJSONObjectByRemovingKeysWithNullValues(<span class="keyword">id</span> JSONObject, <span class="built_in">NSJSONReadingOptions</span> readingOptions) &#123;</span><br><span class="line">    <span class="keyword">if</span> ([JSONObject isKindOfClass:[<span class="built_in">NSArray</span> class]]) &#123;</span><br><span class="line">        <span class="built_in">NSMutableArray</span> *mutableArray = [<span class="built_in">NSMutableArray</span> arrayWithCapacity:[(<span class="built_in">NSArray</span> *)JSONObject count]];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">id</span> value <span class="keyword">in</span> (<span class="built_in">NSArray</span> *)JSONObject) &#123;</span><br><span class="line">            [mutableArray addObject:AFJSONObjectByRemovingKeysWithNullValues(value, readingOptions)];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (readingOptions &amp; <span class="built_in">NSJSONReadingMutableContainers</span>) ? mutableArray : [<span class="built_in">NSArray</span> arrayWithArray:mutableArray];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([JSONObject isKindOfClass:[<span class="built_in">NSDictionary</span> class]]) &#123;</span><br><span class="line">        <span class="built_in">NSMutableDictionary</span> *mutableDictionary = [<span class="built_in">NSMutableDictionary</span> dictionaryWithDictionary:JSONObject];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">id</span> &lt;<span class="built_in">NSCopying</span>&gt; key <span class="keyword">in</span> [(<span class="built_in">NSDictionary</span> *)JSONObject allKeys]) &#123;</span><br><span class="line">            <span class="keyword">id</span> value = (<span class="built_in">NSDictionary</span> *)JSONObject[key];</span><br><span class="line">            <span class="keyword">if</span> (!value || [value isEqual:[<span class="built_in">NSNull</span> null]]) &#123;</span><br><span class="line">                [mutableDictionary removeObjectForKey:key];</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([value isKindOfClass:[<span class="built_in">NSArray</span> class]] || [value isKindOfClass:[<span class="built_in">NSDictionary</span> class]]) &#123;</span><br><span class="line">                mutableDictionary[key] = AFJSONObjectByRemovingKeysWithNullValues(value, readingOptions);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (readingOptions &amp; <span class="built_in">NSJSONReadingMutableContainers</span>) ? mutableDictionary : [<span class="built_in">NSDictionary</span> dictionaryWithDictionary:mutableDictionary];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JSONObject;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>其中移除 <code>null</code> 靠的就是 <code>[mutableDictionary removeObjectForKey:key]</code> 这一行代码。</p>
+<p><strong>注</strong>：</p>
+<ul>
+<li><code>AFXMLParserResponseSerializer</code> 、 <code>AFXMLDocumentResponseSerializer</code> 、<code>AFPropertyListResponseSerializer</code> 、 AFImageResponseSerializer 及 <code>AFCompoundResponseSerializer</code> 将留给感兴趣的同学。</li>
+</ul>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://github.com/Draveness/iOS-Source-Code-Analyze/blob/master/AFNetworking/%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94%20AFURLSerialization%EF%BC%88%E4%B8%89%EF%BC%89.md" target="_blank" rel="external">处理请求和响应 AFURLSerialization（三）</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AFNetworking/" rel="tag">#AFNetworking</a>
+          
+            <a href="/tags/Notes/" rel="tag">#Notes</a>
+          
+            <a href="/tags/Source-Code/" rel="tag">#Source Code</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/09/the-notes-of-learning-afnetworking-three/" rel="next" title="AFNetworking 3.0 源码阅读笔记（三）">
+                <i class="fa fa-chevron-left"></i> AFNetworking 3.0 源码阅读笔记（三）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/15/the-notes-of-learning-afnetworking-five/" rel="prev" title="AFNetworking 3.0 源码阅读笔记（五）">
+                AFNetworking 3.0 源码阅读笔记（五） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾的走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+          
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-twitter"></i> Twitter
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank">
+                  
+                    <i class="fa fa-weibo"></i> Weibo
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 知乎
+                  
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank">
+                  
+                    <i class="fa fa-globe"></i> 豆瓣
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            <p class="site-author-name">小伙伴们</p>
+            
+              <span class="links-of-author-item">
+                <a href="http://tikitoo.me/" target="_blank">安卓同学</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://lovinghuan.com/" target="_blank">poberWong</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.zhaiyifan.cn/" target="_blank">MarkZhai</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://yifeiyuan.me/" target="_blank">程序亦非猿</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://abner-nimengbo.cn/" target="_blank">阿布</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.easydone.cn/" target="_blank">Ailurus</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://wuxiaolong.me/" target="_blank">吴小龙同學</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://drakeet.me/" target="_blank">Drakeet</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://blog.fangjie.info/" target="_blank">方杰</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://hujiaweibujidao.github.io/" target="_blank">五道口宅男</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://gudong.name/" target="_blank">咕咚</a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://soledad.me/" target="_blank">蔡越</a>
+              </span>
+            
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AFURLResponseSerialization"><span class="nav-number">2.</span> <span class="nav-text">AFURLResponseSerialization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AFHTTPResponseSerializer"><span class="nav-number">2.1.</span> <span class="nav-text">AFHTTPResponseSerializer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化"><span class="nav-number">2.1.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#验证响应的有效性"><span class="nav-number">2.1.2.</span> <span class="nav-text">验证响应的有效性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#协议的实现"><span class="nav-number">2.1.3.</span> <span class="nav-text">协议的实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AFJSONResponseSerializer"><span class="nav-number">2.2.</span> <span class="nav-text">AFJSONResponseSerializer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#协议的实现-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">协议的实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2016/05/13/the-notes-of-learning-afnetworking-four/';
+      var disqus_title = 'AFNetworking 3.0 源码阅读笔记（四）';
+      var disqus_url = 'http://itangqi.me/2016/05/13/the-notes-of-learning-afnetworking-four/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+
+</body>
+</html>

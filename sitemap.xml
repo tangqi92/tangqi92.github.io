@@ -2,48 +2,158 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://itangqi.me/2016/03/21/the-notes-of-learning-sdwebimage-two/</loc>
-    <lastmod>2016-05-10T07:24:57.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/23/the-notes-of-learning-sdwebimage-three/</loc>
-    <lastmod>2016-05-10T07:23:54.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/28/the-notes-of-learning-nsoperation/</loc>
-    <lastmod>2016-05-10T07:14:21.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://itangqi.me/2016/04/15/autorelease-pool-in-ios/</loc>
-    <lastmod>2016-05-10T07:10:01.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/</loc>
-    <lastmod>2016-05-10T05:35:42.000Z</lastmod>
+    <lastmod>2016-05-28T08:36:19.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://itangqi.me/2016/04/18/the-first-meet-with-event-delivery/</loc>
-    <lastmod>2016-04-30T12:38:53.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/24/the-notes-of-learning-sdwebimage-four/</loc>
-    <lastmod>2016-04-25T14:31:57.000Z</lastmod>
+    <lastmod>2016-05-28T08:34:14.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://itangqi.me/2016/04/14/the-first-meet-with-runloop/</loc>
-    <lastmod>2016-04-23T05:46:11.000Z</lastmod>
+    <lastmod>2016-05-28T08:30:52.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/10/the-notes-of-learning-arc/</loc>
+    <lastmod>2016-05-28T08:25:10.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/02/18/the-notes-of-learning-text-kit/</loc>
+    <lastmod>2016-05-28T08:22:41.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/15/the-notes-of-learning-gcd/</loc>
+    <lastmod>2016-05-28T08:20:50.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/13/the-notes-of-learning-blocks/</loc>
+    <lastmod>2016-05-28T08:19:33.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/02/08/the-journey-of-learning-ios/</loc>
+    <lastmod>2016-05-28T08:11:48.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2015/12/15/waveloadingview/</loc>
+    <lastmod>2016-05-28T08:06:51.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2015/08/09/google-places-for-android-guide/</loc>
+    <lastmod>2016-05-28T07:58:39.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2015/07/26/orm-greendao-summary/</loc>
+    <lastmod>2016-05-28T07:56:53.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2015/04/11/control-android-device-by-pc/</loc>
+    <lastmod>2016-05-28T07:48:18.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2015/03/07/java-and-javascript-interaction/</loc>
+    <lastmod>2016-05-28T07:46:06.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/23/the-notes-of-learning-sdwebimage-three/</loc>
+    <lastmod>2016-05-28T07:43:33.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/05/20/the-notes-of-learning-afnetworking-seven/</loc>
+    <lastmod>2016-05-28T07:42:17.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/05/17/the-notes-of-learning-afnetworking-six/</loc>
+    <lastmod>2016-05-28T07:41:29.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/05/15/the-notes-of-learning-afnetworking-five/</loc>
+    <lastmod>2016-05-28T07:41:22.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/05/13/the-notes-of-learning-afnetworking-four/</loc>
+    <lastmod>2016-05-28T07:40:53.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/05/09/the-notes-of-learning-afnetworking-three/</loc>
+    <lastmod>2016-05-28T07:39:29.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/05/06/the-notes-of-learning-afnetworking-two/</loc>
+    <lastmod>2016-05-28T07:30:39.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/05/05/the-notes-of-learning-afnetworking-one/</loc>
+    <lastmod>2016-05-28T04:28:06.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/04/01/from-nsurlconnection-to-nsurlsession/</loc>
+    <lastmod>2016-05-28T03:50:28.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/04/05/the-notes-of-learning-illustrating-http-two/</loc>
+    <lastmod>2016-05-28T03:48:45.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/28/the-notes-of-learning-nsoperation/</loc>
+    <lastmod>2016-05-28T03:48:38.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/24/the-notes-of-learning-sdwebimage-four/</loc>
+    <lastmod>2016-05-28T03:48:29.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/</loc>
+    <lastmod>2016-05-28T03:48:22.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/21/the-notes-of-learning-sdwebimage-two/</loc>
+    <lastmod>2016-05-28T03:48:02.000Z</lastmod>
   </url>
   
   <url>
     <loc>http://itangqi.me/2016/04/21/the-notes-of-learning-uicollectionview/</loc>
-    <lastmod>2016-04-21T05:06:55.000Z</lastmod>
+    <lastmod>2016-05-28T03:47:40.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/02/25/the-notes-of-learning-uitableview-one/</loc>
+    <lastmod>2016-05-28T03:47:21.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/02/27/the-notes-of-learning-uitableview-three/</loc>
+    <lastmod>2016-05-28T03:47:13.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/02/26/the-notes-of-learning-uitableview-two/</loc>
+    <lastmod>2016-05-28T03:46:59.000Z</lastmod>
   </url>
   
   <url>
@@ -52,58 +162,8 @@
   </url>
   
   <url>
-    <loc>http://itangqi.me/2016/04/05/the-notes-of-learning-illustrating-http-two/</loc>
-    <lastmod>2016-04-20T02:27:59.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://itangqi.me/2016/04/04/the-notes-of-learning-illustrating-http-one/</loc>
     <lastmod>2016-04-19T08:59:12.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/04/01/from-nsurlconnection-to-nsurlsession/</loc>
-    <lastmod>2016-04-19T08:53:53.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/02/18/the-notes-of-learning-text-kit/</loc>
-    <lastmod>2016-04-19T08:45:43.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/02/08/the-journey-of-learning-ios/</loc>
-    <lastmod>2016-04-19T08:41:13.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/15/the-notes-of-learning-gcd/</loc>
-    <lastmod>2016-04-17T03:53:20.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/02/27/the-notes-of-learning-uitableview-three/</loc>
-    <lastmod>2016-04-16T08:10:55.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/02/26/the-notes-of-learning-uitableview-two/</loc>
-    <lastmod>2016-04-16T08:10:43.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/13/the-notes-of-learning-blocks/</loc>
-    <lastmod>2016-04-14T07:19:27.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/10/the-notes-of-learning-arc/</loc>
-    <lastmod>2016-04-13T09:36:30.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/02/25/the-notes-of-learning-uitableview-one/</loc>
-    <lastmod>2016-03-07T05:42:56.000Z</lastmod>
   </url>
   
   <url>
@@ -127,38 +187,13 @@
   </url>
   
   <url>
-    <loc>http://itangqi.me/2015/04/11/control-android-device-by-pc/</loc>
-    <lastmod>2016-02-25T05:43:46.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://itangqi.me/2015/01/01/everything-is-just-beginning/</loc>
     <lastmod>2016-02-25T05:43:37.000Z</lastmod>
   </url>
   
   <url>
-    <loc>http://itangqi.me/2015/08/09/google-places-for-android-guide/</loc>
-    <lastmod>2016-02-25T05:43:31.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2015/03/07/java-and-javascript-interaction/</loc>
-    <lastmod>2016-02-25T05:43:07.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2015/07/26/orm-greendao-summary/</loc>
-    <lastmod>2016-02-25T05:42:48.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://itangqi.me/2015/02/15/talk-about-material-design/</loc>
     <lastmod>2016-02-25T05:42:41.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2015/12/15/waveloadingview/</loc>
-    <lastmod>2016-02-25T05:42:36.000Z</lastmod>
   </url>
   
   <url>

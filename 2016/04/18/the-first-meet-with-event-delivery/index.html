@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion">
+<html class="theme-next mist use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Event Delivery,Event Type,Responder Chain,Responder Object,iOS," />
+  <meta name="keywords" content="Event Delivery,Event Type,Responder Chain,Responder Object," />
 
 
 
@@ -73,7 +73,7 @@
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-02.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-03.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-04.png">
-<meta property="og:updated_time" content="2016-04-30T12:38:53.000Z">
+<meta property="og:updated_time" content="2016-05-28T08:34:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初探 iOS 事件分发机制">
 <meta name="twitter:description" content="前言今天看到一道面试题：UIWindow 与 UIView 有何区别？
@@ -85,7 +85,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Pisces',
+    scheme: 'Mist',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -208,15 +208,6 @@
 
       
       
-      
-        <li class="menu-item menu-item-search">
-          <a href="#" class="st-search-show-outputs">
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
-            
-            搜索
-          </a>
-        </li>
       
     </ul>
   
@@ -409,8 +400,12 @@
 <p>递归是向界面的根节点 UIWindow 发送 <code>hitTest:withEvent:</code> 消息开始的，从这个消息返回的是一个 UIView，也就是手指当前位置最前面的那个 Hittest View。当向 UIWindow 发送 <code>hitTest:withEvent:</code> 消息时，<code>hitTest:withEvent:</code> 里面所做的事，就是判断当前的点击位置是否在 Window 里面，如果在则遍历 Window 的 Subview 然后依次对 Subview 发送 <code>hitTest:withEvent:</code> 消息（注意这里给 Subview 发送消息是根据当前 Subview 的 index 顺序，index 越大就越先被访问）。如果当前的 point 没有在 View 上面，那么这个 View 的 Subview 也就不会被遍历了。当事件遍历到了 View B.1，发现 point 在 View B.1 里面，并且 View B.1 没有 Subview，那么他就是我们要找的 Hittest View 了，找到之后就会一路返回直到根节点，而 View B 之后的 View A 也不会被遍历了。</p>
 <hr>
 <h2 id="总结">总结</h2><p>所以关于事件的链有两条：事件的<strong>响应链</strong>；Hit-Testing 时事件的<strong>传递链</strong>。</p>
-<p><strong>事件响应链</strong>：由离用户最近的 View 向系统传递：<br>initial view –&gt; Super View –&gt; …… –&gt; View Controller –&gt; Window –&gt; Application –&gt; AppDelegate</p>
-<p><strong>事件传递链</strong>：由系统向离用户最近的 View 传递：<br>UIKit –&gt; active app’s event queue –&gt; Window –&gt; Root View –&gt; …… –&gt; Lowest View</p>
+<ul>
+<li><p><strong>事件响应链</strong>：由离用户最近的 View 向系统传递：<br>initial view –&gt; Super View –&gt; …… –&gt; View Controller –&gt; Window –&gt; Application –&gt; AppDelegate</p>
+</li>
+<li><p><strong>事件传递链</strong>：由系统向离用户最近的 View 传递：<br>UIKit –&gt; active app’s event queue –&gt; Window –&gt; Root View –&gt; …… –&gt; Lowest View</p>
+</li>
+</ul>
 <p>具体的应用可以参见：<a href="http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE.html" target="_blank" rel="external">事件传递响应链</a></p>
 <hr>
 <h2 id="参考">参考</h2><ul>
@@ -434,8 +429,6 @@
             <a href="/tags/Responder-Chain/" rel="tag">#Responder Chain</a>
           
             <a href="/tags/Responder-Object/" rel="tag">#Responder Object</a>
-          
-            <a href="/tags/iOS/" rel="tag">#iOS</a>
           
         </div>
       
@@ -552,7 +545,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -569,7 +562,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">51</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -744,7 +737,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Pisces
+    NexT.Mist
   </a>
 </div>
 
@@ -787,13 +780,6 @@
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
-
-
 
   
   
