@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2016-05-28T07:42:17.000Z</updated>
+  <updated>2016-05-30T15:01:07.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -13,6 +13,111 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[抓包工具 Charles 使用心得]]></title>
+    <link href="http://itangqi.me/2016/05/30/tips-for-using-charles/"/>
+    <id>http://itangqi.me/2016/05/30/tips-for-using-charles/</id>
+    <published>2016-05-29T16:00:00.000Z</published>
+    <updated>2016-05-30T15:01:07.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>虽然实习工作还没有着落，但学习还是要继续的嘛，今天就来学习使用下 Mac 下截取网络封包的工具：<a href="http://www.charlesproxy.com/" target="_blank" rel="external">Charles</a>。</p>
+<p>我想，如果你是个善于利用搜索引擎的人，那么在 Google 中输入「Charles 使用」等相应的关键字，便会出现一大把文章。<br>不过呢，之所以会有这篇文章，就是因为今天在安装和初步使用的过程中，遇到了些问题，而目前搜索出来的绝大数文章并没有提及（或者解决办法已经过时）。所以，我在此记录下来，希望能帮助到通过搜索找到这的朋友们。</p>
+<a id="more"></a>
+<hr>
+<h2 id="付费_&amp;_正版">付费 &amp; 正版</h2><blockquote>
+<p>Charles 是收费软件，可以免费试用 30 天。试用期过后，未付费的用户仍然可以继续使用，但是每次使用时间不能超过 30 分钟，使用过程中不定时会中断 5 秒钟，并且启动时将会有 10 秒种的延时。因此，该付费方案对广大用户还是相当友好的，即使你长期不付费，也能使用完整的软件功能。只是当你需要长时间进行封包调试时，会因为 Charles 强制关闭而遇到影响。</p>
+</blockquote>
+<p>关于价格，见下表：</p>
+<table>
+<thead>
+<tr>
+<th>License</th>
+<th style="text-align:center">Pricing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-4 User Licenses</td>
+<td style="text-align:center">US$50 / license</td>
+</tr>
+<tr>
+<td>5+ User Licenses</td>
+<td style="text-align:center">US$40 / license (20% discount)</td>
+</tr>
+<tr>
+<td>10+ User Licenses</td>
+<td style="text-align:center">US$30 / license (40% discount)</td>
+</tr>
+<tr>
+<td>Site License</td>
+<td style="text-align:center">US$400</td>
+</tr>
+<tr>
+<td>Multi-Site License</td>
+<td style="text-align:center">US$700</td>
+</tr>
+</tbody>
+</table>
+<p>50 刀的价格虽然不白菜，但试用版并未阉割功能，只是在使用体验上稍差，这可称得上良心啊。虽然我暂时不会购买，但我依然会使用正版，希望你也如此。</p>
+<hr>
+<h2 id="VPN">VPN</h2><p>当我打开 Charles（Mac OS X Proxy 已选择），按理说，我立刻就能看见源源不断的网络请求出现在 Charles 的界面中啦，可为什么始终是一片空白呢？</p>
+<p>一番搜索，终于在这里 <a href="http://stackoverflow.com/questions/25697849/charles-proxy-not-working-with-chrome" target="_blank" rel="external">Charles proxy not working with Chrome</a> 找到了答案：</p>
+<blockquote>
+<p>For anyone else using VPN: Charles must be turned on before VPN. So quitting VPN after turning on Charles won’t work either.</p>
+</blockquote>
+<p>没办法，为了正常使用 Charles，只能暂时把梯子撤了：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/tips-for-using-charles-01.png" alt=""></p>
+<hr>
+<h2 id="乱码">乱码</h2><p>刚开始用着挺好的啊，怎么一言不合，就来个乱码呢？</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/tips-for-using-charles-08.png" alt=""></p>
+<p>于是，便在 Google 中输入「Charles 乱码」，我保证，你能搜到的绝对是这样的答案：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/tips-for-using-charles-09.jpg" alt=""></p>
+<p>可我告诉你，反正我尝试了在各种地方进行添加，最后都没有成功。<br>而我最终解决了乱码的问题，但根本没有涉及到 <code>Info.plist</code>。你只要确保，我接下来提及的问题，你有正确进行设置。</p>
+<h3 id="安装_SSL_证书">安装 SSL 证书</h3><h4 id="Mac_端">Mac 端</h4><blockquote>
+<p>首先去 <a href="http://www.charlesproxy.com/ssl.zip" target="_blank" rel="external">http://www.charlesproxy.com/ssl.zip</a> 下载 CA 证书文件，然后双击 .crt 文件，选择「总是信任」按钮，在钥匙串访问中即可看到添加成功的证书。</p>
+</blockquote>
+<p>看看，人家说的多么简单啊，可事实呢？当我访问上述网址时，出现的是如下的文字：</p>
+<blockquote>
+<p>If you are running Charles v3.10 or later, please go to Charles and consult the SSL Proxying submenu in the Help menu, for instructions on installing your new Charles Root Certificate.</p>
+</blockquote>
+<p>我那蹩脚的英文告诉我：如果你使用的是 v3.10 及之后的版本，安装方法已经变了，正确的姿势：启动 Charles 软件，在菜单中找到 Help -&gt; SSL Proxying -&gt; Install Charles Root Certificate. 如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/tips-for-using-charles-02.png" alt=""><a href="http://blog.devtang.com/2015/11/14/charles-introduction/" target="_blank" rel="external">图片来自</a></p>
+<p>随后是这样的：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/tips-for-using-charles-03.jpg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/tips-for-using-charles-04.jpg" alt=""><a href="https://gitsea.com/2015/11/11/charles-https-%E6%8A%93%E5%8C%85-mac/" target="_blank" rel="external">图片来自</a></p>
+<h4 id="iPhone_端">iPhone 端</h4><p>步骤：Help -&gt; SSL Proxying -&gt;Install Charles Root Certificate on a Mobile Device…</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/tips-for-using-charles-07.png" alt=""></p>
+<h3 id="Mac_上的设置">Mac 上的设置</h3><ol>
+<li><p>在 Charles 的工具栏上点击设置按钮，选择 SSL Proxy Settings，选中 Enable SSL Proxying。（别急，选完先别关掉）</p>
+</li>
+<li><p>SSL 选项卡的 Locations 里填写要抓包的域名和端口，点击 Add 按钮，在弹出的表单中 Host 填写域名。比如填api.instagram.com，Port 填 443</p>
+</li>
+</ol>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/tips-for-using-charles-11.jpg" alt=""><a href="https://gitsea.com/2015/11/11/charles-https-%E6%8A%93%E5%8C%85-mac/" target="_blank" rel="external">图片来自</a></p>
+<p><strong>关于乱码，如果没有做这项操作，则肯定会出现乱码。而至于否是在 <code>Info.plist</code> 中添加 <code>UTF-8</code> 的字段，反正最后我没加，但一切正常。</strong></p>
+<p>所以这个坑，我也是无意间解决的。</p>
+<h3 id="iPhone_上的设置">iPhone 上的设置</h3><blockquote>
+<p>首先我们需要获取 Charles 运行所在电脑的 IP 地址，Charles 的顶部菜单的 “Help”-&gt;”Local IP Address”，即可在弹出的对话框中看到 IP 地址，如下图所示：</p>
+</blockquote>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/tips-for-using-charles-05.png" alt=""></p>
+<p>然后就是在 iPhone 上的一系列操作，又是很简单，有木有！</p>
+<p>可是，为什么尼玛我怎么试都不成果呢？！iPhone 上浏览器网址都打不开了….于是又尝试了另一种方式，在终端敲入 <code>ifconfig en0</code>：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/tips-for-using-charles-06.jpg" alt=""><a href="http://zhangfei.tk/2016/02/18/%E6%8A%93%E5%8C%85%E5%B7%A5%E5%85%B7Charles%E7%9A%84%E4%BD%BF%E7%94%A8%E5%BF%83%E5%BE%97/" target="_blank" rel="external">图片来自</a></p>
+<p>Done! 终于可以愉快的玩耍了：）</p>
+<hr>
+<h2 id="参考">参考</h2>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>虽然实习工作还没有着落，但学习还是要继续的嘛，今天就来学习使用下 Mac 下截取网络封包的工具：<a href="http://www.charlesproxy.com/">Charles</a>。</p>
+<p>我想，如果你是个善于利用搜索引擎的人，那么在 Google 中输入「Charles 使用」等相应的关键字，便会出现一大把文章。<br>不过呢，之所以会有这篇文章，就是因为今天在安装和初步使用的过程中，遇到了些问题，而目前搜索出来的绝大数文章并没有提及（或者解决办法已经过时）。所以，我在此记录下来，希望能帮助到通过搜索找到这的朋友们。</p>]]>
+    
+    </summary>
+    
+      <category term="Charles" scheme="http://itangqi.me/tags/Charles/"/>
+    
+      <category term="Tips" scheme="http://itangqi.me/tags/Tips/"/>
+    
+      <category term="Mac" scheme="http://itangqi.me/categories/Mac/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[AFNetworking 3.0 源码阅读笔记（七）]]></title>
@@ -2540,92 +2645,6 @@
     <![CDATA[<h2 id="前言">前言</h2><p>我们在第一篇文章<a href="">《SDWebImage 源码阅读笔记（一）》</a>中，已经了解到，当我们调用</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[cell<span class="variable">.imageView</span> sd_setImageWithURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://www.domain.com/path/to/image.jpg"</span>]</span><br><span class="line">                  placeholderImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"placeholder.png"</span>]];</span><br></pre></td></tr></table></figure>
 <p>时，其实是通过 <code>SDWebImageManager</code> 类进行协调，调用 <code>SDImageCache</code> 与 <code>SDWebImageDownloader</code> 来实现图片的缓存查询与网络下载的。那么今天在第二篇中，就让我们来对 <code>SDImageCache</code> 一探究竟吧：）</p>]]>
-    
-    </summary>
-    
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
-    
-      <category term="SDWebImage" scheme="http://itangqi.me/tags/SDWebImage/"/>
-    
-      <category term="Source Code" scheme="http://itangqi.me/tags/Source-Code/"/>
-    
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[SDWebImage 源码阅读笔记（一）]]></title>
-    <link href="http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/"/>
-    <id>http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/</id>
-    <published>2016-03-18T16:00:00.000Z</published>
-    <updated>2016-05-28T03:48:22.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，但都停留在简单的调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。</p>
-<p>如今转投 iOS 怀抱的我，决定将阅读优秀项目的源码作为学习的一部分，而且是带着<strong>疑问</strong>去阅读。由于在项目中使用及考虑到 SDWebImage 的普及程度，其顺理成章的成为了我第一个阅读的项目。</p>
-<p>话不多说，让我们开始吧！</p>
-<a id="more"></a> 
-<hr>
-<h2 id="简介">简介</h2><blockquote>
-<p>Asynchronous image downloader with cache support as a UIImageView category.</p>
-</blockquote>
-<p>言简意赅：SDWebImage 以 UIImageView category（分类）的形式，来支持图片的异步下载与缓存。</p>
-<p>其提供了以下功能：</p>
-<ol>
-<li>以 UIImageView 的分类，来支持网络图片的加载与缓存管理</li>
-<li>一个异步的图片加载器</li>
-<li>一个异步的内存 + 磁盘图片缓存</li>
-<li>支持 GIF </li>
-<li>支持 WebP</li>
-<li>后台图片解压缩处理</li>
-<li>确保同一个 URL 的图片不被多次下载</li>
-<li>确保虚假的 URL 不会被反复加载</li>
-<li>确保下载及缓存时，主线程不被阻塞</li>
-<li>使用 GCD 与 ARC</li>
-<li>支持 Arm64</li>
-</ol>
-<hr>
-<h2 id="UIImageView+WebCache">UIImageView+WebCache</h2><p>首先，SDWebImage 最常见的使用场景想必如下：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#import <span class="title">&lt;SDWebImage/UIImageView+WebCache.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">UITableViewCell</span> *)tableView:(<span class="built_in">UITableView</span> *)tableView cellForRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">NSString</span> *MyIdentifier = <span class="string">@"MyIdentifier"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">UITableViewCell</span> *cell = [tableView dequeueReusableCellWithIdentifier:MyIdentifier];</span><br><span class="line">    <span class="keyword">if</span> (cell == <span class="literal">nil</span>) &#123;</span><br><span class="line">        cell = [[[<span class="built_in">UITableViewCell</span> alloc] initWithStyle:<span class="built_in">UITableViewCellStyleDefault</span></span><br><span class="line">                                       reuseIdentifier:MyIdentifier] autorelease];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在这里，我们使用 UIImageView 分类提供的 sd_setImageWithURL: 方法来加载网络图片</span></span><br><span class="line">    [cell<span class="variable">.imageView</span> sd_setImageWithURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://www.domain.com/path/to/image.jpg"</span>]</span><br><span class="line">                      placeholderImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"placeholder.png"</span>]];</span><br><span class="line"></span><br><span class="line">    cell<span class="variable">.textLabel</span><span class="variable">.text</span> = <span class="string">@"My Text"</span>;</span><br><span class="line">    <span class="keyword">return</span> cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们在使用 UITableView 时，往往需要在 Cell 上显示来自网络的图片，这里最关键的一行代码便是：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[cell<span class="variable">.imageView</span> sd_setImageWithURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://www.domain.com/path/to/image.jpg"</span>]</span><br><span class="line">                  placeholderImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"placeholder.png"</span>]];</span><br></pre></td></tr></table></figure>
-<p>于是我们「CMD + 左键」来到了 <code>UIImageView+WebCache</code> 查看具体的实现：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 根据 url、placeholder 与 custom options 为 imageview 设置 image</span><br><span class="line"> *</span><br><span class="line"> * 下载是异步的，并且被缓存的</span><br><span class="line"> *</span><br><span class="line"> * @param url            网络图片的 url 地址</span><br><span class="line"> * @param placeholder    用于预显示的图片</span><br><span class="line"> * @param options        一些定制化选项</span><br><span class="line"> * @param progressBlock  下载时的 Block，其定义为：typedef void(^SDWebImageDownloaderProgressBlock)(NSInteger receivedSize, NSInteger expectedSize);</span><br><span class="line"> * @param completedBlock 下载完成时的 Block，其定义为：typedef void(^SDWebImageDownloaderCompletedBlock)(UIImage *image, NSData *data, NSError *error, BOOL finished);</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="keyword">void</span>)sd_setImageWithURL:(<span class="built_in">NSURL</span> *)url placeholderImage:(<span class="built_in">UIImage</span> *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock &#123;</span><br><span class="line">    [<span class="keyword">self</span> sd_cancelCurrentImageLoad];</span><br><span class="line">    objc_setAssociatedObject(<span class="keyword">self</span>, &amp;imageURLKey, url, OBJC_ASSO<span class="built_in">CIATION_RETAIN_NONATOMIC</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!(options &amp; SDWebImageDelayPlaceholder)) &#123;</span><br><span class="line">        dispatch_main_async_safe(^&#123;</span><br><span class="line">            <span class="keyword">self</span><span class="variable">.image</span> = placeholder;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (url) &#123;</span><br><span class="line">        __<span class="keyword">weak</span> __<span class="keyword">typeof</span>(<span class="keyword">self</span>)wself = <span class="keyword">self</span>;</span><br><span class="line">        <span class="keyword">id</span> &lt;SDWebImageOperation&gt; operation = [SDWebImageManager<span class="variable">.sharedManager</span> downloadImageWithURL:url options:options progress:progressBlock completed:^(<span class="built_in">UIImage</span> *image, <span class="built_in">NSError</span> *error, SDImageCacheType cacheType, <span class="built_in">BOOL</span> finished, <span class="built_in">NSURL</span> *imageURL) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!wself) <span class="keyword">return</span>;</span><br><span class="line">            dispatch_main_sync_safe(^&#123;</span><br><span class="line">                <span class="keyword">if</span> (!wself) <span class="keyword">return</span>;</span><br><span class="line">                <span class="keyword">if</span> (image &amp;&amp; (options &amp; SDWebImageAvoidAutoSetImage) &amp;&amp; completedBlock)</span><br><span class="line">                &#123;</span><br><span class="line">                    completedBlock(image, error, cacheType, url);</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (image) &#123;</span><br><span class="line">                    wself<span class="variable">.image</span> = image;</span><br><span class="line">                    [wself setNeedsLayout];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> ((options &amp; SDWebImageDelayPlaceholder)) &#123;</span><br><span class="line">                        wself<span class="variable">.image</span> = placeholder;</span><br><span class="line">                        [wself setNeedsLayout];</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (completedBlock &amp;&amp; finished) &#123;</span><br><span class="line">                    completedBlock(image, error, cacheType, url);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;];</span><br><span class="line">        [<span class="keyword">self</span> sd_setImageLoadOperation:operation forKey:<span class="string">@"UIImageViewImageLoad"</span>];</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        dispatch_main_async_safe(^&#123;</span><br><span class="line">            <span class="built_in">NSError</span> *error = [<span class="built_in">NSError</span> errorWithDomain:SDWebImageErrorDomain code:-<span class="number">1</span> userInfo:@&#123;<span class="built_in">NSLocalizedDescriptionKey</span> : <span class="string">@"Trying to load a nil url"</span>&#125;];</span><br><span class="line">            <span class="keyword">if</span> (completedBlock) &#123;</span><br><span class="line">                completedBlock(<span class="literal">nil</span>, error, SDImageCacheTypeNone, url);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>虽然代码只有几十行，但其中涉及到的知识点却可不少哦，不要急，让我们将迷雾一层层剥开：</p>
-<hr>
-<h2 id="UIView+WebCacheOperation">UIView+WebCacheOperation</h2><p>首先来看：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span> sd_cancelCurrentImageLoad];</span><br></pre></td></tr></table></figure>
-<p>「CMD + 左键」后带我们来到了 <code>UIView+WebCacheOperation</code></p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)sd_cancelImageLoadOperationWithKey:(<span class="built_in">NSString</span> *)key &#123;</span><br><span class="line">    <span class="comment">// 取消正在进行的下载队列</span></span><br><span class="line">    <span class="built_in">NSMutableDictionary</span> *operationDictionary = [<span class="keyword">self</span> operationDictionary];</span><br><span class="line">    <span class="keyword">id</span> operations = [operationDictionary objectForKey:key];</span><br><span class="line">    <span class="keyword">if</span> (operations) &#123;</span><br><span class="line">        <span class="keyword">if</span> ([operations isKindOfClass:[<span class="built_in">NSArray</span> class]]) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">id</span> &lt;SDWebImageOperation&gt; operation <span class="keyword">in</span> operations) &#123;</span><br><span class="line">                <span class="keyword">if</span> (operation) &#123;</span><br><span class="line">                    [operation cancel];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> ([operations conformsToProtocol:<span class="class"><span class="keyword">@protocol</span>(<span class="title">SDWebImageOperation</span>)])</span>&#123;</span><br><span class="line">            [(<span class="keyword">id</span>&lt;SDWebImageOperation&gt;) operations cancel];</span><br><span class="line">        &#125;</span><br><span class="line">        [operationDictionary removeObjectForKey:key];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>框架中的所有操作实际上都是通过一个 operationDictionary（具体查看 UIView+WebCacheOperation）来管理的，而这个 Dictionary 实际上是通过动态的方式（详情可参见：<a href="http://blog.leichunfeng.com/blog/2015/06/26/objective-c-associated-objects-implementation-principle/" target="_blank" rel="external">Objective-C Associated Objects 的实现原理</a>）添加到 UIView 上的一个属性，至于为什么添加到 UIView 上, 主要是因为这个 operationDictionary 需要在 UIButton 和 UIImageView 上重用，所以需要添加到它们的根类上。</p>
-<p>当执行 <code>sd_setImageWithURL:</code> 函数时，首先会 cancel 掉 operationDictionary 中已经存在的 operation，并重新创建一个新的 SDWebImageCombinedOperation 对象来获取 image，该 operation 会被存入 operationDictionary 中。</p>
-<p>这样来保证每个 UIImageView 对象中永远只存在一个 operation，当前只允许一个图片网络请求，该 operation 负责从缓存中获取 image 或者是重新下载 image。</p>
-<p><strong><code>SDWebImageCombinedOperation</code> 的 cancel 操作同时会 cacel 掉缓存查询的 operation 以及 downloader 的 operation</strong></p>
-<hr>
-<h2 id="dispatch_main_sync_safe_&amp;_dispatch_main_async_safe_宏定义">dispatch_main_sync_safe &amp; dispatch_main_async_safe 宏定义</h2><p>再来看：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dispatch_main_async_safe(^&#123;</span><br><span class="line">           <span class="keyword">self</span><span class="variable">.image</span> = placeholder;</span><br><span class="line">       &#125;);</span><br></pre></td></tr></table></figure>
-<p>上述代码中的 <code>dispatch_main_sync_safe</code> 与 <code>dispatch_main_async_safe</code> 均为宏定义, 点进去一看发现宏是这样定义的：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#define dispatch_main_sync_safe(block)\</span></span><br><span class="line">    <span class="keyword">if</span> ([<span class="built_in">NSThread</span> isMainThread]) &#123;\</span><br><span class="line">        block();\</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;\</span><br><span class="line">        <span class="built_in">dispatch_sync</span>(dispatch_get_main_queue(), block);\</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define dispatch_main_async_safe(block)\</span></span><br><span class="line">    <span class="keyword">if</span> ([<span class="built_in">NSThread</span> isMainThread]) &#123;\</span><br><span class="line">        block();\</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;\</span><br><span class="line">        <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), block);\</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>相信你通过这两个宏的名字就能猜到它们的作用了: 因为图像的绘制只能在主线程完成，所以<code>dispatch_main_sync_safe</code> 与 <code>dispatch_main_async_safe</code> 就是为了保证 block 能在主线程中执行。</p>
-<hr>
-<h2 id="SDWebImageManager">SDWebImageManager</h2><p>在 <code>SDWebImageManager.h</code> 中你可以看到关于 SDWebImageManager 的描述：</p>
-<blockquote>
-<p>The SDWebImageManager is the class behind the UIImageView+WebCache category and likes. It ties the asynchronous downloader (SDWebImageDownloader) with the image cache store (SDImageCache). You can use this class directly to benefit from web image downloading with caching in another context than a UIView.</p>
-</blockquote>
-<p>这个类就是隐藏在 <code>UIImageView+WebCache</code> 背后，用于处理异步下载和图片缓存的类，当然你也可以直接使用 SDWebImageManager 的上述方法 <code>downloadImageWithURL:options:progress:completed:</code> 来直接下载图片：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 如果在缓存中则直接返回，否则根据所给的 URL 下载图片</span><br><span class="line"> * </span><br><span class="line"> * @param url            网络图片的 url 地址</span><br><span class="line"> * @param options        一些定制化选项</span><br><span class="line"> * @param progressBlock  下载时的 Block，其定义为：typedef void(^SDWebImageDownloaderProgressBlock)(NSInteger receivedSize, NSInteger expectedSize);</span><br><span class="line"> * @param completedBlock 下载完成时的 Block，其定义为：typedef void(^SDWebImageDownloaderCompletedBlock)(UIImage *image, NSData *data, NSError *error, BOOL finished);</span><br><span class="line"> * @return 				 返回 SDWebImageOperation 的实例</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="keyword">id</span> &lt;SDWebImageOperation&gt;)downloadImageWithURL:(<span class="built_in">NSURL</span> *)url options:(SDWebImageOptions)options</span><br><span class="line">                                        progress:(SDWebImageDownloaderProgressBlock)progressBlock</span><br><span class="line">                                       completed:(SDWebImageCompletionWithFinishedBlock)completedBlock &#123;</span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 前面省略 n 行，主要作了如下处理：</span><br><span class="line">     * 1. 判断 url 的合法性  </span><br><span class="line">     * 2. 创建 SDWebImageCombinedOperation 对象  </span><br><span class="line">     * 3. 查看 url 是否是之前下载失败过的  </span><br><span class="line">     * 4. 如果 url 为 nil，或者在不可重试的情况下是一个下载失败过的 url，则直接返回操作对象并调用完成回调 </span><br><span class="line">    */</span></span><br><span class="line">    <span class="comment">// 根据 URL 生成对应的 key，没有特殊处理为 [url absoluteString];</span></span><br><span class="line">    <span class="built_in">NSString</span> *key = [<span class="keyword">self</span> cacheKeyForURL:url];</span><br><span class="line">    <span class="comment">// 去缓存中查找图片（参见 SDImageCache）</span></span><br><span class="line">    operation<span class="variable">.cacheOperation</span> = [<span class="keyword">self</span><span class="variable">.imageCache</span> queryDiskCacheForKey:key done:^(<span class="built_in">UIImage</span> *image, SDImageCacheType cacheType) </span><br><span class="line">    &#123;</span><br><span class="line">       <span class="comment">/* ... */</span></span><br><span class="line">       <span class="comment">// 如果在缓存中没有找到图片，或者采用的 SDWebImageRefreshCached 选项，则从网络下载</span></span><br><span class="line">        <span class="keyword">if</span> ((!image || options &amp; SDWebImageRefreshCached) &amp;&amp; (![<span class="keyword">self</span><span class="variable">.delegate</span> respondsToSelector:<span class="keyword">@selector</span>(imageManager:shouldDownloadImageForURL:)] || [<span class="keyword">self</span><span class="variable">.delegate</span> imageManager:<span class="keyword">self</span> shouldDownloadImageForURL:url])) &#123;</span><br><span class="line">                dispatch_main_sync_safe(^&#123;</span><br><span class="line">                  <span class="comment">// 如果图片找到了，但是采用的 SDWebImageRefreshCached 选项，通知获取到了图片，并再次从网络下载，使 NSURLCache 重新刷新</span></span><br><span class="line">                     completedBlock(image, <span class="literal">nil</span>, cacheType, <span class="literal">YES</span>, url);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">/* 下载选项设置 */</span> </span><br><span class="line">            <span class="comment">// 使用 imageDownloader 开启网络下载</span></span><br><span class="line">            <span class="keyword">id</span> &lt;SDWebImageOperation&gt; subOperation = [<span class="keyword">self</span><span class="variable">.imageDownloader</span> downloadImageWithURL:url options:downloaderOptions progress:progressBlock completed:^(<span class="built_in">UIImage</span> *downloadedImage, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *error, <span class="built_in">BOOL</span> finished) &#123;</span><br><span class="line">                <span class="comment">/* ... */</span></span><br><span class="line">               <span class="keyword">if</span> (downloadedImage &amp;&amp; finished) &#123;</span><br><span class="line">                     <span class="comment">// 下载完成后，先将图片保存到缓存中，然后主线程返回</span></span><br><span class="line">                     [<span class="keyword">self</span><span class="variable">.imageCache</span> storeImage:downloadedImage recalculateFromImage:<span class="literal">NO</span> imageData:data forKey:key toDisk:cacheOnDisk];</span><br><span class="line">                        &#125;</span><br><span class="line">                     dispatch_main_sync_safe(^&#123;</span><br><span class="line">                            <span class="keyword">if</span> (!weakOperation<span class="variable">.isCancelled</span>) &#123;</span><br><span class="line">                                completedBlock(downloadedImage, <span class="literal">nil</span>, SDImageCacheTypeNone, finished, url);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">          <span class="comment">/* ... */</span></span><br><span class="line">       &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (image) &#123;</span><br><span class="line">          <span class="comment">// 在缓存中找到图片了，直接返回</span></span><br><span class="line">            dispatch_main_sync_safe(^&#123;</span><br><span class="line">                <span class="keyword">if</span> (!weakOperation<span class="variable">.isCancelled</span>) &#123;</span><br><span class="line">                    completedBlock(image, <span class="literal">nil</span>, cacheType, <span class="literal">YES</span>, url);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">    <span class="keyword">return</span> operation;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>更详细的注解可参见：<a href="http://www.jianshu.com/p/6ae6f99b6c4c" target="_blank" rel="external">SDWebImage源码解析之SDWebImageManager的注解</a></p>
-<h3 id="要点">要点</h3><ol>
-<li><p>在 SDWebImageManager 中管理了一个 failedURLs 的 NSMutableSet，里面下载失败的 url 会被存储下来。同时，可以通过 SDWebImageRetryFailed 来强制继续重试下载</p>
-</li>
-<li><p>查找缓存，若缓存中没有 image 则通过 SDWebImageDownloader 来进行下载，下载完成后通过 SDImageCache 进行缓存，会同时缓存到 memCache 和 diskCache 中</p>
-</li>
-</ol>
-<hr>
-<p>可以看到 SDWebImageManager 这个类的主要作用就是为 UIImageView+WebCache 和 SDWebImageDownloader，SDImageCache 之间构建一个桥梁，使它们能够更好的协同工作，在接下来的系列文章中，就让我们一探究竟：它是如何协调异步下载和图片缓存的？</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="前言">前言</h2><p>说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，但都停留在简单的调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。</p>
-<p>如今转投 iOS 怀抱的我，决定将阅读优秀项目的源码作为学习的一部分，而且是带着<strong>疑问</strong>去阅读。由于在项目中使用及考虑到 SDWebImage 的普及程度，其顺理成章的成为了我第一个阅读的项目。</p>
-<p>话不多说，让我们开始吧！</p>]]>
     
     </summary>
     
