@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2016-05-30T15:01:07.000Z</updated>
+  <updated>2016-06-12T02:25:03.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -13,6 +13,187 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Java 中的垃圾回收]]></title>
+    <link href="http://itangqi.me/2016/06/12/garbage-collection-in-java/"/>
+    <id>http://itangqi.me/2016/06/12/garbage-collection-in-java/</id>
+    <published>2016-06-11T16:00:00.000Z</published>
+    <updated>2016-06-12T02:25:03.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要问是我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~</p>
+<p>所以呢，在后继学习 iOS 的过程中，我特别注重原理的掌握。当然，你要问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：<a href="http://itangqi.me/2016/03/10/the-notes-of-learning-arc/">《Objective-C 高级编程》读书笔记之 ARC</a>。</p>
+<blockquote>
+<p>出来混，迟早是要还的。</p>
+</blockquote>
+<p>我想，现在也是时候把在 Java 那欠下的债清一清了，今天就来先来补一补——Java 中的垃圾回收机制。</p>
+<a id="more"></a>
+<hr>
+<h2 id="什么是垃圾回收">什么是垃圾回收</h2><p>乍一看，垃圾回收所做的事情应当恰如其名——查找并清除垃圾。事实上却恰恰相反。垃圾回收会跟踪所有仍在使用的对象，然后将剩余的对象标记为垃圾。牢记了这点之后，我们再来深入地了解下这个被称为「垃圾回收」的自动化内存回收在 JVM 中到底是如何实现的。</p>
+<h3 id="手动内存管理">手动内存管理</h3><p>在介绍现代版的垃圾回收之前，我们先来简单地回顾下需要手动地显式分配及释放内存的那些日子。如果你忘了去释放内存，那么这块内存就无法重用了。这块内存被占有了却没被使用。这种场景被称之为<strong>内存泄露</strong>。</p>
+<p>内存泄露曾经是个非常普遍的问题。你只能通过不断地修复自己的代码来与它们进行抗争。因此，需要有一种更优雅的方式来自动释放无用内存，以便减少人为错误的可能性。这种自动化过程又被称为垃圾回收（简称 GC）。</p>
+<h3 id="自动内存管理">自动内存管理</h3><p>第一代的垃圾回收器是 1959 年 Lisp 引入的，这项技术迄今为止一直在不断演进。</p>
+<h4 id="引用计数">引用计数</h4><p>咦，这不是 Objective-C 中的概念吗？其实许多语言比如说 Perl，Python 以及 PHP，采用的都是这种方式。这个通过一张图可以很容易说明：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-07.png" alt=""></p>
+<p>绿色的云代表的是程序中仍在使用的对象。从技术层面上来说，这有点像是正在执行的某个方法里面的局部变量，亦或是静态变量之类的。不同编程语言的情况可能会不一样，因此这并不是我们关注的重点。</p>
+<p>蓝色的圆圈代表的是内存中的对象，可以看到有多少对象引用了它们。灰色圆圈的对象是已经没有任何人引用的了。因此，它们属于垃圾对象，可以被垃圾回收器清理掉。</p>
+<p>看起来还不错对吧？没错，不过这里存在着一个重大的缺陷。很容易会出现一些<strong>孤立的环（detached cycle）</strong>，它们中的对象都不在任何域内，但彼此却互相引用导致引用数不为 0。下面便是一个例子：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-08.png" alt=""></p>
+<p>看到了吧，红色部分其实就是应用程序不再使用的垃圾对象。由于引用计数的缺陷，因此会存在内存泄露。</p>
+<p>有几种方法可以解决这一问题，比如 OC 中便可以使用 <code>weak</code> 引用来解决，接下来让我们来看下 JVM 所采用的方法。</p>
+<h4 id="标记删除">标记删除</h4><p>首先，JVM 对于对象<strong>可达性</strong>的定义要明确一些。它可不像前面那样用绿色的云便含糊了事的，而是有着非常明确及具体的垃圾回收根对象（Garbage Collection Roots）的定义：</p>
+<ul>
+<li>局部变量</li>
+<li>活动线程</li>
+<li>静态字段</li>
+<li>JNI 引用</li>
+</ul>
+<p>JVM 通过标记删除的算法来记录所有可达（存活）对象，同时确保不可达对象的那些内存能够被重用。这包含两个步骤：</p>
+<ul>
+<li>标记：是指遍历所有可达对象，然后在本地内存中记录这些对象的信息</li>
+<li>删除：会确保不可达对象的内存地址可以在下一次内存分配中使用</li>
+</ul>
+<p>JVM 中的不同 GC 算法，比如说 Parallel Scavenge，Parallel Mark+Copy，CMS 都是这一算法的不同实现，只是各阶段略有不同而已，从概念上来讲仍然是对应着上面所说的那两个步骤。</p>
+<p>这种实现最重要的就是不会再出现泄露的对象环了：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-09.png" alt=""></p>
+<p>缺点就是应用程序的线程需要被<strong>暂停</strong>才能完成回收，如果引用一直在变的话你是无法进行计数的。这个应用程序被暂停以便 JVM 可以收拾家务的情况又被称为 <strong>Stop The World pause</strong>(STW)。这种暂停被触发的可能性有很多，不过垃圾回收应该是最常见的一种。</p>
+<blockquote>
+<p>因为垃圾回收的时候，需要整个的引用状态保持不变，否则判定是判定垃圾，等我稍后回收的时候它又被引用了，这就全乱套了。所以，GC 的时候，其他所有的程序执行处于暂停状态，卡住了。<br>幸运的是，这个卡顿是非常短（尤其是新生代），对程序的影响微乎其微 （关于其他 GC 比如并发 GC 之类的，在此不讨论）。<br>所以 GC 的卡顿问题由此而来，也是情有可原，暂时无可避免。</p>
+</blockquote>
+<hr>
+<h2 id="碎片及整理（Fragmenting_and_Compacting）">碎片及整理（Fragmenting and Compacting）</h2><p>JVM 在清除不可达对象之后，还得确保它们所在的空间是可以进行复用的。对象删除会导致碎片的出现，这有点类似于磁盘碎片，这会带来两个问题：</p>
+<ul>
+<li>写操作会变得更加费时，因为查找下一个可用空闲块已不再是一个简单操作</li>
+<li>JVM 在创建新对象的，会在连续的区块中分配内存。因此如果碎片已经严重到没有一个空闲块能足够容纳新创建的对象时，内存分配便会报错</li>
+</ul>
+<p>为了避免此类情形，JVM 需要确保碎片化在可控范围内。因此，在垃圾回收的过程中，除了进行标记和删除外，还有一个「内存去碎片化」的过程。在这个过程当中，会给可达对象重新分配空间，让它们互相紧挨着对方，这样便可以去除碎片。下图展示的便是这一过程：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-10.png" alt=""></p>
+<hr>
+<h2 id="分代假设">分代假设</h2><p>如前所述，垃圾回收需要完全中止应用运行。显然，对象越多，回收的时间也越长。那么我们能不能在更小的内存区域上进行回收呢？通过可行性调查，一组研究人员发现应用中绝大多数的内存分配会分为两大类：</p>
+<ul>
+<li>绝大部分的对象很快会变为不可用状态</li>
+<li>还有一些，它们的存活时间通常也不会很长</li>
+</ul>
+<p>这些结论最终构成了弱分代假设（Weak Generational Hypothesis）。基于这一假设，虚拟机内的内存被分为两类，新生代（Young Generation)及老生代（Old Generation)。后者又被称为年老代（Tenured Generation）。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-11.png" alt=""></p>
+<p>有了各自独立的可清除区域后，这才出现了众多不同的回收算法，正是它们一直以来在持续提升着 GC 的性能。</p>
+<p>这并不说明这样的方式是没有问题的。比如说，不同分代中的对象可能彼此间有引用，在进行分代回收时，它们便为视为是「事实上」的 GC 根对象（GC roots)。</p>
+<p>而更为重要的是，分代假设对于某些应用来说并不成立。由于 GC 算法主要是为那些「快速消失」或者「永久存活」的对象而进行的优化，因此对于那些生命周期「适中」的对象，JVM 就显得无能为力了。</p>
+<hr>
+<h2 id="内存池">内存池</h2><p>在堆里面进行内存池的划分对大家来说应该是非常熟悉的了。不过大家可能不太清楚的是在不同的内存池中，垃圾回收是如何履行它的职责的。值得注意的是，虽然不同的 GC 算法细节实现上有所不同，但是本文中所提到的概念却是大同小异的。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-04.png" alt=""></p>
+<h3 id="Eden_区">Eden 区</h3><p>新对象被创建时，通常便会被分配到 Eden 区。由于通常都会有多个线程在同时分配大量的对象，因此 Eden 区又被进一步划分成一个或多个线程本地分配缓冲（Thread Local Allocation Buffer，简称 TLAB）。有了这些缓冲区使得 JVM 中大多数对象的分配都可以在各个线程自己对应的 TLAB 中完成，从而避免了线程间昂贵的同步开销。</p>
+<p>如果在 TLAB 中无法完成分配（通常是由于没有足够的空间），便会到 Eden 区的共享空间中进行分配。如果这里还是没有足够的空间，则会触发一次新生代垃圾回收的过程来释放空间。如果垃圾回收后 Eden 区还是没有足够的空间，那么这个对象便会到老生代中去分配。</p>
+<p>当进行 Eden 区的回收时，垃圾回收器会从根对象开始遍历所有的可达对象，并将它们标记为存活状态。</p>
+<p>前面我们已经提到，对象间可能会存在跨代引用，因此最直观的做法便是扫描其它分区到 Eden 区的所有引用。但不幸的是这么做会做成分代的做法变得毫无意义。JVM 对此有它自己的妙招：卡片式标记（card-marking）。基本的做法是，JVM 将 Eden 区中可能存在老生代引用的对象标记为「脏」对象。关于这点<a href="http://psy-lob-saw.blogspot.jp/2014/10/the-jvm-write-barrier-card-marking.html" target="_blank" rel="external">Nitsan</a> 的博客这里有更进一步的介绍。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-05.png" alt=""></p>
+<p>标记完成后，所有存活对象会被复制到其中的一个 Survivor 区。于是整个 Eden 区便可认为是清空了，又可以重新用来分配对象了。这一过程便被称为标记复制（Mark and Copy）：存活对象先被标记，随后被复制到 Survivor 区中。</p>
+<h3 id="Survivor_区">Survivor 区</h3><p>紧挨着 Eden 的是两个 Survivor 区，分别是 ‘from’ 区和 ‘to’ 区。值得一提的是其中的一个 Survivor 区始终都是空的。</p>
+<p>空的 Survivor 区会在下一次新生代 GC 的时候迎来它的居民。整个新生代中的所有存活对象（包含 Eden 区以及那个非空的名为 ‘from’ 的 Survivor 区）都会被复制到 ‘to’ 区中。一旦完成之后，对象便都跑到 ‘to’ 区中而 ‘from’ 区则被清空了。这时两者的角色便会发生调转。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-06.png" alt=""></p>
+<p>存活对象会不断地在两个存活区之间来回地复制，直到其中的一些对象被认为是已经成熟，「足够老」了。请记住这点，基于分代假设，已经存活了一段时间的对象，在相当长的一段时间内仍可能继续存活。</p>
+<p>这些「年老」的对象会被提升至老年代空间。出现对象提升的时候，这些对象则不会再被复制到另一个存活区，而是直接复制到老年代中，它们会一直待到不再被引用为止。</p>
+<p>垃圾回收器会跟踪每个对象历经的回收次数，来判断它们是否已经「足够年老」，可以传播至老年代中。在一轮 GC 完成之后，每个分区中存活下来的对象的计数便会增加。当一个对象的年龄超过了一个特定的年老阈值之后，它便会被提升到老年代中。</p>
+<p>JVM 会动态地调整实际的年龄阈值，不过通过指定 -XX:+MaxTenuringThreshold 参数可以给该值设置一个上限。将 -XX:+MaxTenuringThreshold 设置为 0 则立即触发对象提升，而不会复制到存活区中。在现代的 JVM 中，这个值默认会被设置为 15 个 GC 周期。在 HotSpot 虚拟机中这也是该值的上限。</p>
+<p>如果存活区的大小不足以存放所有的新生代存活对象，则会出现过早提升。</p>
+<h3 id="老生代">老生代</h3><p>老生代的内存空间的实现则更为复杂。老生代的空间通常都会非常大，里面存放的对象都是不太可能会被回收的。</p>
+<p>老生代的 GC 比新生代的 GC 发生的频率要少得多。由于老生代中的多数对象都被认为是存活的，也就不会存在标记-复制操作了。在 GC 中，这些对象会被挪到一起以减少碎片。老生代的回收算法通常都是根据不同的理论来构建的。不过大体上都会分成如下几步：</p>
+<ul>
+<li>标记可达对象，设置 GC 根对象可达的所有对象后的标记位</li>
+<li>删除不可达对象</li>
+<li>整理老生代空间的对象，将存活对象复制到老生代开始的连续空间内。</li>
+</ul>
+<p>从以上描述中可知，为了避免过度碎片化，老生代的 GC 是明确需要进行整理操作的。</p>
+<h3 id="持久代">持久代</h3><p>在 Java 8 以前还有一个特殊的空间叫做持久代（Permanent Generation）。这是元数据比如类相关数据存放的地方。除此之外，像驻留的字符串（internalized string）也会被存放在持久代中。这的确给Java开发人员带来了不少麻烦事，因为很难评估这究竟会使用到多少空间。评估不到位偏会抛出 java.lang.OutOfMemoryError: Permgen space 的异常。只要不是真的因为内存泄漏而引起的 OutOfMemoryError 异常，可以通过增加持久代空间的大小来解决这一问题，比如下例中的把持久代最大空间设置为 256MB：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -XX:MaxPermSize=<span class="number">256</span>m com.mycompany.MyApplication</span><br></pre></td></tr></table></figure>
+<h3 id="元空间">元空间</h3><p>由于元数据空间大小的预测是件繁琐且低效的工作，于是 Java 8 中干脆就去掉了持久代，转而推出了元空间。从此以后，那些个杂七杂八的东西便都存储到正常的 Java 堆了。</p>
+<p>但是，类定义如今则是存储到了元空间里。它存储在本地内存中，不会与堆 内存相混杂。默认情况下，元空间的大小只受限于Java进程的可用本地内存的大小。这大大解放了开发人员，他们不会再因为多增加了一个类而引发 java.lang.OutOfMemoryError: Permgen space 异常了。值得注意的是，虽然看似元空间大小毫无限制了，但这一些并非是没有代价的——如果任由元空间无节制地增长，你可能会面临的是频繁的内存交换（swapping）或者是本地内存分配失败。</p>
+<p>如果你希望避免此类情况，可以像下例中这样限制一下元空间的大小，将它设置成比如 256 MB：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -XX:MaxMetaspaceSize=<span class="number">256</span>m com.mycompany.MyApplication</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="新生代_GC（Minor_GC）vs-_老生代_GC（Major_GC）vs-_Full_GC">新生代 GC（Minor GC）vs. 老生代 GC（Major GC）vs. Full GC</h2><p>清除堆内存不同区域的垃圾回收事件又被称为新生代 GC，老生代 GC，以及 Full GC 事件。下面我们将介绍一下不同事件的区别在哪里。不过你会发现其实各自的差别并不是那么重要。</p>
+<p>重要的是我们希望知道应用是否到达它的服务能力上限了，而这又只能去监控应用的处理延时或者吞吐量。只有在这个时间GC事件才能派上用场。这些事件的关键之处在于它们是否停止了应用的运行，以及停了多久。</p>
+<p>不过由于新生代 GC，老生代 GC，Full GC 这几个术语被广泛使用却又没有一个清晰的定义，我们还是先来详细地介绍一下它们的区别再说吧。</p>
+<h3 id="新生代_GC">新生代 GC</h3><p>新生代垃圾的回收被称作 Minor GC。这个定义非常清晰，理解起来也不会有什么歧义。不过当处理新生代GC事件时，还是有一些有意思的东西值得注意的：</p>
+<ol>
+<li>只要 JVM 无法为新创建的对象分配空间，就肯定会触发新生代 GC，比方说 Eden 区满了。因此对象创建得越频繁，新生代 GC 肯定也更频繁</li>
+<li>一旦内存池满了，它的所有内容就会被拷贝走，指针又将重新归零。因此和经典的标记（Mark），清除（Sweep），整理（Compact）的过程不同的是，Eden 区和 Survivor 区的清理只涉及到标记和拷贝。在它们中是不会出现碎片的。写指针始终在当前使用区的顶部</li>
+<li>在一次新生代 GC 事件中，通常不涉及到年老代。年老代到年轻代的引用被认为是 GC 的根对象。而在标记阶段中，从年轻代到年老代的引用则会被忽略掉</li>
+<li>和通常所理解的不一样的是，所有的新生代 GC 都会触发 stop-the-world 暂停，这会中断应用程序的线程。对绝大多数应用而言，暂停的时间是可以忽略不计的</li>
+</ol>
+<p>现在来看新生代 GC 还是很清晰的——每一次新生代 GC 都会对年轻代进行垃圾清除。</p>
+<h3 id="老年代_GC_与_Full_GC">老年代 GC 与 Full GC</h3><p>你会发现关于这两种 GC 其实并没有明确的定义。JVM 规范或者垃圾回收相关的论文中都没有提及。不过从直觉来说，根据新生代 GC（Minor GC）清理的是新生代空间的认识来看，不难得出以下推论（这里应当从英文出发来理解，Minor, Major 与 Full GC，翻译过来的名称已经带有明显的释义了）：</p>
+<ul>
+<li>Major GC 清理的是老年代的空间</li>
+<li>Full GC 清理的是整个堆——包括新生代与老年代空间</li>
+</ul>
+<p>因此我们从实际的 GC 日志中所看到的是这样——其实没有什么两次所谓的 Full GC，只有一次清理年老代空间的 Major GC 而已。</p>
+<hr>
+<h2 id="垃圾回收算法">垃圾回收算法</h2><h3 id="标记清除算法（Mark-Sweep）">标记清除算法（Mark-Sweep）</h3><p>通过名字就应该猜到了，就是标记哪些是可回收的，然后进行清除回收处理。</p>
+<p>标记-清除算法分为两个阶段：标记阶段和清除阶段。标记阶段的任务是标记出所有需要被回收的对象，清除阶段就是回收被标记的对象所占用的空间。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-12.png" alt=""></p>
+<blockquote>
+<p>优点：简单，易实现<br>缺点：容易产生内存碎片，对于后面分配大空间时，找不到足够的空间，而主动会触发一次内存回收，增加内存回收的次数。</p>
+</blockquote>
+<h3 id="复制算法">复制算法</h3><p>此方法将内存按容量分为两块，例如 A、B 两块，每次只使用其中的一块，当要进行回收操作时，将 A 中还存活的对象复制到 B 块中（假设上次使用 A），然后对 A 中所有对象清空就又构成一个完整的内存块。这种方法就避免了标记清除的内存碎片问题。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-13.png" alt=""></p>
+<blockquote>
+<p>优点：快速高效，不会产生内存碎片。<br>缺点：可用内存会减少一半，因为是按照均分的。</p>
+</blockquote>
+<p><strong>注意： 效率也与存活对象的多少有关，如果存活对象多，复制就多，效率就低了。</strong></p>
+<h3 id="标记整理算法（Mark-Compact）">标记整理算法（Mark-Compact）</h3><p>标记整理算法就是在标记清除方法的基础上进行了优化，主要是在标记完成后将这些存活的对象向一端移动，然后将末尾边界后的所有内存空间清除。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-14.png" alt=""></p>
+<blockquote>
+<p>优点： 适合存活对象多的，不产生内存碎片</p>
+</blockquote>
+<h3 id="分代回收算法">分代回收算法</h3><p>分代回收算法其实不算一种新的算法，而是根据复制算法和标记整理算法的的特点综合而成。这种综合是考虑到 Java 的语言特性的。</p>
+<p>下面来回顾一下两种老算法的适用场景：</p>
+<blockquote>
+<p>复制算法：适用于存活对象很少，回收对象多<br>标记整理算法: 适用用于存活对象多，回收对象少</p>
+</blockquote>
+<p>于是，我们根据对象存活的生命周期将内存划分为若干个不同的区域。一般情况下将堆区划分为老年代（Old Generation）和新生代（Young Generation），老年代的特点是每次垃圾收集时只有少量对象需要被回收，而新生代的特点是每次垃圾回收时都有大量的对象需要被回收，那么就可以根据不同代的特点采取最适合的收集算法：</p>
+<blockquote>
+<p>新生代：由于新生代产生很多临时对象，大量对象需要进行回收，所以采用复制算法是最高效的。<br>老年代：回收的对象很少，都是经过几次标记后都不是可回收的状态转移到老年代的，所以仅有少量对象需要回收，故采用标记清除或者标记整理算法。</p>
+</blockquote>
+<p>所以以上整个过程就达到了最高效的回收办法——分代回收算法</p>
+<h4 id="深入理解分代回收算法">深入理解分代回收算法</h4><p><strong>为什么不是一块 Survivor 区而是两块？</strong></p>
+<blockquote>
+<p>这里涉及到一个新生代和老年代的存活周期的问题，比如一个对象在新生代经历 15 次（仅供参考）GC，就可以移到老年代了。问题来了，当我们第一次 GC 的时候，我们可以把 Eden 区的存活对象放到 Survivor A区，但是第二次 GC 的时候，Survivor A 区的存活对象也需要再次用 Copying 算法，放到 Survivor B 区上，而把刚刚的 Survivor A 区和 Eden 区清除。第三次 GC 时，又把 Survivor B 区的存活对象复制到 Survivor A 区，如此反复。</p>
+</blockquote>
+<p>所以，这里就需要两块 Survivor 区来回倒腾。</p>
+<p><strong>为什么 Eden 区这么大而 Survivor 区要分的少一点？</strong></p>
+<blockquote>
+<p>新创建的对象都是放在 Eden 区，这是很频繁的，尤其是大量的局部变量产生的临时对象，这些对象绝大部分都应该马上被回收，能存活下来被转移到 Survivor 区的往往不多。所以，设置较大的 Eden 区和较小的 Survivor 区是合理的，大大提高了内存的使用率，缓解了 Copying 算法的缺点。</p>
+</blockquote>
+<p>新的问题又来了，从 Eden 区往 Survivor 区转移的时候 Survivor 区不够了怎么办？——直接放到老年代去。</p>
+<p><strong>Eden 区和两块 Survivor 区的工作流程？</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分配了一个又一个对象</span></span><br><span class="line">放到 Eden 区</span><br><span class="line"><span class="comment">// 不好，Eden 区满了，只能 GC（新生代 GC：Minor GC）了</span></span><br><span class="line">把 Eden 区的存活对象 <span class="keyword">copy</span> 到 Survivor A 区，然后清空 Eden 区（本来 Survivor B 区也需要清空的，不过本来就是空的）</span><br><span class="line"><span class="comment">// 又分配了一个又一个对象</span></span><br><span class="line">放到 Eden 区</span><br><span class="line"><span class="comment">// 不好，Eden 区又满了，只能 GC（新生代 GC：Minor GC）了</span></span><br><span class="line">把 Eden 区和 Survivor A 区的存活对象 <span class="keyword">copy</span> 到 Survivor B 区，然后清空 Eden 区和 Survivor A 区</span><br><span class="line"><span class="comment">// 又分配了一个又一个对象</span></span><br><span class="line">放到 Eden 区</span><br><span class="line"><span class="comment">// 不好，Eden 区又满了，只能 GC（新生代GC：Minor GC）了</span></span><br><span class="line">把 Eden 区和 Survivor B 区的存活对象 <span class="keyword">copy</span> 到 Survivor A 区，然后清空 Eden 区和 Survivor B 区</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// 有的对象来回在 Survivor A 区或者 B 区呆了比如 15 次，就被分配到老年代 Old 区</span></span><br><span class="line"><span class="comment">// 有的对象太大，超过了 Eden 区，直接被分配在 Old 区</span></span><br><span class="line"><span class="comment">// 有的存活对象，放不下 Survivor 区，也被分配到 Old 区</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// 在某次 Minor GC 的过程中突然发现：</span></span><br><span class="line"><span class="comment">// 不好，老年代 Old 区也满了，这是一次大 GC（老年代 GC：Major GC）</span></span><br><span class="line">Old 区慢慢的整理一番，空间又够了</span><br><span class="line"><span class="comment">// 继续 Minor GC</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>以上为了说明原理，只是最简化版本。</p>
+<hr>
+<h2 id="小结">小结</h2><p>至此，关于 Java 虚拟机垃圾回收（GC）的讲解就告一段落了，后面要补的知识还很多，路还很长，一步一脚印咯：D</p>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://plumbr.eu/handbook/what-is-garbage-collection" target="_blank" rel="external">JAVA Garbage Collection Handbook</a></li>
+<li><a href="http://jayfeng.com/2016/03/11/%E7%90%86%E8%A7%A3Java%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" target="_blank" rel="external">理解Java垃圾回收机制</a></li>
+<li><a href="http://stackoverflow.com/questions/7874342/what-is-the-difference-between-objective-c-automatic-reference-counting-and-garb****" target="_blank" rel="external">What is the difference between Objective-C automatic reference counting and garbage collection?</a></li>
+</ul>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要问是我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~</p>
+<p>所以呢，在后继学习 iOS 的过程中，我特别注重原理的掌握。当然，你要问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：<a href="http://itangqi.me/2016/03/10/the-notes-of-learning-arc/">《Objective-C 高级编程》读书笔记之 ARC</a>。</p>
+<blockquote>
+<p>出来混，迟早是要还的。</p>
+</blockquote>
+<p>我想，现在也是时候把在 Java 那欠下的债清一清了，今天就来先来补一补——Java 中的垃圾回收机制。</p>]]>
+    
+    </summary>
+    
+      <category term="GC" scheme="http://itangqi.me/tags/GC/"/>
+    
+      <category term="JVM" scheme="http://itangqi.me/tags/JVM/"/>
+    
+      <category term="Java" scheme="http://itangqi.me/categories/Java/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[抓包工具 Charles 使用心得]]></title>
@@ -2561,90 +2742,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="前言">前言</h2><p>不知不觉，我们已经通过前面两篇文章的介绍（<a href="http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/">我是链接=;=</a>），对 SDWebImage 的工作流程有了较为清晰的认识，那么，今天就让我们把重点放在 <code>SDWebImageDownloader</code> 上，它到底做了哪些工作？又有哪些奇淫技巧？别着急，你慢慢往下看：）</p>]]>
-    
-    </summary>
-    
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
-    
-      <category term="SDWebImage" scheme="http://itangqi.me/tags/SDWebImage/"/>
-    
-      <category term="Source Code" scheme="http://itangqi.me/tags/Source-Code/"/>
-    
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[SDWebImage 源码阅读笔记（二）]]></title>
-    <link href="http://itangqi.me/2016/03/21/the-notes-of-learning-sdwebimage-two/"/>
-    <id>http://itangqi.me/2016/03/21/the-notes-of-learning-sdwebimage-two/</id>
-    <published>2016-03-20T16:00:00.000Z</published>
-    <updated>2016-05-28T03:48:02.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>我们在第一篇文章<a href="">《SDWebImage 源码阅读笔记（一）》</a>中，已经了解到，当我们调用</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[cell<span class="variable">.imageView</span> sd_setImageWithURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://www.domain.com/path/to/image.jpg"</span>]</span><br><span class="line">                  placeholderImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"placeholder.png"</span>]];</span><br></pre></td></tr></table></figure>
-<p>时，其实是通过 <code>SDWebImageManager</code> 类进行协调，调用 <code>SDImageCache</code> 与 <code>SDWebImageDownloader</code> 来实现图片的缓存查询与网络下载的。那么今天在第二篇中，就让我们来对 <code>SDImageCache</code> 一探究竟吧：）</p>
-<a id="more"></a> 
-<hr>
-<h2 id="SDImageCache">SDImageCache</h2><p>在 <code>SDImageCache.h</code> 中你可以看到关于 SDImageCache 的描述：</p>
-<blockquote>
-<p>SDImageCache maintains a memory cache and an optional disk cache. Disk cache write operations are performed asynchronous so it doesn’t add unnecessary latency to the UI.</p>
-</blockquote>
-<p>该类维护了一个内存缓存与一个可选的磁盘缓存。同时，磁盘缓存的写操作是异步的，所以它不会对 UI 造成不必要的影响。</p>
-<p>每次查询图片时，首先会根据图片的 URL 对应的 key 值先检查内存中是否有对应的图片，如果有则直接返回；如果没有则在 ioQueue 中去磁盘中查找，其 key 是根据 URL 生成的 MD5 值，找到之后先将图片缓存在内存中，然后在把图片返回：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSOperation</span> *)queryDiskCacheForKey:(<span class="built_in">NSString</span> *)key done:(SDWebImageQueryCompletedBlock)doneBlock &#123;</span><br><span class="line">    <span class="keyword">if</span> (!doneBlock) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!key) &#123;</span><br><span class="line">        doneBlock(<span class="literal">nil</span>, SDImageCacheTypeNone);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 首先检查内存缓存（查询是同步的），如果查找到，则直接回调 doneBlock 并返回</span></span><br><span class="line">    <span class="built_in">UIImage</span> *image = [<span class="keyword">self</span> imageFromMemoryCacheForKey:key];</span><br><span class="line">    <span class="keyword">if</span> (image) &#123;</span><br><span class="line">        doneBlock(image, SDImageCacheTypeMemory);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">NSOperation</span> *operation = [<span class="built_in">NSOperation</span> new];</span><br><span class="line">    <span class="built_in">dispatch_async</span>(<span class="keyword">self</span><span class="variable">.ioQueue</span>, ^&#123;</span><br><span class="line">        <span class="keyword">if</span> (operation<span class="variable">.isCancelled</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 创建自动释放池，内存及时释放</span></span><br><span class="line">        <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        	<span class="comment">// 检查磁盘缓存（查询是异步的），如果查找到，则将其放到内存缓存，并调用 doneBlock 回调</span></span><br><span class="line">            <span class="built_in">UIImage</span> *diskImage = [<span class="keyword">self</span> diskImageForKey:key];</span><br><span class="line">            <span class="keyword">if</span> (diskImage) &#123;</span><br><span class="line">                <span class="built_in">NSUInteger</span> cost = SDCacheCostForImage(diskImage);</span><br><span class="line">                <span class="comment">// 缓存至内存（NSCache）中</span></span><br><span class="line">                [<span class="keyword">self</span><span class="variable">.memCache</span> setObject:diskImage forKey:key cost:cost];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 返回主线程设置图片</span></span><br><span class="line">            <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                doneBlock(diskImage, SDImageCacheTypeDisk);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> operation;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="NSCache">NSCache</h3><blockquote>
-<p>An NSCache object is a collection-like container, or cache, that stores key-value pairs, similar to the NSDictionary class. </p>
-</blockquote>
-<p>NSCache 是苹果官方提供的缓存类，用法与 NSMutableDictionary 的用法很相似，在 SDWebImage 和 AFNetworking 中，使用它来管理缓存。同样是以 key-value 的形式进行存储，那么 NSCache 与 NSMutableDictionary 等集合类的区别或者说优势又是哪些呢？</p>
-<ol>
-<li><p>NSCache 类结合了各种<strong>自动删除</strong>策略，以确保不会占用过多的系统内存。如果其它应用需要内存时，系统自动执行这些策略。当调用这些策略时，会从缓存中删除一些对象，以最大限度减少内存的占用</p>
-</li>
-<li><p>NSCache 是<strong>线程安全</strong>的，我们可以在不同的线程中添加、删除和查询缓存中的对象，而不需要锁定缓存区域</p>
-</li>
-<li><p>不像 NSMutableDictionary 对象，NSCache 对象并不会拷贝键（key），而是会强引用它</p>
-</li>
-</ol>
-<h4 id="要点">要点</h4><ol>
-<li><p>在开发者自己不编写加锁代码的前提下，多个线程便可以同时访问 NSCache</p>
-</li>
-<li><p>NSCache 对象不拷贝键的原因在于：很多时候，键都是由不支持拷贝操作的对象来充当的。所以说，在键不支持拷贝操作的情况下，该类用起来比字典更方便</p>
-</li>
-<li><p>可以给 NSCache 对象设置上限，用以限制缓存中的对象总个数及「总成本」，而这些尺度则定义了缓存删减其中对象的时机。但是绝对不要把这些尺度当成可靠的「硬限制」，它们仅对 NSCache 起指导作用 </p>
-</li>
-<li><p>将 NSPurgeableData 与 NSCache 搭配使用，可实现自动清除数据的功能，也就是说，当 NSPurgeableData 对象所占内存为系统所丢弃时，该对象自身也会从缓存中移除</p>
-</li>
-<li><p>如果缓存使用得当，那么应用程序的响应速度就能提高。只有那种「重新计算起来很费事的」数据，才值得放入缓存，比如那些需要从网络获取或者从磁盘读取的数据</p>
-</li>
-<li><p>内存查询是同步，磁盘查询是异步</p>
-</li>
-</ol>
-<hr>
-<h3 id="磁盘">磁盘</h3><p>磁盘缓存的处理则是使用 NSFileManager 对象来实现的。默认以 <code>com.hackemist.SDWebImageCache.default</code> 为磁盘的缓存命名空间，程序运行后，可以在应用程序的文件夹 <code>Library/Caches/default/com.hackemist.SDWebImageCache.default</code> 下看到一些缓存文件。另外，SDImageCache 还定义了一个串行队列，来异步存储图片。</p>
-<p>在磁盘查询的时候，会在后台将 NSData 转成 UIImage，并完成相关的解码工作:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">UIImage</span> *)diskImageForKey:(<span class="built_in">NSString</span> *)key &#123;</span><br><span class="line">    <span class="built_in">NSData</span> *data = [<span class="keyword">self</span> diskImageDataBySearchingAllPathsForKey:key];</span><br><span class="line">    <span class="keyword">if</span> (data) &#123;</span><br><span class="line">        <span class="built_in">UIImage</span> *image = [<span class="built_in">UIImage</span> sd_imageWithData:data];</span><br><span class="line">        image = [<span class="keyword">self</span> scaledImageForKey:key image:image];</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.shouldDecompressImages</span>) &#123;</span><br><span class="line">            image = [<span class="built_in">UIImage</span> decodedImageWithImage:image];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> image;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="要点-1">要点</h4><ol>
-<li>为何要进行 decode，参见：<a href="http://www.cocoanetics.com/2011/10/avoiding-image-decompression-sickness/" target="_blank" rel="external">Avoiding Image Decompression Sickness</a></li>
-</ol>
-<hr>
-<h3 id="存储图片">存储图片</h3><p>当下载完图片后，会先将图片保存到 NSCache 中，并把图片像素大小作为该对象的 cost 值，同时如果需要保存到硬盘，会先判断图片的格式，PNG 或者 JPEG，并保存对应的 NSData 到缓存路径中，文件名为 URL 的 MD5 值：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)storeImage:(<span class="built_in">UIImage</span> *)image recalculateFromImage:(<span class="built_in">BOOL</span>)recalculate imageData:(<span class="built_in">NSData</span> *)imageData forKey:(<span class="built_in">NSString</span> *)key toDisk:(<span class="built_in">BOOL</span>)toDisk &#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// 内存缓存，将其存入 NSCache 中，同时传入图片的消耗值，cost 为像素值（当内存受限或者所有缓存对象的总代价超过了最大允许的值时，缓存会移除其中的一些对象）</span></span><br><span class="line">  [<span class="keyword">self</span><span class="variable">.memCache</span> setObject:image forKey:key cost:image<span class="variable">.size</span><span class="variable">.height</span> * image<span class="variable">.size</span><span class="variable">.width</span> * image<span class="variable">.scale</span> * image<span class="variable">.scale</span>];</span><br><span class="line">  <span class="keyword">if</span> (toDisk) &#123;</span><br><span class="line">    <span class="comment">// 如果确定需要磁盘缓存，则将缓存操作作为一个任务放入 ioQueue 中</span></span><br><span class="line">    <span class="built_in">dispatch_async</span>(<span class="keyword">self</span><span class="variable">.ioQueue</span>, ^&#123;</span><br><span class="line">      <span class="comment">// 构建一个 data，用来存储到 disk 中，默认值为 imageData</span></span><br><span class="line">      <span class="built_in">NSData</span> *data = imageData;</span><br><span class="line">      <span class="keyword">if</span> (image &amp;&amp; (recalculate || !data)) &#123;</span><br><span class="line"><span class="preprocessor">#if TARGET_OS_IPHONE</span></span><br><span class="line">        <span class="comment">// 需要确定图片是 PNG 还是 JPEG。PNG 图片容易检测，因为有一个唯一签名。PNG 图像的前 8 个字节总是包含以下值：137 80 78 71 13 10 26 10</span></span><br><span class="line">        <span class="comment">// 在 imageData 为 nil 的情况下假定图像为 PNG。我们将其当作 PNG 以避免丢失透明度。而当有图片数据时，我们检测其前缀，确定图片的类型</span></span><br><span class="line">        <span class="built_in">BOOL</span> imageIsPng = <span class="literal">YES</span>;</span><br><span class="line">        <span class="keyword">if</span> ([imageData length] &gt;= [kPNGSignatureData length]) &#123;</span><br><span class="line">          imageIsPng = ImageDataHasPNGPreffix(imageData);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果 image 是 PNG 格式，就是用 UIImagePNGRepresentation 将其转化为 NSData，否则按照 JPEG 格式转化，并且压缩质量为 1，即无压缩</span></span><br><span class="line">        <span class="keyword">if</span> (imageIsPng) &#123;</span><br><span class="line">          data = <span class="built_in">UIImagePNGRepresentation</span>(image);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">          data = <span class="built_in">UIImageJPEGRepresentation</span>(image, (<span class="built_in">CGFloat</span>)<span class="number">1.0</span>);</span><br><span class="line">        &#125;</span><br><span class="line"><span class="preprocessor">#else</span></span><br><span class="line">        data = [<span class="built_in">NSBitmapImageRep</span> representationOfImageRepsInArray:image<span class="variable">.representations</span> usingType: <span class="built_in">NSJPEGFileType</span> properties:<span class="literal">nil</span>];</span><br><span class="line"><span class="preprocessor">#endif</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// 创建缓存文件并存储图片（使用 fileManager）</span></span><br><span class="line">      <span class="keyword">if</span> (data) &#123;</span><br><span class="line">        <span class="keyword">if</span> (![_fileManager fileExistsAtPath:_diskCachePath]) &#123;</span><br><span class="line">          [_fileManager createDirectoryAtPath:_diskCachePath withIntermediateDirectories:<span class="literal">YES</span> attributes:<span class="literal">nil</span> error:<span class="literal">NULL</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 保存 data 到指定的路径中</span></span><br><span class="line">        [_fileManager createFileAtPath:[<span class="keyword">self</span> defaultCachePathForKey:key] contents:data attributes:<span class="literal">nil</span>];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="清理图片">清理图片</h3><p>SDImageCache 会在系统发出低内存警告时释放内存，并且在程序进入 UIApplicationWillTerminateNotification 时，清理<strong>磁盘缓存</strong>，清理磁盘的机制是：</p>
-<ol>
-<li><p>删除过期的图片，默认 7 天过期，可以通过 maxCacheAge 修改过期天数。</p>
-</li>
-<li><p>如果缓存的数据大小超过设置的最大缓存 maxCacheSize，则会按照文件最后修改时间的逆序，以每次一半的递归来移除那些过早的文件，直到缓存的实际大小小于我们设置的最大使用空间，可以通过修改 maxCacheSize 来改变最大缓存大小。</p>
-</li>
-</ol>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)cleanDiskWithCompletionBlock:(SDWebImageNoParamsBlock)completionBlock &#123;</span><br><span class="line">    <span class="built_in">dispatch_async</span>(<span class="keyword">self</span><span class="variable">.ioQueue</span>, ^&#123;</span><br><span class="line">        <span class="built_in">NSURL</span> *diskCacheURL = [<span class="built_in">NSURL</span> fileURLWithPath:<span class="keyword">self</span><span class="variable">.diskCachePath</span> isDirectory:<span class="literal">YES</span>];</span><br><span class="line">        <span class="built_in">NSArray</span> *resourceKeys = @[<span class="built_in">NSURLIsDirectoryKey</span>, <span class="built_in">NSURLContentModificationDateKey</span>, <span class="built_in">NSURLTotalFileAllocatedSizeKey</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 该枚举器预先获取缓存文件的有用的属性</span></span><br><span class="line">        <span class="built_in">NSDirectoryEnumerator</span> *fileEnumerator = [_fileManager enumeratorAtURL:diskCacheURL</span><br><span class="line">                                                   includingPropertiesForKeys:resourceKeys</span><br><span class="line">                                                                      options:<span class="built_in">NSDirectoryEnumerationSkipsHiddenFiles</span></span><br><span class="line">                                                                 errorHandler:<span class="literal">NULL</span>];</span><br><span class="line"></span><br><span class="line">        <span class="built_in">NSDate</span> *expirationDate = [<span class="built_in">NSDate</span> dateWithTimeIntervalSinceNow:-<span class="keyword">self</span><span class="variable">.maxCacheAge</span>];</span><br><span class="line">        <span class="built_in">NSMutableDictionary</span> *cacheFiles = [<span class="built_in">NSMutableDictionary</span> dictionary];</span><br><span class="line">        <span class="built_in">NSUInteger</span> currentCacheSize = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 枚举缓存文件夹中所有文件，该迭代有两个目的：移除比过期日期更老的文件；存储文件属性以备后面执行基于缓存大小的清理操作 </span></span><br><span class="line">        <span class="built_in">NSMutableArray</span> *urlsToDelete = [[<span class="built_in">NSMutableArray</span> alloc] init];</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSURL</span> *fileURL <span class="keyword">in</span> fileEnumerator) &#123;</span><br><span class="line">            <span class="built_in">NSDictionary</span> *resourceValues = [fileURL resourceValuesForKeys:resourceKeys error:<span class="literal">NULL</span>];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 跳过文件夹 </span></span><br><span class="line">            <span class="keyword">if</span> ([resourceValues[<span class="built_in">NSURLIsDirectoryKey</span>] boolValue]) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 移除早于有效期的老文件</span></span><br><span class="line">            <span class="built_in">NSDate</span> *modificationDate = resourceValues[<span class="built_in">NSURLContentModificationDateKey</span>];</span><br><span class="line">            <span class="keyword">if</span> ([[modificationDate laterDate:expirationDate] isEqualToDate:expirationDate]) &#123;</span><br><span class="line">                [urlsToDelete addObject:fileURL];</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 存储文件的引用并计算所有文件的总大小，以备后用 </span></span><br><span class="line">            <span class="built_in">NSNumber</span> *totalAllocatedSize = resourceValues[<span class="built_in">NSURLTotalFileAllocatedSizeKey</span>];</span><br><span class="line">            currentCacheSize += [totalAllocatedSize unsignedIntegerValue];</span><br><span class="line">            [cacheFiles setObject:resourceValues forKey:fileURL];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">NSURL</span> *fileURL <span class="keyword">in</span> urlsToDelete) &#123;</span><br><span class="line">            [_fileManager removeItemAtURL:fileURL error:<span class="literal">nil</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果磁盘缓存的大小大于我们配置的最大大小，则执行基于文件大小的清理，我们首先删除最早的文件 </span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.maxCacheSize</span> &gt; <span class="number">0</span> &amp;&amp; currentCacheSize &gt; <span class="keyword">self</span><span class="variable">.maxCacheSize</span>) &#123;</span><br><span class="line">            <span class="comment">// 以设置的最大缓存大小的一半作为清理目标</span></span><br><span class="line">            <span class="keyword">const</span> <span class="built_in">NSUInteger</span> desiredCacheSize = <span class="keyword">self</span><span class="variable">.maxCacheSize</span> / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 按照最后修改时间来排序剩下的缓存文件 </span></span><br><span class="line">            <span class="built_in">NSArray</span> *sortedFiles = [cacheFiles keysSortedByValueWithOptions:<span class="built_in">NSSortConcurrent</span></span><br><span class="line">                                                            usingComparator:^<span class="built_in">NSComparisonResult</span>(<span class="keyword">id</span> obj1, <span class="keyword">id</span> obj2) &#123;</span><br><span class="line">                                                                <span class="keyword">return</span> [obj1[<span class="built_in">NSURLContentModificationDateKey</span>] compare:obj2[<span class="built_in">NSURLContentModificationDateKey</span>]];</span><br><span class="line">                                                            &#125;];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 删除文件，直到缓存总大小降到我们期望的大小</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">NSURL</span> *fileURL <span class="keyword">in</span> sortedFiles) &#123;</span><br><span class="line">                <span class="keyword">if</span> ([_fileManager removeItemAtURL:fileURL error:<span class="literal">nil</span>]) &#123;</span><br><span class="line">                    <span class="built_in">NSDictionary</span> *resourceValues = cacheFiles[fileURL];</span><br><span class="line">                    <span class="built_in">NSNumber</span> *totalAllocatedSize = resourceValues[<span class="built_in">NSURLTotalFileAllocatedSizeKey</span>];</span><br><span class="line">                    currentCacheSize -= [totalAllocatedSize unsignedIntegerValue];</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (currentCacheSize &lt; desiredCacheSize) &#123;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (completionBlock) &#123;</span><br><span class="line">            <span class="built_in">dispatch_async</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                completionBlock();</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr>
-<p>关于 <code>SDImageCache</code> 的内容大致就这么多，接下来就让我们一起来看一下 <code>SDWebImageDownloader</code> 中都暗藏了哪些玄机吧！</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="前言">前言</h2><p>我们在第一篇文章<a href="">《SDWebImage 源码阅读笔记（一）》</a>中，已经了解到，当我们调用</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[cell<span class="variable">.imageView</span> sd_setImageWithURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://www.domain.com/path/to/image.jpg"</span>]</span><br><span class="line">                  placeholderImage:[<span class="built_in">UIImage</span> imageNamed:<span class="string">@"placeholder.png"</span>]];</span><br></pre></td></tr></table></figure>
-<p>时，其实是通过 <code>SDWebImageManager</code> 类进行协调，调用 <code>SDImageCache</code> 与 <code>SDWebImageDownloader</code> 来实现图片的缓存查询与网络下载的。那么今天在第二篇中，就让我们来对 <code>SDImageCache</code> 一探究竟吧：）</p>]]>
     
     </summary>
     

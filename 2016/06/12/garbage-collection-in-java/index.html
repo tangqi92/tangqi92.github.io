@@ -1,0 +1,1104 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="GC,JVM," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要问是我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~
+所以呢，在后继学习 iOS 的过程中，我特别注重原理的掌握。当然，你要问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：《Objective-C 高级编程》读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 中的垃圾回收">
+<meta property="og:url" content="http://itangqi.me/2016/06/12/garbage-collection-in-java/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要问是我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~
+所以呢，在后继学习 iOS 的过程中，我特别注重原理的掌握。当然，你要问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：《Objective-C 高级编程》读">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-07.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-08.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-09.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-10.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-11.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-04.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-05.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-06.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-12.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-13.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-14.png">
+<meta property="og:updated_time" content="2016-06-12T02:25:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 中的垃圾回收">
+<meta name="twitter:description" content="前言说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要问是我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~
+所以呢，在后继学习 iOS 的过程中，我特别注重原理的掌握。当然，你要问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：《Objective-C 高级编程》读">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Java 中的垃圾回收 | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java 中的垃圾回收
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-12T00:00:00+08:00" content="2016-06-12">
+              2016-06-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/06/12/garbage-collection-in-java/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/06/12/garbage-collection-in-java/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/06/12/garbage-collection-in-java/" class="leancloud_visitors" data-flag-title="Java 中的垃圾回收">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><p>说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要问是我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~</p>
+<p>所以呢，在后继学习 iOS 的过程中，我特别注重原理的掌握。当然，你要问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：<a href="http://itangqi.me/2016/03/10/the-notes-of-learning-arc/">《Objective-C 高级编程》读书笔记之 ARC</a>。</p>
+<blockquote>
+<p>出来混，迟早是要还的。</p>
+</blockquote>
+<p>我想，现在也是时候把在 Java 那欠下的债清一清了，今天就来先来补一补——Java 中的垃圾回收机制。</p>
+<a id="more"></a>
+<hr>
+<h2 id="什么是垃圾回收">什么是垃圾回收</h2><p>乍一看，垃圾回收所做的事情应当恰如其名——查找并清除垃圾。事实上却恰恰相反。垃圾回收会跟踪所有仍在使用的对象，然后将剩余的对象标记为垃圾。牢记了这点之后，我们再来深入地了解下这个被称为「垃圾回收」的自动化内存回收在 JVM 中到底是如何实现的。</p>
+<h3 id="手动内存管理">手动内存管理</h3><p>在介绍现代版的垃圾回收之前，我们先来简单地回顾下需要手动地显式分配及释放内存的那些日子。如果你忘了去释放内存，那么这块内存就无法重用了。这块内存被占有了却没被使用。这种场景被称之为<strong>内存泄露</strong>。</p>
+<p>内存泄露曾经是个非常普遍的问题。你只能通过不断地修复自己的代码来与它们进行抗争。因此，需要有一种更优雅的方式来自动释放无用内存，以便减少人为错误的可能性。这种自动化过程又被称为垃圾回收（简称 GC）。</p>
+<h3 id="自动内存管理">自动内存管理</h3><p>第一代的垃圾回收器是 1959 年 Lisp 引入的，这项技术迄今为止一直在不断演进。</p>
+<h4 id="引用计数">引用计数</h4><p>咦，这不是 Objective-C 中的概念吗？其实许多语言比如说 Perl，Python 以及 PHP，采用的都是这种方式。这个通过一张图可以很容易说明：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-07.png" alt=""></p>
+<p>绿色的云代表的是程序中仍在使用的对象。从技术层面上来说，这有点像是正在执行的某个方法里面的局部变量，亦或是静态变量之类的。不同编程语言的情况可能会不一样，因此这并不是我们关注的重点。</p>
+<p>蓝色的圆圈代表的是内存中的对象，可以看到有多少对象引用了它们。灰色圆圈的对象是已经没有任何人引用的了。因此，它们属于垃圾对象，可以被垃圾回收器清理掉。</p>
+<p>看起来还不错对吧？没错，不过这里存在着一个重大的缺陷。很容易会出现一些<strong>孤立的环（detached cycle）</strong>，它们中的对象都不在任何域内，但彼此却互相引用导致引用数不为 0。下面便是一个例子：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-08.png" alt=""></p>
+<p>看到了吧，红色部分其实就是应用程序不再使用的垃圾对象。由于引用计数的缺陷，因此会存在内存泄露。</p>
+<p>有几种方法可以解决这一问题，比如 OC 中便可以使用 <code>weak</code> 引用来解决，接下来让我们来看下 JVM 所采用的方法。</p>
+<h4 id="标记删除">标记删除</h4><p>首先，JVM 对于对象<strong>可达性</strong>的定义要明确一些。它可不像前面那样用绿色的云便含糊了事的，而是有着非常明确及具体的垃圾回收根对象（Garbage Collection Roots）的定义：</p>
+<ul>
+<li>局部变量</li>
+<li>活动线程</li>
+<li>静态字段</li>
+<li>JNI 引用</li>
+</ul>
+<p>JVM 通过标记删除的算法来记录所有可达（存活）对象，同时确保不可达对象的那些内存能够被重用。这包含两个步骤：</p>
+<ul>
+<li>标记：是指遍历所有可达对象，然后在本地内存中记录这些对象的信息</li>
+<li>删除：会确保不可达对象的内存地址可以在下一次内存分配中使用</li>
+</ul>
+<p>JVM 中的不同 GC 算法，比如说 Parallel Scavenge，Parallel Mark+Copy，CMS 都是这一算法的不同实现，只是各阶段略有不同而已，从概念上来讲仍然是对应着上面所说的那两个步骤。</p>
+<p>这种实现最重要的就是不会再出现泄露的对象环了：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-09.png" alt=""></p>
+<p>缺点就是应用程序的线程需要被<strong>暂停</strong>才能完成回收，如果引用一直在变的话你是无法进行计数的。这个应用程序被暂停以便 JVM 可以收拾家务的情况又被称为 <strong>Stop The World pause</strong>(STW)。这种暂停被触发的可能性有很多，不过垃圾回收应该是最常见的一种。</p>
+<blockquote>
+<p>因为垃圾回收的时候，需要整个的引用状态保持不变，否则判定是判定垃圾，等我稍后回收的时候它又被引用了，这就全乱套了。所以，GC 的时候，其他所有的程序执行处于暂停状态，卡住了。<br>幸运的是，这个卡顿是非常短（尤其是新生代），对程序的影响微乎其微 （关于其他 GC 比如并发 GC 之类的，在此不讨论）。<br>所以 GC 的卡顿问题由此而来，也是情有可原，暂时无可避免。</p>
+</blockquote>
+<hr>
+<h2 id="碎片及整理（Fragmenting_and_Compacting）">碎片及整理（Fragmenting and Compacting）</h2><p>JVM 在清除不可达对象之后，还得确保它们所在的空间是可以进行复用的。对象删除会导致碎片的出现，这有点类似于磁盘碎片，这会带来两个问题：</p>
+<ul>
+<li>写操作会变得更加费时，因为查找下一个可用空闲块已不再是一个简单操作</li>
+<li>JVM 在创建新对象的，会在连续的区块中分配内存。因此如果碎片已经严重到没有一个空闲块能足够容纳新创建的对象时，内存分配便会报错</li>
+</ul>
+<p>为了避免此类情形，JVM 需要确保碎片化在可控范围内。因此，在垃圾回收的过程中，除了进行标记和删除外，还有一个「内存去碎片化」的过程。在这个过程当中，会给可达对象重新分配空间，让它们互相紧挨着对方，这样便可以去除碎片。下图展示的便是这一过程：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-10.png" alt=""></p>
+<hr>
+<h2 id="分代假设">分代假设</h2><p>如前所述，垃圾回收需要完全中止应用运行。显然，对象越多，回收的时间也越长。那么我们能不能在更小的内存区域上进行回收呢？通过可行性调查，一组研究人员发现应用中绝大多数的内存分配会分为两大类：</p>
+<ul>
+<li>绝大部分的对象很快会变为不可用状态</li>
+<li>还有一些，它们的存活时间通常也不会很长</li>
+</ul>
+<p>这些结论最终构成了弱分代假设（Weak Generational Hypothesis）。基于这一假设，虚拟机内的内存被分为两类，新生代（Young Generation)及老生代（Old Generation)。后者又被称为年老代（Tenured Generation）。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-11.png" alt=""></p>
+<p>有了各自独立的可清除区域后，这才出现了众多不同的回收算法，正是它们一直以来在持续提升着 GC 的性能。</p>
+<p>这并不说明这样的方式是没有问题的。比如说，不同分代中的对象可能彼此间有引用，在进行分代回收时，它们便为视为是「事实上」的 GC 根对象（GC roots)。</p>
+<p>而更为重要的是，分代假设对于某些应用来说并不成立。由于 GC 算法主要是为那些「快速消失」或者「永久存活」的对象而进行的优化，因此对于那些生命周期「适中」的对象，JVM 就显得无能为力了。</p>
+<hr>
+<h2 id="内存池">内存池</h2><p>在堆里面进行内存池的划分对大家来说应该是非常熟悉的了。不过大家可能不太清楚的是在不同的内存池中，垃圾回收是如何履行它的职责的。值得注意的是，虽然不同的 GC 算法细节实现上有所不同，但是本文中所提到的概念却是大同小异的。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-04.png" alt=""></p>
+<h3 id="Eden_区">Eden 区</h3><p>新对象被创建时，通常便会被分配到 Eden 区。由于通常都会有多个线程在同时分配大量的对象，因此 Eden 区又被进一步划分成一个或多个线程本地分配缓冲（Thread Local Allocation Buffer，简称 TLAB）。有了这些缓冲区使得 JVM 中大多数对象的分配都可以在各个线程自己对应的 TLAB 中完成，从而避免了线程间昂贵的同步开销。</p>
+<p>如果在 TLAB 中无法完成分配（通常是由于没有足够的空间），便会到 Eden 区的共享空间中进行分配。如果这里还是没有足够的空间，则会触发一次新生代垃圾回收的过程来释放空间。如果垃圾回收后 Eden 区还是没有足够的空间，那么这个对象便会到老生代中去分配。</p>
+<p>当进行 Eden 区的回收时，垃圾回收器会从根对象开始遍历所有的可达对象，并将它们标记为存活状态。</p>
+<p>前面我们已经提到，对象间可能会存在跨代引用，因此最直观的做法便是扫描其它分区到 Eden 区的所有引用。但不幸的是这么做会做成分代的做法变得毫无意义。JVM 对此有它自己的妙招：卡片式标记（card-marking）。基本的做法是，JVM 将 Eden 区中可能存在老生代引用的对象标记为「脏」对象。关于这点<a href="http://psy-lob-saw.blogspot.jp/2014/10/the-jvm-write-barrier-card-marking.html" target="_blank" rel="external">Nitsan</a> 的博客这里有更进一步的介绍。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-05.png" alt=""></p>
+<p>标记完成后，所有存活对象会被复制到其中的一个 Survivor 区。于是整个 Eden 区便可认为是清空了，又可以重新用来分配对象了。这一过程便被称为标记复制（Mark and Copy）：存活对象先被标记，随后被复制到 Survivor 区中。</p>
+<h3 id="Survivor_区">Survivor 区</h3><p>紧挨着 Eden 的是两个 Survivor 区，分别是 ‘from’ 区和 ‘to’ 区。值得一提的是其中的一个 Survivor 区始终都是空的。</p>
+<p>空的 Survivor 区会在下一次新生代 GC 的时候迎来它的居民。整个新生代中的所有存活对象（包含 Eden 区以及那个非空的名为 ‘from’ 的 Survivor 区）都会被复制到 ‘to’ 区中。一旦完成之后，对象便都跑到 ‘to’ 区中而 ‘from’ 区则被清空了。这时两者的角色便会发生调转。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-06.png" alt=""></p>
+<p>存活对象会不断地在两个存活区之间来回地复制，直到其中的一些对象被认为是已经成熟，「足够老」了。请记住这点，基于分代假设，已经存活了一段时间的对象，在相当长的一段时间内仍可能继续存活。</p>
+<p>这些「年老」的对象会被提升至老年代空间。出现对象提升的时候，这些对象则不会再被复制到另一个存活区，而是直接复制到老年代中，它们会一直待到不再被引用为止。</p>
+<p>垃圾回收器会跟踪每个对象历经的回收次数，来判断它们是否已经「足够年老」，可以传播至老年代中。在一轮 GC 完成之后，每个分区中存活下来的对象的计数便会增加。当一个对象的年龄超过了一个特定的年老阈值之后，它便会被提升到老年代中。</p>
+<p>JVM 会动态地调整实际的年龄阈值，不过通过指定 -XX:+MaxTenuringThreshold 参数可以给该值设置一个上限。将 -XX:+MaxTenuringThreshold 设置为 0 则立即触发对象提升，而不会复制到存活区中。在现代的 JVM 中，这个值默认会被设置为 15 个 GC 周期。在 HotSpot 虚拟机中这也是该值的上限。</p>
+<p>如果存活区的大小不足以存放所有的新生代存活对象，则会出现过早提升。</p>
+<h3 id="老生代">老生代</h3><p>老生代的内存空间的实现则更为复杂。老生代的空间通常都会非常大，里面存放的对象都是不太可能会被回收的。</p>
+<p>老生代的 GC 比新生代的 GC 发生的频率要少得多。由于老生代中的多数对象都被认为是存活的，也就不会存在标记-复制操作了。在 GC 中，这些对象会被挪到一起以减少碎片。老生代的回收算法通常都是根据不同的理论来构建的。不过大体上都会分成如下几步：</p>
+<ul>
+<li>标记可达对象，设置 GC 根对象可达的所有对象后的标记位</li>
+<li>删除不可达对象</li>
+<li>整理老生代空间的对象，将存活对象复制到老生代开始的连续空间内。</li>
+</ul>
+<p>从以上描述中可知，为了避免过度碎片化，老生代的 GC 是明确需要进行整理操作的。</p>
+<h3 id="持久代">持久代</h3><p>在 Java 8 以前还有一个特殊的空间叫做持久代（Permanent Generation）。这是元数据比如类相关数据存放的地方。除此之外，像驻留的字符串（internalized string）也会被存放在持久代中。这的确给Java开发人员带来了不少麻烦事，因为很难评估这究竟会使用到多少空间。评估不到位偏会抛出 java.lang.OutOfMemoryError: Permgen space 的异常。只要不是真的因为内存泄漏而引起的 OutOfMemoryError 异常，可以通过增加持久代空间的大小来解决这一问题，比如下例中的把持久代最大空间设置为 256MB：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -XX:MaxPermSize=<span class="number">256</span>m com.mycompany.MyApplication</span><br></pre></td></tr></table></figure>
+<h3 id="元空间">元空间</h3><p>由于元数据空间大小的预测是件繁琐且低效的工作，于是 Java 8 中干脆就去掉了持久代，转而推出了元空间。从此以后，那些个杂七杂八的东西便都存储到正常的 Java 堆了。</p>
+<p>但是，类定义如今则是存储到了元空间里。它存储在本地内存中，不会与堆 内存相混杂。默认情况下，元空间的大小只受限于Java进程的可用本地内存的大小。这大大解放了开发人员，他们不会再因为多增加了一个类而引发 java.lang.OutOfMemoryError: Permgen space 异常了。值得注意的是，虽然看似元空间大小毫无限制了，但这一些并非是没有代价的——如果任由元空间无节制地增长，你可能会面临的是频繁的内存交换（swapping）或者是本地内存分配失败。</p>
+<p>如果你希望避免此类情况，可以像下例中这样限制一下元空间的大小，将它设置成比如 256 MB：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -XX:MaxMetaspaceSize=<span class="number">256</span>m com.mycompany.MyApplication</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="新生代_GC（Minor_GC）vs-_老生代_GC（Major_GC）vs-_Full_GC">新生代 GC（Minor GC）vs. 老生代 GC（Major GC）vs. Full GC</h2><p>清除堆内存不同区域的垃圾回收事件又被称为新生代 GC，老生代 GC，以及 Full GC 事件。下面我们将介绍一下不同事件的区别在哪里。不过你会发现其实各自的差别并不是那么重要。</p>
+<p>重要的是我们希望知道应用是否到达它的服务能力上限了，而这又只能去监控应用的处理延时或者吞吐量。只有在这个时间GC事件才能派上用场。这些事件的关键之处在于它们是否停止了应用的运行，以及停了多久。</p>
+<p>不过由于新生代 GC，老生代 GC，Full GC 这几个术语被广泛使用却又没有一个清晰的定义，我们还是先来详细地介绍一下它们的区别再说吧。</p>
+<h3 id="新生代_GC">新生代 GC</h3><p>新生代垃圾的回收被称作 Minor GC。这个定义非常清晰，理解起来也不会有什么歧义。不过当处理新生代GC事件时，还是有一些有意思的东西值得注意的：</p>
+<ol>
+<li>只要 JVM 无法为新创建的对象分配空间，就肯定会触发新生代 GC，比方说 Eden 区满了。因此对象创建得越频繁，新生代 GC 肯定也更频繁</li>
+<li>一旦内存池满了，它的所有内容就会被拷贝走，指针又将重新归零。因此和经典的标记（Mark），清除（Sweep），整理（Compact）的过程不同的是，Eden 区和 Survivor 区的清理只涉及到标记和拷贝。在它们中是不会出现碎片的。写指针始终在当前使用区的顶部</li>
+<li>在一次新生代 GC 事件中，通常不涉及到年老代。年老代到年轻代的引用被认为是 GC 的根对象。而在标记阶段中，从年轻代到年老代的引用则会被忽略掉</li>
+<li>和通常所理解的不一样的是，所有的新生代 GC 都会触发 stop-the-world 暂停，这会中断应用程序的线程。对绝大多数应用而言，暂停的时间是可以忽略不计的</li>
+</ol>
+<p>现在来看新生代 GC 还是很清晰的——每一次新生代 GC 都会对年轻代进行垃圾清除。</p>
+<h3 id="老年代_GC_与_Full_GC">老年代 GC 与 Full GC</h3><p>你会发现关于这两种 GC 其实并没有明确的定义。JVM 规范或者垃圾回收相关的论文中都没有提及。不过从直觉来说，根据新生代 GC（Minor GC）清理的是新生代空间的认识来看，不难得出以下推论（这里应当从英文出发来理解，Minor, Major 与 Full GC，翻译过来的名称已经带有明显的释义了）：</p>
+<ul>
+<li>Major GC 清理的是老年代的空间</li>
+<li>Full GC 清理的是整个堆——包括新生代与老年代空间</li>
+</ul>
+<p>因此我们从实际的 GC 日志中所看到的是这样——其实没有什么两次所谓的 Full GC，只有一次清理年老代空间的 Major GC 而已。</p>
+<hr>
+<h2 id="垃圾回收算法">垃圾回收算法</h2><h3 id="标记清除算法（Mark-Sweep）">标记清除算法（Mark-Sweep）</h3><p>通过名字就应该猜到了，就是标记哪些是可回收的，然后进行清除回收处理。</p>
+<p>标记-清除算法分为两个阶段：标记阶段和清除阶段。标记阶段的任务是标记出所有需要被回收的对象，清除阶段就是回收被标记的对象所占用的空间。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-12.png" alt=""></p>
+<blockquote>
+<p>优点：简单，易实现<br>缺点：容易产生内存碎片，对于后面分配大空间时，找不到足够的空间，而主动会触发一次内存回收，增加内存回收的次数。</p>
+</blockquote>
+<h3 id="复制算法">复制算法</h3><p>此方法将内存按容量分为两块，例如 A、B 两块，每次只使用其中的一块，当要进行回收操作时，将 A 中还存活的对象复制到 B 块中（假设上次使用 A），然后对 A 中所有对象清空就又构成一个完整的内存块。这种方法就避免了标记清除的内存碎片问题。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-13.png" alt=""></p>
+<blockquote>
+<p>优点：快速高效，不会产生内存碎片。<br>缺点：可用内存会减少一半，因为是按照均分的。</p>
+</blockquote>
+<p><strong>注意： 效率也与存活对象的多少有关，如果存活对象多，复制就多，效率就低了。</strong></p>
+<h3 id="标记整理算法（Mark-Compact）">标记整理算法（Mark-Compact）</h3><p>标记整理算法就是在标记清除方法的基础上进行了优化，主要是在标记完成后将这些存活的对象向一端移动，然后将末尾边界后的所有内存空间清除。</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-14.png" alt=""></p>
+<blockquote>
+<p>优点： 适合存活对象多的，不产生内存碎片</p>
+</blockquote>
+<h3 id="分代回收算法">分代回收算法</h3><p>分代回收算法其实不算一种新的算法，而是根据复制算法和标记整理算法的的特点综合而成。这种综合是考虑到 Java 的语言特性的。</p>
+<p>下面来回顾一下两种老算法的适用场景：</p>
+<blockquote>
+<p>复制算法：适用于存活对象很少，回收对象多<br>标记整理算法: 适用用于存活对象多，回收对象少</p>
+</blockquote>
+<p>于是，我们根据对象存活的生命周期将内存划分为若干个不同的区域。一般情况下将堆区划分为老年代（Old Generation）和新生代（Young Generation），老年代的特点是每次垃圾收集时只有少量对象需要被回收，而新生代的特点是每次垃圾回收时都有大量的对象需要被回收，那么就可以根据不同代的特点采取最适合的收集算法：</p>
+<blockquote>
+<p>新生代：由于新生代产生很多临时对象，大量对象需要进行回收，所以采用复制算法是最高效的。<br>老年代：回收的对象很少，都是经过几次标记后都不是可回收的状态转移到老年代的，所以仅有少量对象需要回收，故采用标记清除或者标记整理算法。</p>
+</blockquote>
+<p>所以以上整个过程就达到了最高效的回收办法——分代回收算法</p>
+<h4 id="深入理解分代回收算法">深入理解分代回收算法</h4><p><strong>为什么不是一块 Survivor 区而是两块？</strong></p>
+<blockquote>
+<p>这里涉及到一个新生代和老年代的存活周期的问题，比如一个对象在新生代经历 15 次（仅供参考）GC，就可以移到老年代了。问题来了，当我们第一次 GC 的时候，我们可以把 Eden 区的存活对象放到 Survivor A区，但是第二次 GC 的时候，Survivor A 区的存活对象也需要再次用 Copying 算法，放到 Survivor B 区上，而把刚刚的 Survivor A 区和 Eden 区清除。第三次 GC 时，又把 Survivor B 区的存活对象复制到 Survivor A 区，如此反复。</p>
+</blockquote>
+<p>所以，这里就需要两块 Survivor 区来回倒腾。</p>
+<p><strong>为什么 Eden 区这么大而 Survivor 区要分的少一点？</strong></p>
+<blockquote>
+<p>新创建的对象都是放在 Eden 区，这是很频繁的，尤其是大量的局部变量产生的临时对象，这些对象绝大部分都应该马上被回收，能存活下来被转移到 Survivor 区的往往不多。所以，设置较大的 Eden 区和较小的 Survivor 区是合理的，大大提高了内存的使用率，缓解了 Copying 算法的缺点。</p>
+</blockquote>
+<p>新的问题又来了，从 Eden 区往 Survivor 区转移的时候 Survivor 区不够了怎么办？——直接放到老年代去。</p>
+<p><strong>Eden 区和两块 Survivor 区的工作流程？</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 分配了一个又一个对象</span></span><br><span class="line">放到 Eden 区</span><br><span class="line"><span class="comment">// 不好，Eden 区满了，只能 GC（新生代 GC：Minor GC）了</span></span><br><span class="line">把 Eden 区的存活对象 <span class="keyword">copy</span> 到 Survivor A 区，然后清空 Eden 区（本来 Survivor B 区也需要清空的，不过本来就是空的）</span><br><span class="line"><span class="comment">// 又分配了一个又一个对象</span></span><br><span class="line">放到 Eden 区</span><br><span class="line"><span class="comment">// 不好，Eden 区又满了，只能 GC（新生代 GC：Minor GC）了</span></span><br><span class="line">把 Eden 区和 Survivor A 区的存活对象 <span class="keyword">copy</span> 到 Survivor B 区，然后清空 Eden 区和 Survivor A 区</span><br><span class="line"><span class="comment">// 又分配了一个又一个对象</span></span><br><span class="line">放到 Eden 区</span><br><span class="line"><span class="comment">// 不好，Eden 区又满了，只能 GC（新生代GC：Minor GC）了</span></span><br><span class="line">把 Eden 区和 Survivor B 区的存活对象 <span class="keyword">copy</span> 到 Survivor A 区，然后清空 Eden 区和 Survivor B 区</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// 有的对象来回在 Survivor A 区或者 B 区呆了比如 15 次，就被分配到老年代 Old 区</span></span><br><span class="line"><span class="comment">// 有的对象太大，超过了 Eden 区，直接被分配在 Old 区</span></span><br><span class="line"><span class="comment">// 有的存活对象，放不下 Survivor 区，也被分配到 Old 区</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// 在某次 Minor GC 的过程中突然发现：</span></span><br><span class="line"><span class="comment">// 不好，老年代 Old 区也满了，这是一次大 GC（老年代 GC：Major GC）</span></span><br><span class="line">Old 区慢慢的整理一番，空间又够了</span><br><span class="line"><span class="comment">// 继续 Minor GC</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<p>以上为了说明原理，只是最简化版本。</p>
+<hr>
+<h2 id="小结">小结</h2><p>至此，关于 Java 虚拟机垃圾回收（GC）的讲解就告一段落了，后面要补的知识还很多，路还很长，一步一脚印咯：D</p>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://plumbr.eu/handbook/what-is-garbage-collection" target="_blank" rel="external">JAVA Garbage Collection Handbook</a></li>
+<li><a href="http://jayfeng.com/2016/03/11/%E7%90%86%E8%A7%A3Java%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" target="_blank" rel="external">理解Java垃圾回收机制</a></li>
+<li><a href="http://stackoverflow.com/questions/7874342/what-is-the-difference-between-objective-c-automatic-reference-counting-and-garb****" target="_blank" rel="external">What is the difference between Objective-C automatic reference counting and garbage collection?</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>我知道是不会有人点的，但万一有人想不开呢？</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/wechat.jpg" alt="Qi Tang WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/alipay.jpg" alt="Qi Tang Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GC/" rel="tag">#GC</a>
+          
+            <a href="/tags/JVM/" rel="tag">#JVM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/30/tips-for-using-charles/" rel="next" title="抓包工具 Charles 使用心得">
+                <i class="fa fa-chevron-left"></i> 抓包工具 Charles 使用心得
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾的走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              小伙伴们
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://tikitoo.me/" title="安卓同学" target="_blank">安卓同学</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lovinghuan.com/" title="poberWong" target="_blank">poberWong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.zhaiyifan.cn/" title="MarkZhai" target="_blank">MarkZhai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yifeiyuan.me/" title="程序亦非猿" target="_blank">程序亦非猿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://abner-nimengbo.cn/" title="阿布" target="_blank">阿布</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.easydone.cn/" title="Ailurus" target="_blank">Ailurus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuxiaolong.me/" title="吴小龙同學" target="_blank">吴小龙同學</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://drakeet.me/" title="Drakeet" target="_blank">Drakeet</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.fangjie.info/" title="方杰" target="_blank">方杰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hujiaweibujidao.github.io/" title="五道口宅男" target="_blank">五道口宅男</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gudong.name/" title="咕咚" target="_blank">咕咚</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://soledad.me/" title="蔡越" target="_blank">蔡越</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是垃圾回收"><span class="nav-number">2.</span> <span class="nav-text">什么是垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#手动内存管理"><span class="nav-number">2.1.</span> <span class="nav-text">手动内存管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动内存管理"><span class="nav-number">2.2.</span> <span class="nav-text">自动内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引用计数"><span class="nav-number">2.2.1.</span> <span class="nav-text">引用计数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标记删除"><span class="nav-number">2.2.2.</span> <span class="nav-text">标记删除</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#碎片及整理（Fragmenting_and_Compacting）"><span class="nav-number">3.</span> <span class="nav-text">碎片及整理（Fragmenting and Compacting）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分代假设"><span class="nav-number">4.</span> <span class="nav-text">分代假设</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存池"><span class="nav-number">5.</span> <span class="nav-text">内存池</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Eden_区"><span class="nav-number">5.1.</span> <span class="nav-text">Eden 区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Survivor_区"><span class="nav-number">5.2.</span> <span class="nav-text">Survivor 区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#老生代"><span class="nav-number">5.3.</span> <span class="nav-text">老生代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久代"><span class="nav-number">5.4.</span> <span class="nav-text">持久代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元空间"><span class="nav-number">5.5.</span> <span class="nav-text">元空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新生代_GC（Minor_GC）vs-_老生代_GC（Major_GC）vs-_Full_GC"><span class="nav-number">6.</span> <span class="nav-text">新生代 GC（Minor GC）vs. 老生代 GC（Major GC）vs. Full GC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新生代_GC"><span class="nav-number">6.1.</span> <span class="nav-text">新生代 GC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#老年代_GC_与_Full_GC"><span class="nav-number">6.2.</span> <span class="nav-text">老年代 GC 与 Full GC</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾回收算法"><span class="nav-number">7.</span> <span class="nav-text">垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标记清除算法（Mark-Sweep）"><span class="nav-number">7.1.</span> <span class="nav-text">标记清除算法（Mark-Sweep）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制算法"><span class="nav-number">7.2.</span> <span class="nav-text">复制算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标记整理算法（Mark-Compact）"><span class="nav-number">7.3.</span> <span class="nav-text">标记整理算法（Mark-Compact）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分代回收算法"><span class="nav-number">7.4.</span> <span class="nav-text">分代回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#深入理解分代回收算法"><span class="nav-number">7.4.1.</span> <span class="nav-text">深入理解分代回收算法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">8.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'tangqi92githubio';
+      var disqus_identifier = '2016/06/12/garbage-collection-in-java/';
+      var disqus_title = "Java 中的垃圾回收";
+      var disqus_url = 'http://itangqi.me/2016/06/12/garbage-collection-in-java/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cRxqlqW9Tlkg0rnkVdEPhC8o-gzGzoHsz", "sRfp02fY2qyxRj4KTp4AyzK7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

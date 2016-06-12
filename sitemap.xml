@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/2016/06/12/garbage-collection-in-java/</loc>
+    <lastmod>2016-06-12T02:25:03.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2015/12/15/waveloadingview/</loc>
+    <lastmod>2016-06-07T07:39:20.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/about/index.html</loc>
     <lastmod>2016-06-03T04:12:54.000Z</lastmod>
   </url>
@@ -49,11 +59,6 @@
   <url>
     <loc>http://itangqi.me/2016/02/08/the-journey-of-learning-ios/</loc>
     <lastmod>2016-05-28T08:11:48.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2015/12/15/waveloadingview/</loc>
-    <lastmod>2016-05-28T08:06:51.000Z</lastmod>
   </url>
   
   <url>
