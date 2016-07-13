@@ -86,14 +86,14 @@
 
 
 
-<meta name="description" content="前言说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要问是我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~
-所以呢，在后继学习 iOS 的过程中，我特别注重原理的掌握。当然，你要问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：《Objective-C 高级编程》读">
+<meta name="description" content="前言说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要是问我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~
+所以呢，在后继学习 iOS 开发的过程中，我特别注重原理的掌握。当然，如果你问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：《Objective-C 高级编">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 中的垃圾回收">
 <meta property="og:url" content="http://itangqi.me/2016/06/12/garbage-collection-in-java/index.html">
 <meta property="og:site_name" content="Qi Tang's Blog">
-<meta property="og:description" content="前言说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要问是我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~
-所以呢，在后继学习 iOS 的过程中，我特别注重原理的掌握。当然，你要问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：《Objective-C 高级编程》读">
+<meta property="og:description" content="前言说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要是问我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~
+所以呢，在后继学习 iOS 开发的过程中，我特别注重原理的掌握。当然，如果你问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：《Objective-C 高级编">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-07.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-08.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-09.png">
@@ -105,11 +105,11 @@
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-12.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-13.png">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/garbage-collection-in-java-14.png">
-<meta property="og:updated_time" content="2016-06-12T02:25:03.000Z">
+<meta property="og:updated_time" content="2016-06-22T04:28:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 中的垃圾回收">
-<meta name="twitter:description" content="前言说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要问是我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~
-所以呢，在后继学习 iOS 的过程中，我特别注重原理的掌握。当然，你要问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：《Objective-C 高级编程》读">
+<meta name="twitter:description" content="前言说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要是问我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~
+所以呢，在后继学习 iOS 开发的过程中，我特别注重原理的掌握。当然，如果你问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：《Objective-C 高级编">
 
 
 
@@ -381,8 +381,8 @@
       
 
       
-        <h2 id="前言">前言</h2><p>说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要问是我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~</p>
-<p>所以呢，在后继学习 iOS 的过程中，我特别注重原理的掌握。当然，你要问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：<a href="http://itangqi.me/2016/03/10/the-notes-of-learning-arc/">《Objective-C 高级编程》读书笔记之 ARC</a>。</p>
+        <h2 id="前言">前言</h2><p>说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要是问我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~</p>
+<p>所以呢，在后继学习 iOS 开发的过程中，我特别注重原理的掌握。当然，如果你问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：<a href="http://itangqi.me/2016/03/10/the-notes-of-learning-arc/">《Objective-C 高级编程》读书笔记之 ARC</a>。</p>
 <blockquote>
 <p>出来混，迟早是要还的。</p>
 </blockquote>

@@ -86,22 +86,22 @@
 
 
 
-<meta name="description" content="前言说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，但都停留在简单的调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。
+<meta name="description" content="前言说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，可却始终停留在简单地调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。
 如今转投 iOS 怀抱的我，决定将阅读优秀项目的源码作为学习的一部分，而且是带着疑问去阅读。由于在项目中使用及考虑到 SDWebImage 的普及程度，其顺理成章的成为了我第一个阅读的项目。
-话不多说">
+话不">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SDWebImage 源码阅读笔记（一）">
 <meta property="og:url" content="http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/index.html">
 <meta property="og:site_name" content="Qi Tang's Blog">
-<meta property="og:description" content="前言说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，但都停留在简单的调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。
+<meta property="og:description" content="前言说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，可却始终停留在简单地调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。
 如今转投 iOS 怀抱的我，决定将阅读优秀项目的源码作为学习的一部分，而且是带着疑问去阅读。由于在项目中使用及考虑到 SDWebImage 的普及程度，其顺理成章的成为了我第一个阅读的项目。
-话不多说">
-<meta property="og:updated_time" content="2016-05-28T03:48:22.000Z">
+话不">
+<meta property="og:updated_time" content="2016-07-12T08:10:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage 源码阅读笔记（一）">
-<meta name="twitter:description" content="前言说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，但都停留在简单的调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。
+<meta name="twitter:description" content="前言说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，可却始终停留在简单地调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。
 如今转投 iOS 怀抱的我，决定将阅读优秀项目的源码作为学习的一部分，而且是带着疑问去阅读。由于在项目中使用及考虑到 SDWebImage 的普及程度，其顺理成章的成为了我第一个阅读的项目。
-话不多说">
+话不">
 
 
 
@@ -373,7 +373,7 @@
       
 
       
-        <h2 id="前言">前言</h2><p>说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，但都停留在简单的调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。</p>
+        <h2 id="前言">前言</h2><p>说来惭愧，我之前从事 Android 开发，用过许多著名的第三方库，可却始终停留在简单地调用 API 阶段，从未涉及到源码的阅读以了解其背后的实现原理，所以一直处于「知其然，而不知所以然」的状态。</p>
 <p>如今转投 iOS 怀抱的我，决定将阅读优秀项目的源码作为学习的一部分，而且是带着<strong>疑问</strong>去阅读。由于在项目中使用及考虑到 SDWebImage 的普及程度，其顺理成章的成为了我第一个阅读的项目。</p>
 <p>话不多说，让我们开始吧！</p>
 <a id="more"></a> 

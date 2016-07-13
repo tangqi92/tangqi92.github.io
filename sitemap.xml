@@ -2,8 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/2016/03/23/the-notes-of-learning-sdwebimage-three/</loc>
+    <lastmod>2016-07-13T02:36:50.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/</loc>
+    <lastmod>2016-07-12T08:10:33.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/2016/06/12/garbage-collection-in-java/</loc>
-    <lastmod>2016-06-12T02:25:03.000Z</lastmod>
+    <lastmod>2016-06-22T04:28:33.000Z</lastmod>
   </url>
   
   <url>
@@ -82,11 +92,6 @@
   </url>
   
   <url>
-    <loc>http://itangqi.me/2016/03/23/the-notes-of-learning-sdwebimage-three/</loc>
-    <lastmod>2016-05-28T07:43:33.000Z</lastmod>
-  </url>
-  
-  <url>
     <loc>http://itangqi.me/2016/05/20/the-notes-of-learning-afnetworking-seven/</loc>
     <lastmod>2016-05-28T07:42:17.000Z</lastmod>
   </url>
@@ -139,11 +144,6 @@
   <url>
     <loc>http://itangqi.me/2016/03/24/the-notes-of-learning-sdwebimage-four/</loc>
     <lastmod>2016-05-28T03:48:29.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/</loc>
-    <lastmod>2016-05-28T03:48:22.000Z</lastmod>
   </url>
   
   <url>
