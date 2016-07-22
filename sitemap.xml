@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/about/index.html</loc>
+    <lastmod>2016-07-20T05:30:07.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/2016/03/23/the-notes-of-learning-sdwebimage-three/</loc>
     <lastmod>2016-07-13T02:36:50.000Z</lastmod>
   </url>
@@ -19,11 +24,6 @@
   <url>
     <loc>http://itangqi.me/2015/12/15/waveloadingview/</loc>
     <lastmod>2016-06-07T07:39:20.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/about/index.html</loc>
-    <lastmod>2016-06-03T04:12:54.000Z</lastmod>
   </url>
   
   <url>
