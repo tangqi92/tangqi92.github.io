@@ -1,0 +1,1006 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="UICollectionView,UITableView,UITableViewCell," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言自从去年来到花瓣实习以后，因为时间与精力（其实就是懒）的原因，这半年多没有写过一篇技术相关的文章。不过，随着项目的逐渐进展，我想，有必要对一些知识点进行总结与回顾了。与此同时，如果能帮助到大家就最好不过了：）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UITableViewCell 中嵌套 UICollectionView 的实现">
+<meta property="og:url" content="http://itangqi.me/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言自从去年来到花瓣实习以后，因为时间与精力（其实就是懒）的原因，这半年多没有写过一篇技术相关的文章。不过，随着项目的逐渐进展，我想，有必要对一些知识点进行总结与回顾了。与此同时，如果能帮助到大家就最好不过了：）">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-01.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-03.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-04.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-06.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-07.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-09.png">
+<meta property="og:updated_time" content="2017-02-21T07:09:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UITableViewCell 中嵌套 UICollectionView 的实现">
+<meta name="twitter:description" content="前言自从去年来到花瓣实习以后，因为时间与精力（其实就是懒）的原因，这半年多没有写过一篇技术相关的文章。不过，随着项目的逐渐进展，我想，有必要对一些知识点进行总结与回顾了。与此同时，如果能帮助到大家就最好不过了：）">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> UITableViewCell 中嵌套 UICollectionView 的实现 | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                UITableViewCell 中嵌套 UICollectionView 的实现
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-21T00:00:00+08:00" content="2017-02-21">
+              2017-02-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/" class="leancloud_visitors" data-flag-title="UITableViewCell 中嵌套 UICollectionView 的实现">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><p>自从去年来到花瓣实习以后，因为时间与精力（其实就是懒）的原因，这半年多没有写过一篇技术相关的文章。不过，随着项目的逐渐进展，我想，有必要对一些知识点进行总结与回顾了。与此同时，如果能帮助到大家就最好不过了：）</p>
+<a id="more"></a>
+<p>本文中的参考 Demo：<a href="https://github.com/tangqi92/QTTableCollectionView" target="_blank" rel="external">https://github.com/tangqi92/QTTableCollectionView</a>，请结合 Demo 阅读本文。</p>
+<hr>
+<h2 id="需求">需求</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-01.png" alt=""></p>
+<p>这是 <strong>花瓣 4.0</strong> 中「个人主页」里的「关注」页面，我想，你一定会非常熟悉这样的界面布局：竖向与横向滚动列表的结合，我们熟悉的 <strong>App Store</strong>，其首页便是代表之一。</p>
+<hr>
+<h2 id="分析">分析</h2><p>本文的实现方式是：UITableView + UICollectionView 的结合（其实后来发现，仅仅使用 UICollectionView 就可以实现，不管啦~）。</p>
+<p>于是，我们将页面简化，可以得到下图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-03.png" alt=""></p>
+<p>现在，我们来分析下 Layout 结构：最外层当然是 UITableView，然后其中每个 UITableViewCell 中包含着一个 UICollectionView，而其中的 UICollectionViewCell 有 3 种不同的样式（既红、绿、蓝三种样式）。于是，我们又得到了下图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-04.png" alt=""></p>
+<p>没错，我们将 UITableView 与 UICollectionView 的 Delegate 与 DataSource 都由 TableViewController 处理，是希望 UITableViewCell 中不要出现不必要的代码。</p>
+<hr>
+<h2 id="实现">实现</h2><p>下面，我们以 <a href="https://github.com/tangqi92/QTTableCollectionView" target="_blank" rel="external">https://github.com/tangqi92/QTTableCollectionView</a> 为例进行讲解。首先，来看下项目的目录结构：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-06.png" alt=""></p>
+<h3 id="Model">Model</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">QTExploreModel</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// <span class="doctag">TODO:</span> 请根据自身需求，定义相关 Model 类与其属性。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p><code>QTExploreModel</code> \ <code>QTBoardModel</code> \ <code>QTUserModel</code> 3 个 Model 类，在这里仅是象征性作用，请根据实际项目需求定义。</p>
+<h3 id="View">View</h3><h4 id="自定义_UICollectionViewCell">自定义 UICollectionViewCell</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">QTExploresCollectionViewCell</span> : <span class="title">UICollectionViewCell</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) QTExploreModel *exploreModel;</span><br><span class="line"><span class="comment">/// 该方仅法用于测试。</span></span><br><span class="line">- (<span class="keyword">void</span>)setupModel;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">QTExploresCollectionViewCell</span> ()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// <span class="doctag">TODO:</span> 请根据自身需求，自定义 CollectionViewCell。</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">UIView</span> *coverView;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">QTExploresCollectionViewCell</span></span></span><br><span class="line"></span><br><span class="line">- (instancetype)initWithFrame:(<span class="built_in">CGRect</span>)frame &#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        [<span class="keyword">self</span> initViews];</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.layer</span><span class="variable">.cornerRadius</span> = <span class="number">4</span>;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.layer</span><span class="variable">.masksToBounds</span> = <span class="literal">YES</span>;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> clearColor];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)initViews &#123;</span><br><span class="line">    _coverView = [<span class="built_in">UIView</span> new];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.contentView</span> addSubview:_coverView];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</span><br><span class="line">    [<span class="keyword">super</span> layoutSubviews];</span><br><span class="line">    [_coverView mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">        make<span class="variable">.edges</span><span class="variable">.equalTo</span>(<span class="keyword">self</span><span class="variable">.contentView</span>);</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setExploreModel:(QTExploreModel *)exploreModel &#123;</span><br><span class="line">    <span class="comment">// <span class="doctag">TODO:</span> 数据填充</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setupModel &#123;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.coverView</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> redColor];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p><code>QTExploresCollectionViewCell</code> \ <code>QTBoardsCollectionViewCell</code> \ <code>QTUsersCollectionViewCell</code> 3 个自定义 UICollectionViewCell，也请根据实际项目需求自行定义。</p>
+<h4 id="自定义_UICollectionView">自定义 UICollectionView</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 3 种类型的 Cell。</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, CollectionViewCellType) &#123;</span><br><span class="line">    CellTypeExplores = <span class="number">0</span>,</span><br><span class="line">    CellTypeBoards,</span><br><span class="line">    CellTypeUsers</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">QTCollectionView</span> : <span class="title">UICollectionView</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// indexPath 用于查询相应的 Model，并填充至 Cell。</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSIndexPath</span> *indexPath;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) CollectionViewCellType collectionViewCellType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p><code>indexPath</code> 用于记录 UICollectionView 所处的位置，而 <code>CollectionViewCellType</code> 用于区分不同类型的 UICollectionViewCell（当然，你可以直接使用 indexPath.section（0、1、2） 用以区别，只是我个人比较倾向使用枚举而已）。</p>
+<h4 id="自定义_UITableViewCell">自定义 UITableViewCell</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> ExploreCollectionViewCellID = <span class="string">@"ExploreCollectionViewCellID"</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> BoardCollectionViewCellID = <span class="string">@"BoardCollectionViewCellID"</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="built_in">NSString</span> *<span class="keyword">const</span> UserCollectionViewCellID = <span class="string">@"UserCollectionViewCellID"</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">QTTableViewCell</span> : <span class="title">UITableViewCell</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/// UITableViewCell 中嵌套 CollectionView。</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) QTCollectionView *collectionView;</span><br><span class="line"></span><br><span class="line"><span class="comment">/// 设置 CollectionView 的 DataSource 与 Delegate。</span></span><br><span class="line">- (<span class="keyword">void</span>)setCollectionViewDataSourceDelegate:(<span class="keyword">id</span>&lt;<span class="built_in">UICollectionViewDataSource</span>, <span class="built_in">UICollectionViewDelegate</span>, <span class="built_in">UICollectionViewDelegateFlowLayout</span>&gt;)dataSourceDelegate indexPath:(<span class="built_in">NSIndexPath</span> *)indexPath;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>本文前面已经提过，该界面实现的关键便在于 <code>UITableViewCell</code> 中嵌套 <code>UICollectionView</code>，并将 <code>UICollectionView</code> 的 Delegate 与 DataSource 交由 <code>UITableViewController</code> 处理。在这里，我们使用 <code>- (void)setCollectionViewDataSourceDelegate:indexPath:</code> 处理。下面，我们再来看下 <code>QTTableViewCell</code> 的具体实现：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">QTTableViewCell</span></span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">id</span>)initWithStyle:(<span class="built_in">UITableViewCellStyle</span>)style reuseIdentifier:(<span class="built_in">NSString</span> *)reuseIdentifier &#123;</span><br><span class="line">    <span class="keyword">if</span> (!(<span class="keyword">self</span> = [<span class="keyword">super</span> initWithStyle:style reuseIdentifier:reuseIdentifier])) <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 UICollectionViewFlowLayout 进行布局。</span></span><br><span class="line">    <span class="comment">// 注册 UICollectionViewCell。</span></span><br><span class="line">    <span class="comment">// 其他初始化操作。</span></span><br><span class="line">    ......</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)layoutSubviews &#123;</span><br><span class="line">    [<span class="keyword">super</span> layoutSubviews];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.collectionView</span> mas_makeConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">        make<span class="variable">.edges</span><span class="variable">.equalTo</span>(<span class="keyword">self</span><span class="variable">.contentView</span>);</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)setCollectionViewDataSourceDelegate:(<span class="keyword">id</span>&lt;<span class="built_in">UICollectionViewDataSource</span>, <span class="built_in">UICollectionViewDelegate</span>&gt;)dataSourceDelegate indexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.collectionView</span><span class="variable">.dataSource</span> = dataSourceDelegate;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.collectionView</span><span class="variable">.delegate</span> = dataSourceDelegate;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.collectionView</span><span class="variable">.indexPath</span> = indexPath;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.collectionView</span> setContentOffset:<span class="keyword">self</span><span class="variable">.collectionView</span><span class="variable">.contentOffset</span> animated:<span class="literal">NO</span>];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.collectionView</span> reloadData];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<h3 id="Controller">Controller</h3><h4 id="UITableViewController_的实现">UITableViewController 的实现</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView willDisplayCell:(QTTableViewCell *)cell forRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="comment">// 为 TableViewCell 中的 CollectionView 设置不同的 collectionViewCellType 用以区别，此处一共 3 种样式。</span></span><br><span class="line">    <span class="keyword">if</span> (indexPath<span class="variable">.section</span> == <span class="number">0</span>) &#123;</span><br><span class="line">        cell<span class="variable">.collectionView</span><span class="variable">.collectionViewCellType</span> = CellTypeExplores;</span><br><span class="line">        <span class="built_in">NSInteger</span> index = cell<span class="variable">.collectionView</span><span class="variable">.indexPath</span><span class="variable">.row</span>;</span><br><span class="line">        <span class="built_in">CGFloat</span> horizontalOffset = [<span class="keyword">self</span><span class="variable">.contentOffsetDictionaryOfExplores</span>[[@(index) stringValue]] floatValue];</span><br><span class="line">        <span class="comment">// 设置 CollectionView 的 ContentOffset，在'- (void)scrollViewDidScroll:(UIScrollView *)scrollView;' 中存储的。</span></span><br><span class="line">        [cell<span class="variable">.collectionView</span> setContentOffset:<span class="built_in">CGPointMake</span>(horizontalOffset, <span class="number">0</span>)];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (indexPath<span class="variable">.section</span> == <span class="number">1</span>) &#123;</span><br><span class="line">        cell<span class="variable">.collectionView</span><span class="variable">.collectionViewCellType</span> = CellTypeBoards;</span><br><span class="line">        <span class="built_in">NSInteger</span> index = cell<span class="variable">.collectionView</span><span class="variable">.indexPath</span><span class="variable">.row</span>;</span><br><span class="line">        <span class="built_in">CGFloat</span> horizontalOffset = [<span class="keyword">self</span><span class="variable">.contentOffsetDictionaryOfBoards</span>[[@(index) stringValue]] floatValue];</span><br><span class="line">        <span class="comment">// 设置 CollectionView 的 ContentOffset。</span></span><br><span class="line">        [cell<span class="variable">.collectionView</span> setContentOffset:<span class="built_in">CGPointMake</span>(horizontalOffset, <span class="number">0</span>)];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (indexPath<span class="variable">.section</span> == <span class="number">2</span>) &#123;</span><br><span class="line">        cell<span class="variable">.collectionView</span><span class="variable">.collectionViewCellType</span> = CellTypeUsers;</span><br><span class="line">        <span class="built_in">NSInteger</span> index = cell<span class="variable">.collectionView</span><span class="variable">.indexPath</span><span class="variable">.row</span>;</span><br><span class="line">        <span class="built_in">CGFloat</span> horizontalOffset = [<span class="keyword">self</span><span class="variable">.contentOffsetDictionaryOfUsers</span>[[@(index) stringValue]] floatValue];</span><br><span class="line">        <span class="comment">// 设置 CollectionView 的 ContentOffset。</span></span><br><span class="line">        [cell<span class="variable">.collectionView</span> setContentOffset:<span class="built_in">CGPointMake</span>(horizontalOffset, <span class="number">0</span>)];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// !!!: 设置 CollectionView 的 DataSource 与 Delegate 及所处的 indexPath。</span></span><br><span class="line">    [cell setCollectionViewDataSourceDelegate:<span class="keyword">self</span> indexPath:indexPath];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>记住，在 UITableViewCell 中的 CollectionView 是在 Cell 之后初始化的，也就是在初始化这个 Cell 的之后要立即设置这个 Cell 中 CollectionView 的数据源跟代理。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">UICollectionViewCell</span> *)collectionView:(QTCollectionView *)collectionView cellForItemAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="built_in">UICollectionViewCell</span> *cell = <span class="literal">nil</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (collectionView<span class="variable">.collectionViewCellType</span> == CellTypeExplores) &#123;</span><br><span class="line">        cell = [collectionView dequeueReusableCellWithReuseIdentifier:ExploreCollectionViewCellID forIndexPath:indexPath];</span><br><span class="line">        <span class="keyword">if</span> ([cell isKindOfClass:[QTExploresCollectionViewCell class]]) &#123;</span><br><span class="line">            QTExploresCollectionViewCell *cellExplore = (QTExploresCollectionViewCell *) cell;</span><br><span class="line">            [cellExplore setupModel];</span><br><span class="line">            <span class="comment">// <span class="doctag">TODO:</span> 获取到相应的 Model 后进行赋值操作</span></span><br><span class="line">            <span class="comment">//            if (self.dataSourceExplores.count &gt; 0) &#123;</span></span><br><span class="line">            <span class="comment">//                cellExplore.exploreModel = self.dataSourceExplores[indexPath.row];</span></span><br><span class="line">            <span class="comment">//            &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (collectionView<span class="variable">.collectionViewCellType</span> == CellTypeBoards) &#123;</span><br><span class="line">        cell = [collectionView dequeueReusableCellWithReuseIdentifier:BoardCollectionViewCellID forIndexPath:indexPath];</span><br><span class="line">        <span class="keyword">if</span> ([cell isKindOfClass:[QTBoardsCollectionViewCell class]]) &#123;</span><br><span class="line">            QTBoardsCollectionViewCell *cellBoard = (QTBoardsCollectionViewCell *) cell;</span><br><span class="line">            [cellBoard setupModel];</span><br><span class="line">            <span class="comment">//            if (self.dataSourceBoards.count &gt; 0) &#123;</span></span><br><span class="line">            <span class="comment">//                cellBoard.boardModel = self.dataSourceBoards[indexPath.row];</span></span><br><span class="line">            <span class="comment">//            &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (collectionView<span class="variable">.collectionViewCellType</span> == CellTypeUsers) &#123;</span><br><span class="line">        cell = [collectionView dequeueReusableCellWithReuseIdentifier:UserCollectionViewCellID forIndexPath:indexPath];</span><br><span class="line">        <span class="keyword">if</span> ([cell isKindOfClass:[QTUsersCollectionViewCell class]]) &#123;</span><br><span class="line">            QTUsersCollectionViewCell *cellUser = (QTUsersCollectionViewCell *) cell;</span><br><span class="line">            [cellUser setupModel];</span><br><span class="line">            <span class="comment">//            if (self.dataSourceUsers.count &gt; 0) &#123;</span></span><br><span class="line">            <span class="comment">//                cellUser.userModel = self.dataSourceUsers[indexPath.row];</span></span><br><span class="line">            <span class="comment">//            &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> cell;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)scrollViewDidScroll:(<span class="built_in">UIScrollView</span> *)scrollView &#123;</span><br><span class="line">    <span class="keyword">if</span> (![scrollView isKindOfClass:[<span class="built_in">UICollectionView</span> class]])</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">CGFloat</span> horizontalOffset = scrollView<span class="variable">.contentOffset</span><span class="variable">.x</span>;</span><br><span class="line">    QTCollectionView *collectionView = (QTCollectionView *) scrollView;</span><br><span class="line">    <span class="built_in">NSInteger</span> index = collectionView<span class="variable">.indexPath</span><span class="variable">.row</span>;</span><br><span class="line">    <span class="comment">// 根据 collectionViewCellType 存储对应的偏移量</span></span><br><span class="line">    <span class="keyword">if</span> (collectionView<span class="variable">.collectionViewCellType</span> == CellTypeExplores) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.contentOffsetDictionaryOfExplores</span>[[@(index) stringValue]] = @(horizontalOffset);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (collectionView<span class="variable">.collectionViewCellType</span> == CellTypeBoards) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.contentOffsetDictionaryOfBoards</span>[[@(index) stringValue]] = @(horizontalOffset);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (collectionView<span class="variable">.collectionViewCellType</span> == CellTypeUsers) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.contentOffsetDictionaryOfUsers</span>[[@(index) stringValue]] = @(horizontalOffset);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于 Cell 的重用机制，我们需要通过辅助手段，记住每个 UICollectionView 中滑动的偏移量，这里通过：<code>- (void)scrollViewDidScroll:(UIScrollView *)scrollView</code> 实现。</p>
+<p>整个代码比较简单，辅助上注释，相信并不难理解。大功告成，我们来看下最后的实现效果吧：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-07.png" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/putting-a-uicollectionview-in-a-uitableviewcell-09.png" alt=""></p>
+<hr>
+<h2 id="感谢">感谢</h2><p>本文绝大部分思想来自 <a href="https://ashfurrow.com/blog/putting-a-uicollectionview-in-a-uitableviewcell/" target="_blank" rel="external">Putting a UICollectionView in a UITableViewCell</a>，再次表示感谢！</p>
+<p>如果你是个 Swifter，这里提供一篇基于 Swift 的文章 <a href="https://www.thorntech.com/2015/08/want-your-swift-app-to-scroll-in-two-directions-like-netflix-heres-how/" target="_blank" rel="external">https://www.thorntech.com/2015/08/want-your-swift-app-to-scroll-in-two-directions-like-netflix-heres-how/</a> 以供参考。</p>
+<hr>
+<h2 id="参考">参考</h2><ol>
+<li><a href="https://ashfurrow.com/blog/putting-a-uicollectionview-in-a-uitableviewcell/" target="_blank" rel="external">Putting a UICollectionView in a UITableViewCell</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>我知道是不会有人点的，但万一有人想不开呢？</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/wechat.jpg" alt="Qi Tang WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/alipay.jpg" alt="Qi Tang Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/UICollectionView/" rel="tag">#UICollectionView</a>
+          
+            <a href="/tags/UITableView/" rel="tag">#UITableView</a>
+          
+            <a href="/tags/UITableViewCell/" rel="tag">#UITableViewCell</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/31/bye2016-hi2017/" rel="next" title="Bye 2016, Hi 2017">
+                <i class="fa fa-chevron-left"></i> Bye 2016, Hi 2017
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/"
+     data-title="UITableViewCell 中嵌套 UICollectionView 的实现"
+     data-content=""
+     data-url="http://itangqi.me/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/"
+           data-title="UITableViewCell 中嵌套 UICollectionView 的实现" data-url="http://itangqi.me/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾地走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">45</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/imtangqi" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              小伙伴们
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://tikitoo.me/" title="安卓同学" target="_blank">安卓同学</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lovinghuan.com/" title="poberWong" target="_blank">poberWong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.zhaiyifan.cn/" title="MarkZhai" target="_blank">MarkZhai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yifeiyuan.me/" title="程序亦非猿" target="_blank">程序亦非猿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://abner-nimengbo.cn/" title="阿布" target="_blank">阿布</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.easydone.cn/" title="Ailurus" target="_blank">Ailurus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuxiaolong.me/" title="吴小龙同學" target="_blank">吴小龙同學</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://drakeet.me/" title="Drakeet" target="_blank">Drakeet</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.fangjie.info/" title="方杰" target="_blank">方杰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hujiaweibujidao.github.io/" title="五道口宅男" target="_blank">五道口宅男</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gudong.name/" title="咕咚" target="_blank">咕咚</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://soledad.me/" title="蔡越" target="_blank">蔡越</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-number">2.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">3.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Model"><span class="nav-number">4.1.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#View"><span class="nav-number">4.2.</span> <span class="nav-text">View</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义_UICollectionViewCell"><span class="nav-number">4.2.1.</span> <span class="nav-text">自定义 UICollectionViewCell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义_UICollectionView"><span class="nav-number">4.2.2.</span> <span class="nav-text">自定义 UICollectionView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义_UITableViewCell"><span class="nav-number">4.2.3.</span> <span class="nav-text">自定义 UITableViewCell</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller"><span class="nav-number">4.3.</span> <span class="nav-text">Controller</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UITableViewController_的实现"><span class="nav-number">4.3.1.</span> <span class="nav-text">UITableViewController 的实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#感谢"><span class="nav-number">5.</span> <span class="nav-text">感谢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"itangqi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cRxqlqW9Tlkg0rnkVdEPhC8o-gzGzoHsz", "sRfp02fY2qyxRj4KTp4AyzK7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
