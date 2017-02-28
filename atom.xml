@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2017-02-21T07:09:36.000Z</updated>
+  <updated>2017-02-28T11:36:00.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -13,6 +13,154 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[关于 UITableView's Separator Inset 的探究]]></title>
+    <link href="http://itangqi.me/2017/02/28/uitableview-cell-separatorinset/"/>
+    <id>http://itangqi.me/2017/02/28/uitableview-cell-separatorinset/</id>
+    <published>2017-02-27T16:00:00.000Z</published>
+    <updated>2017-02-28T11:36:00.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>这是一次关于 UITableView’s Separator Inset 的探究，请结合 Demo：<a href="https://github.com/tangqi92/QTSeparatorInsetTableView.git" target="_blank" rel="external">https://github.com/tangqi92/QTSeparatorInsetTableView.git</a> 阅读本文。</p>
+<a id="more"></a>
+<hr>
+<h2 id="需求">需求</h2><p>我相信，在平日的开发中，<code>UITableView</code> 绝对算得上使用最平凡的 <code>UIKit</code> 控件之一，并且必定会涉及到 <code>UITableView/UITableViewCell</code> 分割线的设置。</p>
+<p>下面，我们就来聊一聊，关于 <code>UITableView/UITableViewCell</code> 分割线的相关内容：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/uitableview-cell-separatorinset-01.png" alt=""></p>
+<p>如上图所示，按设计师的要求，在 <code>UITableView</code> 中 <code>Cell</code> 的分割线需要距离左右边距各 16pt。</p>
+<p>卧槽，这不很简单嘛！</p>
+<p>是吗？</p>
+<hr>
+<h2 id="边距为_0">边距为 0</h2><p>对于如此简单的页面，自定义 Cell 并添加分割线的方式虽然可行，但未免有些小题大做了。所以，在这里我直接使用系统自带的 <code>UITableViewCell</code> 来实现。</p>
+<p>天真的我，想都没想，直接设置 <code>self.tableView.separatorInset = UIEdgeInsetsMake(0, 16, 0, 16);</code>，然后分别测试了 iOS 8.x、iOS 9.x、iOS 10.x，结果显示效果一致，完美！</p>
+<p>但出于验证自己答案和寻找更多实现方式的目的，我决定看看大家都是如何实现的，于是 Google 一番后，找到了：<a href="http://stackoverflow.com/questions/25770119/ios-8-uitableview-separator-inset-0-not-working" target="_blank" rel="external">iOS 8 UITableView separator inset 0 not working</a> 。该问题的描述是「为何在 iOS 8 中设置 UITableView 分割线边距为 0 不起作用」，我想这不简单嘛，于是 <code>self.tableView.separatorInset = UIEdgeInsetsZero;</code> ，然后做了测试，显示效果见下表：</p>
+<table>
+<thead>
+<tr>
+<th>系统版本</th>
+<th style="text-align:center">测试用例</th>
+<th style="text-align:center">实现效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iOS 8.x</td>
+<td style="text-align:center">self.tableView.separatorInset = UIEdgeInsetsZero;</td>
+<td style="text-align:center">NO</td>
+</tr>
+<tr>
+<td>iOS 9.x</td>
+<td style="text-align:center">self.tableView.separatorInset = UIEdgeInsetsZero;</td>
+<td style="text-align:center">NO</td>
+</tr>
+<tr>
+<td>iOS 10.x</td>
+<td style="text-align:center">self.tableView.separatorInset = UIEdgeInsetsZero;</td>
+<td style="text-align:center">YES</td>
+</tr>
+</tbody>
+</table>
+<p>WTF（黑人问号脸？？？），这是什么情况？看来我真是「Too Young, Too Naive」…于是我又做了如下测试：</p>
+<table>
+<thead>
+<tr>
+<th>系统版本</th>
+<th style="text-align:center">测试用例</th>
+<th style="text-align:center">实现效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iOS 8.x</td>
+<td style="text-align:center">self.tableView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5);</td>
+<td style="text-align:center">NO</td>
+</tr>
+<tr>
+<td>iOS 9.x</td>
+<td style="text-align:center">self.tableView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5);</td>
+<td style="text-align:center">NO</td>
+</tr>
+<tr>
+<td>iOS 10.x</td>
+<td style="text-align:center">self.tableView.separatorInset = UIEdgeInsetsMake(0, 5, 0, 5);</td>
+<td style="text-align:center">YES</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>系统版本</th>
+<th style="text-align:center">测试用例</th>
+<th style="text-align:center">实现效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>iOS 8.x</td>
+<td style="text-align:center">self.tableView.separatorInset = UIEdgeInsetsMake(0, 25, 0, 25);</td>
+<td style="text-align:center">YES</td>
+</tr>
+<tr>
+<td>iOS 9.x</td>
+<td style="text-align:center">self.tableView.separatorInset = UIEdgeInsetsMake(0, 25, 0, 25);</td>
+<td style="text-align:center">YES</td>
+</tr>
+<tr>
+<td>iOS 10.x</td>
+<td style="text-align:center">self.tableView.separatorInset = UIEdgeInsetsMake(0, 25, 0, 25);</td>
+<td style="text-align:center">YES</td>
+</tr>
+</tbody>
+</table>
+<p>一定是姿势不对，嗯，一定的！</p>
+<hr>
+<h2 id="历史回顾">历史回顾</h2><p>为了探究其缘由，在经过一番查阅资料后，关于「分割线边距」（Separator Inset），我们可以得到如下总结：</p>
+<h3 id="Prior_to_iOS_7-x">Prior to iOS 7.x</h3><p>分割线默认边距为 <code>0</code>。</p>
+<h3 id="iOS_7-x">iOS 7.x</h3><p>新增 <a href="https://developer.apple.com/reference/uikit/uitableview/1614851-separatorinset?language=objc" target="_blank" rel="external">separatorInset</a> 属性，默认边距为 <code>15</code>，此时直接设置 <code>separatorInset</code> 值为 <code>UIEdgeInsetsZero</code> 即可。</p>
+<p>我们再来看下文档中关于 <code>separatorInset</code> 的解释：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/uitableview-cell-separatorinset-05.png" alt=""></p>
+<h3 id="iOS_8-x">iOS 8.x</h3><p>新增 <a href="https://developer.apple.com/reference/uikit/uiview/1622566-layoutmargins?language=objc" target="_blank" rel="external">layoutMargins</a> 属性，如直接设置 <code>separatorInset</code> 为 <code>UIEdgeInsetsZero</code> 无效。</p>
+<p>我们再来看下文档中关于 <code>layoutMargins</code> 的解释：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/uitableview-cell-separatorinset-06.png" alt=""></p>
+<p>中间又涉及到 <a href="https://developer.apple.com/reference/uikit/uiview/1622653-preservessuperviewlayoutmargins?language=objc" target="_blank" rel="external">preservesSuperviewLayoutMargins</a> 属性，其解释：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/uitableview-cell-separatorinset-08.png" alt=""></p>
+<p>简单来讲就是：<code>layoutMargins</code> 是 View 的 <code>bounds</code> 的边距，默认为 <code>8pt</code>。</p>
+<p>如果 <code>preservesSuperviewLayoutMargins</code> 属性设置为 <code>YES</code>，那么父控件的 <code>layoutMargins</code> 边距就将会影响其子控件。</p>
+<h3 id="iOS_9-x">iOS 9.x</h3><p>新增 <a href="https://developer.apple.com/reference/uikit/uitableview/1614849-celllayoutmarginsfollowreadablew?language=objc" target="_blank" rel="external">cellLayoutMarginsFollowReadableWidth</a> 属性，其解释：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A Boolean value that indicates whether the cell margins are derived from the width of the readable content guide.</span><br></pre></td></tr></table></figure>
+<p>该属性的作用：当设置为 <code>YES</code> 时，在 iPad 上，当 TableView 横屏时，会根据内容留有空白，如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/uitableview-cell-separatorinset-09.png" alt=""></p>
+<h3 id="iOS_10-x">iOS 10.x</h3><p>直接设置 tableview 的 <code>separatorInset</code> 即可。</p>
+<hr>
+<h2 id="实现">实现</h2><p>所以，为了能完美实现「分割线边距可控」的需求，我们需要如下操作：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)tableView:(<span class="built_in">UITableView</span> *)tableView willDisplayCell:(<span class="built_in">UITableViewCell</span> *)cell forRowAtIndexPath:(<span class="built_in">NSIndexPath</span> *)indexPath &#123;</span><br><span class="line">    <span class="comment">// If cell margins are derived from the width of the readableContentGuide.</span></span><br><span class="line">    <span class="comment">// NS_AVAILABLE_IOS(9_0)，需进行判断</span></span><br><span class="line">    <span class="comment">// 设置为 NO，防止在横屏时留白</span></span><br><span class="line">    <span class="keyword">if</span> ([tableView respondsToSelector:<span class="keyword">@selector</span>(setCellLayoutMarginsFollowReadableWidth:)]) &#123;</span><br><span class="line">        tableView<span class="variable">.cellLayoutMarginsFollowReadableWidth</span> = <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Prevent the cell from inheriting the Table View's margin settings.</span></span><br><span class="line">    <span class="comment">// NS_AVAILABLE_IOS(8_0)，需进行判断</span></span><br><span class="line">    <span class="comment">// 阻止 Cell 继承来自 TableView 相关的设置（LayoutMargins or SeparatorInset），设置为 NO 后，Cell 可以独立地设置其自身的分割线边距而不依赖于 TableView</span></span><br><span class="line">    <span class="keyword">if</span> ([cell respondsToSelector:<span class="keyword">@selector</span>(setPreservesSuperviewLayoutMargins:)]) &#123;</span><br><span class="line">        [cell setPreservesSuperviewLayoutMargins:<span class="literal">NO</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Remove seperator inset.</span></span><br><span class="line">    <span class="comment">// NS_AVAILABLE_IOS(8_0)，需进行判断</span></span><br><span class="line">    <span class="comment">// 移除 Cell 的 layoutMargins（即设置为 0）</span></span><br><span class="line">    <span class="keyword">if</span> ([cell respondsToSelector:<span class="keyword">@selector</span>(setLayoutMargins:)]) &#123;</span><br><span class="line">        [cell setLayoutMargins:<span class="built_in">UIEdgeInsetsZero</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Explictly set your cell's layout margins.</span></span><br><span class="line">    <span class="comment">// NS_AVAILABLE_IOS(7_0)，需进行判断</span></span><br><span class="line">    <span class="comment">// 根据需求设置相应的边距</span></span><br><span class="line">    <span class="keyword">if</span> ([cell respondsToSelector:<span class="keyword">@selector</span>(setSeparatorInset:)]) &#123;</span><br><span class="line">        [cell setSeparatorInset:<span class="built_in">UIEdgeInsetsMake</span>(<span class="number">0</span>, <span class="number">16</span>, <span class="number">0</span>, <span class="number">16</span>)];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好啦，以上就是由一个简单的需求「设置分割线边距」引发的一系列探究，希望对你有所帮助。</p>
+<hr>
+<h2 id="疑问">疑问</h2><p>对于 iOS 10.x 直接设置 <code>self.tableView.separatorInset = UIEdgeInsetsMake(0, xx, 0, xx);</code> 便能实现效果，我到目前仍没有找到明确的答案，如果你正巧看到这，又正巧知道原因，希望能告知我一下，先在此表示感谢：）</p>
+<hr>
+<h2 id="参考">参考</h2><ol>
+<li><a href="http://stackoverflow.com/questions/25770119/ios-8-uitableview-separator-inset-0-not-working" target="_blank" rel="external">iOS 8 UITableView separator inset 0 not working</a></li>
+<li><a href="http://johnszumski.com/blog/hiding-table-separators-on-a-cell-by-cell-basis" target="_blank" rel="external">Hiding Table Separators on a Cell-by-Cell Basis</a></li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>这是一次关于 UITableView’s Separator Inset 的探究，请结合 Demo：<a href="https://github.com/tangqi92/QTSeparatorInsetTableView.git">https://github.com/tangqi92/QTSeparatorInsetTableView.git</a> 阅读本文。</p>]]>
+    
+    </summary>
+    
+      <category term="Inset" scheme="http://itangqi.me/tags/Inset/"/>
+    
+      <category term="Margin" scheme="http://itangqi.me/tags/Margin/"/>
+    
+      <category term="Separator" scheme="http://itangqi.me/tags/Separator/"/>
+    
+      <category term="UITableView" scheme="http://itangqi.me/tags/UITableView/"/>
+    
+      <category term="UITableViewCell" scheme="http://itangqi.me/tags/UITableViewCell/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[UITableViewCell 中嵌套 UICollectionView 的实现]]></title>
@@ -2485,177 +2633,6 @@
       <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
     
       <category term="HTTP" scheme="http://itangqi.me/categories/HTTP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[从 NSURLConnection 到 NSURLSession]]></title>
-    <link href="http://itangqi.me/2016/04/01/from-nsurlconnection-to-nsurlsession/"/>
-    <id>http://itangqi.me/2016/04/01/from-nsurlconnection-to-nsurlsession/</id>
-    <published>2016-03-31T16:00:00.000Z</published>
-    <updated>2016-05-28T03:50:28.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>现如今的移动应用开发，网络模块几乎成了标配。如果你是早期 iOS 开发者的话，那么你对 <code>NSURLConnection</code>一定不会陌生。但其操作起来有许多不便，这也使得大家更愿意使用第三方库的解决方案，比如大名鼎鼎的 <a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a> 你一定有所耳闻。正是因为这一点，苹果随着 iOS 7 的发布，也为开发者带来了改进后的原生网络库支持，那就是 NSURLSession。</p>
-<p>今天，就让我来给你道一道从 <code>NSURLConnection</code> 到 <code>NSURLSession</code> 那些你知道和不知道的事。 </p>
-<a id="more"></a>
-<hr>
-<h2 id="NSURLConnection">NSURLConnection</h2><p><code>NSURLConnection</code> 作为 Core Foundation / CFNetwork 框架的 API 之上的一个抽象，在 2003 年，随着第一版的 Safari 的发布就发布了。<code>NSURLConnection</code> 这个名字，实际上是指代的 Foundation 框架的 URL 加载系统中一系列相关联的组件：<code>NSURLRequest</code>、<code>NSURLResponse</code>、<code>NSURLProtocol</code>、 <code>NSURLCache</code>、 <code>NSHTTPCookieStorage</code>、<code>NSURLCredentialStorage</code> 以及同名类 <code>NSURLConnection</code>。</p>
-<p><code>NSURLRequest</code> 被传递给 <code>NSURLConnection</code>。被委托对象（遵守以前的非正式协议 <code>&lt;NSURLConnectionDelegate&gt;</code> 和 <code>&lt;NSURLConnectionDataDelegate&gt;</code>）异步地返回一个 <code>NSURLResponse</code> 以及包含服务器返回信息的 <code>NSData</code>。</p>
-<p>在一个请求被发送到服务器之前，系统会先查询共享的缓存信息，然后根据策略（policy）以及可用性（availability）的不同，一个已经被缓存的响应可能会被立即返回。如果没有缓存的响应可用，则这个请求将根据我们指定的策略来缓存它的响应以便将来的请求可以使用。</p>
-<p>在把请求发送给服务器的过程中，服务器可能会发出鉴权查询（authentication challenge），这可以由共享的 cookie 或机密存储（credential storage）来自动响应，或者由被委托对象来响应。发送中的请求也可以被注册的 <code>NSURLProtocol</code> 对象所拦截，以便在必要的时候无缝地改变其加载行为。</p>
-<h3 id="使用步骤">使用步骤</h3><h4 id="概览">概览</h4><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/from-nsurlconnection-to-nsurlsession-003.png" alt="">（<a href="http://hayageek.com/ios-nsurlsession-example/" target="_blank" rel="external">图片来自</a>）</p>
-<h4 id="NSURL">NSURL</h4><p>创建一个 <code>NSURL</code> 对象，设置请求路径：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"协议://主机地址/路径?参数&amp;参数"</span>];</span><br></pre></td></tr></table></figure>
-<p>解释如下：</p>
-<ul>
-<li>协议：不同的协议，代表着不同的资源查找方式、资源传输方式，比如常用的 HTTP、FTP 等</li>
-<li>主机地址：存放资源的主机的 IP 地址（域名）</li>
-<li>路径：资源在主机中的具体位置</li>
-<li>参数：参数可有可无，也可以多个。如果带参数的话，用 “?” 号后面接参数，多个参数的话之间用 “&amp;” 隔开</li>
-</ul>
-<h4 id="NSURLRequest">NSURLRequest</h4><p>创建一个 <code>NSURLRequest</code> 对象并传入 <code>NSURL</code>，设置请求头和请求体：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:url cachePolicy:<span class="built_in">NSURLRequestUseProtocolCachePolicy</span> timeoutInterval:<span class="number">15.0</span>];</span><br></pre></td></tr></table></figure>
-<p>参数解释如下：</p>
-<ul>
-<li>requestWithURL：资源路径</li>
-<li>cachePolicy：缓存策略（无论使用哪种缓存策略，都会在本地缓存数据），类型为枚举类型，取值如下：<ul>
-<li>NSURLRequestUseProtocolCachePolicy = 0 // 默认的缓存策略，使用协议的缓存策略</li>
-<li>NSURLRequestReloadIgnoringLocalCacheData = 1 // 每次都从网络加载</li>
-<li>NSURLRequestReturnCacheDataElseLoad = 2 // 返回缓存否则加载，很少使用</li>
-<li>NSURLRequestReturnCacheDataDontLoad = 3 // 只返回缓存，没有也不加载，很少使用</li>
-</ul>
-</li>
-<li>timeoutInterval：超时时长，默认 60s</li>
-</ul>
-<p>另外，还可以设置其它一些信息，比如请求头，请求体等等，如下：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 告诉服务器数据为 JSON 类型</span></span><br><span class="line">[request setValue:<span class="string">@"application/json"</span> forHTTPHeaderField:<span class="string">@"Content-Type"</span>]; </span><br><span class="line"><span class="comment">// 设置请求体（JSON类型）</span></span><br><span class="line"><span class="built_in">NSData</span> *jsonData = [<span class="built_in">NSJSONSerialization</span> dataWithJSONObject:@&#123;<span class="string">@"userid"</span>:<span class="string">@"123456"</span>&#125; options:<span class="built_in">NSJSONWritingPrettyPrinted</span> error:<span class="literal">nil</span>];</span><br><span class="line">request<span class="variable">.HTTPBody</span> = jsonData;</span><br></pre></td></tr></table></figure>
-<p>注意，上面的 request 应为 <code>NSMutableURLRequest</code>，即可变类型。（使用 POST 请求的话，那么就必须的使用 <code>NSMutableURLRequest</code>）</p>
-<h4 id="NSURLConnection-1">NSURLConnection</h4><p>使用 <code>NSURLConnection</code> 发送请求，通过返回 <code>NSURLResponse</code> 实例和 <code>NSError</code> 实例分析结果，接受服务器返回数据。</p>
-<p><code>NSURLConnection</code> 默认的请求类型为 GET，下面分异步和同步介绍 GET 的使用（POST 会在 <code>NSURLSession</code> 中介绍）。</p>
-<p><strong>异步请求</strong></p>
-<p>异步是指：在发送请求之后，一边在子线程中接收返回数据，一边执行之后的代码，当返回数据接收完毕后，采用回调的方式通知主线程做处理。同时，异步请求有两种实现方式。</p>
-<p>1.使用 block：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[<span class="built_in">NSURLConnection</span> sendAsynchronousRequest:request queue:[[<span class="built_in">NSOperationQueue</span> alloc] init] completionHandler:^(<span class="built_in">NSURLResponse</span> *response, <span class="built_in">NSData</span> *data, <span class="built_in">NSError</span> *connectionError) &#123;</span><br><span class="line">    <span class="comment">// 有的时候，服务器访问正常，但是会没有数据</span></span><br><span class="line">    <span class="comment">// 以下的 if 是比较标准的错误处理代码</span></span><br><span class="line">    <span class="keyword">if</span> (connectionError != <span class="literal">nil</span> || data == <span class="literal">nil</span>) &#123;</span><br><span class="line">        <span class="comment">//给用户的提示信息</span></span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"网络不给力"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
-<p>参数说明如下：</p>
-<ul>
-<li>completionHandler:请求响应后（或者请求超时）执行的代码，queue 为代码添加到的队列，即 block执行的线程<ul>
-<li>NSURLResponse 为服务器的响应，真实类型为 NSHTTPURLResponse，通常只在「下载」功能时，才会使用；下面是协议头的参数：<ul>
-<li>URL：响应的 URL，有的时候，访问一个 URL 地址，服务器可能会出现重定向，会定位到新的地址</li>
-<li>MIMEType（Content-Type）：服务器告诉客户端，可以用什么软件打开二进制数据。网络之所以丰富多采，是因为有丰富的客户端软件。栗子：Windows 上提示安装 Flash 插件</li>
-<li>expectedContentLength：预期的内容长度，要下载的文件长度，下载文件时非常有用</li>
-<li>suggestedFilename：「建议」的文件名，方便用户直接保存，很多时候，用户并不关心要保存成什么名字</li>
-<li>textEncodingName：文本的编码名称 @”UTF8”，大多数都是 UTF8</li>
-<li>statusCode：状态码，在做下载操作的时候，需要判断一下</li>
-<li>allHeaderFields：所有的响应头字典时候，用户并不关心要保存成什么名字</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>NSData：服务器返回的数据，例如：JSON、XML</li>
-<li>NSError：网络访问错误码</li>
-</ul>
-<p>2.使用代理（Delegate）:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()&lt;<span class="title">NSURLConnectionDataDelegate</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSURL</span> * url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://itangqi.me"</span>];</span><br><span class="line"><span class="built_in">NSURLRequest</span> * request = [<span class="built_in">NSURLRequest</span> requestWithURL:url];</span><br><span class="line">[<span class="built_in">NSURLConnection</span> connectionWithRequest:request delegate:<span class="keyword">self</span>];</span><br></pre></td></tr></table></figure>
-<p>使用代理可以监测下载过程：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveResponse:(<span class="built_in">NSURLResponse</span> *)response &#123;</span><br><span class="line">    <span class="comment">// 开始接收数据</span></span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveData:(<span class="built_in">NSData</span> *)data &#123;</span><br><span class="line">    <span class="comment">// 正在接收数据(会调用多次)</span></span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didFailWithError:(<span class="built_in">NSError</span> *)error &#123;</span><br><span class="line">    <span class="comment">// 接收数据失败</span></span><br><span class="line">&#125;</span><br><span class="line">-(<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection &#123;</span><br><span class="line">    <span class="comment">// 接收数据完成(成功|失败)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>同步</strong></p>
-<p>同步是指：数据的请求在主线程来执行，一旦发送同步请求，直至服务器返回数据完成，才可以进行下一步操作，而网络数据加载需要一个时间过程，这样的话就会堵塞主线程，当然这种使用场景很少。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同步请求，代码会阻塞在这里一直等待服务器返回，如果 data 为 nil 则请求失败，当获取少量数据时可以使用此方法。</span></span><br><span class="line"><span class="comment">// request 参数同上。</span></span><br><span class="line"><span class="built_in">NSData</span> *data = [<span class="built_in">NSURLConnection</span> sendSynchronousRequest:request returningResponse:<span class="literal">nil</span> error:<span class="literal">nil</span>];</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="NSURLSession">NSURLSession</h2><p>不管怎样，<code>NSURLConnection</code> 作为网络基础架构，已经服务了成千上万的 iOS 和 Mac OS 程序，并且做的还算相当不错。但是这些年，一些用例——尤其是在 iPhone 和 iPad 上面——已经对 <code>NSURLConnection</code> 的几个核心概念提出了挑战，让苹果有理由对它进行重构。</p>
-<p>在 2013 的 WWDC 上，苹果推出了 <code>NSURLConnection</code> 的继任者：<code>NSURLSession</code>。</p>
-<p>和 <code>NSURLConnection</code> 一样，<code>NSURLSession</code> 指的也不仅是同名类 <code>NSURLSession</code>，还包括一系列相互关联的类。<code>NSURLSession</code> 包括了与之前相同的组件，<code>NSURLRequest</code> 与 <code>NSURLCache</code>，但是把 <code>NSURLConnection</code> 替换成了 <code>NSURLSession</code>、<code>NSURLSessionConfiguration</code> 以及 <code>NSURLSessionTask</code> 的 3 个子类：<code>NSURLSessionDataTask</code>，<code>NSURLSessionUploadTask</code>，<code>NSURLSessionDownloadTask</code>。</p>
-<p>与 <code>NSURLConnection</code> 相比，<code>NSURLsession</code> 最直接的改进就是可以配置每个 session 的缓存，协议，cookie，以及证书策略（credential policy），甚至跨程序共享这些信息。这将允许程序和网络基础框架之间相互独立，不会发生干扰。每个 <code>NSURLSession</code> 对象都由一个 <code>NSURLSessionConfiguration</code> 对象来进行初始化，后者指定了刚才提到的那些策略以及一些用来增强移动设备上性能的新选项。</p>
-<p><code>NSURLSession</code> 中另一大块就是 session task。它负责处理数据的加载以及文件和数据在客户端与服务端之间的上传和下载。<code>NSURLSessionTask</code> 与 <code>NSURLConnection</code> 最大的相似之处在于它也负责数据的加载，最大的不同之处在于所有的 task 共享其创造者 <code>NSURLSession</code> 这一公共委托者（common delegate）。</p>
-<p>我们先来深入探讨 task，过后再来讨论 <code>NSURLSessionConfiguration</code>。</p>
-<h3 id="概览-1">概览</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/from-nsurlconnection-to-nsurlsession-002.png" alt="">（<a href="http://hayageek.com/ios-nsurlsession-example/" target="_blank" rel="external">图片来自</a>）</p>
-<h3 id="Sessions">Sessions</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用静态的 sharedSession 的方法，该类使用共享的 seesion，该 seesion 使用全局的 Cache，Cookie 和证书</span></span><br><span class="line">+ (<span class="built_in">NSURLSession</span> *)sharedSession;  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据 NSURLSessionConfiguration 创建对应配置的 seesion</span></span><br><span class="line">+ (<span class="built_in">NSURLSession</span> *)sessionWithConfiguration:(<span class="built_in">NSURLSessionConfiguration</span> *)configuration; </span><br><span class="line"></span><br><span class="line"><span class="comment">// 也是根据 NSURLSessionConfiguration 创建对应配置的 seesion，并且可以指定 seesion 的委托和委托所处的队列</span></span><br><span class="line">+ (<span class="built_in">NSURLSession</span> *)sessionWithConfiguration:(<span class="built_in">NSURLSessionConfiguration</span> *)configuration delegate:(<span class="keyword">id</span> &lt;<span class="built_in">NSURLSessionDelegate</span>&gt;)delegate delegateQueue:(<span class="built_in">NSOperationQueue</span> *)queue;</span><br></pre></td></tr></table></figure>
-<h3 id="NSURLSessionTask">NSURLSessionTask</h3><p><code>NSURLSession</code> 本身是不会进行请求的，而是通过创建 task 的形式进行网络请求，同一个 NSURLSession 可以创建多个 task，并且这些 task 之间的 cache 和 cookie 是共享的。那么我们就来看看 NSURLSession 都能创建哪些 task 吧。</p>
-<p>Task 可以翻译为任务，那么在和网络请求相关的任务中，我们可以理解为：数据请求任务、下载任务、上传任务等。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/from-nsurlconnection-to-nsurlsession-001.png" alt=""></p>
-<p>其实从类名就能猜出它们各自的用途：</p>
-<ol>
-<li><p><code>NSURLSessionDataTask</code>：使用这个 task 来调用 HTTP GET 方式请求，从服务器获取数据到内存。返回的数据格式是 NSData，可根据需要自行转换成 XML、JSON 等数据格式</p>
-</li>
-<li><p><code>NSURLSessionUploadTask</code>：使用这个 task 来上传磁盘文件到 web 服务器，典型地通过 HTTP POST 或者 PUT 方式</p>
-</li>
-<li><p><code>NSURLSessionDownloadTask</code>：使用这个 task 来从远程服务器下载文件到临时文件地址</p>
-</li>
-<li><p><code>NSURLSessionStreamTask</code>：使用这个 task 来执行异步的读和写</p>
-</li>
-</ol>
-<p>你也能暂停，恢复（开始）和取消 tasks。</p>
-<h4 id="NSURLSessionDataTask_POST">NSURLSessionDataTask POST</h4><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> *  简单 Post 请求，POST 和 GET 请求在于对 request 的处理不同，其余和 GET 相同</span><br><span class="line"> */</span></span><br><span class="line">- (<span class="keyword">void</span>)postWithSharedSession &#123;</span><br><span class="line">  <span class="comment">// 获取默认 Session</span></span><br><span class="line">  <span class="built_in">NSURLSession</span> *session = [<span class="built_in">NSURLSession</span> sharedSession];</span><br><span class="line">  <span class="comment">// 创建 URL</span></span><br><span class="line">  <span class="built_in">NSURL</span> *url = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://120.25.226.186:32812/login"</span>];</span><br><span class="line">  <span class="comment">// 创建 request</span></span><br><span class="line">  <span class="built_in">NSMutableURLRequest</span> *request = [<span class="built_in">NSMutableURLRequest</span> requestWithURL:url];</span><br><span class="line">  <span class="comment">// 请求方法</span></span><br><span class="line">  request<span class="variable">.HTTPMethod</span> = <span class="string">@"POST"</span>;</span><br><span class="line">  <span class="comment">// 请求体</span></span><br><span class="line">  request<span class="variable">.HTTPBody</span> = [<span class="string">@"username=1234&amp;pwd=4321"</span> dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</span><br><span class="line">  <span class="comment">// 创建任务 task</span></span><br><span class="line">  <span class="built_in">NSURLSessionDataTask</span> *task = [session dataTaskWithRequest:request completionHandler:^(<span class="built_in">NSData</span> * _Nullable data, <span class="built_in">NSURLResponse</span> * _Nullable response, <span class="built_in">NSError</span> * _Nullable error) &#123;</span><br><span class="line">  <span class="comment">// 获取数据后解析并输出</span></span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[<span class="built_in">NSJSONSerialization</span> JSONObjectWithData:data options:kNilOptions error:<span class="literal">nil</span>]);</span><br><span class="line">  &#125;];</span><br><span class="line">  <span class="comment">// 启动任务</span></span><br><span class="line">  [task resume];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="NSURLSessionDataDelegate_代理方法">NSURLSessionDataDelegate 代理方法</h4><p><code>NSURLSession</code> 提供了 block 的方式处理返回的数据，但是如果我们想要在接收数据的过程中处理数据，我们可以使用 <code>NSURLSessionDataDelegate</code> 的代理方法，分为接收响应、接收数据和请求完成三个阶段。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"> - (<span class="keyword">void</span>)sessionDataDelegate &#123;</span><br><span class="line"> <span class="comment">// 创建带有代理方法的自定义 session</span></span><br><span class="line"><span class="built_in">NSURLSession</span> *session = [<span class="built_in">NSURLSession</span> sessionWithConfiguration:[<span class="built_in">NSURLSessionConfiguration</span> defaultSessionConfiguration] delegate:<span class="keyword">self</span> delegateQueue:[<span class="built_in">NSOperationQueue</span> mainQueue]];</span><br><span class="line"> </span><br><span class="line"> <span class="comment">// 创建任务</span></span><br><span class="line"><span class="built_in">NSURLSessionDataTask</span> *task = [session dataTaskWithRequest:[<span class="built_in">NSURLRequest</span> requestWithURL:[<span class="built_in">NSURL</span> URLWithString:<span class="string">@"http://120.25.226.186:32812/login?username=1234&amp;pwd=4321"</span>]]];</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 启动任务</span></span><br><span class="line">[task resume];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 1. 接受到服务器的响应</span></span><br><span class="line">- (<span class="keyword">void</span>)URLSession:(<span class="built_in">NSURLSession</span> *)session dataTask:(<span class="built_in">NSURLSessionDataTask</span> *)dataTask didReceiveResponse:(<span class="built_in">NSURLResponse</span> *)response completionHandler:(<span class="keyword">void</span> (^)(<span class="built_in">NSURLSessionResponseDisposition</span>))completionHandler &#123;</span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"任务完成"</span>);</span><br><span class="line">  <span class="comment">// 必须设置对响应进行允许处理才会执行后面两个操作。</span></span><br><span class="line">  completionHandler(<span class="built_in">NSURLSessionResponseAllow</span>);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2. 接收到服务器的数据（可能调用多次）</span></span><br><span class="line">- (<span class="keyword">void</span>)URLSession:(<span class="built_in">NSURLSession</span> *)session dataTask:(<span class="built_in">NSURLSessionDataTask</span> *)dataTask didReceiveData:(<span class="built_in">NSData</span> *)data &#123;</span><br><span class="line">  <span class="comment">// 处理每次接收的数据</span></span><br><span class="line">  <span class="built_in">NSLog</span>(<span class="string">@"%s"</span>,__func__);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 3. 请求成功或者失败（如果失败，error有值）</span></span><br><span class="line">- (<span class="keyword">void</span>)URLSession:(<span class="built_in">NSURLSession</span> *)session task:(<span class="built_in">NSURLSessionTask</span> *)task didCompleteWithError:(<span class="built_in">NSError</span> *)error &#123;</span><br><span class="line">    <span class="comment">// 请求完成,成功或者失败的处理</span></span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"SessionTask %s"</span>,__func__);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="NSURLSessionConfiguration">NSURLSessionConfiguration</h3><p><code>NSURLSessionConfiguration</code> 对象用于对 <code>NSURLSession</code> 对象进行初始化。从指定可用网络，到 cookie，安全性，缓存策略，再到使用自定义协议，启动事件的设置，以及用于移动设备优化的几个新属性，你会发现使用 <code>NSURLSessionConfiguration</code> 可以找到几乎任何你想要进行配置的选项。其有三个类工厂方法：</p>
-<ol>
-<li><p>默认模式（+defaultSessionConfiguration）：返回一个标准的 configuration，工作模式类似于 NSURLConnection，可以使用缓存的 Cache，Cookie，证书（credential）</p>
-</li>
-<li><p>及时模式（+ephemeralSessionConfiguration）: 临时 session 配置，与默认配置相比，这个配置不会使用缓存的 Cache，Cookie，证书，只会存在内存里，所以当程序退出时，所有的数据都会消失，这对于实现像秘密浏览这种功能来说是很理想的</p>
-</li>
-<li><p>后台模式（+backgroundSessionConfiguration）：它会创建一个后台 session。后台 session 不同于常规的，普通的 session，它甚至可以在应用程序挂起，退出或者崩溃的情况下运行上传和下载任务。初始化时指定的标识符，被用于向任何可能在进程外恢复后台传输的守护进程（daemon）提供上下文</p>
-</li>
-</ol>
-<p>除了这三种预设的模式之外 <code>NSURLSessionConfiguration</code> 还可以进行很多的配置。 <code>timeoutIntervalForRequest</code> 和 <code>timeoutIntervalForResource</code> 可以控制网络操作的超时时间。 <code>allowsCellularAccess</code> 属性可以控制是否允许使用无线网络。<code>HTTPAdditionalHeaders</code> 可以指定 HTTP 请求头。</p>
-<p><code>NSURLSessionConfiguration</code> 几乎可以完成网络操作的大多数配置功能，并且这些配置都绑定到当前的 Session 中，我们一旦用配置好的 <code>NSURLSessionConfiguration</code> 初始化 <code>NSURLSession</code> 实例后，就不能修改这个 <code>NSURLSession</code> 相关的配置了。所以，一切的配置操作都放在初始化 <code>NSURLSession</code> 之前。</p>
-<hr>
-<h2 id="iOS_9">iOS 9</h2><ol>
-<li><p>在 iOS 7 后，苹果推荐使用 <code>NSURLSession</code>，并在 iOS 9 中废弃了 <code>NSURLConnection</code> </p>
-</li>
-<li><p>iOS 9 所有网络连接默认为 HTTPS 服务，为此推出 App Transport Security，详情可参见：<a href="https://developer.apple.com/videos/play/wwdc2015/711/" target="_blank" rel="external">Networking with NSURLSession</a></p>
-</li>
-</ol>
-<hr>
-<h2 id="NSURLConnection_vs-_NSURLSession">NSURLConnection vs. NSURLSession</h2><ol>
-<li><p>后台上传和下载：只需在创建 <code>NSURLSession</code> 的时候配置一个选项，就能得到后台网络的所有好处。这样可以延长电池寿命，并且还支持 UIKit 的多 task，在进程间使用相同的委托模型</p>
-</li>
-<li><p>能够暂停和恢复网络操作：使用 NSURLSession API 能够暂停，停止，恢复所有的网络任务，再也完全不需要子类化 NSOperation</p>
-</li>
-<li><p>可配置的容器：对于 <code>NSURLSession</code> 里面的 requests 来说，每个<code>NSURLSession</code> 都是可配置的容器。举个例来说，假如你需要设置 HTTP header 选项，你只用做一次，session 里面的每个 request 就会有同样的配置</p>
-</li>
-<li><p>提高认证处理：认证是在一个指定的连接基础上完成的。在使用 <code>NSURLConnection</code> 时，如果发出一个访问，会返回一个任意的 request。此时，你就不能确切的知道哪个 request 收到了访问。而在 NSURLSession 中，就能用代理处理认证</p>
-</li>
-<li><p>丰富的代理模式：在处理认证的时候，<code>NSURLConnection</code> 有一些基于异步的 block 方法，但是它的代理方法就不能处理认证，不管请求是成功或是失败。在 <code>NSURLSession</code> 中，可以混合使用代理和 block 方法处理认证</p>
-</li>
-<li><p>上传和下载通过文件系统：它鼓励将数据（文件内容）从元数据（URL 和 settings）中分离出来</p>
-</li>
-</ol>
-<h2 id="要点">要点</h2><ol>
-<li><p>请求的缓存策略使用 <code>NSURLRequestReloadIgnoringCacheData</code>，忽略本地缓存</p>
-</li>
-<li><p>服务器响应结束后，要记录 Etag，服务器内容和本地缓存对比是否变化的重要依据</p>
-</li>
-<li><p>在发送请求时，设置 If-None-Match，并且传入 etag</p>
-</li>
-<li><p>连接结束后，要判断响应头的状态码，如果是 304，说明本地缓存内容没有发生变化，此时可以使用本地缓存来加载数据，如果缓存文件被意外删除，程序依然运行但会报错，加载数据也失败</p>
-</li>
-<li><p>GET 缓存的数据会保存在 Cache 目录中 /bundleId 下，Cache.db 中</p>
-</li>
-</ol>
-<hr>
-<h2 id="参考">参考</h2><ul>
-<li><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Reference/Foundation/Classes/NSURLConnection_Class/" target="_blank" rel="external">NSURLConnection Class Reference</a></li>
-<li><a href="https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSURLSession_class/" target="_blank" rel="external">NSURLSession Class Reference</a></li>
-<li><a href="https://www.objc.io/issues/5-ios7/from-nsurlconnection-to-nsurlsession/" target="_blank" rel="external">From NSURLConnection to NSURLSession</a></li>
-<li><a href="http://www.cnblogs.com/mddblog/p/5134783.html" target="_blank" rel="external">iOS网络1——NSURLConnection使用详解</a></li>
-<li><a href="http://blog.qiji.tech/archives/6454" target="_blank" rel="external">[iOS] NSURLSession</a></li>
-<li><a href="http://swiftcafe.io/2015/12/20/nsurlsession/" target="_blank" rel="external">NSURLSession 网络库 - 原生系统送给我们的礼物</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="前言">前言</h2><p>现如今的移动应用开发，网络模块几乎成了标配。如果你是早期 iOS 开发者的话，那么你对 <code>NSURLConnection</code>一定不会陌生。但其操作起来有许多不便，这也使得大家更愿意使用第三方库的解决方案，比如大名鼎鼎的 <a href="https://github.com/AFNetworking/AFNetworking">AFNetworking</a> 你一定有所耳闻。正是因为这一点，苹果随着 iOS 7 的发布，也为开发者带来了改进后的原生网络库支持，那就是 NSURLSession。</p>
-<p>今天，就让我来给你道一道从 <code>NSURLConnection</code> 到 <code>NSURLSession</code> 那些你知道和不知道的事。 </p>]]>
-    
-    </summary>
-    
-      <category term="NSURLConnection" scheme="http://itangqi.me/tags/NSURLConnection/"/>
-    
-      <category term="NSURLSession" scheme="http://itangqi.me/tags/NSURLSession/"/>
-    
-      <category term="Networking" scheme="http://itangqi.me/tags/Networking/"/>
-    
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
     
   </entry>
   

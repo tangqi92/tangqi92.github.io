@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/2017/02/28/uitableview-cell-separatorinset/</loc>
+    <lastmod>2017-02-28T11:36:00.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/</loc>
     <lastmod>2017-02-21T07:09:36.000Z</lastmod>
   </url>
