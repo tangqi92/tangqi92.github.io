@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="Qi Tang's Blog">
 <meta property="og:description" content="前言不知不觉，我们已经通过前面两篇文章的介绍（我是链接=;=），对 SDWebImage 的工作流程有了较为清晰的认识，那么，今天就让我们把重点放在 SDWebImageDownloader 上，它到底做了哪些工作？又有哪些奇淫技巧？别着急，你慢慢往下看：）">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-sdwebimage-three-01.png">
-<meta property="og:updated_time" content="2016-07-13T02:36:50.000Z">
+<meta property="og:updated_time" content="2017-03-01T04:29:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage 源码阅读笔记（三）">
 <meta name="twitter:description" content="前言不知不觉，我们已经通过前面两篇文章的介绍（我是链接=;=），对 SDWebImage 的工作流程有了较为清晰的认识，那么，今天就让我们把重点放在 SDWebImageDownloader 上，它到底做了哪些工作？又有哪些奇淫技巧？别着急，你慢慢往下看：）">
@@ -420,7 +420,7 @@
 <h2 id="要点">要点</h2><ol>
 <li>通知的接收所在的线程是基于发送通知所在的线程，如果通知是在主线程发出的，通知的接收也是在主线程，如果通知的发送是在子线程，通知的接收也是在子线程。（如果想回主线程，可使用 <code>dispatch_async(dispatch_get_main_queue(), ^</code>）</li>
 </ol>
-<p>关于 SDWebImage 的整体分析就到这里啦，我会在终结篇：<a href="">SDWebImage 源码阅读笔记（四）</a>中对某些知识点进行扩展，感兴趣的同学不妨去瞅瞅呗！</p>
+<p>关于 SDWebImage 的整体分析就到这里啦，我会在终结篇：<a href="http://itangqi.me/2016/03/24/the-notes-of-learning-sdwebimage-four/">SDWebImage 源码阅读笔记（四）</a>中对某些知识点进行扩展，感兴趣的同学不妨去瞅瞅呗！</p>
 <hr>
 <h2 id="参考">参考</h2><ul>
 <li><a href="http://cocoadocs.org/docsets/SDWebImage/3.7.5/" target="_blank" rel="external">CocoaDocs - SDWebImage</a></li>
