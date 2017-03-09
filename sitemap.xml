@@ -2,6 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/2017/03/09/handle-orientation-changes-two/</loc>
+    <lastmod>2017-03-09T07:37:10.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/2017/03/08/handle-orientation-changes-one/</loc>
+    <lastmod>2017-03-09T05:07:05.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://itangqi.me/about/index.html</loc>
+    <lastmod>2017-03-06T09:24:31.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/2016/03/23/the-notes-of-learning-sdwebimage-three/</loc>
     <lastmod>2017-03-01T04:29:39.000Z</lastmod>
   </url>
@@ -14,11 +29,6 @@
   <url>
     <loc>http://itangqi.me/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/</loc>
     <lastmod>2017-02-21T07:09:36.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/about/index.html</loc>
-    <lastmod>2017-02-11T09:36:55.000Z</lastmod>
   </url>
   
   <url>

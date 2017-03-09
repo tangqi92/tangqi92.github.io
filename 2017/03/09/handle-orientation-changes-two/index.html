@@ -1,0 +1,1039 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FLEX,Orientation,Rotation,UIDevice," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言在 iOS 屏幕旋转的那些事（一）一文中，整个实践的过程都比较顺利，但直到我遇到了 FLEX……">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS 屏幕旋转的那些事（二）">
+<meta property="og:url" content="http://itangqi.me/2017/03/09/handle-orientation-changes-two/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言在 iOS 屏幕旋转的那些事（一）一文中，整个实践的过程都比较顺利，但直到我遇到了 FLEX……">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/handle-orientation-changes-04.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/handle-orientation-changes-03.png">
+<meta property="og:updated_time" content="2017-03-09T07:37:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 屏幕旋转的那些事（二）">
+<meta name="twitter:description" content="前言在 iOS 屏幕旋转的那些事（一）一文中，整个实践的过程都比较顺利，但直到我遇到了 FLEX……">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> iOS 屏幕旋转的那些事（二） | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS 屏幕旋转的那些事（二）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-09T00:00:00+08:00" content="2017-03-09">
+              2017-03-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/09/handle-orientation-changes-two/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/09/handle-orientation-changes-two/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/09/handle-orientation-changes-two/" class="leancloud_visitors" data-flag-title="iOS 屏幕旋转的那些事（二）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><p>在 <a href="http://itangqi.me/2017/03/09/handle-orientation-changes-one/">iOS 屏幕旋转的那些事（一）</a>一文中，整个实践的过程都比较顺利，但直到我遇到了 FLEX……</p>
+<a id="more"></a>
+<hr>
+<h2 id="迷之_FLEX">迷之 FLEX</h2><p>如果你对 FLEX 还不了解，可参见：<a href="https://github.com/Flipboard/FLEX" target="_blank" rel="external">https://github.com/Flipboard/FLEX</a></p>
+<p>由于在 iPad 版的某些页面，需要以 <a href="https://developer.apple.com/library/content/featuredarticles/ViewControllerPGforiPhoneOS/PresentingaViewController.html" target="_blank" rel="external">Modal View</a> 的形式展现，其中又涉及到横竖屏切换时，Modal View 的高度相应改变的问题，所以我需要获取到 Screen Width 与 Screen Height 的值。效果如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/handle-orientation-changes-04.png" alt=""></p>
+<p>于是，我在 <code>- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id&lt;UIViewControllerTransitionCoordinator&gt;)coordinator;</code> 中执行如下代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillTransitionToSize:(<span class="built_in">CGSize</span>)size withTransitionCoordinator:(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinator</span>&gt;)coordinator &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillTransitionToSize:size withTransitionCoordinator:coordinator];</span><br><span class="line">    <span class="built_in">CGFloat</span> screenWidth = [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>;</span><br><span class="line">    <span class="built_in">CGFloat</span> screenHeight = [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你觉得此时 <code>screenWidth</code> 与 <code>screenHeight</code> 的值是屏幕旋转前还是旋转后的呢？</p>
+<p>顺便说一句：iOS 7 之前 UIScreen 的 bounds 不会随着方向而变化，但是到了 iOS 8 以后，随着设备方向的旋转，<code>[UIScreen mainScreen].bounds.size.width</code> 和 <code>[UIScreen mainScreen].bounds.size.height</code> 也会相应发生变化。具体请参见: <a href="http://stackoverflow.com/questions/24150359/is-uiscreen-mainscreen-bounds-size-becoming-orientation-dependent-in-ios8" target="_blank" rel="external">Is [UIScreen mainScreen].bounds.size becoming orientation-dependent in iOS8?</a></p>
+<p>最终经过测试后的答案是：<strong>要看 FLEX 使用声明语句的位置而定！</strong></p>
+<p>FLEX 的使用非常简单，我们来看下 <code>AppDelegate.m</code> 中的 <code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions;</code> ：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span>];</span><br><span class="line"><span class="keyword">self</span><span class="variable">.window</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> whiteColor];</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];</span><br><span class="line"></span><br><span class="line">QTViewController *viewController = [[QTViewController alloc] init];</span><br><span class="line">viewController<span class="variable">.title</span> = <span class="string">@"QTViewController"</span>;</span><br><span class="line"><span class="built_in">UINavigationController</span> *navigationController = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:viewController];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在此处及之前开启，则在 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id &lt;UIViewControllerTransitionCoordinator&gt;)coordinator 中使用 [UIScreen mainScreen].bounds.size 获取的为旋转后的值。</span></span><br><span class="line">[[FLEXManager sharedManager] showExplorer];</span><br><span class="line"><span class="comment">// !!!:</span></span><br><span class="line"><span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = navigationController;</span><br><span class="line"><span class="comment">// 在此处及之后开启，则在 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id &lt;UIViewControllerTransitionCoordinator&gt;)coordinator 中使用 [UIScreen mainScreen].bounds.size 获取的为旋转前的值。</span></span><br><span class="line">[[FLEXManager sharedManager] showExplorer];</span><br></pre></td></tr></table></figure>
+<p>随后，我又改进了写法，进行进一步测试：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillTransitionToSize:(<span class="built_in">CGSize</span>)size withTransitionCoordinator:(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinator</span>&gt;)coordinator &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillTransitionToSize:size withTransitionCoordinator:coordinator];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Before: %f"</span>, [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Before: %f"</span>, [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">    </span><br><span class="line">    [coordinator animateAlongsideTransition:^(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinatorContext</span>&gt; context) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"After: %f"</span>, [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"After: %f"</span>, [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">    &#125;</span><br><span class="line">                                 completion:^(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinatorContext</span>&gt; context)&#123;</span><br><span class="line">                                     </span><br><span class="line">                                 &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最终的测试结果为：</p>
+<table>
+<thead>
+<tr>
+<th>是否开启 FLEX</th>
+<th style="text-align:center">位置</th>
+<th style="text-align:center">Before 处的 Size</th>
+<th style="text-align:center">After 处的 Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>否</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">旋转前</td>
+<td style="text-align:center">旋转后</td>
+</tr>
+<tr>
+<td>是</td>
+<td style="text-align:center">self.window.rootViewController = xxx 之后</td>
+<td style="text-align:center">旋转前</td>
+<td style="text-align:center">旋转后</td>
+</tr>
+<tr>
+<td>是</td>
+<td style="text-align:center">self.window.rootViewController = xxx 之前</td>
+<td style="text-align:center"><strong>旋转后</strong></td>
+<td style="text-align:center">旋转后</td>
+</tr>
+</tbody>
+</table>
+<p>所以，如果你真的需要在屏幕旋转时获取 Screen Size，请将操作放在 <code>After</code> 中，因为此时无论 FLEX 是否开启，也无论声明的位置，其都是获取到屏幕旋转之后的值。或将 FLEX 的使用声明语句放到 <code>self.window.rootViewController = xxx</code> 之后。</p>
+<p>虽然已经可以解决问题了，但我仍有疑问，那就是「FLEX 到底做了什么，导致在 <code>self.window.rootViewController = xxx 之前</code> 声明，会改变 Before 处的 Size？」</p>
+<p>于是，我们顺着 <code>[[FLEXManager sharedManager] showExplorer];</code> 查看源码中的调用顺序：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)sharedManager</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">static</span> FLEXManager *sharedManager = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">        sharedManager = [[[<span class="keyword">self</span> class] alloc] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> sharedManager;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)showExplorer</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.explorerWindow</span><span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (FLEXWindow *)explorerWindow</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSAssert</span>([<span class="built_in">NSThread</span> isMainThread], <span class="string">@"You must use %@ from the main thread only."</span>, <span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> class]));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!_explorerWindow) &#123;</span><br><span class="line">        _explorerWindow = [[FLEXWindow alloc] initWithFrame:[[<span class="built_in">UIScreen</span> mainScreen] bounds]];</span><br><span class="line">        _explorerWindow<span class="variable">.eventDelegate</span> = <span class="keyword">self</span>;</span><br><span class="line">        _explorerWindow<span class="variable">.rootViewController</span> = <span class="keyword">self</span><span class="variable">.explorerViewController</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> _explorerWindow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，我们来看下 <code>FLEXWindow</code> 是如何实现的：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> clearColor];</span><br><span class="line">        <span class="comment">// Some apps have windows at UIWindowLevelStatusBar + n.</span></span><br><span class="line">        <span class="comment">// If we make the window level too high, we block out UIAlertViews.</span></span><br><span class="line">        <span class="comment">// There's a balance between staying above the app's windows and staying below alerts.</span></span><br><span class="line">        <span class="comment">// UIWindowLevelStatusBar + 100 seems to hit that balance.</span></span><br><span class="line">        <span class="keyword">self</span><span class="variable">.windowLevel</span> = <span class="built_in">UIWindowLevelStatusBar</span> + <span class="number">100.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">BOOL</span> pointInside = <span class="literal">NO</span>;</span><br><span class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span><span class="variable">.eventDelegate</span> shouldHandleTouchAtPoint:point]) &#123;</span><br><span class="line">        pointInside = [<span class="keyword">super</span> pointInside:point withEvent:event];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pointInside;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)shouldAffectStatusBarAppearance</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> isKeyWindow];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)canBecomeKeyWindow</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span><span class="variable">.eventDelegate</span> canBecomeKeyWindow];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="keyword">void</span>)initialize</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// This adds a method (superclass override) at runtime which gives us the status bar behavior we want.</span></span><br><span class="line">    <span class="comment">// The FLEX window is intended to be an overlay that generally doesn't affect the app underneath.</span></span><br><span class="line">    <span class="comment">// Most of the time, we want the app's main window(s) to be in control of status bar behavior.</span></span><br><span class="line">    <span class="comment">// Done at runtime with an obfuscated selector because it is private API. But you shoudn't ship this to the App Store anyways...</span></span><br><span class="line">    <span class="built_in">NSString</span> *canAffectSelectorString = [@[<span class="string">@"_can"</span>, <span class="string">@"Affect"</span>, <span class="string">@"Status"</span>, <span class="string">@"Bar"</span>, <span class="string">@"Appearance"</span>] componentsJoinedByString:<span class="string">@""</span>];</span><br><span class="line">    SEL canAffectSelector = <span class="built_in">NSSelectorFromString</span>(canAffectSelectorString);</span><br><span class="line">    Method shouldAffectMethod = class_getInstanceMethod(<span class="keyword">self</span>, <span class="keyword">@selector</span>(shouldAffectStatusBarAppearance));</span><br><span class="line">    IMP canAffectImplementation = method_getImplementation(shouldAffectMethod);</span><br><span class="line">    class_addMethod(<span class="keyword">self</span>, canAffectSelector, canAffectImplementation, method_getTypeEncoding(shouldAffectMethod));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// One more...</span></span><br><span class="line">    <span class="built_in">NSString</span> *canBecomeKeySelectorString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"_%@"</span>, <span class="built_in">NSStringFromSelector</span>(<span class="keyword">@selector</span>(canBecomeKeyWindow))];</span><br><span class="line">    SEL canBecomeKeySelector = <span class="built_in">NSSelectorFromString</span>(canBecomeKeySelectorString);</span><br><span class="line">    Method canBecomeKeyMethod = class_getInstanceMethod(<span class="keyword">self</span>, <span class="keyword">@selector</span>(canBecomeKeyWindow));</span><br><span class="line">    IMP canBecomeKeyImplementation = method_getImplementation(canBecomeKeyMethod);</span><br><span class="line">    class_addMethod(<span class="keyword">self</span>, canBecomeKeySelector, canBecomeKeyImplementation, method_getTypeEncoding(canBecomeKeyMethod));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里，也许你需要一点关于 <code>UIWindow</code> 的相关知识。简言之，就是将 <code>FLEXWindow</code> 置于整个 View Hierarchy 的最顶部，如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/handle-orientation-changes-03.png" alt=""><a href="http://www.jianshu.com/p/8bc4c5f4b19f" target="_blank" rel="external">图片来源</a></p>
+<p>那 FLEX 又在屏幕旋转时做了哪些操作呢？首先我们需要了解下整体响应旋转变化的事件流程，简单来说如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIScreen</span> -&gt; <span class="built_in">UIWindow</span> -&gt; <span class="built_in">UIViewController</span> -&gt; ChildViewControllers -&gt; View -&gt; Subviews</span><br></pre></td></tr></table></figure>
+<p>当发生屏幕旋转事件的时候，<code>UIApplication</code> 对象会将旋转事件传递给 <code>UIWindow</code>，<code>UIWindow</code> 本身并不处理旋转事件，而是将旋转事件传递给它的根控制器，由根控制器决定是否需要旋转及旋转操作。</p>
+<p>最后，我们来看下 <code>FLEXExplorerViewController</code> 中关于 <code>Rotation</code> 的逻辑：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#pragma mark - Rotation</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">UIViewController</span> *)viewControllerForRotationAndOrientation</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">UIWindow</span> *window = <span class="keyword">self</span><span class="variable">.previousKeyWindow</span> ?: [[<span class="built_in">UIApplication</span> sharedApplication] keyWindow];</span><br><span class="line">    <span class="built_in">UIViewController</span> *viewController = window<span class="variable">.rootViewController</span>;</span><br><span class="line">    <span class="built_in">NSString</span> *viewControllerSelectorString = [@[<span class="string">@"_vie"</span>, <span class="string">@"wContro"</span>, <span class="string">@"llerFor"</span>, <span class="string">@"Supported"</span>, <span class="string">@"Interface"</span>, <span class="string">@"Orientations"</span>] componentsJoinedByString:<span class="string">@""</span>];</span><br><span class="line">    SEL viewControllerSelector = <span class="built_in">NSSelectorFromString</span>(viewControllerSelectorString);</span><br><span class="line">    <span class="keyword">if</span> ([viewController respondsToSelector:viewControllerSelector]) &#123;</span><br><span class="line"><span class="preprocessor">#pragma clang diagnostic push</span></span><br><span class="line"><span class="preprocessor">#pragma clang diagnostic ignored <span class="title">"-Warc-performSelector-leaks"</span></span></span><br><span class="line">        viewController = [viewController performSelector:viewControllerSelector];</span><br><span class="line"><span class="preprocessor">#pragma clang diagnostic pop</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> viewController;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">UIInterfaceOrientationMask</span>)supportedInterfaceOrientations</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">UIViewController</span> *viewControllerToAsk = [<span class="keyword">self</span> viewControllerForRotationAndOrientation];</span><br><span class="line">    <span class="built_in">UIInterfaceOrientationMask</span> supportedOrientations = [FLEXUtility infoPlistSupportedInterfaceOrientationsMask];</span><br><span class="line">    <span class="keyword">if</span> (viewControllerToAsk &amp;&amp; viewControllerToAsk != <span class="keyword">self</span>) &#123;</span><br><span class="line">        supportedOrientations = [viewControllerToAsk supportedInterfaceOrientations];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// The UIViewController docs state that this method must not return zero.</span></span><br><span class="line">    <span class="comment">// If we weren't able to get a valid value for the supported interface orientations, default to all supported.</span></span><br><span class="line">    <span class="keyword">if</span> (supportedOrientations == <span class="number">0</span>) &#123;</span><br><span class="line">        supportedOrientations = <span class="built_in">UIInterfaceOrientationMaskAll</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> supportedOrientations;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)shouldAutorotate</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">UIViewController</span> *viewControllerToAsk = [<span class="keyword">self</span> viewControllerForRotationAndOrientation];</span><br><span class="line">    <span class="built_in">BOOL</span> shouldAutorotate = <span class="literal">YES</span>;</span><br><span class="line">    <span class="keyword">if</span> (viewControllerToAsk &amp;&amp; viewControllerToAsk != <span class="keyword">self</span>) &#123;</span><br><span class="line">        shouldAutorotate = [viewControllerToAsk shouldAutorotate];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> shouldAutorotate;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)willRotateToInterfaceOrientation:(<span class="built_in">UIInterfaceOrientation</span>)toInterfaceOrientation duration:(<span class="built_in">NSTimeInterval</span>)duration</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">UIView</span> *outlineView <span class="keyword">in</span> [<span class="keyword">self</span><span class="variable">.outlineViewsForVisibleViews</span> allValues]) &#123;</span><br><span class="line">        outlineView<span class="variable">.hidden</span> = <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.selectedViewOverlay</span><span class="variable">.hidden</span> = <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)didRotateFromInterfaceOrientation:(<span class="built_in">UIInterfaceOrientation</span>)fromInterfaceOrientation</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">UIView</span> *view <span class="keyword">in</span> <span class="keyword">self</span><span class="variable">.viewsAtTapPoint</span>) &#123;</span><br><span class="line">        <span class="built_in">NSValue</span> *key = [<span class="built_in">NSValue</span> valueWithNonretainedObject:view];</span><br><span class="line">        <span class="built_in">UIView</span> *outlineView = <span class="keyword">self</span><span class="variable">.outlineViewsForVisibleViews</span>[key];</span><br><span class="line">        outlineView<span class="variable">.frame</span> = [<span class="keyword">self</span> frameInLocalCoordinatesForView:view];</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.currentMode</span> == FLEXExplorerModeSelect) &#123;</span><br><span class="line">            outlineView<span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.selectedView</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.selectedViewOverlay</span><span class="variable">.frame</span> = [<span class="keyword">self</span> frameInLocalCoordinatesForView:<span class="keyword">self</span><span class="variable">.selectedView</span>];</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.selectedViewOverlay</span><span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过，到目前为止，仍然不能解决我的疑问（瞬间感觉自己弱爆了……）如果你正巧知道原因，欢迎给我留言：）</p>
+<p>如果你想对 FLEX 有更深入的了解，可参见系列文章：<a href="http://www.jianshu.com/p/8bc4c5f4b19f" target="_blank" rel="external">FLEX 2.0源码分析（一）</a></p>
+<hr>
+<h2 id="One_More_Thing">One More Thing</h2><p>好啦，对于已经阅读到这部分的朋友，作为回报，送上两个 iPad 适配相关的 Tips：</p>
+<ol>
+<li><a href="http://stackoverflow.com/questions/14469251/uicollectionviewflowlayout-size-warning-when-rotating-device-to-landscape" target="_blank" rel="external">UICollectionViewFlowLayout Size Warning When Rotating Device to Landscape</a></li>
+<li><a href="http://stackoverflow.com/questions/16518175/custom-size-for-modal-view-loaded-with-form-sheet-presentation" target="_blank" rel="external">Custom size for Modal View loaded with Form Sheet presentation</a></li>
+</ol>
+<hr>
+<h2 id="参考&amp;推荐">参考&amp;推荐</h2><ol>
+<li><a href="http://stackoverflow.com/questions/26069874/what-is-the-right-way-to-handle-orientation-changes-in-ios-8" target="_blank" rel="external">What is the “right” way to handle orientation changes in iOS 8?</a></li>
+<li><a href="http://www.jianshu.com/p/db03da61cd2c" target="_blank" rel="external">详解iOS开发中处理屏幕旋转的几种方法</a></li>
+<li><a href="http://www.jianshu.com/p/8bc4c5f4b19f" target="_blank" rel="external">FLEX 2.0源码分析（一）</a></li>
+<li><a href="https://satanwoo.github.io/2016/09/17/uiwindow-iOS/" target="_blank" rel="external">浅谈iOS的多Window处理</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>我知道是不会有人点的，但万一有人想不开呢？</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/wechat.jpg" alt="Qi Tang WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/alipay.jpg" alt="Qi Tang Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FLEX/" rel="tag">#FLEX</a>
+          
+            <a href="/tags/Orientation/" rel="tag">#Orientation</a>
+          
+            <a href="/tags/Rotation/" rel="tag">#Rotation</a>
+          
+            <a href="/tags/UIDevice/" rel="tag">#UIDevice</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/08/handle-orientation-changes-one/" rel="next" title="iOS 屏幕旋转的那些事（一）">
+                <i class="fa fa-chevron-left"></i> iOS 屏幕旋转的那些事（一）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/03/09/handle-orientation-changes-two/"
+     data-title="iOS 屏幕旋转的那些事（二）"
+     data-content=""
+     data-url="http://itangqi.me/2017/03/09/handle-orientation-changes-two/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/09/handle-orientation-changes-two/"
+           data-title="iOS 屏幕旋转的那些事（二）" data-url="http://itangqi.me/2017/03/09/handle-orientation-changes-two/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾地走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">48</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/imtangqi" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              小伙伴们
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://tikitoo.me/" title="安卓同学" target="_blank">安卓同学</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lovinghuan.com/" title="poberWong" target="_blank">poberWong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.zhaiyifan.cn/" title="MarkZhai" target="_blank">MarkZhai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yifeiyuan.me/" title="程序亦非猿" target="_blank">程序亦非猿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://abner-nimengbo.cn/" title="阿布" target="_blank">阿布</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.easydone.cn/" title="Ailurus" target="_blank">Ailurus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuxiaolong.me/" title="吴小龙同學" target="_blank">吴小龙同學</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://drakeet.me/" title="Drakeet" target="_blank">Drakeet</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.fangjie.info/" title="方杰" target="_blank">方杰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hujiaweibujidao.github.io/" title="五道口宅男" target="_blank">五道口宅男</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gudong.name/" title="咕咚" target="_blank">咕咚</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://soledad.me/" title="蔡越" target="_blank">蔡越</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#迷之_FLEX"><span class="nav-number">2.</span> <span class="nav-text">迷之 FLEX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#One_More_Thing"><span class="nav-number">3.</span> <span class="nav-text">One More Thing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考&推荐"><span class="nav-number">4.</span> <span class="nav-text">参考&推荐</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"itangqi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cRxqlqW9Tlkg0rnkVdEPhC8o-gzGzoHsz", "sRfp02fY2qyxRj4KTp4AyzK7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

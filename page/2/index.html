@@ -294,6 +294,276 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/15/the-notes-of-learning-afnetworking-five/" itemprop="url">
+                  AFNetworking 3.0 源码阅读笔记（五）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-15T00:00:00+08:00" content="2016-05-15">
+              2016-05-15
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/15/the-notes-of-learning-afnetworking-five/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/15/the-notes-of-learning-afnetworking-five/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/15/the-notes-of-learning-afnetworking-five/" class="leancloud_visitors" data-flag-title="AFNetworking 3.0 源码阅读笔记（五）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="AFURLRequestSerialization">AFURLRequestSerialization</h2><p><code>AFURLRequestSerialization</code> 定义为协议，其主要工作是对发出的 HTTP 请求进行处理：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">AFURLRequestSerialization</span> &lt;<span class="title">NSObject</span>, <span class="title">NSSecureCoding</span>, <span class="title">NSCopying</span>&gt;</span></span><br><span class="line"></span><br><span class="line">- (nullable <span class="built_in">NSURLRequest</span> *)requestBySerializingRequest:(<span class="built_in">NSURLRequest</span> *)request</span><br><span class="line">                               withParameters:(nullable <span class="keyword">id</span>)parameters</span><br><span class="line">                                        error:(<span class="built_in">NSError</span> * _Nullable __autoreleasing *)error <span class="built_in">NS_SWIFT_NOTHROW</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure>
+<p>遵循该协议的类同时也要遵循 NSObject、NSSecureCoding 和 NSCopying 这三个协议，以实现 Objective-C 对象的基本行为、安全编码以及拷贝。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/15/the-notes-of-learning-afnetworking-five/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/05/13/the-notes-of-learning-afnetworking-four/" itemprop="url">
+                  AFNetworking 3.0 源码阅读笔记（四）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-13T00:00:00+08:00" content="2016-05-13">
+              2016-05-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/05/13/the-notes-of-learning-afnetworking-four/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/05/13/the-notes-of-learning-afnetworking-four/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/05/13/the-notes-of-learning-afnetworking-four/" class="leancloud_visitors" data-flag-title="AFNetworking 3.0 源码阅读笔记（四）">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言">前言</h2><p>通过前面的文章，我们已经知道 <code>AFNetworking</code> 是对 <code>NSURLSession</code> 的封装，也了解它是如何发出请求的，在这里我们<strong>对发出请求以及接收响应的过程</strong>进行序列化，这涉及到两个<strong>模块</strong>：</p>
+<ul>
+<li><a href="#afurlresponseserialization">AFURLResponseSerialization</a></li>
+<li><a href="#afurlrequestserialization">AFURLRequestSerialization</a></li>
+</ul>
+<p>前者是处理响应的模块，将请求返回的数据解析成对应的格式。而后者的主要作用是修改请求（主要是 HTTP 请求）的头部，提供了一些语义明确的接口设置 HTTP 头部字段。</p>
+<p>我们首先会对 <code>AFURLResponseSerialization</code> 进行简单的介绍，因为这个模块使用在 <code>AFURLSessionManager</code> 也就是核心类中，而后者 <code>AFURLRequestSerialization</code> 主要用于 <code>AFHTTPSessionManager</code> 中，因为它主要用于<strong>修改 HTTP 头部</strong>。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/13/the-notes-of-learning-afnetworking-four/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/09/the-notes-of-learning-afnetworking-three/" itemprop="url">
                   AFNetworking 3.0 源码阅读笔记（三）
                 </a>
@@ -1334,270 +1604,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/05/the-notes-of-learning-illustrating-http-two/" itemprop="url">
-                  《图解 HTTP》读书笔记（二）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-05T00:00:00+08:00" content="2016-04-05">
-              2016-04-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/05/the-notes-of-learning-illustrating-http-two/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/05/the-notes-of-learning-illustrating-http-two/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/04/05/the-notes-of-learning-illustrating-http-two/" class="leancloud_visitors" data-flag-title="《图解 HTTP》读书笔记（二）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="第_4_章_返回结果的_HTTP_状态码">第 4 章 返回结果的 HTTP 状态码</h2>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/05/the-notes-of-learning-illustrating-http-two/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/04/the-notes-of-learning-illustrating-http-one/" itemprop="url">
-                  《图解 HTTP》读书笔记（一）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-04T00:00:00+08:00" content="2016-04-04">
-              2016-04-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/04/04/the-notes-of-learning-illustrating-http-one/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/04/04/the-notes-of-learning-illustrating-http-one/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/04/04/the-notes-of-learning-illustrating-http-one/" class="leancloud_visitors" data-flag-title="《图解 HTTP》读书笔记（一）">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="前言">前言</h2><p>由于最近一段时间在找实习，所以陆陆续续面试了几家公司，可结果都跪了….</p>
-<p>总结失败的原因有很多，如果要进行个排名的话，<strong>网络</strong>一定能进前三。每每被面试官问到网络相关知识的时候，我都是一脸懵逼样，支支吾吾说不出个所以然。</p>
-<p>现在想想，做移动端也有些日子了，可网络知识这块居然只知胜少，究其原因就是自己不求上进，直到找工作的时候被现实打脸了才恍然醒悟。于是，痛定思痛，决定恶补下网络知识，一番 Google 后，决定以《图解 HTTP》作为入门书籍。当然好记性不如烂笔头，读书笔记是少不了的。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/04/the-notes-of-learning-illustrating-http-one/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1643,7 +1649,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">46</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1660,7 +1666,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

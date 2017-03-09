@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2017-02-28T11:36:00.000Z</updated>
+  <updated>2017-03-09T07:37:10.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -13,6 +13,158 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[iOS 屏幕旋转的那些事（二）]]></title>
+    <link href="http://itangqi.me/2017/03/09/handle-orientation-changes-two/"/>
+    <id>http://itangqi.me/2017/03/09/handle-orientation-changes-two/</id>
+    <published>2017-03-08T16:00:00.000Z</published>
+    <updated>2017-03-09T07:37:10.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>在 <a href="http://itangqi.me/2017/03/09/handle-orientation-changes-one/">iOS 屏幕旋转的那些事（一）</a>一文中，整个实践的过程都比较顺利，但直到我遇到了 FLEX……</p>
+<a id="more"></a>
+<hr>
+<h2 id="迷之_FLEX">迷之 FLEX</h2><p>如果你对 FLEX 还不了解，可参见：<a href="https://github.com/Flipboard/FLEX" target="_blank" rel="external">https://github.com/Flipboard/FLEX</a></p>
+<p>由于在 iPad 版的某些页面，需要以 <a href="https://developer.apple.com/library/content/featuredarticles/ViewControllerPGforiPhoneOS/PresentingaViewController.html" target="_blank" rel="external">Modal View</a> 的形式展现，其中又涉及到横竖屏切换时，Modal View 的高度相应改变的问题，所以我需要获取到 Screen Width 与 Screen Height 的值。效果如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/handle-orientation-changes-04.png" alt=""></p>
+<p>于是，我在 <code>- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id&lt;UIViewControllerTransitionCoordinator&gt;)coordinator;</code> 中执行如下代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillTransitionToSize:(<span class="built_in">CGSize</span>)size withTransitionCoordinator:(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinator</span>&gt;)coordinator &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillTransitionToSize:size withTransitionCoordinator:coordinator];</span><br><span class="line">    <span class="built_in">CGFloat</span> screenWidth = [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>;</span><br><span class="line">    <span class="built_in">CGFloat</span> screenHeight = [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你觉得此时 <code>screenWidth</code> 与 <code>screenHeight</code> 的值是屏幕旋转前还是旋转后的呢？</p>
+<p>顺便说一句：iOS 7 之前 UIScreen 的 bounds 不会随着方向而变化，但是到了 iOS 8 以后，随着设备方向的旋转，<code>[UIScreen mainScreen].bounds.size.width</code> 和 <code>[UIScreen mainScreen].bounds.size.height</code> 也会相应发生变化。具体请参见: <a href="http://stackoverflow.com/questions/24150359/is-uiscreen-mainscreen-bounds-size-becoming-orientation-dependent-in-ios8" target="_blank" rel="external">Is [UIScreen mainScreen].bounds.size becoming orientation-dependent in iOS8?</a></p>
+<p>最终经过测试后的答案是：<strong>要看 FLEX 使用声明语句的位置而定！</strong></p>
+<p>FLEX 的使用非常简单，我们来看下 <code>AppDelegate.m</code> 中的 <code>- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(nullable NSDictionary *)launchOptions;</code> ：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">self</span><span class="variable">.window</span> = [[<span class="built_in">UIWindow</span> alloc] initWithFrame:[<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span>];</span><br><span class="line"><span class="keyword">self</span><span class="variable">.window</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> whiteColor];</span><br><span class="line">[<span class="keyword">self</span><span class="variable">.window</span> makeKeyAndVisible];</span><br><span class="line"></span><br><span class="line">QTViewController *viewController = [[QTViewController alloc] init];</span><br><span class="line">viewController<span class="variable">.title</span> = <span class="string">@"QTViewController"</span>;</span><br><span class="line"><span class="built_in">UINavigationController</span> *navigationController = [[<span class="built_in">UINavigationController</span> alloc] initWithRootViewController:viewController];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在此处及之前开启，则在 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id &lt;UIViewControllerTransitionCoordinator&gt;)coordinator 中使用 [UIScreen mainScreen].bounds.size 获取的为旋转后的值。</span></span><br><span class="line">[[FLEXManager sharedManager] showExplorer];</span><br><span class="line"><span class="comment">// !!!:</span></span><br><span class="line"><span class="keyword">self</span><span class="variable">.window</span><span class="variable">.rootViewController</span> = navigationController;</span><br><span class="line"><span class="comment">// 在此处及之后开启，则在 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id &lt;UIViewControllerTransitionCoordinator&gt;)coordinator 中使用 [UIScreen mainScreen].bounds.size 获取的为旋转前的值。</span></span><br><span class="line">[[FLEXManager sharedManager] showExplorer];</span><br></pre></td></tr></table></figure>
+<p>随后，我又改进了写法，进行进一步测试：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillTransitionToSize:(<span class="built_in">CGSize</span>)size withTransitionCoordinator:(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinator</span>&gt;)coordinator &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewWillTransitionToSize:size withTransitionCoordinator:coordinator];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Before: %f"</span>, [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"Before: %f"</span>, [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">    </span><br><span class="line">    [coordinator animateAlongsideTransition:^(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinatorContext</span>&gt; context) &#123;</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"After: %f"</span>, [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.width</span>);</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"After: %f"</span>, [<span class="built_in">UIScreen</span> mainScreen]<span class="variable">.bounds</span><span class="variable">.size</span><span class="variable">.height</span>);</span><br><span class="line">    &#125;</span><br><span class="line">                                 completion:^(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinatorContext</span>&gt; context)&#123;</span><br><span class="line">                                     </span><br><span class="line">                                 &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最终的测试结果为：</p>
+<table>
+<thead>
+<tr>
+<th>是否开启 FLEX</th>
+<th style="text-align:center">位置</th>
+<th style="text-align:center">Before 处的 Size</th>
+<th style="text-align:center">After 处的 Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>否</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">旋转前</td>
+<td style="text-align:center">旋转后</td>
+</tr>
+<tr>
+<td>是</td>
+<td style="text-align:center">self.window.rootViewController = xxx 之后</td>
+<td style="text-align:center">旋转前</td>
+<td style="text-align:center">旋转后</td>
+</tr>
+<tr>
+<td>是</td>
+<td style="text-align:center">self.window.rootViewController = xxx 之前</td>
+<td style="text-align:center"><strong>旋转后</strong></td>
+<td style="text-align:center">旋转后</td>
+</tr>
+</tbody>
+</table>
+<p>所以，如果你真的需要在屏幕旋转时获取 Screen Size，请将操作放在 <code>After</code> 中，因为此时无论 FLEX 是否开启，也无论声明的位置，其都是获取到屏幕旋转之后的值。或将 FLEX 的使用声明语句放到 <code>self.window.rootViewController = xxx</code> 之后。</p>
+<p>虽然已经可以解决问题了，但我仍有疑问，那就是「FLEX 到底做了什么，导致在 <code>self.window.rootViewController = xxx 之前</code> 声明，会改变 Before 处的 Size？」</p>
+<p>于是，我们顺着 <code>[[FLEXManager sharedManager] showExplorer];</code> 查看源码中的调用顺序：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">+ (instancetype)sharedManager</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">static</span> FLEXManager *sharedManager = <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</span><br><span class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</span><br><span class="line">        sharedManager = [[[<span class="keyword">self</span> class] alloc] init];</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> sharedManager;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)showExplorer</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.explorerWindow</span><span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- (FLEXWindow *)explorerWindow</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSAssert</span>([<span class="built_in">NSThread</span> isMainThread], <span class="string">@"You must use %@ from the main thread only."</span>, <span class="built_in">NSStringFromClass</span>([<span class="keyword">self</span> class]));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!_explorerWindow) &#123;</span><br><span class="line">        _explorerWindow = [[FLEXWindow alloc] initWithFrame:[[<span class="built_in">UIScreen</span> mainScreen] bounds]];</span><br><span class="line">        _explorerWindow<span class="variable">.eventDelegate</span> = <span class="keyword">self</span>;</span><br><span class="line">        _explorerWindow<span class="variable">.rootViewController</span> = <span class="keyword">self</span><span class="variable">.explorerViewController</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> _explorerWindow;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，我们来看下 <code>FLEXWindow</code> 是如何实现的：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)initWithFrame:(<span class="built_in">CGRect</span>)frame</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithFrame:frame];</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.backgroundColor</span> = [<span class="built_in">UIColor</span> clearColor];</span><br><span class="line">        <span class="comment">// Some apps have windows at UIWindowLevelStatusBar + n.</span></span><br><span class="line">        <span class="comment">// If we make the window level too high, we block out UIAlertViews.</span></span><br><span class="line">        <span class="comment">// There's a balance between staying above the app's windows and staying below alerts.</span></span><br><span class="line">        <span class="comment">// UIWindowLevelStatusBar + 100 seems to hit that balance.</span></span><br><span class="line">        <span class="keyword">self</span><span class="variable">.windowLevel</span> = <span class="built_in">UIWindowLevelStatusBar</span> + <span class="number">100.0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">BOOL</span> pointInside = <span class="literal">NO</span>;</span><br><span class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span><span class="variable">.eventDelegate</span> shouldHandleTouchAtPoint:point]) &#123;</span><br><span class="line">        pointInside = [<span class="keyword">super</span> pointInside:point withEvent:event];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pointInside;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)shouldAffectStatusBarAppearance</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> isKeyWindow];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)canBecomeKeyWindow</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span><span class="variable">.eventDelegate</span> canBecomeKeyWindow];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (<span class="keyword">void</span>)initialize</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// This adds a method (superclass override) at runtime which gives us the status bar behavior we want.</span></span><br><span class="line">    <span class="comment">// The FLEX window is intended to be an overlay that generally doesn't affect the app underneath.</span></span><br><span class="line">    <span class="comment">// Most of the time, we want the app's main window(s) to be in control of status bar behavior.</span></span><br><span class="line">    <span class="comment">// Done at runtime with an obfuscated selector because it is private API. But you shoudn't ship this to the App Store anyways...</span></span><br><span class="line">    <span class="built_in">NSString</span> *canAffectSelectorString = [@[<span class="string">@"_can"</span>, <span class="string">@"Affect"</span>, <span class="string">@"Status"</span>, <span class="string">@"Bar"</span>, <span class="string">@"Appearance"</span>] componentsJoinedByString:<span class="string">@""</span>];</span><br><span class="line">    SEL canAffectSelector = <span class="built_in">NSSelectorFromString</span>(canAffectSelectorString);</span><br><span class="line">    Method shouldAffectMethod = class_getInstanceMethod(<span class="keyword">self</span>, <span class="keyword">@selector</span>(shouldAffectStatusBarAppearance));</span><br><span class="line">    IMP canAffectImplementation = method_getImplementation(shouldAffectMethod);</span><br><span class="line">    class_addMethod(<span class="keyword">self</span>, canAffectSelector, canAffectImplementation, method_getTypeEncoding(shouldAffectMethod));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// One more...</span></span><br><span class="line">    <span class="built_in">NSString</span> *canBecomeKeySelectorString = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"_%@"</span>, <span class="built_in">NSStringFromSelector</span>(<span class="keyword">@selector</span>(canBecomeKeyWindow))];</span><br><span class="line">    SEL canBecomeKeySelector = <span class="built_in">NSSelectorFromString</span>(canBecomeKeySelectorString);</span><br><span class="line">    Method canBecomeKeyMethod = class_getInstanceMethod(<span class="keyword">self</span>, <span class="keyword">@selector</span>(canBecomeKeyWindow));</span><br><span class="line">    IMP canBecomeKeyImplementation = method_getImplementation(canBecomeKeyMethod);</span><br><span class="line">    class_addMethod(<span class="keyword">self</span>, canBecomeKeySelector, canBecomeKeyImplementation, method_getTypeEncoding(canBecomeKeyMethod));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里，也许你需要一点关于 <code>UIWindow</code> 的相关知识。简言之，就是将 <code>FLEXWindow</code> 置于整个 View Hierarchy 的最顶部，如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/handle-orientation-changes-03.png" alt=""><a href="http://www.jianshu.com/p/8bc4c5f4b19f" target="_blank" rel="external">图片来源</a></p>
+<p>那 FLEX 又在屏幕旋转时做了哪些操作呢？首先我们需要了解下整体响应旋转变化的事件流程，简单来说如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIScreen</span> -&gt; <span class="built_in">UIWindow</span> -&gt; <span class="built_in">UIViewController</span> -&gt; ChildViewControllers -&gt; View -&gt; Subviews</span><br></pre></td></tr></table></figure>
+<p>当发生屏幕旋转事件的时候，<code>UIApplication</code> 对象会将旋转事件传递给 <code>UIWindow</code>，<code>UIWindow</code> 本身并不处理旋转事件，而是将旋转事件传递给它的根控制器，由根控制器决定是否需要旋转及旋转操作。</p>
+<p>最后，我们来看下 <code>FLEXExplorerViewController</code> 中关于 <code>Rotation</code> 的逻辑：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#pragma mark - Rotation</span></span><br><span class="line"></span><br><span class="line">- (<span class="built_in">UIViewController</span> *)viewControllerForRotationAndOrientation</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">UIWindow</span> *window = <span class="keyword">self</span><span class="variable">.previousKeyWindow</span> ?: [[<span class="built_in">UIApplication</span> sharedApplication] keyWindow];</span><br><span class="line">    <span class="built_in">UIViewController</span> *viewController = window<span class="variable">.rootViewController</span>;</span><br><span class="line">    <span class="built_in">NSString</span> *viewControllerSelectorString = [@[<span class="string">@"_vie"</span>, <span class="string">@"wContro"</span>, <span class="string">@"llerFor"</span>, <span class="string">@"Supported"</span>, <span class="string">@"Interface"</span>, <span class="string">@"Orientations"</span>] componentsJoinedByString:<span class="string">@""</span>];</span><br><span class="line">    SEL viewControllerSelector = <span class="built_in">NSSelectorFromString</span>(viewControllerSelectorString);</span><br><span class="line">    <span class="keyword">if</span> ([viewController respondsToSelector:viewControllerSelector]) &#123;</span><br><span class="line"><span class="preprocessor">#pragma clang diagnostic push</span></span><br><span class="line"><span class="preprocessor">#pragma clang diagnostic ignored <span class="title">"-Warc-performSelector-leaks"</span></span></span><br><span class="line">        viewController = [viewController performSelector:viewControllerSelector];</span><br><span class="line"><span class="preprocessor">#pragma clang diagnostic pop</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> viewController;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">UIInterfaceOrientationMask</span>)supportedInterfaceOrientations</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">UIViewController</span> *viewControllerToAsk = [<span class="keyword">self</span> viewControllerForRotationAndOrientation];</span><br><span class="line">    <span class="built_in">UIInterfaceOrientationMask</span> supportedOrientations = [FLEXUtility infoPlistSupportedInterfaceOrientationsMask];</span><br><span class="line">    <span class="keyword">if</span> (viewControllerToAsk &amp;&amp; viewControllerToAsk != <span class="keyword">self</span>) &#123;</span><br><span class="line">        supportedOrientations = [viewControllerToAsk supportedInterfaceOrientations];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// The UIViewController docs state that this method must not return zero.</span></span><br><span class="line">    <span class="comment">// If we weren't able to get a valid value for the supported interface orientations, default to all supported.</span></span><br><span class="line">    <span class="keyword">if</span> (supportedOrientations == <span class="number">0</span>) &#123;</span><br><span class="line">        supportedOrientations = <span class="built_in">UIInterfaceOrientationMaskAll</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> supportedOrientations;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)shouldAutorotate</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">UIViewController</span> *viewControllerToAsk = [<span class="keyword">self</span> viewControllerForRotationAndOrientation];</span><br><span class="line">    <span class="built_in">BOOL</span> shouldAutorotate = <span class="literal">YES</span>;</span><br><span class="line">    <span class="keyword">if</span> (viewControllerToAsk &amp;&amp; viewControllerToAsk != <span class="keyword">self</span>) &#123;</span><br><span class="line">        shouldAutorotate = [viewControllerToAsk shouldAutorotate];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> shouldAutorotate;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)willRotateToInterfaceOrientation:(<span class="built_in">UIInterfaceOrientation</span>)toInterfaceOrientation duration:(<span class="built_in">NSTimeInterval</span>)duration</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">UIView</span> *outlineView <span class="keyword">in</span> [<span class="keyword">self</span><span class="variable">.outlineViewsForVisibleViews</span> allValues]) &#123;</span><br><span class="line">        outlineView<span class="variable">.hidden</span> = <span class="literal">YES</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">self</span><span class="variable">.selectedViewOverlay</span><span class="variable">.hidden</span> = <span class="literal">YES</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)didRotateFromInterfaceOrientation:(<span class="built_in">UIInterfaceOrientation</span>)fromInterfaceOrientation</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="built_in">UIView</span> *view <span class="keyword">in</span> <span class="keyword">self</span><span class="variable">.viewsAtTapPoint</span>) &#123;</span><br><span class="line">        <span class="built_in">NSValue</span> *key = [<span class="built_in">NSValue</span> valueWithNonretainedObject:view];</span><br><span class="line">        <span class="built_in">UIView</span> *outlineView = <span class="keyword">self</span><span class="variable">.outlineViewsForVisibleViews</span>[key];</span><br><span class="line">        outlineView<span class="variable">.frame</span> = [<span class="keyword">self</span> frameInLocalCoordinatesForView:view];</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.currentMode</span> == FLEXExplorerModeSelect) &#123;</span><br><span class="line">            outlineView<span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span><span class="variable">.selectedView</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.selectedViewOverlay</span><span class="variable">.frame</span> = [<span class="keyword">self</span> frameInLocalCoordinatesForView:<span class="keyword">self</span><span class="variable">.selectedView</span>];</span><br><span class="line">        <span class="keyword">self</span><span class="variable">.selectedViewOverlay</span><span class="variable">.hidden</span> = <span class="literal">NO</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过，到目前为止，仍然不能解决我的疑问（瞬间感觉自己弱爆了……）如果你正巧知道原因，欢迎给我留言：）</p>
+<p>如果你想对 FLEX 有更深入的了解，可参见系列文章：<a href="http://www.jianshu.com/p/8bc4c5f4b19f" target="_blank" rel="external">FLEX 2.0源码分析（一）</a></p>
+<hr>
+<h2 id="One_More_Thing">One More Thing</h2><p>好啦，对于已经阅读到这部分的朋友，作为回报，送上两个 iPad 适配相关的 Tips：</p>
+<ol>
+<li><a href="http://stackoverflow.com/questions/14469251/uicollectionviewflowlayout-size-warning-when-rotating-device-to-landscape" target="_blank" rel="external">UICollectionViewFlowLayout Size Warning When Rotating Device to Landscape</a></li>
+<li><a href="http://stackoverflow.com/questions/16518175/custom-size-for-modal-view-loaded-with-form-sheet-presentation" target="_blank" rel="external">Custom size for Modal View loaded with Form Sheet presentation</a></li>
+</ol>
+<hr>
+<h2 id="参考&amp;推荐">参考&amp;推荐</h2><ol>
+<li><a href="http://stackoverflow.com/questions/26069874/what-is-the-right-way-to-handle-orientation-changes-in-ios-8" target="_blank" rel="external">What is the “right” way to handle orientation changes in iOS 8?</a></li>
+<li><a href="http://www.jianshu.com/p/db03da61cd2c" target="_blank" rel="external">详解iOS开发中处理屏幕旋转的几种方法</a></li>
+<li><a href="http://www.jianshu.com/p/8bc4c5f4b19f" target="_blank" rel="external">FLEX 2.0源码分析（一）</a></li>
+<li><a href="https://satanwoo.github.io/2016/09/17/uiwindow-iOS/" target="_blank" rel="external">浅谈iOS的多Window处理</a></li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>在 <a href="http://itangqi.me/2017/03/09/handle-orientation-changes-one/">iOS 屏幕旋转的那些事（一）</a>一文中，整个实践的过程都比较顺利，但直到我遇到了 FLEX……</p>]]>
+    
+    </summary>
+    
+      <category term="FLEX" scheme="http://itangqi.me/tags/FLEX/"/>
+    
+      <category term="Orientation" scheme="http://itangqi.me/tags/Orientation/"/>
+    
+      <category term="Rotation" scheme="http://itangqi.me/tags/Rotation/"/>
+    
+      <category term="UIDevice" scheme="http://itangqi.me/tags/UIDevice/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[iOS 屏幕旋转的那些事（一）]]></title>
+    <link href="http://itangqi.me/2017/03/08/handle-orientation-changes-one/"/>
+    <id>http://itangqi.me/2017/03/08/handle-orientation-changes-one/</id>
+    <published>2017-03-07T16:00:00.000Z</published>
+    <updated>2017-03-09T05:07:05.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>本文将讨论的话题是：iOS 屏幕旋转的那些事，文中示例 Demo 请参见：<a href="https://github.com/tangqi92/QTHandleOrientationChanges.git" target="_blank" rel="external">https://github.com/tangqi92/QTHandleOrientationChanges.git</a>。</p>
+<a id="more"></a>
+<hr>
+<h2 id="需求">需求</h2><p>在即将推出的<strong>花瓣 4.0</strong> 版本中我们增加了对 iPad 横屏的支持，因为在实践的过程中踩了些坑，所以在此作下总结，同时也希望能帮助到有需要的朋友们。</p>
+<p>由于历史原因，项目是手撕 Frame 而不是 Storyboard 进行布局，也并没有使用 Auto Layout。</p>
+<p>又由于历史原因，项目设置为 「Universal」以支持 iPad。虽然支持 iPad，不过仅支持竖屏，其实也就是个放大的 iPhone 版，体验效果不佳。这次花瓣 4.0 的改版，iPad 横屏的支持便是一重点改进点，效果可见下图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/handle-orientation-changes-01.png" alt=""></p>
+<p>如果你是使用 Storyboard 进行布局，当然可以通过 <a href="Size-Class-Specific Layout">Size Classes</a> 来解决多尺寸设备适配的问题。不过前面已经提到，本人喜欢手写布局，但依然可以实现效果。</p>
+<p>PS：如果你对「布局实现方式的选择」或「Auto Layout」等概念仍有疑问，你可阅读下面参考文章，本文就不作过多详述：</p>
+<ol>
+<li><a href="https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/AutolayoutPG/" target="_blank" rel="external">Understanding Auto Layout</a></li>
+<li><a href="https://blog.callmewhy.com/2016/08/24/autolayout-design-aesthetic/" target="_blank" rel="external">Auto Layout 设计美学</a></li>
+<li><a href="http://hjcapple.github.io/2016/04/21/ios-make-ui.html" target="_blank" rel="external">iOS 开发中，搭建界面的一些争论</a></li>
+<li><a href="https://halfrost.com/wwdc2016_xcode8autolayout_features/" target="_blank" rel="external">WWDC2016 Session笔记 - Xcode 8 Auto Layout新特性</a></li>
+</ol>
+<hr>
+<h2 id="实现">实现</h2><p>因为当屏幕旋转的时候，Controller 的 View 的 Size 会发生改变，就会调用 <code>viewWillLayoutSubviews()</code> 等方法重新布局，如果你是在这些方法里面布局的话，那么界面中的内容会重新布局，更进一步，如果你是在这些方法里面使用 Auto Layout 布局，那么就不需要再做额外的处理了。</p>
+<p>但是，如果你是在 <code>viewDidLoad()</code> 等里面布局，那么界面中的内容将不会变化，你可能就需要监听屏幕旋转的地方重新布局，处理好旋转动画等。</p>
+<p>于是，实现的关键便是处理屏幕的旋转事件，手动进行布局修改，以适配横竖屏不同效果的布局。那，我们又是如何知道设备的方向发生了改变的呢？不妨看看下面这些方法吧：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UIInterfaceOrientation</span> interfaceOrientation <span class="built_in">NS_DEPRECATED_IOS</span>(<span class="number">2</span>_0,<span class="number">8</span>_0) __TVOS_PROHIBITED;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Notifies when rotation begins, reaches halfway point and ends.</span></span><br><span class="line">- (<span class="keyword">void</span>)willRotateToInterfaceOrientation:(<span class="built_in">UIInterfaceOrientation</span>)toInterfaceOrientation duration:(<span class="built_in">NSTimeInterval</span>)duration <span class="built_in">NS_DEPRECATED_IOS</span>(<span class="number">2</span>_0,<span class="number">8</span>_0, <span class="string">"Implement viewWillTransitionToSize:withTransitionCoordinator: instead"</span>) __TVOS_PROHIBITED;</span><br><span class="line">- (<span class="keyword">void</span>)didRotateFromInterfaceOrientation:(<span class="built_in">UIInterfaceOrientation</span>)fromInterfaceOrientation <span class="built_in">NS_DEPRECATED_IOS</span>(<span class="number">2</span>_0,<span class="number">8</span>_0) __TVOS_PROHIBITED;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)willAnimateRotationToInterfaceOrientation:(<span class="built_in">UIInterfaceOrientation</span>)toInterfaceOrientation duration:(<span class="built_in">NSTimeInterval</span>)duration <span class="built_in">NS_DEPRECATED_IOS</span>(<span class="number">3</span>_0,<span class="number">8</span>_0, <span class="string">"Implement viewWillTransitionToSize:withTransitionCoordinator: instead"</span>) __TVOS_PROHIBITED;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)willAnimateFirstHalfOfRotationToInterfaceOrientation:(<span class="built_in">UIInterfaceOrientation</span>)toInterfaceOrientation duration:(<span class="built_in">NSTimeInterval</span>)duration <span class="built_in">NS_DEPRECATED_IOS</span>(<span class="number">2</span>_0, <span class="number">5</span>_0) __TVOS_PROHIBITED;</span><br><span class="line">- (<span class="keyword">void</span>)didAnimateFirstHalfOfRotationToInterfaceOrientation:(<span class="built_in">UIInterfaceOrientation</span>)toInterfaceOrientation <span class="built_in">NS_DEPRECATED_IOS</span>(<span class="number">2</span>_0, <span class="number">5</span>_0) __TVOS_PROHIBITED; <span class="comment">// The rotating header and footer views are offscreen.</span></span><br><span class="line">- (<span class="keyword">void</span>)willAnimateSecondHalfOfRotationFromInterfaceOrientation:(<span class="built_in">UIInterfaceOrientation</span>)fromInterfaceOrientation duration:(<span class="built_in">NSTimeInterval</span>)duration <span class="built_in">NS_DEPRECATED_IOS</span>(<span class="number">2</span>_0, <span class="number">5</span>_0) __TVOS_PROHIBITED; <span class="comment">// A this point, our view orientation is set to the new orientation.</span></span><br></pre></td></tr></table></figure>
+<p>别高兴的太早，网上大部分文章（至少中文文章）都会告诉你使用上面的这些方法，而然，Apple 早已在 iOS 8.0 中便将这些关于 Controller 的 Rotation APIs 进行废弃，取而代之的是推荐使用：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillTransitionToSize:(<span class="built_in">CGSize</span>)size withTransitionCoordinator:(<span class="keyword">id</span> &lt;<span class="built_in">UIViewControllerTransitionCoordinator</span>&gt;)coordinator <span class="built_in">NS_AVAILABLE_IOS</span>(<span class="number">8</span>_0);</span><br></pre></td></tr></table></figure>
+<p>即当 Controller 的 View 的 Size 发生改变时便会触发该方法，下面来看下官方文档的解释：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/handle-orientation-changes-02.png" alt=""></p>
+<p>其中 <strong>Size</strong> 为 View 改变（旋转）后的 Size，而 <strong>coordinator</strong> 则可用来处理转换动画。例如，你可以在该方法中改变子 View 的位置或大小：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillTransitionToSize:(<span class="built_in">CGSize</span>)size withTransitionCoordinator:(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinator</span>&gt;)coordinator &#123;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">super</span> viewWillTransitionToSize:size withTransitionCoordinator:coordinator];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Code here will execute before the rotation begins.</span></span><br><span class="line">    <span class="comment">// Equivalent to placing it in the deprecated method -[willRotateToInterfaceOrientation:duration:].</span></span><br><span class="line">    [coordinator animateAlongsideTransition:^(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinatorContext</span>&gt; context) &#123;</span><br><span class="line">        <span class="comment">// Place code here to perform animations during the rotation.</span></span><br><span class="line">        <span class="comment">// You can pass nil for this closure if not necessary.</span></span><br><span class="line">        <span class="comment">// Reorganize views, or move child view controllers.</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">UIInterfaceOrientationIsLandscape</span>([<span class="built_in">UIApplication</span> sharedApplication]<span class="variable">.statusBarOrientation</span>)) &#123;</span><br><span class="line">            [<span class="keyword">self</span><span class="variable">.redView</span> mas_updateConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">                make<span class="variable">.size</span><span class="variable">.mas_equalTo</span>(<span class="built_in">CGSizeMake</span>(<span class="number">200</span>, <span class="number">200</span>));</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">UIInterfaceOrientationIsPortrait</span>([<span class="built_in">UIApplication</span> sharedApplication]<span class="variable">.statusBarOrientation</span>)) &#123;</span><br><span class="line">            [<span class="keyword">self</span><span class="variable">.redView</span> mas_updateConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">                make<span class="variable">.size</span><span class="variable">.mas_equalTo</span>(<span class="built_in">CGSizeMake</span>(<span class="number">100</span>, <span class="number">100</span>));</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">                                 completion:^(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinatorContext</span>&gt; context)&#123;</span><br><span class="line">                                     <span class="comment">// Code here will execute after the rotation has finished.</span></span><br><span class="line">                                     <span class="comment">// Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:].</span></span><br><span class="line">                                     <span class="comment">// Do any cleanup, if necessary.</span></span><br><span class="line"></span><br><span class="line">                                 &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释非常简单，就不做翻译了，其中，你可以通过 <code>[UIApplication sharedApplication].statusBarOrientation)</code> 来获取当前设备的方向，便于你之后的操作。</p>
+<p>嗯，这篇文章很水，而我会在下篇文章：<a href="http://itangqi.me/2017/03/09/handle-orientation-changes-two/">iOS 屏幕旋转的那些事（二）</a> 中具体介绍我遇到的一个坑。</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>本文将讨论的话题是：iOS 屏幕旋转的那些事，文中示例 Demo 请参见：<a href="https://github.com/tangqi92/QTHandleOrientationChanges.git">https://github.com/tangqi92/QTHandleOrientationChanges.git</a>。</p>]]>
+    
+    </summary>
+    
+      <category term="FLEX" scheme="http://itangqi.me/tags/FLEX/"/>
+    
+      <category term="Orientation" scheme="http://itangqi.me/tags/Orientation/"/>
+    
+      <category term="Rotation" scheme="http://itangqi.me/tags/Rotation/"/>
+    
+      <category term="UIDevice" scheme="http://itangqi.me/tags/UIDevice/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[关于 UITableView's Separator Inset 的探究]]></title>
@@ -2006,625 +2158,6 @@
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="第_7_章_确保_Web_安全的_HTTPS">第 7 章 确保 Web 安全的 HTTPS</h2>]]>
-    
-    </summary>
-    
-      <category term="HTTP" scheme="http://itangqi.me/tags/HTTP/"/>
-    
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
-    
-      <category term="HTTP" scheme="http://itangqi.me/categories/HTTP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[《图解 HTTP》读书笔记（二）]]></title>
-    <link href="http://itangqi.me/2016/04/05/the-notes-of-learning-illustrating-http-two/"/>
-    <id>http://itangqi.me/2016/04/05/the-notes-of-learning-illustrating-http-two/</id>
-    <published>2016-04-04T16:00:00.000Z</published>
-    <updated>2016-05-28T03:48:45.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="第_4_章_返回结果的_HTTP_状态码">第 4 章 返回结果的 HTTP 状态码</h2><a id="more"></a> 
-<h3 id="4-1_状态码告知从服务器端返回的请求结果">4.1  状态码告知从服务器端返回的请求结果</h3><p>状态码的职责是当客户端向服务器端发送请求时，描述返回的请求结果。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-4.1.1.jpg" alt=""></p>
-<p>数字中的第一位定义了响应类别，后两位无分类。响应类别有以下 5 种：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">类别</th>
-<th style="text-align:center">原因短语</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">1XX</td>
-<td style="text-align:center">Informational（信息性状态码）</td>
-<td style="text-align:center">接收的请求正在处理</td>
-</tr>
-<tr>
-<td style="text-align:center">2XX</td>
-<td style="text-align:center">Success（成功状态码）</td>
-<td style="text-align:center">请求正常处理完毕</td>
-</tr>
-<tr>
-<td style="text-align:center">3XX</td>
-<td style="text-align:center">Redirection（重定向状态码）</td>
-<td style="text-align:center">需求进行附加操作以完成请求</td>
-</tr>
-<tr>
-<td style="text-align:center">4XX</td>
-<td style="text-align:center">Client Error（客户端错误状态码）</td>
-<td style="text-align:center">服务器无法处理请求</td>
-</tr>
-<tr>
-<td style="text-align:center">5XX</td>
-<td style="text-align:center">Server Error（服务器错误状态码）</td>
-<td style="text-align:center">服务器处理请求出错</td>
-</tr>
-</tbody>
-</table>
-<p>只要遵守状态码类别的定义，即使改变 <a href="https://datatracker.ietf.org/doc/rfc2616/" target="_blank" rel="external">RFC2616</a> 中定义的状态码，或服务器端自行创建状态码都没问题。</p>
-<h4 id="2XX_成功">2XX 成功</h4><p>200 OK：表示从客户端发来的请求在服务器端被正常处理了</p>
-<p>204 No Content：请求处理成功，但是没有资源返回</p>
-<p>206 Partial Content：请求处理成功，返回部分内容，响应报文中包含 Content-Range 指定范围的实体内容</p>
-<h4 id="3XX_重定向">3XX 重定向</h4><p>301 Moved Permanently：永久性重定向</p>
-<p>302 Found：临时性重定向</p>
-<p>303 See Other：表示请求的资源存在着另一个 URL，应使用 GET 方法定向获取请求的资源</p>
-<p>304 Not Modified：表示请求的资源没有改变，可以使用客户端上未过期的资源</p>
-<p>307 Temporary Redirect：临时性重定向，不会从 POST 变成 GET</p>
-<h4 id="4XX_客户端错误">4XX 客户端错误</h4><p>400 Bad Request：表示请求报文中存在语法错误</p>
-<p>401 Unauthorized：表示发送的请求需要有通过 HTTP 认证</p>
-<p>403 Forbidden：表示请求资源的访问被服务器拒绝了</p>
-<p>404 Not Found：表示服务器上没有请求的资源</p>
-<h4 id="5XX_服务器错误">5XX 服务器错误</h4><p>500 Internal Server Error：表示服务器在执行请求时发生了错误</p>
-<p>503 Service Unavailable：表示服务器暂时处于超负载或者正在进行停机维护，现在无法处理请求</p>
-<hr>
-<h2 id="第_5_章_与_HTTP_协作的_Web_服务器">第 5 章 与 HTTP 协作的 Web 服务器</h2><h3 id="5-1_用单台虚拟主机实现多个域名">5.1  用单台虚拟主机实现多个域名</h3><p>HTTP / 1.1 规范允许一台 HTTP 服务器搭建多个 Web 站点。这是利用虚拟主机（Virtual Host，又称虚拟服务器）的功能。</p>
-<p>在互联网上，域名通过 DNS 服务映射到 IP 地址之后访问目标网站。可见，当请求发送到服务器时，已经是以 IP 地址形式访问了。所以，当一台托管了两个域名的服务器接收到请求时就需要弄清楚究竟要访问哪个域名。<br>在相同的 IP 地址下，由于虚拟主机可以寄存多个不同主机名和域名的 Web 网站，因此在发送 HTTP 请求时，必须在 Host 首部内完整指定主机名或域名的 URI。</p>
-<h3 id="5-2_通信数据转发程序：代理、网关、隧道">5.2 通信数据转发程序：代理、网关、隧道</h3><h4 id="5-2-1_代理">5.2.1 代理</h4><p>代理是一种有转发功能的应用程序，它扮演了位于服务器和客户端“中间人”的角色，接收由客户端发送的请求并转发给服务器，同时也接收服务器返回的响应并转发给客户端。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-5.2.1.jpg" alt=""></p>
-<p>每次通过代理服务器转发请求或响应式，会追加写入via首部信息。</p>
-<p>使用代理服务器的理由有：利用缓存技术（稍后讲解）减少网络带宽的流量，组织内部针对特定网站的访问控制，以获取访问日志为主要目的，等等。</p>
-<p>代理有多种使用方法，按两种基准分类。一种是是否使用缓存，另一种是是否会修改报文：</p>
-<ul>
-<li>缓存代理：代理转发响应时，缓存代理会预先将资源的副本（缓存）保存在代理服务器上</li>
-<li>透明代理：转发请求或响应时，不对报文做任何加工的代理类型被称为透明代理。反之，对 报文内容进行加工的代理被成为非透明代理</li>
-</ul>
-<h4 id="5-2-2_网关">5.2.2 网关</h4><p>网关是转发其他服务器通信数据的服务器，接收从客户端发送来的请求时，它就像自己拥有资源的源服务器一样对请求进行处理。有时客户端可能都不会察觉，自己的通信目标是一个网关。 </p>
-<p>网关的工作机制和代理十分相似。而网关能使通信线路上的服务器提供非 HTTP 协议服务。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-5.2.2.jpg" alt=""></p>
-<h4 id="5-2-3_隧道">5.2.3 隧道</h4><p>隧道是在相隔甚远的客户端和服务器两者之间进行中转，并保持双方通信连接的应用程序。</p>
-<p>隧道本身不会去解析 HTTP 请求。请求保持原样中转给之后的服务器。隧道会在通信双方断开连接时结束。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-5.2.3.jpg" alt=""></p>
-<h3 id="5-3_保存资源的缓存">5.3 保存资源的缓存</h3><p>缓存是指代理服务器或客户端本地磁盘内保存的资源副本。利用缓存可减少对源服务器的访问，节省通信流量和时间。</p>
-<p>缓存服务器是代理服务器的一种。当代理转发从服务器返回的响应时，代理服务器将会保存一份资源的副本。</p>
-<p>缓存服务器的优势在于利用缓存可避免多次从源服务器转发资源。因此客户端可就近从缓存服务器上获取资源，而源服务器也不必多次处理相同的请求了。</p>
-<h4 id="5-3-1_缓存的有效期限">5.3.1 缓存的有效期限</h4><p>对于缓存服务器和客户端浏览器，当判定缓存过期或客户端要求，会向源服务器确认资源的有效性。若失效，浏览器会再次请求新资源。</p>
-<h4 id="5-3-2_客户端的缓存">5.3.2 客户端的缓存</h4><p>缓存不仅可以存在于缓存服务器内，还可以存在客户端浏览器中。以 Internet Explorer 程序为例，把客户端缓存称为临时网络文件（Temporary Internet File）。</p>
-<hr>
-<h2 id="第_6_章_HTTP_首部">第 6 章 HTTP 首部</h2><h3 id="6-1_HTTP_首部字段">6.1 HTTP 首部字段</h3><h4 id="6-1-1_HTTP_首部字段传递重要信息">6.1.1 HTTP 首部字段传递重要信息</h4><p>使用首部字段是为了给浏览器和服务器提供报文主体大小、所使用的语言、认证信息等内容。</p>
-<h4 id="6-1-2_4_种_HTTP_首部字段类型">6.1.2 4 种 HTTP 首部字段类型</h4><ol>
-<li>通用首部字段（General Header Fields）</li>
-<li>请求首部字段（Request Header Fields）</li>
-<li>响应首部字段（Response Header Fields）</li>
-<li>实体首部字段（Entity Header Fields）</li>
-</ol>
-<h4 id="6-1-3_HTTP_/_1-1_首部字段一览">6.1.3 HTTP / 1.1 首部字段一览</h4><p><strong>通用首部字段</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">首部字段名</th>
-<th style="text-align:center">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Cache-Control</td>
-<td style="text-align:center">控制缓存的行为</td>
-</tr>
-<tr>
-<td style="text-align:center">Connection</td>
-<td style="text-align:center">逐跳首部、连接的管理</td>
-</tr>
-<tr>
-<td style="text-align:center">Date</td>
-<td style="text-align:center">创建报文日期时间</td>
-</tr>
-<tr>
-<td style="text-align:center">Pragma</td>
-<td style="text-align:center">报文指令</td>
-</tr>
-<tr>
-<td style="text-align:center">Trailer</td>
-<td style="text-align:center">报文末端的首部一览</td>
-</tr>
-<tr>
-<td style="text-align:center">Transfer-Encoding</td>
-<td style="text-align:center">指定报文主体的传输编码方式</td>
-</tr>
-<tr>
-<td style="text-align:center">Upgrade</td>
-<td style="text-align:center">升级为其他协议</td>
-</tr>
-<tr>
-<td style="text-align:center">Via</td>
-<td style="text-align:center">代理服务器的相关信息</td>
-</tr>
-<tr>
-<td style="text-align:center">Warning</td>
-<td style="text-align:center">错误通知</td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li>Cache-Control 的 no-cache 指令代表不缓存过期的资源，而不是不缓存。no-store 才是真正不进行缓存。</li>
-<li>Connection 首部字段的值为 close 时，代表服务器想明确断开连接（HTTP / 1.1默认都是持久连接）</li>
-</ol>
-<p><strong>请求首部字段</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">首部字段名</th>
-<th style="text-align:center">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Accept</td>
-<td style="text-align:center">用户代理可处理的媒体类型</td>
-</tr>
-<tr>
-<td style="text-align:center">Accept-Charset</td>
-<td style="text-align:center">优先的字符集</td>
-</tr>
-<tr>
-<td style="text-align:center">Accept-Encoding</td>
-<td style="text-align:center">优先的内容编码</td>
-</tr>
-<tr>
-<td style="text-align:center">Accept-Language</td>
-<td style="text-align:center">优先的语言</td>
-</tr>
-<tr>
-<td style="text-align:center">Authorization</td>
-<td style="text-align:center">Web 认证信息</td>
-</tr>
-<tr>
-<td style="text-align:center">Expect</td>
-<td style="text-align:center">期待服务器的特定行为</td>
-</tr>
-<tr>
-<td style="text-align:center">From</td>
-<td style="text-align:center">用户的电子邮件地址</td>
-</tr>
-<tr>
-<td style="text-align:center">Host</td>
-<td style="text-align:center">请求资源所在服务器</td>
-</tr>
-<tr>
-<td style="text-align:center">If-Match</td>
-<td style="text-align:center">比较实体标记（ETag）</td>
-</tr>
-<tr>
-<td style="text-align:center">If-Modified-Since</td>
-<td style="text-align:center">比较资源的更新时间</td>
-</tr>
-<tr>
-<td style="text-align:center">If-None-Match</td>
-<td style="text-align:center">比较实体标记（与If-Match相反）</td>
-</tr>
-<tr>
-<td style="text-align:center">If-Range</td>
-<td style="text-align:center">资源未更新时发送实体 Byte 的范围请求</td>
-</tr>
-<tr>
-<td style="text-align:center">If-Unmodified-Since</td>
-<td style="text-align:center">比较资源的更新时间（与 If-Modified-Since 相反）</td>
-</tr>
-<tr>
-<td style="text-align:center">Max-Forwards</td>
-<td style="text-align:center">最大传输逐跳数</td>
-</tr>
-<tr>
-<td style="text-align:center">Proxy-Authorization</td>
-<td style="text-align:center">代理服务器要求客户端的认真信息</td>
-</tr>
-<tr>
-<td style="text-align:center">Range</td>
-<td style="text-align:center">实体的字节范围请求</td>
-</tr>
-<tr>
-<td style="text-align:center">Referer</td>
-<td style="text-align:center">对请求中 URI 的原始获取方</td>
-</tr>
-<tr>
-<td style="text-align:center">TE</td>
-<td style="text-align:center">传输编码的优先级</td>
-</tr>
-<tr>
-<td style="text-align:center">User-Agent</td>
-<td style="text-align:center">HTTP 客户端程序的信息</td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li>该表的 Accept* 字段都可以指定权重 q 值（0-1）。当服务器提供多种内容时，将会首先返回权重最高的</li>
-<li>If-xxx 请求首部字段都称为条件请求，服务器接收到附带条件的请求后，只有判断指定条件为真时，才回执行请求</li>
-<li>Referer 的正确拼写应该是 Referrer。当直接在浏览器的地址栏输入 URI 时，或处于安全考虑时，可不发该首部字段</li>
-</ol>
-<p><strong>响应首部字段</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">首部字段名</th>
-<th style="text-align:center">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Accept-Ranges</td>
-<td style="text-align:center">是否接受字节范围请求</td>
-</tr>
-<tr>
-<td style="text-align:center">Age</td>
-<td style="text-align:center">推算资源创建经过时间</td>
-</tr>
-<tr>
-<td style="text-align:center">ETag</td>
-<td style="text-align:center">资源的匹配信息</td>
-</tr>
-<tr>
-<td style="text-align:center">Location</td>
-<td style="text-align:center">令客户端重定向至指定的 URI</td>
-</tr>
-<tr>
-<td style="text-align:center">Proxy-Authentication</td>
-<td style="text-align:center">代理服务器对客户端的认证信息</td>
-</tr>
-<tr>
-<td style="text-align:center">Retry-After</td>
-<td style="text-align:center">对再次发起请求的时机要求</td>
-</tr>
-<tr>
-<td style="text-align:center">Server</td>
-<td style="text-align:center">HTTP 服务器的安装信息</td>
-</tr>
-<tr>
-<td style="text-align:center">Vary</td>
-<td style="text-align:center">代理服务器缓存的管理信息</td>
-</tr>
-<tr>
-<td style="text-align:center">WWW-Authenticate</td>
-<td style="text-align:center">服务器对客户端的认证信息</td>
-</tr>
-</tbody>
-</table>
-<p>几乎所有浏览器在接收到包含首部字段 Location 的响应后，都会强制性地尝试对已提示的重定向资源的访问。</p>
-<p><strong>实体首部字段</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">首部字段名</th>
-<th style="text-align:center">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Allow</td>
-<td style="text-align:center">资源可支持的 HTTP 方法</td>
-</tr>
-<tr>
-<td style="text-align:center">Content-Encoding</td>
-<td style="text-align:center">实体主体适用的编码方式</td>
-</tr>
-<tr>
-<td style="text-align:center">Content-Language</td>
-<td style="text-align:center">实体主体的自然语言</td>
-</tr>
-<tr>
-<td style="text-align:center">Content-Length</td>
-<td style="text-align:center">实体主体的大小（单位：字节）</td>
-</tr>
-<tr>
-<td style="text-align:center">Content-Location</td>
-<td style="text-align:center">替代对应资源的 URI</td>
-</tr>
-<tr>
-<td style="text-align:center">Content-MD5</td>
-<td style="text-align:center">实体主体的报文摘要</td>
-</tr>
-<tr>
-<td style="text-align:center">Content-Range</td>
-<td style="text-align:center">实体主体的位置范围</td>
-</tr>
-<tr>
-<td style="text-align:center">Content-Type</td>
-<td style="text-align:center">实体主体的媒体类型</td>
-</tr>
-<tr>
-<td style="text-align:center">Expires</td>
-<td style="text-align:center">实体主体过期的日期时间</td>
-</tr>
-<tr>
-<td style="text-align:center">Last-Modified</td>
-<td style="text-align:center">资源的最后修改日期时间</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Cookie 相关首部字段</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">首部字段名</th>
-<th style="text-align:center">说明</th>
-<th style="text-align:center">首部类型</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Set-Cookie</td>
-<td style="text-align:center">服务器端返回给客户端存储的 Cookie 信息</td>
-<td style="text-align:center">响应首部字段</td>
-</tr>
-<tr>
-<td style="text-align:center">Cookie</td>
-<td style="text-align:center">客户端向服务器端发送 Cookie 信息</td>
-<td style="text-align:center">请求首部字段</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Set-Cookie 字段的属性</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">属性</th>
-<th style="text-align:center">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">NAME=VALUE</td>
-<td style="text-align:center">赋予 Cookie 的名称和其值（必须项）</td>
-</tr>
-<tr>
-<td style="text-align:center">expires=DATE</td>
-<td style="text-align:center">Cookie 的有效期（若不明确指定则默认为浏览器关闭前为止）</td>
-</tr>
-<tr>
-<td style="text-align:center">path=Path</td>
-<td style="text-align:center">将服务器上的文件目录作为 Cookie 的适用对象（若不指定则默认为文档所在的文件目录）</td>
-</tr>
-<tr>
-<td style="text-align:center">domain=域名</td>
-<td style="text-align:center">作为 Cookie 适用对象的域名（若不指定则默认为创建 Cookie 的服务器的域名）</td>
-</tr>
-<tr>
-<td style="text-align:center">Secure</td>
-<td style="text-align:center">仅在 HTTPS 安全通信时才会发送 Cookie</td>
-</tr>
-<tr>
-<td style="text-align:center">HttpOnly</td>
-<td style="text-align:center">加以限制，使 Cookie 不能被 JavaScript 脚本访问</td>
-</tr>
-</tbody>
-</table>
-<ol>
-<li>expires：一旦 Cookie 从服务器端发送至客户端，服务器端就不存在可以显示删除 Cookie 的方法。但可通过覆盖已过期的 Cookie，实现对客户端 Cookie 的实质性删除操作</li>
-<li>path：用来指定 cookie 被发送到服务器的哪一个目录路径下（即被服务器哪个路径接收 cookie），其中”/“指的是站点根目录，可在同一台服务器（即使有多个应用）内共享该 cookie</li>
-</ol>
-<p><strong>其他首部字段</strong></p>
-<ul>
-<li>X-Frame-Options</li>
-<li>X-XSS-Protection</li>
-<li>DNT</li>
-<li>P3P</li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="第_4_章_返回结果的_HTTP_状态码">第 4 章 返回结果的 HTTP 状态码</h2>]]>
-    
-    </summary>
-    
-      <category term="HTTP" scheme="http://itangqi.me/tags/HTTP/"/>
-    
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
-    
-      <category term="HTTP" scheme="http://itangqi.me/categories/HTTP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[《图解 HTTP》读书笔记（一）]]></title>
-    <link href="http://itangqi.me/2016/04/04/the-notes-of-learning-illustrating-http-one/"/>
-    <id>http://itangqi.me/2016/04/04/the-notes-of-learning-illustrating-http-one/</id>
-    <published>2016-04-03T16:00:00.000Z</published>
-    <updated>2016-04-19T08:59:12.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>由于最近一段时间在找实习，所以陆陆续续面试了几家公司，可结果都跪了….</p>
-<p>总结失败的原因有很多，如果要进行个排名的话，<strong>网络</strong>一定能进前三。每每被面试官问到网络相关知识的时候，我都是一脸懵逼样，支支吾吾说不出个所以然。</p>
-<p>现在想想，做移动端也有些日子了，可网络知识这块居然只知胜少，究其原因就是自己不求上进，直到找工作的时候被现实打脸了才恍然醒悟。于是，痛定思痛，决定恶补下网络知识，一番 Google 后，决定以《图解 HTTP》作为入门书籍。当然好记性不如烂笔头，读书笔记是少不了的。</p>
-<a id="more"></a> 
-<hr>
-<h2 id="第_1_章_了解_Web_及网络基础">第 1 章 了解 Web 及网络基础</h2><h3 id="1-1_使用_HTTP_协议访问_Web">1.1  使用 HTTP 协议访问 Web</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.1.jpg" alt=""></p>
-<h4 id="1-1-1_从输入_URL_到页面加载完成的过程中都发生了什么事情？">1.1.1 从输入 URL 到页面加载完成的过程中都发生了什么事情？</h4><ol>
-<li>在浏览器里输入网址</li>
-<li>浏览器查找域名的 IP 地址</li>
-<li>浏览器给 Web 服务器发送一个 HTTP 请求</li>
-<li>Facebook 服务的永久重定向响应</li>
-<li>浏览器跟踪重定向地址</li>
-<li>服务器「处理」请求</li>
-<li>服务器发回一个 HTML 响应</li>
-<li>浏览器开始显示HTML</li>
-<li>浏览器发送获取嵌入在 HTML 中的对象</li>
-<li>浏览器发送异步（AJAX）请求</li>
-</ol>
-<p>详情参见：</p>
-<ul>
-<li><a href="https://github.com/skyline75489/what-happens-when-zh_CN" target="_blank" rel="external">当···时发生了什么？</a></li>
-<li><a href="http://fex.baidu.com/blog/2014/05/what-happen/" target="_blank" rel="external">从输入 URL 到页面加载完成的过程中都发生了什么事情？</a></li>
-<li><a href="https://www.zhihu.com/question/34873227" target="_blank" rel="external">当在浏览器地址栏输入一个URL后回车，将会发生的事情？</a></li>
-</ul>
-<h3 id="1-2_HTTP_历史">1.2  HTTP 历史</h3><h4 id="1-2-1_HTTP_1-0_vs_HTTP_1-1">1.2.1  HTTP 1.0 vs HTTP 1.1</h4><ol>
-<li>可扩展性</li>
-<li>缓存</li>
-<li>带宽优化</li>
-<li>长连接</li>
-<li>消息传递</li>
-<li>Host 头域</li>
-<li>错误提示</li>
-<li>内容协商</li>
-</ol>
-<p>详情参见：</p>
-<ul>
-<li><a href="http://stackoverflow.com/questions/246859/http-1-0-vs-1-1" target="_blank" rel="external">HTTP 1.0 vs 1.1</a></li>
-<li><a href="http://blog.csdn.net/forgotaboutgirl/article/details/6936982" target="_blank" rel="external">HTTP/1.1与HTTP/1.0的区别</a></li>
-</ul>
-<h4 id="1-2-2_HTTP_2-0">1.2.2  HTTP 2.0</h4><ol>
-<li>二进制分帧</li>
-<li>首部压缩</li>
-<li>多路复用</li>
-<li>并行双向字节流的请求和响应</li>
-<li>请求优先级</li>
-<li>服务器推送</li>
-</ol>
-<p>详情参见：</p>
-<ul>
-<li><a href="https://www.zhihu.com/question/34074946" target="_blank" rel="external">HTTP/2.0 相比1.0有哪些重大改进？</a></li>
-<li><a href="http://www.alloyteam.com/2015/03/http2-0-di-qi-miao-ri-chang/" target="_blank" rel="external">HTTP 2.0 的奇妙日常</a></li>
-</ul>
-<h3 id="1-3_网络基础_TCP/IP">1.3  网络基础 TCP/IP</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.3.jpg" alt=""></p>
-<p>图：TCP/IP 是互联网相关的各类协议族的总称</p>
-<h4 id="1-3-1_TCP/IP_的分层管理">1.3.1 TCP/IP 的分层管理</h4><ul>
-<li><p>应用层：决定了向用户提供应用服务时通信的活动</p>
-</li>
-<li><p>传输层：对上层应用层，提供处于网络连接中的两台计算机之间的数据传输</p>
-</li>
-<li><p>网络层（又名网络互连层）：用来处理在网络上流动的数据包</p>
-</li>
-<li><p>链路层（又名数据链路层，网络接口层）：用来处理连接网络的硬件部分</p>
-</li>
-</ul>
-<h4 id="1-3-2_TCP/IP_通信传输流">1.3.2  TCP/IP 通信传输流</h4><p>利用 TCP/IP 协议族进行网络通信时，会通过分层顺序与对方进行通信。发送端从应用层往下走，接收端则往应用层往上走。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.3.2.jpg" alt=""></p>
-<p>发送端在层与层之间传输数据时，每经过一层时必定会被打上一个该层所属的首部信息。反之，接收端在层与层传输数据时，每经过一层时会把对应的首部消去。</p>
-<h3 id="1-4_与_HTTP_关系密切的协议：IP、TCP_和_DNS">1.4  与 HTTP 关系密切的协议：IP、TCP 和 DNS</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.4.1.jpg" alt=""></p>
-<h4 id="1-4-1_负责传输的_IP_协议">1.4.1  负责传输的 IP 协议</h4><p>在进行中转时，会利用下一站中转设备的 MAC 地址来搜索下一个中转目标。这时，会采用 ARP 协议（Address Resolution Protocol）。ARP 是一种用以解析地址的协议，根据通信方的 IP 地址就可以反查出对应的 MAC 地址。</p>
-<h4 id="1-4-2_确保可靠性的_TCP_协议">1.4.2  确保可靠性的 TCP 协议</h4><p>为了准确无误地将数据送达目标处，TCP 协议采用了三次握手（three-way handshaking）策略。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.4.2.jpg" alt=""></p>
-<h5 id="1-4-2-1_为何要三次握手">1.4.2.1  为何要三次握手</h5><ol>
-<li><p>为了防止已失效的连接请求报文段（上一个 TCP 连接）突然又传送到了服务端，因而产生错误（服务端白白等待）</p>
-</li>
-<li><p>也可假设想场景：两个人打电话</p>
-</li>
-</ol>
-<h5 id="1-4-2-2_为何要四次分手">1.4.2.2 为何要四次分手</h5><ol>
-<li><p>保证 TCP 协议的全双工连接能够可靠关闭</p>
-</li>
-<li><p>保证这次连接的重复数据段从网络中消失</p>
-</li>
-<li><p>TCP 连接是全双工的，这就意味着，当主机 1 发出 FIN 报文段时，只是表示主机 1 已经没有数据要发送了，但是，这个时候主机 1 还是可以接受来自主机 2 的数据；当主机 2 返回 ACK 报文段时，表示它已经知道主机 1 没有数据发送了，但是主机 2 还是可以发送数据到主机 1 的；当主机 2 也发送了 FIN 报文段时，这个时候就表示主机 2 也没有数据要发送了，就会告诉主机 1，我也没有数据要发送了，之后彼此就会愉快的中断这次 TCP 连接</p>
-</li>
-</ol>
-<p>详情参见：</p>
-<ul>
-<li><a href="http://www.jellythink.com/archives/705" target="_blank" rel="external">简析TCP的三次握手与四次分手</a></li>
-</ul>
-<h5 id="1-4-2-3_为什么最后还要等待两个时间周期呢？">1.4.2.3 为什么最后还要等待两个时间周期呢？</h5><h3 id="1-5_负责域名解析的_DNS_服务">1.5  负责域名解析的 DNS 服务</h3><p>DNS（Domain Name System）服务是和 HTTP 协议一样位于应用层的协议。它提供域名到 IP 地址之间的解析服务。</p>
-<h3 id="1-6_各种协议与_HTTP_协议的关系">1.6 各种协议与 HTTP 协议的关系</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-1.6.jpg" alt=""></p>
-<h3 id="1-7_URI_和_URL">1.7  URI 和 URL</h3><p>URI 用字符串标识某一互联网资源，而 URL 表示资源的地点（互联网上所处的位置）。<br>URL 是 URI 的子集。<br>区别就是 URI 定义资源，而 URL 不单定义这个资源，还定义了如何找到这个资源（既访问资源的方式）。</p>
-<p>详情参见：</p>
-<ul>
-<li><a href="http://www.cnblogs.com/youmeng/p/4891788.html" target="_blank" rel="external">Http权威指南笔记(一) URI URL URN 关系</a></li>
-</ul>
-<hr>
-<h2 id="第_2_章_简单的_HTTP_协议">第 2 章  简单的 HTTP 协议</h2><h3 id="2-1_HTTP_请求和响应报文格式">2.1  HTTP 请求和响应报文格式</h3><p>HTTP 请求报文由请求行、请求头部、空行和请求包体 4 个部分组成，如下图所示：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-2.1.1.jpg" alt=""></p>
-<p>HTTP 响应报文由状态行、响应头部、空行和响应包体 4 个部分组成，如下图所示：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-2.1.2.jpg" alt=""></p>
-<p>详情参见：</p>
-<ul>
-<li><a href="http://www.cnblogs.com/biyeymyhjob/archive/2012/07/28/2612910.html" target="_blank" rel="external">HTTP请求报文和HTTP响应报文</a></li>
-</ul>
-<h3 id="2-2_告知服务器意图的_HTTP_方法">2.2  告知服务器意图的 HTTP 方法</h3><p>表 2-1：HTTP/1.0 和 HTTP/1.1 支持的方法</p>
-<table>
-<thead>
-<tr>
-<th>方法</th>
-<th style="text-align:center">说明</th>
-<th style="text-align:center">支持的 HTTP 协议版本</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>GET</td>
-<td style="text-align:center">获取资源</td>
-<td style="text-align:center">1.0、1.1</td>
-</tr>
-<tr>
-<td>POST</td>
-<td style="text-align:center">传输实体主体</td>
-<td style="text-align:center">1.0、1.1</td>
-</tr>
-<tr>
-<td>PUT</td>
-<td style="text-align:center">传输文件</td>
-<td style="text-align:center">1.0、1.1</td>
-</tr>
-<tr>
-<td>HEAD</td>
-<td style="text-align:center">获得报文首部</td>
-<td style="text-align:center">1.0、1.1</td>
-</tr>
-<tr>
-<td>DELETE</td>
-<td style="text-align:center">删除文件</td>
-<td style="text-align:center">1.0、1.1</td>
-</tr>
-<tr>
-<td>OPTIONS</td>
-<td style="text-align:center">询问支持的方法</td>
-<td style="text-align:center">1.1</td>
-</tr>
-<tr>
-<td>TRACE</td>
-<td style="text-align:center">追踪路径</td>
-<td style="text-align:center">1.1</td>
-</tr>
-<tr>
-<td>CONNECT</td>
-<td style="text-align:center">要求用隧道协议连接代理</td>
-<td style="text-align:center">1.1</td>
-</tr>
-<tr>
-<td>LINK</td>
-<td style="text-align:center">建立和资源之间的联系</td>
-<td style="text-align:center">1.0</td>
-</tr>
-<tr>
-<td>UNLINK</td>
-<td style="text-align:center">断开连接关系</td>
-<td style="text-align:center">1.0</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="第_3_章_HTTP_报文内的_HTTP_信息">第 3 章  HTTP 报文内的 HTTP 信息</h2><h3 id="3-1_编码提升传输速率">3.1  编码提升传输速率</h3><h4 id="3-1-1_压缩传输的内容编码">3.1.1  压缩传输的内容编码</h4><p>内容编码指明应用在实体内容上的编码格式，并保持实体信息原样压缩。内容编码后的实体由客户端接收并负责解码。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-3.1.1.jpg" alt=""></p>
-<p>常用的内容编码有以下几种：</p>
-<ol>
-<li>gzip（GNU zip）</li>
-<li>compress（UNIX 系统的标准压缩）</li>
-<li>deflate（zlib）</li>
-<li>identity（不进行编码）</li>
-</ol>
-<h4 id="3-1-2_分割发送的分块传输编码">3.1.2  分割发送的分块传输编码</h4><p>在 HTTP 通信过程中，请求的编码实体资源尚未全部传输完成之前，浏览器无法显示请求页面。在传输大容量数据时，通过把数据分割成多块，能够让浏览器逐步显示页面。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-3.1.2.jpg" alt=""></p>
-<h3 id="3-2_获取部分内容的范围请求">3.2  获取部分内容的范围请求</h3><p>执行范围请求时，会用到首部字段 Range 来指定资源的 byte 范围。</p>
-<p>针对范围请求，响应会返回状态码为 206 Partial Content 的响应报文。另外，对于多重范围的范围请求，响应会在首部字段 Content-Type 标明 multipart/byteranges 后返回响应报文。</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="前言">前言</h2><p>由于最近一段时间在找实习，所以陆陆续续面试了几家公司，可结果都跪了….</p>
-<p>总结失败的原因有很多，如果要进行个排名的话，<strong>网络</strong>一定能进前三。每每被面试官问到网络相关知识的时候，我都是一脸懵逼样，支支吾吾说不出个所以然。</p>
-<p>现在想想，做移动端也有些日子了，可网络知识这块居然只知胜少，究其原因就是自己不求上进，直到找工作的时候被现实打脸了才恍然醒悟。于是，痛定思痛，决定恶补下网络知识，一番 Google 后，决定以《图解 HTTP》作为入门书籍。当然好记性不如烂笔头，读书笔记是少不了的。</p>]]>
     
     </summary>
     
