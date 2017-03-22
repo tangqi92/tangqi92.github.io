@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2017-03-09T07:37:10.000Z</updated>
+  <updated>2017-03-22T12:28:45.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -15,11 +15,205 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title><![CDATA[ReactiveCocoa 知识点整理]]></title>
+    <link href="http://itangqi.me/2017/03/22/the-notes-of-learning-reactivecocoa/"/>
+    <id>http://itangqi.me/2017/03/22/the-notes-of-learning-reactivecocoa/</id>
+    <published>2017-03-21T16:00:00.000Z</published>
+    <updated>2017-03-22T12:28:45.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
+<p>本文仅作为个人对于 <code>ReactiveCocoa</code> 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。</p>
+</blockquote>
+<p>Last updated on 2017.03.22</p>
+<a id="more"></a> 
+<hr>
+<h2 id="FRP_思想">FRP 思想</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">2</span></span><br><span class="line">b = <span class="number">2</span></span><br><span class="line">c = a + b <span class="comment">// c is 4</span></span><br><span class="line"></span><br><span class="line">b = <span class="number">3</span></span><br><span class="line"><span class="comment">// now what is the value of c?</span></span><br></pre></td></tr></table></figure>
+<p>简单来讲，FRP 是基于异步事件流进行编程的一种编程范式。针对离散事件序列进行有效的封装，利用函数式编程的思想，满足响应式编程的需要。</p>
+<hr>
+<h2 id="ReactiveCocoa_常见类">ReactiveCocoa 常见类</h2><h3 id="信号源相关">信号源相关</h3><h4 id="RACStream">RACStream</h4><blockquote>
+<p>An abstract class representing any stream of values.</p>
+</blockquote>
+<p><code>RACStream</code> 是一个抽象类，是以 <code>Monad</code>（函数式编程语言）的概念为依据进行设计的，它代表的就是一个 <code>Monad</code>。有了 <code>Monad</code> 作为基石后，许多基于流的操作就可以被建立起来了，比如 <code>map</code> 、<code>filter</code> 、<code>zip</code> 等。 </p>
+<h4 id="RACSignal">RACSignal</h4><p>可以把信号想象成水龙头，只不过里面不是水，而是玻璃球（value），直径跟水管的内径一样，这样就能保证玻璃球是依次排列，不会出现并排的情况（数据都是线性处理的，不会出现并发情况）。水龙头的开关默认是关的，除非有了接收方（subscriber），才会打开。这样只要有新的玻璃球进来，就会自动传送给接收方。可以在水龙头上加一个过滤嘴（filter），不符合的不让通过，也可以加一个改动装置，把球改变成符合自己的需求（map）。也可以把多个水龙头合并成一个新的水龙头（combineLatest:reduce:），这样只要其中的一个水龙头有玻璃球出来，这个新合并的水龙头就会得到这个球。</p>
+<p><code>RACSignal</code> 代表的是将来会被传递的值，它是一种 <code>push-driven</code> 的流。<code>RACSignal</code> 可以向订阅者发送三种不同类型的事件：</p>
+<ul>
+<li><code>next</code> ：<code>RACSignal</code> 通过 <code>next</code> 事件向订阅者传送新的值，并且这个值可以为 <code>nil</code>；</li>
+<li><code>error</code> ：<code>RACSignal</code> 通过 <code>error</code> 事件向订阅者表明信号在正常结束前发生了错误；</li>
+<li><code>completed</code> ：<code>RACSignal</code> 通过 <code>completed</code> 事件向订阅者表明信号已经正常结束，不会再有后续的值传送给订阅者。</li>
+</ul>
+<p>注意，<code>ReactiveCocoa</code> 中的值流只包含正常的值，即通过 <code>next</code> 事件传送的值，并不包括 <code>error</code> 和 <code>completed</code> 事件，它们需要被特殊处理。通常情况下，一个信号的生命周期是由任意个 <code>next</code> 事件和一个 <code>error</code> 事件或一个 <code>completed</code> 事件组成的。</p>
+<p><code>RACSignal</code> 的 <code>Subscription</code> 过程概括起来可以分为三个步骤：</p>
+<ol>
+<li>[RACSignal createSignal] 来获得 signal</li>
+<li>[signal subscribeNext:] 来获得 subscriber，然后进行subscription</li>
+<li>进入 didSubscribe ，通过 [subscriber sendNext:] 来执行 next block 。</li>
+</ol>
+<h4 id="RACSubject">RACSubject</h4><p><code>RACSubject</code> 代表的是可以手动控制的信号，我们可以把它看作是 <code>RACSignal</code> 的可变版本，就好比 <code>NSMutableArray</code> 是 <code>NSArray</code> 的可变版本一样。<code>RACSubject</code> 继承自 <code>RACSignal</code> ，所以它可以作为信号源被订阅者订阅，同时，它又实现了 <code>RACSubscriber</code> 协议，所以它也可以作为订阅者订阅其他信号源，这个就是 <code>RACSubject</code> 为什么可以手动控制的原因。</p>
+<p>实际使用中，在 <code>MVVM</code> 中使用 <code>RACSubject</code> 可以非常方便地实现统一的错误处理逻辑。比如，我们可以在 <code>viewModel</code> 的基类中声明一个 <code>RACSubject</code> 类型的属性 <code>errors</code> ，然后在 <code>viewController</code> 的基类中编写统一的错误处理逻辑：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.errors</span> subscribeNext:^(<span class="built_in">NSError</span> *error) &#123;</span><br><span class="line">    <span class="comment">// 错误处理逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="RACCommand">RACCommand</h4><blockquote>
+<p>A command is a signal triggered in response to some action, typically UI-related.</p>
+</blockquote>
+<p><code>RACCommand</code> 通常用来表示某个 <code>Action</code> 的执行，比如点击<code>Button</code>。它有几个比较重要的属性：executionSignals / errors / executing。</p>
+<ul>
+<li><code>executionSignals</code> ：是 signal of signals ，如果直接 subscribe 的话会得到一个 signal ，而不是我们想要的 value，所以一般会配合 <code>switchToLatest</code> 。</li>
+<li><code>errors</code> ：跟正常的 signal 不一样，RACCommand 的错误不是通过 sendError 来实现的，而是通过 errors 属性传递出来的。</li>
+<li><code>executing</code> ：表示该 command 当前是否正在执行。</li>
+</ul>
+<h4 id="RACSequence">RACSequence</h4><blockquote>
+<p>Represents an immutable sequence of values. Unless otherwise specified, the sequences’ values are evaluated lazily on demand. Like Cocoa collections, sequences cannot contain nil.</p>
+</blockquote>
+<p><code>RACSequence</code> 代表的是一个不可变的值的序列，与 <code>RACSignal</code> 不同，它是 <code>pull-driven</code> 类型的流。从严格意义上讲，<code>RACSequence</code> 并不能算作是信号源，因为它并不能像 <code>RACSignal</code> 那样，可以被订阅者订阅，但是它与 <code>RACSignal</code> 之间可以非常方便地进行转换。</p>
+<p>因此，我们可以非常方便地使用 <code>RACSequence</code> 来实现集合的链式操作，直到得到你想要的最终结果为止，常用的使用场景为「字典转模型」。</p>
+<p><strong>注意</strong>：<code>RACSequence</code> 会涉及到性能与效率的问题。</p>
+<h3 id="订阅者相关">订阅者相关</h3><h4 id="RACSubscriber">RACSubscriber</h4><blockquote>
+<p>Represents any object which can directly receive values from a RACSignal.</p>
+</blockquote>
+<p>订阅者对信号源的一次订阅过程可以抽象为：通过 <code>RACSignal</code> 的 <code>-subscribe:</code> 方法传入一个订阅者，并最终返回一个 <code>RACDisposable</code> 对象的过程。</p>
+<p><strong>注意</strong>：在 <code>ReactiveCocoa</code> 中并没有专门的类 <code>RACSubscription</code> 来代表一次订阅，而间接地使用 <code>RACDisposable</code> 来充当这一角色。因此，一个 <code>RACDisposable</code> 对象就代表着一次订阅，并且我们可以用它来取消这次订阅。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">- (RACDisposable *)subscribeNext:(<span class="keyword">void</span> (^)(<span class="keyword">id</span> x))nextBlock &#123;</span><br><span class="line">true<span class="built_in">NSCParameterAssert</span>(nextBlock != <span class="literal">NULL</span>);</span><br><span class="line">true</span><br><span class="line">trueRACSubscriber *o = [RACSubscriber subscriberWithNext:nextBlock error:<span class="literal">NULL</span> completed:<span class="literal">NULL</span>];</span><br><span class="line">true<span class="keyword">return</span> [<span class="keyword">self</span> subscribe:o];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)subscriberWithNext:(<span class="keyword">void</span> (^)(<span class="keyword">id</span> x))next error:(<span class="keyword">void</span> (^)(<span class="built_in">NSError</span> *error))error completed:(<span class="keyword">void</span> (^)(<span class="keyword">void</span>))completed &#123;</span><br><span class="line">trueRACSubscriber *subscriber = [[<span class="keyword">self</span> alloc] init];</span><br><span class="line"></span><br><span class="line">truesubscriber-&gt;_next = [next <span class="keyword">copy</span>];</span><br><span class="line">truesubscriber-&gt;_error = [error <span class="keyword">copy</span>];</span><br><span class="line">truesubscriber-&gt;_completed = [completed <span class="keyword">copy</span>];</span><br><span class="line"></span><br><span class="line">true<span class="keyword">return</span> subscriber;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (RACDisposable *)subscribe:(<span class="keyword">id</span>&lt;RACSubscriber&gt;)subscriber &#123;</span><br><span class="line">true<span class="built_in">NSCAssert</span>(<span class="literal">NO</span>, <span class="string">@"This method must be overridden by subclasses"</span>);</span><br><span class="line">true<span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="调度器相关">调度器相关</h3><h4 id="RACScheduler">RACScheduler</h4><blockquote>
+<p>Schedulers are used to control when and where work is performed.</p>
+</blockquote>
+<p><code>RACScheduler</code> 在 <code>ReactiveCocoa</code> 中就是扮演着调度器的角色，本质上，它就是用 <code>GCD</code> 的串行队列来实现的，并且支持取消操作。是的，在 <code>ReactiveCocoa</code> 中，并没有使用到 <code>NSOperationQueue</code> 和 <code>NSRunloop</code> 等技术，<code>RACScheduler</code> 也只是对 <code>GCD</code> 的简单封装而已。</p>
+<h3 id="清洁工相关">清洁工相关</h3><h4 id="RACDisposable">RACDisposable</h4><blockquote>
+<p>A disposable encapsulates the work necessary to tear down and cleanup a subscription.</p>
+</blockquote>
+<p><code>RACDisposable</code> 在 <code>ReactiveCocoa</code> 中就充当着清洁工的角色，它封装了取消和清理一次订阅所必需的工作。它有一个核心的方法 <code>-dispose</code> ，调用这个方法就会执行相应的清理工作，这有点类似于 <code>NSObject</code> 的 <code>-dealloc</code> 方法。</p>
+<hr>
+<h2 id="ReactiveCocoa_常见用法">ReactiveCocoa 常见用法</h2><h3 id="代替代理">代替代理</h3><ul>
+<li><code>rac_signalForSelector</code> 用户代替代理</li>
+</ul>
+<h3 id="代替_KVO">代替 KVO</h3><ul>
+<li><code>rac_valuesAndChangesForKeyPath</code> 用于监听某个对象的某个属性的改变</li>
+</ul>
+<h3 id="代替事件监听">代替事件监听</h3><ul>
+<li><code>rac_signalForControlEvents</code> 用于监听某个事件</li>
+</ul>
+<h3 id="代替通知">代替通知</h3><ul>
+<li><code>rac_addObserverForName</code> 用于监听某个通知，且不需要在 <code>- (void)dealloc</code> 中移除监听</li>
+</ul>
+<h3 id="监听文本框文字改变">监听文本框文字改变</h3><ul>
+<li><code>rac_textSignal</code> 用于监听文本框文字变化</li>
+</ul>
+<h3 id="代替手势">代替手势</h3><ul>
+<li><code>rac_gestureSignal</code>用于监听手势操作</li>
+</ul>
+<h3 id="多个请求完成时，再执行后继操作">多个请求完成时，再执行后继操作</h3><ul>
+<li><code>rac_liftSelector:withSignalsFromArray:Signals</code> 当传入的 Signals，每一个 Signal 都至少 sendNext 过一次，就会去触发第一个 selector 参数的方法。</li>
+</ul>
+<h3 id="信号的相关操作">信号的相关操作</h3><ul>
+<li><code>bind</code> ：函数会返回一个新的信号 N。整体思路是对原信号 O 进行订阅，每当信号 O 产生一个值就将其转变成一个中间信号 M ，并马上订阅 M ，之后将信号M的输出作为新信号 N 的输出。</li>
+<li><code>map</code> \ <code>flattenMap</code> ：用于把源信号内容映射成新的内容（信号）。</li>
+<li><code>concat</code> ：组合，按一定顺序拼接信号，当多个信号发出的时候，有顺序的接收信号。</li>
+<li><code>then</code> ：用于连接两个信号，当第一个信号完成，才会连接 <code>then</code> 返回的信号。</li>
+<li><code>merge</code> ：把多个信号合并为一个信号，任何一个信号有新值的时候就会调用。</li>
+<li><code>zipWith</code> ：把两个信号压缩成一个信号，只有当两个信号同时发出信号内容时，并且把两个信号的内容合并成一个元组，才会触发压缩流的 <code>next</code> 事件。</li>
+<li><code>combineLatest</code> ：将多个信号合并起来，并且拿到各个信号的最新的值，必须每个合并的 <code>signal</code> 至少都有过一次 <code>sendNext</code> ，才会触发合并的信号。</li>
+<li><code>reduce</code> ：聚合，用于信号发出的内容是元组，把信号发出元组的值聚合成一个值。</li>
+<li><code>filter</code> ：过滤信号，使用它可以获取满足条件的信号。</li>
+<li><code>ignore</code> ：忽略某些值的信号，使用 <code>RACObserve</code> 时可配合使用，其实现由 <code>filter</code> 完成。</li>
+<li><code>distinctUntilChanged</code> ：实现是用 <code>bind</code> 来完成的，每次变换中都记录一下原信号上一次发送过来的值，并与这一次进行比较，如果是相同的值，就「吞」掉，返回 empty 信号。只有和原信号上一次发送的值不同，变换后的新信号才把这个值发送出来。</li>
+<li><code>take</code> ：从开始一共取 N 次的信号。</li>
+<li><code>takeLast</code> ：取最后 N 次的信号，前提条件：订阅者必须调用完成，因为只有完成，才知道总共有多少信号。</li>
+<li><code>takeUntil</code> ：获取信号直到某个信号执行完成。</li>
+<li><code>skip</code> ：跳过几个信号，不接受。</li>
+<li><code>switchToLatest</code> ：用于 <code>signalOfSignals</code>（信号的信号），有时候信号也会发出信号，会在 <code>signalOfSignals</code> 中，获取 <code>signalOfSignals</code> 发送的最新信号。</li>
+<li><code>doNext</code> ：执行 <code>next</code> 之前，会先执行这个 Block 。</li>
+<li><code>doCompleted</code> ：执行 <code>sendCompleted</code> 之前，会先执行这个Block 。</li>
+<li><code>timeout</code> ：超时，可以让一个信号在一定的时间后，自动报错。</li>
+<li><code>interval</code> ：定时：每隔一段时间发出信号。</li>
+<li><code>delay</code> ：延迟发送 <code>next</code> 。</li>
+<li><code>retry</code> ：重试，只要失败，就会重新执行创建信号中的 block ，直到成功。</li>
+<li><code>replay</code> ：重放，当一个信号被多次订阅，反复播放内容。</li>
+<li><code>throttle</code> ：节流，当某个信号发送比较频繁时，可以使用节流，在某一段时间不发送信号内容，过了一段时间获取信号的最新内容发出。</li>
+</ul>
+<hr>
+<h2 id="ReactiveCocoa_常见宏">ReactiveCocoa 常见宏</h2><ul>
+<li><code>RAC(TARGET, ...)</code> 用于绑定某个对象的某个属性</li>
+<li><code>RACObserve(TARGET, KEYPATH)</code> 用于监听某个对象的某个属性，返回的是信号</li>
+<li><code>@weakify(Obj)</code> &amp; <code>@strongify(Obj)</code> 配套使用</li>
+</ul>
+<hr>
+<h2 id="注意事项">注意事项</h2><h3 id="Side_Effect">Side Effect</h3><blockquote>
+<p>Side effects occur for each subscription by default, but there are certain situations where side effects should only occur once – for example, a network request typically should not be repeated when a new subscriber is added.</p>
+</blockquote>
+<p>如果某个信号被多个 <code>subscriber</code> 订阅，那么它的 <code>didSubscribe</code> 会被多次调用。</p>
+<p>如果想要避免这种情况的发生，可以使用 <code>reply</code> / <code>replayLast</code> / <code>replayLazily</code> 方法，它们的作用是保证 <code>signal</code> 只被触发一次，然后把 <code>sendNext:</code> 的 <code>value</code> 给缓存起来，下一次再有新的 <code>subscriber</code> 时，直接发送缓存的 <code>value</code> 。</p>
+<p>其内部实现依赖：<code>- (RACMulticastConnection *)multicast:(RACSubject *)subject;</code> 这个方法。</p>
+<h3 id="Cell_重用">Cell 重用</h3><p>RAC 给 <code>UITableViewCell</code> 提供了一个方法： <code>rac_prepareForReuseSignal</code> ，它的作用是当 Cell 即将要被重用时，告诉 Cell 。想象 Cell 上有多个 <code>Button</code> ，Cell 在初始化时给每个 Button 都 <code>addTarget:action:forControlEvents</code> ，被重用时需要先移除这些 target ，下面这段代码就可以很方便地解决这个问题：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[[[<span class="keyword">self</span><span class="variable">.cancelButton</span></span><br><span class="line">truerac_signalForControlEvents:<span class="built_in">UIControlEventTouchUpInside</span>]</span><br><span class="line">truetakeUntil:<span class="keyword">self</span><span class="variable">.rac_prepareForReuseSignal</span>]</span><br><span class="line">truesubscribeNext:^(<span class="built_in">UIButton</span> *x) &#123;</span><br><span class="line">true<span class="comment">// do other things</span></span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h3 id="Strong_/_Weak_Dance">Strong / Weak Dance</h3><p>因为 RAC 很多操作都是在 <code>Block</code> 中进行的，所以最常见的问题便是「循环引用」，所以需要通过 <code>@weakify</code> 和 <code>@strongify</code> 来消除循环引用。</p>
+<p>注意：事实上 <code>RACObserve(TARGET, KEYPATH)</code> 总是会引用 <code>self</code> ，即使 target 不是 self ，所以只要有 RACObserve 的地方都要使用 <code>@weakify</code> / <code>@strongify</code> 。</p>
+<h3 id="flattenMap_与_map_的区别">flattenMap 与 map 的区别</h3><ul>
+<li><code>flattenMap</code> 中的 block 返回信号。</li>
+<li><code>map</code> 中的 block 返回对象。</li>
+<li><code>map</code> 的实现是用了 <code>flattenMap</code> 函数来实现的。把 <code>map</code> 的入参闭包，放到了 <code>flattenMap</code> 的返回值中。</li>
+<li>开发中，如果信号发出的值不是信号，映射一般使用 <code>map</code> 。</li>
+<li>开发中，如果信号发出的值是信号，映射一般使用 <code>flattenMap</code> 。</li>
+<li><code>signalOfsignals</code> 用 <code>flattenMap</code> 。</li>
+</ul>
+<h3 id="冷信号与热信号的区别">冷信号与热信号的区别</h3><ul>
+<li>Hot Observable 是主动的，尽管你并没有订阅事件，但是它会时刻推送，就像鼠标移动；而 Cold Observable 是被动的，只有当你订阅的时候，它才会发布消息。</li>
+<li>Hot Observable 可以有多个订阅者，是一对多，集合可以与订阅者共享信息；而 Cold Observable 只能一对一，当有不同的订阅者，消息是重新完整发送。</li>
+<li><code>Subject</code> 类似「直播」，错过了就不再处理。而 <code>Signal</code> 类似「点播」。</li>
+<li><code>RACSubject</code> 及其子类是热信号，<code>RACSignal</code> 排除 <code>RACSubject</code> 类以外的是冷信号。</li>
+<li><code>RACSubject</code> 会持有订阅者（因为 <code>RACSubject</code> 是热信号，为了保证未来有事件发送的时候，订阅者可以收到信息，所以需要对订阅者保持状态，做法就是持有订阅者），而 <code>RACSignal</code> 不会持有订阅者。</li>
+</ul>
+<h3 id="其他">其他</h3><ul>
+<li><p>当一个 <code>signal</code> 被一个 <code>subscriber</code> subscribe 后，这个 <code>subscriber</code> 何时会被移除？答案是：当 <code>subscriber</code> 被 <code>sendComplete</code> 或 <code>sendError</code> 时，或者手动调用 <code>[disposable dispose]</code> 。</p>
+</li>
+<li><p><code>replay</code> 是 <code>multicast</code> 的一个特殊 case 而已。</p>
+</li>
+<li><p>当 <code>subscriber</code> 被 <code>dispose</code> 后，所有该 <code>subscriber</code> 相关的工作都会被停止或取消，如 http 请求，资源也会被释放。</p>
+</li>
+<li><p><code>Errors</code> 有优先权，如果有多个 <code>signals</code> 被同时监听，只要其中一个 signal <code>sendError</code>，那么 error 就会立刻被传送给 subscriber ，并导致 signals 终止执行。相当于<code>Exception</code> 。</p>
+</li>
+<li><p>使用 <code>RACSubject</code> ，如果进行了 <code>map</code> 操作，那么一定要发送完成信号，不然会内存泄漏。</p>
+</li>
+<li><p>任何的信号转换即是对原有的信号进行订阅从而产生新的信号。</p>
+</li>
+</ul>
+<hr>
+<h2 id="系列文章">系列文章</h2><ol>
+<li><a href="http://tech.meituan.com/tag/ReactiveCocoa" target="_blank" rel="external">美团点评技术团队</a></li>
+<li><a href="http://www.jianshu.com/p/d7d951a99db8" target="_blank" rel="external">一缕殇流化隐半边冰霜</a></li>
+<li><a href="http://draveness.me/racsignal/" target="_blank" rel="external">Draveness</a></li>
+</ol>
+<hr>
+<h2 id="参考链接">参考链接</h2><ol>
+<li><a href="http://blog.leichunfeng.com/blog/2015/12/25/reactivecocoa-v2-dot-5-yuan-ma-jie-xi-zhi-jia-gou-zong-lan/" target="_blank" rel="external">ReactiveCocoa v2.5 源码解析之架构总览</a></li>
+<li><a href="http://limboy.me/tech/2014/06/06/deep-into-reactivecocoa2.html" target="_blank" rel="external">ReactiveCocoa2实战</a></li>
+<li><a href="http://limboy.me/tech/2013/12/27/reactivecocoa-2.html" target="_blank" rel="external">说说ReactiveCocoa 2</a></li>
+<li><a href="https://github.com/ming1016/study/wiki/iOS%E5%87%BD%E6%95%B0%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8AReactiveCocoa%E7%9A%84%E4%BD%BF%E7%94%A8" target="_blank" rel="external">iOS函数响应式编程以及ReactiveCocoa的使用</a></li>
+<li><a href="http://www.jianshu.com/p/87ef6720a096" target="_blank" rel="external">最快让你上手ReactiveCocoa之基础篇</a></li>
+<li><a href="http://www.jianshu.com/p/e10e5ca413b7" target="_blank" rel="external">最快让你上手ReactiveCocoa之进阶篇</a></li>
+<li><a href="http://blog.devtang.com/2016/01/03/reactive-cocoa-discussion/" target="_blank" rel="external">ReactiveCocoa 讨论会</a></li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><blockquote>
+<p>本文仅作为个人对于 <code>ReactiveCocoa</code> 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。</p>
+</blockquote>
+<p>Last updated on 2017.03.22</p>]]>
+    
+    </summary>
+    
+      <category term="FRP" scheme="http://itangqi.me/tags/FRP/"/>
+    
+      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+    
+      <category term="ReactiveCocoa" scheme="http://itangqi.me/tags/ReactiveCocoa/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
+  
+  <entry>
     <title><![CDATA[iOS 屏幕旋转的那些事（二）]]></title>
     <link href="http://itangqi.me/2017/03/09/handle-orientation-changes-two/"/>
     <id>http://itangqi.me/2017/03/09/handle-orientation-changes-two/</id>
     <published>2017-03-08T16:00:00.000Z</published>
-    <updated>2017-03-09T07:37:10.000Z</updated>
+    <updated>2017-03-09T07:37:19.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>在 <a href="http://itangqi.me/2017/03/09/handle-orientation-changes-one/">iOS 屏幕旋转的那些事（一）</a>一文中，整个实践的过程都比较顺利，但直到我遇到了 FLEX……</p>
 <a id="more"></a>
 <hr>
@@ -2050,122 +2244,6 @@
       <category term="Run Loop" scheme="http://itangqi.me/tags/Run-Loop/"/>
     
       <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[《图解 HTTP》读书笔记（三）]]></title>
-    <link href="http://itangqi.me/2016/04/07/the-notes-of-learning-illustrating-http-three/"/>
-    <id>http://itangqi.me/2016/04/07/the-notes-of-learning-illustrating-http-three/</id>
-    <published>2016-04-06T16:00:00.000Z</published>
-    <updated>2016-04-21T05:06:48.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="第_7_章_确保_Web_安全的_HTTPS">第 7 章 确保 Web 安全的 HTTPS</h2><a id="more"></a> 
-<h3 id="7-1_HTTP_的缺点">7.1 HTTP 的缺点</h3><h4 id="7-1-1_通信使用明文（不加密），内容可能会被窃听">7.1.1 通信使用明文（不加密），内容可能会被窃听</h4><h5 id="TCP/IP_是可能被窃听的网络">TCP/IP 是可能被窃听的网络</h5><p>这是因为，按 TCP/IP 协议族的工作机制，通信内容在所有的通信线路上都有可能遭到窥视。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.1.jpg" alt=""></p>
-<h5 id="加密处理防止被窃听">加密处理防止被窃听</h5><p><strong>1. 通信的加密</strong></p>
-<p>一种方式就是将通信加密。HTTP 协议中没有加密机制，但可以通过和 SSL（Secure Socket Layer，安全套接层）或 TLS（Transport Layer Security，安全层传输协议）的组合使用，加密 HTTP 的通信内容。</p>
-<p>用 SSL 建立安全通信线路之后，就可以在这条线路上进行 HTTP 通信了。与 SSL 组合使用的 HTTP 被称为 HTTPS（HTTP Secure，超文本传输安全协议）或 HTTP over SSL。</p>
-<p><strong>2. 内容加密</strong></p>
-<p>由于 HTTP 协议中没有加密机制，那么就对 HTTP 协议传输的内容本身加密。即把 HTTP 报文里所含的内容进行加密处理。</p>
-<p>在这种情况下，客户端需要对 HTTP 报文进行加密处理后再发送请求。</p>
-<p>有一点必须引起注意，由于该方式不同于 SSL 或 TLS 将整个通信线路加密处理，所以内容仍有被篡改的风险。稍后我们会加以说明。</p>
-<h4 id="7-1-2_不验证通信方的身份，因此有可能遭遇伪装">7.1.2 不验证通信方的身份，因此有可能遭遇伪装</h4><p><strong>1. 任何人都可发起请求</strong></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.2.jpg" alt=""></p>
-<p>HTTP 协议的实现本身非常简单，不论是谁发送过来的请求都会返回响应，因此不确认通信方，会存在以下各种隐患：</p>
-<ol>
-<li><p>无法确定请求发送至目标的 Web 服务器是否是按真实意图返回响应的那台服务器。有可能是已伪装的 Web 服务器</p>
-</li>
-<li><p>无法确定响应返回到的客户端是否是按真实意图接收响应的那个客户端。有可能是已伪装的客户端</p>
-</li>
-<li><p>无法确定正在通信的对方是否具备访问权限。因为某些 Web 服务器上保存着重要的信息，只想发给特定用户通信的权限</p>
-</li>
-<li><p>无法判定请求是来自何方、出自谁手</p>
-</li>
-<li><p>即使是无意义的请求也会照单全收。无法阻止海量请求下的 DoS 攻击（Denial of Service，拒绝服务攻击）</p>
-</li>
-</ol>
-<p><strong>2. 查明对手的证书</strong></p>
-<p>如果使用 SSL 则可以。SSL 不仅提供加密处理，而且还使用了一种被称为<strong>证书</strong>的手段，可用于确定方。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.3.jpg" alt=""></p>
-<h4 id="7-1-3_无法证明报文的完整性，所以有可能已遭篡改">7.1.3 无法证明报文的完整性，所以有可能已遭篡改</h4><p>所谓完整性是指信息的准确度。若无法证明其完整性，通常也就意味着无法判断信息是否准确。</p>
-<p><strong>1. 接收到的内容可能有误</strong></p>
-<p>像这样，请求或响应在传输途中，遭攻击者拦截并篡改内容的攻击称为中间人攻击（Man-in-the-Middle attack，MITM）。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.1.4.jpg" alt=""></p>
-<p><strong>2. 如何防止篡改</strong></p>
-<p>虽然有使用 HTTP 协议确定报文完整性的方法，但事实上并不便捷、可靠。其中常用的是 MD5 和 SHA-1 等散列值校验的方法，以及用来确认文件的数字签名方法。</p>
-<p>可惜的是，用这些方法也依然无法百分百保证确认结果正确。因为 PGP 和 MD5 本身被改写的话，用户是没有办法意识到的。</p>
-<p>为了有效防止这些弊端，有必要使用 HTTPS。</p>
-<h3 id="7-2_HTTP_+_加密_+_认证_+_完整性保护_=_HTTPS">7.2 HTTP + 加密 + 认证 + 完整性保护 = HTTPS</h3><h4 id="7-2-1_HTTPS_是身披_SSL_外壳的_HTTP">7.2.1 HTTPS 是身披 SSL 外壳的 HTTP</h4><p>通常，HTTP 直接和 TCP 通信。当使用 SSL 时，则演变成先和 SSL 通信，再由 SSL 和 TCP 通信了。简言之，所谓 HTTPS，其实就是身披 SSL 协议这层外壳的 HTTP。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.1.jpg" alt=""></p>
-<p>在采用 SSL 后，HTTP 就拥有了 HTTPS 的<strong>加密</strong>、<strong>证书</strong>和<strong>完整性保护</strong>这些功能。</p>
-<p>SSL 是独立于 HTTP 的协议，所以不光是 HTTP 协议，其他运行在应用层的 SMTP 和 Telnet 等协议均可配合 SSL（Secure Socket Layer） 协议使用。可以说 SSL 是当今世界上应用最为广泛的网络安全技术。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.1.1.jpg" alt=""></p>
-<h4 id="7-2-2_相互交换密钥的公开密钥加密技术">7.2.2 相互交换密钥的公开密钥加密技术</h4><p>SSL 采用一种叫做公开密钥加密（Public-key cryptography）的加密处理方式。</p>
-<p>近代的加密方法中加密算法是公开的，而密钥却是保密的。通过这种方式得以保持加密方法的安全性。</p>
-<p><strong>1. 共享密钥加密的困境</strong></p>
-<p>加密和解密同用一个密钥的方式称为共享密钥加密（Common key crypto system），也被叫做对称密钥加密。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.2.1.jpg" alt=""></p>
-<p>以共享密钥方式加密时必须将密钥也发给对方。可究竟怎样才能安全地转交？在互联网上转发密钥时，如果通信被监听那么密钥就可会落入攻击者之手，同时也就失去了加密的意义。另外还得设法安全地保管接收到的密钥。</p>
-<p><strong>2. 使用两把密钥的公开密钥加密</strong></p>
-<p>公开密钥加密使用一对非对称的密钥。一把叫做私有密钥（private key），另一把叫做公开密钥（public key）。顾名思义，私有密钥不能让其他任何人知道，而公开密钥则可以随意发布，任何人都可以获得。</p>
-<p>使用公开密钥加密方式，发送密文的一方使用对方的公开密钥进行加密处理，对方收到被加密的信息后，再使用自己的私有密钥进行解密。利用这种方式，不需要发送用来解密的私有密钥，也不必担心密钥被攻击者窃听而盗走。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.2.2.jpg" alt=""></p>
-<p><strong>3. HTTPS 采用混合加密机制</strong></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.2.3.jpg" alt=""></p>
-<h4 id="7-2-3_证明公开密钥正确性的证书">7.2.3 证明公开密钥正确性的证书</h4><p>遗憾的是，公开密钥加密方式还是存在一些问题的。那就是无法证明公开密钥本身就是货真价实的公开密钥。比如，正准备和某台服务器建立公开密钥加密方式下的通信时，如何证明收到的公开密钥就是原本预想的那台服务器发行的公开密钥。或许在公开密钥传输途中，真正的公开密钥已经被攻击者替换掉了。</p>
-<p>为了解决上述问题，可以使用由数字证书认证机构（CA，Certificate Authority）和其相关机关颁发的公开密钥证书。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.3.jpg" alt=""></p>
-<p><strong>1. 可证明组织真实性的 EV SSL 证书</strong></p>
-<p><strong>2. 用以确定客户端的客户端证书</strong></p>
-<p><strong>3. 认证机构信誉第一</strong></p>
-<p><strong>4. 自由认证机构颁发的证书称为自签名证书</strong></p>
-<h4 id="7-2-4_HTTPS_的安全通信机制">7.2.4 HTTPS 的安全通信机制</h4><p>为了更好地理解 HTTPS，我们来观察一下 HTTPS 的通信步骤：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.4.1.jpg" alt=""></p>
-<p>在以上流程中，应用层发送数据时会附加一种叫做 MAC（Message Authentication Code）的报文摘要。MAC 能够查知报文是否遭到篡改，从而保护报文的完整性。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.4.2.jpg" alt=""></p>
-<p><strong>1. SSL 和 TLS</strong></p>
-<p>SSL 技术最初是由浏览器开发商网景通信公司率先倡导的，开发过 SSL3.0 之前的版本。目前主导权已转移到 IETF（Internet Engineering Task Force，Internet 工程任务组）的手中。</p>
-<p>IETF 以 SSL3.0 为基准，后又制定了 TLS1.0、TLS1.1 和 TLS1.2。TSL 是以 SSL 为原型开发的协议，有时会统一称该协议为 SSL。当前主流的版本是 SSL3.0 和 TLS1.0。</p>
-<p><strong>2. SSL 速度慢吗</strong></p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-7.2.4.3.jpg" alt=""></p>
-<p>SSL 的慢分两种。一种是指通信慢。另一种是指由于大量消耗 CPU 及内存等资源，导致处理速度变慢。</p>
-<hr>
-<h2 id="第_8_章_确认访问用户身份的认证">第 8 章 确认访问用户身份的认证</h2><h3 id="8-1_何为认证">8.1 何为认证</h3><p><strong>HTTP/1.1 使用的认证方式如下所示：</strong></p>
-<ol>
-<li>BASIC 认证（基本认证）</li>
-<li>DIGEST  认证（摘要认证）</li>
-<li>SSL 客户端认证</li>
-<li>FormBase 认证（基于表单认证）</li>
-</ol>
-<p>此外，还有 Windows 统一认证（Keberos 认证、NTLM 认证）</p>
-<h3 id="8-2_BASIC_认证">8.2 BASIC 认证</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-8.1.jpg" alt=""></p>
-<p>BASIC 采用 Base64 编码方式，但这并不是加密处理。</p>
-<p>详情参见：</p>
-<ul>
-<li><a href="http://www.cnblogs.com/xqxacm/p/4886299.html" target="_blank" rel="external">浅谈Base64编码算法</a></li>
-<li><a href="https://nieyong.github.io/wiki_web/BASE64%E7%BC%96%E7%A0%81%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8.html" target="_blank" rel="external">BASE64编码原理及应用</a></li>
-<li><a href="https://segmentfault.com/q/1010000000801988" target="_blank" rel="external">为什么有的代码要用 base64 进行编码？</a></li>
-<li><a href="http://blog.xiayf.cn/2016/01/24/base64-encoding/" target="_blank" rel="external">Base64编码原理与应用</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2008/06/base64.html" target="_blank" rel="external">Base64笔记</a></li>
-</ul>
-<h3 id="8-3_DIGEST_认证">8.3 DIGEST 认证</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-8.2.jpg" alt=""></p>
-<p>DIGEST 认证提供了高于 BASIC 认证的安全等级，但是和 HTTPS 的客户端认证相比仍旧很弱。DIGEST 认证提供防止密码被窃听的保护机制，但并不存在防止用户伪装的保护机制。</p>
-<h3 id="8-4_SSL_客户端认证">8.4 SSL 客户端认证</h3><p>SSL 客户端认证是借由 HTTPS 的客户端证书完成认证的方式。凭借客户端证书（在 HTTPS 一章已讲解）认证，服务器可确认访问是否来自已登录的客户端。</p>
-<p>在多数情况下，SSL 客户端认证不会仅依靠证书完成认证，一般会和基于表单认证（稍后讲解）组合形成一种双因素认证（Two-factor authentication）来使用。所谓双因素认证就是指，认证过程中不仅需要密码这一个因素，还需要申请认证者提供其他持有信息，从而作为另一个因素，与其组合使用的认证方式。</p>
-<h3 id="8-5_基于表单认证">8.5 基于表单认证</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/http-8.3.jpg" alt=""></p>
-<p>基于表单认证本身是通过服务器端的 Web 应用，将客户端发送过来的用户 ID 和密码与之前登录过的信息做匹配来进行认证的。</p>
-<p>但鉴于 HTTP 是无状态协议，之前已认证成功的用户状态无法通过协议层面保存下来。即，无法实现状态管理，因此即使当该用户下一次继续访问，也无法区分他与其他的用户。于是我们会使用 Cookie 来管理 Session，以弥补 HTTP 协议中不存在的状态管理功能。”</p>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="第_7_章_确保_Web_安全的_HTTPS">第 7 章 确保 Web 安全的 HTTPS</h2>]]>
-    
-    </summary>
-    
-      <category term="HTTP" scheme="http://itangqi.me/tags/HTTP/"/>
-    
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
-    
-      <category term="HTTP" scheme="http://itangqi.me/categories/HTTP/"/>
     
   </entry>
   

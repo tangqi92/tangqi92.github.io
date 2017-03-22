@@ -1,0 +1,1137 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="FRP,Notes,ReactiveCocoa," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言
+本文仅作为个人对于 ReactiveCocoa 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。
+
+Last updated on 2017.03.22">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactiveCocoa 知识点整理">
+<meta property="og:url" content="http://itangqi.me/2017/03/22/the-notes-of-learning-reactivecocoa/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言
+本文仅作为个人对于 ReactiveCocoa 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。
+
+Last updated on 2017.03.22">
+<meta property="og:updated_time" content="2017-03-22T12:28:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactiveCocoa 知识点整理">
+<meta name="twitter:description" content="前言
+本文仅作为个人对于 ReactiveCocoa 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。
+
+Last updated on 2017.03.22">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> ReactiveCocoa 知识点整理 | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Qi Tang's Blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                ReactiveCocoa 知识点整理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-22T00:00:00+08:00" content="2017-03-22">
+              2017-03-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/03/22/the-notes-of-learning-reactivecocoa/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/22/the-notes-of-learning-reactivecocoa/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/03/22/the-notes-of-learning-reactivecocoa/" class="leancloud_visitors" data-flag-title="ReactiveCocoa 知识点整理">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><blockquote>
+<p>本文仅作为个人对于 <code>ReactiveCocoa</code> 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。</p>
+</blockquote>
+<p>Last updated on 2017.03.22</p>
+<a id="more"></a> 
+<hr>
+<h2 id="FRP_思想">FRP 思想</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">2</span></span><br><span class="line">b = <span class="number">2</span></span><br><span class="line">c = a + b <span class="comment">// c is 4</span></span><br><span class="line"></span><br><span class="line">b = <span class="number">3</span></span><br><span class="line"><span class="comment">// now what is the value of c?</span></span><br></pre></td></tr></table></figure>
+<p>简单来讲，FRP 是基于异步事件流进行编程的一种编程范式。针对离散事件序列进行有效的封装，利用函数式编程的思想，满足响应式编程的需要。</p>
+<hr>
+<h2 id="ReactiveCocoa_常见类">ReactiveCocoa 常见类</h2><h3 id="信号源相关">信号源相关</h3><h4 id="RACStream">RACStream</h4><blockquote>
+<p>An abstract class representing any stream of values.</p>
+</blockquote>
+<p><code>RACStream</code> 是一个抽象类，是以 <code>Monad</code>（函数式编程语言）的概念为依据进行设计的，它代表的就是一个 <code>Monad</code>。有了 <code>Monad</code> 作为基石后，许多基于流的操作就可以被建立起来了，比如 <code>map</code> 、<code>filter</code> 、<code>zip</code> 等。 </p>
+<h4 id="RACSignal">RACSignal</h4><p>可以把信号想象成水龙头，只不过里面不是水，而是玻璃球（value），直径跟水管的内径一样，这样就能保证玻璃球是依次排列，不会出现并排的情况（数据都是线性处理的，不会出现并发情况）。水龙头的开关默认是关的，除非有了接收方（subscriber），才会打开。这样只要有新的玻璃球进来，就会自动传送给接收方。可以在水龙头上加一个过滤嘴（filter），不符合的不让通过，也可以加一个改动装置，把球改变成符合自己的需求（map）。也可以把多个水龙头合并成一个新的水龙头（combineLatest:reduce:），这样只要其中的一个水龙头有玻璃球出来，这个新合并的水龙头就会得到这个球。</p>
+<p><code>RACSignal</code> 代表的是将来会被传递的值，它是一种 <code>push-driven</code> 的流。<code>RACSignal</code> 可以向订阅者发送三种不同类型的事件：</p>
+<ul>
+<li><code>next</code> ：<code>RACSignal</code> 通过 <code>next</code> 事件向订阅者传送新的值，并且这个值可以为 <code>nil</code>；</li>
+<li><code>error</code> ：<code>RACSignal</code> 通过 <code>error</code> 事件向订阅者表明信号在正常结束前发生了错误；</li>
+<li><code>completed</code> ：<code>RACSignal</code> 通过 <code>completed</code> 事件向订阅者表明信号已经正常结束，不会再有后续的值传送给订阅者。</li>
+</ul>
+<p>注意，<code>ReactiveCocoa</code> 中的值流只包含正常的值，即通过 <code>next</code> 事件传送的值，并不包括 <code>error</code> 和 <code>completed</code> 事件，它们需要被特殊处理。通常情况下，一个信号的生命周期是由任意个 <code>next</code> 事件和一个 <code>error</code> 事件或一个 <code>completed</code> 事件组成的。</p>
+<p><code>RACSignal</code> 的 <code>Subscription</code> 过程概括起来可以分为三个步骤：</p>
+<ol>
+<li>[RACSignal createSignal] 来获得 signal</li>
+<li>[signal subscribeNext:] 来获得 subscriber，然后进行subscription</li>
+<li>进入 didSubscribe ，通过 [subscriber sendNext:] 来执行 next block 。</li>
+</ol>
+<h4 id="RACSubject">RACSubject</h4><p><code>RACSubject</code> 代表的是可以手动控制的信号，我们可以把它看作是 <code>RACSignal</code> 的可变版本，就好比 <code>NSMutableArray</code> 是 <code>NSArray</code> 的可变版本一样。<code>RACSubject</code> 继承自 <code>RACSignal</code> ，所以它可以作为信号源被订阅者订阅，同时，它又实现了 <code>RACSubscriber</code> 协议，所以它也可以作为订阅者订阅其他信号源，这个就是 <code>RACSubject</code> 为什么可以手动控制的原因。</p>
+<p>实际使用中，在 <code>MVVM</code> 中使用 <code>RACSubject</code> 可以非常方便地实现统一的错误处理逻辑。比如，我们可以在 <code>viewModel</code> 的基类中声明一个 <code>RACSubject</code> 类型的属性 <code>errors</code> ，然后在 <code>viewController</code> 的基类中编写统一的错误处理逻辑：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.errors</span> subscribeNext:^(<span class="built_in">NSError</span> *error) &#123;</span><br><span class="line">    <span class="comment">// 错误处理逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="RACCommand">RACCommand</h4><blockquote>
+<p>A command is a signal triggered in response to some action, typically UI-related.</p>
+</blockquote>
+<p><code>RACCommand</code> 通常用来表示某个 <code>Action</code> 的执行，比如点击<code>Button</code>。它有几个比较重要的属性：executionSignals / errors / executing。</p>
+<ul>
+<li><code>executionSignals</code> ：是 signal of signals ，如果直接 subscribe 的话会得到一个 signal ，而不是我们想要的 value，所以一般会配合 <code>switchToLatest</code> 。</li>
+<li><code>errors</code> ：跟正常的 signal 不一样，RACCommand 的错误不是通过 sendError 来实现的，而是通过 errors 属性传递出来的。</li>
+<li><code>executing</code> ：表示该 command 当前是否正在执行。</li>
+</ul>
+<h4 id="RACSequence">RACSequence</h4><blockquote>
+<p>Represents an immutable sequence of values. Unless otherwise specified, the sequences’ values are evaluated lazily on demand. Like Cocoa collections, sequences cannot contain nil.</p>
+</blockquote>
+<p><code>RACSequence</code> 代表的是一个不可变的值的序列，与 <code>RACSignal</code> 不同，它是 <code>pull-driven</code> 类型的流。从严格意义上讲，<code>RACSequence</code> 并不能算作是信号源，因为它并不能像 <code>RACSignal</code> 那样，可以被订阅者订阅，但是它与 <code>RACSignal</code> 之间可以非常方便地进行转换。</p>
+<p>因此，我们可以非常方便地使用 <code>RACSequence</code> 来实现集合的链式操作，直到得到你想要的最终结果为止，常用的使用场景为「字典转模型」。</p>
+<p><strong>注意</strong>：<code>RACSequence</code> 会涉及到性能与效率的问题。</p>
+<h3 id="订阅者相关">订阅者相关</h3><h4 id="RACSubscriber">RACSubscriber</h4><blockquote>
+<p>Represents any object which can directly receive values from a RACSignal.</p>
+</blockquote>
+<p>订阅者对信号源的一次订阅过程可以抽象为：通过 <code>RACSignal</code> 的 <code>-subscribe:</code> 方法传入一个订阅者，并最终返回一个 <code>RACDisposable</code> 对象的过程。</p>
+<p><strong>注意</strong>：在 <code>ReactiveCocoa</code> 中并没有专门的类 <code>RACSubscription</code> 来代表一次订阅，而间接地使用 <code>RACDisposable</code> 来充当这一角色。因此，一个 <code>RACDisposable</code> 对象就代表着一次订阅，并且我们可以用它来取消这次订阅。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">- (RACDisposable *)subscribeNext:(<span class="keyword">void</span> (^)(<span class="keyword">id</span> x))nextBlock &#123;</span><br><span class="line">true<span class="built_in">NSCParameterAssert</span>(nextBlock != <span class="literal">NULL</span>);</span><br><span class="line">true</span><br><span class="line">trueRACSubscriber *o = [RACSubscriber subscriberWithNext:nextBlock error:<span class="literal">NULL</span> completed:<span class="literal">NULL</span>];</span><br><span class="line">true<span class="keyword">return</span> [<span class="keyword">self</span> subscribe:o];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">+ (instancetype)subscriberWithNext:(<span class="keyword">void</span> (^)(<span class="keyword">id</span> x))next error:(<span class="keyword">void</span> (^)(<span class="built_in">NSError</span> *error))error completed:(<span class="keyword">void</span> (^)(<span class="keyword">void</span>))completed &#123;</span><br><span class="line">trueRACSubscriber *subscriber = [[<span class="keyword">self</span> alloc] init];</span><br><span class="line"></span><br><span class="line">truesubscriber-&gt;_next = [next <span class="keyword">copy</span>];</span><br><span class="line">truesubscriber-&gt;_error = [error <span class="keyword">copy</span>];</span><br><span class="line">truesubscriber-&gt;_completed = [completed <span class="keyword">copy</span>];</span><br><span class="line"></span><br><span class="line">true<span class="keyword">return</span> subscriber;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (RACDisposable *)subscribe:(<span class="keyword">id</span>&lt;RACSubscriber&gt;)subscriber &#123;</span><br><span class="line">true<span class="built_in">NSCAssert</span>(<span class="literal">NO</span>, <span class="string">@"This method must be overridden by subclasses"</span>);</span><br><span class="line">true<span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="调度器相关">调度器相关</h3><h4 id="RACScheduler">RACScheduler</h4><blockquote>
+<p>Schedulers are used to control when and where work is performed.</p>
+</blockquote>
+<p><code>RACScheduler</code> 在 <code>ReactiveCocoa</code> 中就是扮演着调度器的角色，本质上，它就是用 <code>GCD</code> 的串行队列来实现的，并且支持取消操作。是的，在 <code>ReactiveCocoa</code> 中，并没有使用到 <code>NSOperationQueue</code> 和 <code>NSRunloop</code> 等技术，<code>RACScheduler</code> 也只是对 <code>GCD</code> 的简单封装而已。</p>
+<h3 id="清洁工相关">清洁工相关</h3><h4 id="RACDisposable">RACDisposable</h4><blockquote>
+<p>A disposable encapsulates the work necessary to tear down and cleanup a subscription.</p>
+</blockquote>
+<p><code>RACDisposable</code> 在 <code>ReactiveCocoa</code> 中就充当着清洁工的角色，它封装了取消和清理一次订阅所必需的工作。它有一个核心的方法 <code>-dispose</code> ，调用这个方法就会执行相应的清理工作，这有点类似于 <code>NSObject</code> 的 <code>-dealloc</code> 方法。</p>
+<hr>
+<h2 id="ReactiveCocoa_常见用法">ReactiveCocoa 常见用法</h2><h3 id="代替代理">代替代理</h3><ul>
+<li><code>rac_signalForSelector</code> 用户代替代理</li>
+</ul>
+<h3 id="代替_KVO">代替 KVO</h3><ul>
+<li><code>rac_valuesAndChangesForKeyPath</code> 用于监听某个对象的某个属性的改变</li>
+</ul>
+<h3 id="代替事件监听">代替事件监听</h3><ul>
+<li><code>rac_signalForControlEvents</code> 用于监听某个事件</li>
+</ul>
+<h3 id="代替通知">代替通知</h3><ul>
+<li><code>rac_addObserverForName</code> 用于监听某个通知，且不需要在 <code>- (void)dealloc</code> 中移除监听</li>
+</ul>
+<h3 id="监听文本框文字改变">监听文本框文字改变</h3><ul>
+<li><code>rac_textSignal</code> 用于监听文本框文字变化</li>
+</ul>
+<h3 id="代替手势">代替手势</h3><ul>
+<li><code>rac_gestureSignal</code>用于监听手势操作</li>
+</ul>
+<h3 id="多个请求完成时，再执行后继操作">多个请求完成时，再执行后继操作</h3><ul>
+<li><code>rac_liftSelector:withSignalsFromArray:Signals</code> 当传入的 Signals，每一个 Signal 都至少 sendNext 过一次，就会去触发第一个 selector 参数的方法。</li>
+</ul>
+<h3 id="信号的相关操作">信号的相关操作</h3><ul>
+<li><code>bind</code> ：函数会返回一个新的信号 N。整体思路是对原信号 O 进行订阅，每当信号 O 产生一个值就将其转变成一个中间信号 M ，并马上订阅 M ，之后将信号M的输出作为新信号 N 的输出。</li>
+<li><code>map</code> \ <code>flattenMap</code> ：用于把源信号内容映射成新的内容（信号）。</li>
+<li><code>concat</code> ：组合，按一定顺序拼接信号，当多个信号发出的时候，有顺序的接收信号。</li>
+<li><code>then</code> ：用于连接两个信号，当第一个信号完成，才会连接 <code>then</code> 返回的信号。</li>
+<li><code>merge</code> ：把多个信号合并为一个信号，任何一个信号有新值的时候就会调用。</li>
+<li><code>zipWith</code> ：把两个信号压缩成一个信号，只有当两个信号同时发出信号内容时，并且把两个信号的内容合并成一个元组，才会触发压缩流的 <code>next</code> 事件。</li>
+<li><code>combineLatest</code> ：将多个信号合并起来，并且拿到各个信号的最新的值，必须每个合并的 <code>signal</code> 至少都有过一次 <code>sendNext</code> ，才会触发合并的信号。</li>
+<li><code>reduce</code> ：聚合，用于信号发出的内容是元组，把信号发出元组的值聚合成一个值。</li>
+<li><code>filter</code> ：过滤信号，使用它可以获取满足条件的信号。</li>
+<li><code>ignore</code> ：忽略某些值的信号，使用 <code>RACObserve</code> 时可配合使用，其实现由 <code>filter</code> 完成。</li>
+<li><code>distinctUntilChanged</code> ：实现是用 <code>bind</code> 来完成的，每次变换中都记录一下原信号上一次发送过来的值，并与这一次进行比较，如果是相同的值，就「吞」掉，返回 empty 信号。只有和原信号上一次发送的值不同，变换后的新信号才把这个值发送出来。</li>
+<li><code>take</code> ：从开始一共取 N 次的信号。</li>
+<li><code>takeLast</code> ：取最后 N 次的信号，前提条件：订阅者必须调用完成，因为只有完成，才知道总共有多少信号。</li>
+<li><code>takeUntil</code> ：获取信号直到某个信号执行完成。</li>
+<li><code>skip</code> ：跳过几个信号，不接受。</li>
+<li><code>switchToLatest</code> ：用于 <code>signalOfSignals</code>（信号的信号），有时候信号也会发出信号，会在 <code>signalOfSignals</code> 中，获取 <code>signalOfSignals</code> 发送的最新信号。</li>
+<li><code>doNext</code> ：执行 <code>next</code> 之前，会先执行这个 Block 。</li>
+<li><code>doCompleted</code> ：执行 <code>sendCompleted</code> 之前，会先执行这个Block 。</li>
+<li><code>timeout</code> ：超时，可以让一个信号在一定的时间后，自动报错。</li>
+<li><code>interval</code> ：定时：每隔一段时间发出信号。</li>
+<li><code>delay</code> ：延迟发送 <code>next</code> 。</li>
+<li><code>retry</code> ：重试，只要失败，就会重新执行创建信号中的 block ，直到成功。</li>
+<li><code>replay</code> ：重放，当一个信号被多次订阅，反复播放内容。</li>
+<li><code>throttle</code> ：节流，当某个信号发送比较频繁时，可以使用节流，在某一段时间不发送信号内容，过了一段时间获取信号的最新内容发出。</li>
+</ul>
+<hr>
+<h2 id="ReactiveCocoa_常见宏">ReactiveCocoa 常见宏</h2><ul>
+<li><code>RAC(TARGET, ...)</code> 用于绑定某个对象的某个属性</li>
+<li><code>RACObserve(TARGET, KEYPATH)</code> 用于监听某个对象的某个属性，返回的是信号</li>
+<li><code>@weakify(Obj)</code> &amp; <code>@strongify(Obj)</code> 配套使用</li>
+</ul>
+<hr>
+<h2 id="注意事项">注意事项</h2><h3 id="Side_Effect">Side Effect</h3><blockquote>
+<p>Side effects occur for each subscription by default, but there are certain situations where side effects should only occur once – for example, a network request typically should not be repeated when a new subscriber is added.</p>
+</blockquote>
+<p>如果某个信号被多个 <code>subscriber</code> 订阅，那么它的 <code>didSubscribe</code> 会被多次调用。</p>
+<p>如果想要避免这种情况的发生，可以使用 <code>reply</code> / <code>replayLast</code> / <code>replayLazily</code> 方法，它们的作用是保证 <code>signal</code> 只被触发一次，然后把 <code>sendNext:</code> 的 <code>value</code> 给缓存起来，下一次再有新的 <code>subscriber</code> 时，直接发送缓存的 <code>value</code> 。</p>
+<p>其内部实现依赖：<code>- (RACMulticastConnection *)multicast:(RACSubject *)subject;</code> 这个方法。</p>
+<h3 id="Cell_重用">Cell 重用</h3><p>RAC 给 <code>UITableViewCell</code> 提供了一个方法： <code>rac_prepareForReuseSignal</code> ，它的作用是当 Cell 即将要被重用时，告诉 Cell 。想象 Cell 上有多个 <code>Button</code> ，Cell 在初始化时给每个 Button 都 <code>addTarget:action:forControlEvents</code> ，被重用时需要先移除这些 target ，下面这段代码就可以很方便地解决这个问题：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[[[<span class="keyword">self</span><span class="variable">.cancelButton</span></span><br><span class="line">truerac_signalForControlEvents:<span class="built_in">UIControlEventTouchUpInside</span>]</span><br><span class="line">truetakeUntil:<span class="keyword">self</span><span class="variable">.rac_prepareForReuseSignal</span>]</span><br><span class="line">truesubscribeNext:^(<span class="built_in">UIButton</span> *x) &#123;</span><br><span class="line">true<span class="comment">// do other things</span></span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<h3 id="Strong_/_Weak_Dance">Strong / Weak Dance</h3><p>因为 RAC 很多操作都是在 <code>Block</code> 中进行的，所以最常见的问题便是「循环引用」，所以需要通过 <code>@weakify</code> 和 <code>@strongify</code> 来消除循环引用。</p>
+<p>注意：事实上 <code>RACObserve(TARGET, KEYPATH)</code> 总是会引用 <code>self</code> ，即使 target 不是 self ，所以只要有 RACObserve 的地方都要使用 <code>@weakify</code> / <code>@strongify</code> 。</p>
+<h3 id="flattenMap_与_map_的区别">flattenMap 与 map 的区别</h3><ul>
+<li><code>flattenMap</code> 中的 block 返回信号。</li>
+<li><code>map</code> 中的 block 返回对象。</li>
+<li><code>map</code> 的实现是用了 <code>flattenMap</code> 函数来实现的。把 <code>map</code> 的入参闭包，放到了 <code>flattenMap</code> 的返回值中。</li>
+<li>开发中，如果信号发出的值不是信号，映射一般使用 <code>map</code> 。</li>
+<li>开发中，如果信号发出的值是信号，映射一般使用 <code>flattenMap</code> 。</li>
+<li><code>signalOfsignals</code> 用 <code>flattenMap</code> 。</li>
+</ul>
+<h3 id="冷信号与热信号的区别">冷信号与热信号的区别</h3><ul>
+<li>Hot Observable 是主动的，尽管你并没有订阅事件，但是它会时刻推送，就像鼠标移动；而 Cold Observable 是被动的，只有当你订阅的时候，它才会发布消息。</li>
+<li>Hot Observable 可以有多个订阅者，是一对多，集合可以与订阅者共享信息；而 Cold Observable 只能一对一，当有不同的订阅者，消息是重新完整发送。</li>
+<li><code>Subject</code> 类似「直播」，错过了就不再处理。而 <code>Signal</code> 类似「点播」。</li>
+<li><code>RACSubject</code> 及其子类是热信号，<code>RACSignal</code> 排除 <code>RACSubject</code> 类以外的是冷信号。</li>
+<li><code>RACSubject</code> 会持有订阅者（因为 <code>RACSubject</code> 是热信号，为了保证未来有事件发送的时候，订阅者可以收到信息，所以需要对订阅者保持状态，做法就是持有订阅者），而 <code>RACSignal</code> 不会持有订阅者。</li>
+</ul>
+<h3 id="其他">其他</h3><ul>
+<li><p>当一个 <code>signal</code> 被一个 <code>subscriber</code> subscribe 后，这个 <code>subscriber</code> 何时会被移除？答案是：当 <code>subscriber</code> 被 <code>sendComplete</code> 或 <code>sendError</code> 时，或者手动调用 <code>[disposable dispose]</code> 。</p>
+</li>
+<li><p><code>replay</code> 是 <code>multicast</code> 的一个特殊 case 而已。</p>
+</li>
+<li><p>当 <code>subscriber</code> 被 <code>dispose</code> 后，所有该 <code>subscriber</code> 相关的工作都会被停止或取消，如 http 请求，资源也会被释放。</p>
+</li>
+<li><p><code>Errors</code> 有优先权，如果有多个 <code>signals</code> 被同时监听，只要其中一个 signal <code>sendError</code>，那么 error 就会立刻被传送给 subscriber ，并导致 signals 终止执行。相当于<code>Exception</code> 。</p>
+</li>
+<li><p>使用 <code>RACSubject</code> ，如果进行了 <code>map</code> 操作，那么一定要发送完成信号，不然会内存泄漏。</p>
+</li>
+<li><p>任何的信号转换即是对原有的信号进行订阅从而产生新的信号。</p>
+</li>
+</ul>
+<hr>
+<h2 id="系列文章">系列文章</h2><ol>
+<li><a href="http://tech.meituan.com/tag/ReactiveCocoa" target="_blank" rel="external">美团点评技术团队</a></li>
+<li><a href="http://www.jianshu.com/p/d7d951a99db8" target="_blank" rel="external">一缕殇流化隐半边冰霜</a></li>
+<li><a href="http://draveness.me/racsignal/" target="_blank" rel="external">Draveness</a></li>
+</ol>
+<hr>
+<h2 id="参考链接">参考链接</h2><ol>
+<li><a href="http://blog.leichunfeng.com/blog/2015/12/25/reactivecocoa-v2-dot-5-yuan-ma-jie-xi-zhi-jia-gou-zong-lan/" target="_blank" rel="external">ReactiveCocoa v2.5 源码解析之架构总览</a></li>
+<li><a href="http://limboy.me/tech/2014/06/06/deep-into-reactivecocoa2.html" target="_blank" rel="external">ReactiveCocoa2实战</a></li>
+<li><a href="http://limboy.me/tech/2013/12/27/reactivecocoa-2.html" target="_blank" rel="external">说说ReactiveCocoa 2</a></li>
+<li><a href="https://github.com/ming1016/study/wiki/iOS%E5%87%BD%E6%95%B0%E5%93%8D%E5%BA%94%E5%BC%8F%E7%BC%96%E7%A8%8B%E4%BB%A5%E5%8F%8AReactiveCocoa%E7%9A%84%E4%BD%BF%E7%94%A8" target="_blank" rel="external">iOS函数响应式编程以及ReactiveCocoa的使用</a></li>
+<li><a href="http://www.jianshu.com/p/87ef6720a096" target="_blank" rel="external">最快让你上手ReactiveCocoa之基础篇</a></li>
+<li><a href="http://www.jianshu.com/p/e10e5ca413b7" target="_blank" rel="external">最快让你上手ReactiveCocoa之进阶篇</a></li>
+<li><a href="http://blog.devtang.com/2016/01/03/reactive-cocoa-discussion/" target="_blank" rel="external">ReactiveCocoa 讨论会</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>我知道是不会有人点的，但万一有人想不开呢？</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/wechat.jpg" alt="Qi Tang WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/alipay.jpg" alt="Qi Tang Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/FRP/" rel="tag">#FRP</a>
+          
+            <a href="/tags/Notes/" rel="tag">#Notes</a>
+          
+            <a href="/tags/ReactiveCocoa/" rel="tag">#ReactiveCocoa</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/09/handle-orientation-changes-two/" rel="next" title="iOS 屏幕旋转的那些事（二）">
+                <i class="fa fa-chevron-left"></i> iOS 屏幕旋转的那些事（二）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/03/22/the-notes-of-learning-reactivecocoa/"
+     data-title="ReactiveCocoa 知识点整理"
+     data-content=""
+     data-url="http://itangqi.me/2017/03/22/the-notes-of-learning-reactivecocoa/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/22/the-notes-of-learning-reactivecocoa/"
+           data-title="ReactiveCocoa 知识点整理" data-url="http://itangqi.me/2017/03/22/the-notes-of-learning-reactivecocoa/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+          <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾地走在全栈的路上...</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">49</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/imtangqi" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              小伙伴们
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://tikitoo.me/" title="安卓同学" target="_blank">安卓同学</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lovinghuan.com/" title="poberWong" target="_blank">poberWong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.zhaiyifan.cn/" title="MarkZhai" target="_blank">MarkZhai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yifeiyuan.me/" title="程序亦非猿" target="_blank">程序亦非猿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://abner-nimengbo.cn/" title="阿布" target="_blank">阿布</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.easydone.cn/" title="Ailurus" target="_blank">Ailurus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuxiaolong.me/" title="吴小龙同學" target="_blank">吴小龙同學</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://drakeet.me/" title="Drakeet" target="_blank">Drakeet</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.fangjie.info/" title="方杰" target="_blank">方杰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hujiaweibujidao.github.io/" title="五道口宅男" target="_blank">五道口宅男</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gudong.name/" title="咕咚" target="_blank">咕咚</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://soledad.me/" title="蔡越" target="_blank">蔡越</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FRP_思想"><span class="nav-number">2.</span> <span class="nav-text">FRP 思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReactiveCocoa_常见类"><span class="nav-number">3.</span> <span class="nav-text">ReactiveCocoa 常见类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#信号源相关"><span class="nav-number">3.1.</span> <span class="nav-text">信号源相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RACStream"><span class="nav-number">3.1.1.</span> <span class="nav-text">RACStream</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RACSignal"><span class="nav-number">3.1.2.</span> <span class="nav-text">RACSignal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RACSubject"><span class="nav-number">3.1.3.</span> <span class="nav-text">RACSubject</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RACCommand"><span class="nav-number">3.1.4.</span> <span class="nav-text">RACCommand</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RACSequence"><span class="nav-number">3.1.5.</span> <span class="nav-text">RACSequence</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#订阅者相关"><span class="nav-number">3.2.</span> <span class="nav-text">订阅者相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RACSubscriber"><span class="nav-number">3.2.1.</span> <span class="nav-text">RACSubscriber</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度器相关"><span class="nav-number">3.3.</span> <span class="nav-text">调度器相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RACScheduler"><span class="nav-number">3.3.1.</span> <span class="nav-text">RACScheduler</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#清洁工相关"><span class="nav-number">3.4.</span> <span class="nav-text">清洁工相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RACDisposable"><span class="nav-number">3.4.1.</span> <span class="nav-text">RACDisposable</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReactiveCocoa_常见用法"><span class="nav-number">4.</span> <span class="nav-text">ReactiveCocoa 常见用法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代替代理"><span class="nav-number">4.1.</span> <span class="nav-text">代替代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代替_KVO"><span class="nav-number">4.2.</span> <span class="nav-text">代替 KVO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代替事件监听"><span class="nav-number">4.3.</span> <span class="nav-text">代替事件监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代替通知"><span class="nav-number">4.4.</span> <span class="nav-text">代替通知</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监听文本框文字改变"><span class="nav-number">4.5.</span> <span class="nav-text">监听文本框文字改变</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代替手势"><span class="nav-number">4.6.</span> <span class="nav-text">代替手势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多个请求完成时，再执行后继操作"><span class="nav-number">4.7.</span> <span class="nav-text">多个请求完成时，再执行后继操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信号的相关操作"><span class="nav-number">4.8.</span> <span class="nav-text">信号的相关操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReactiveCocoa_常见宏"><span class="nav-number">5.</span> <span class="nav-text">ReactiveCocoa 常见宏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">6.</span> <span class="nav-text">注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Side_Effect"><span class="nav-number">6.1.</span> <span class="nav-text">Side Effect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cell_重用"><span class="nav-number">6.2.</span> <span class="nav-text">Cell 重用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Strong_/_Weak_Dance"><span class="nav-number">6.3.</span> <span class="nav-text">Strong / Weak Dance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flattenMap_与_map_的区别"><span class="nav-number">6.4.</span> <span class="nav-text">flattenMap 与 map 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#冷信号与热信号的区别"><span class="nav-number">6.5.</span> <span class="nav-text">冷信号与热信号的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">6.6.</span> <span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系列文章"><span class="nav-number">7.</span> <span class="nav-text">系列文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">8.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"itangqi"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cRxqlqW9Tlkg0rnkVdEPhC8o-gzGzoHsz", "sRfp02fY2qyxRj4KTp4AyzK7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
