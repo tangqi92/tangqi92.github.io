@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/2017/03/25/the-notes-of-learning-mvvm-with-rac/</loc>
+    <lastmod>2017-03-25T08:30:41.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/2017/03/22/the-notes-of-learning-reactivecocoa/</loc>
-    <lastmod>2017-03-22T12:28:45.000Z</lastmod>
+    <lastmod>2017-03-24T06:57:48.000Z</lastmod>
   </url>
   
   <url>

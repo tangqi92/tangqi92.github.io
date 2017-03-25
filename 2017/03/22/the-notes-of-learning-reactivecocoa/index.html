@@ -92,7 +92,7 @@
 <meta name="description" content="前言
 本文仅作为个人对于 ReactiveCocoa 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。
 
-Last updated on 2017.03.22">
+Last updated on 2017.03.24">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ReactiveCocoa 知识点整理">
 <meta property="og:url" content="http://itangqi.me/2017/03/22/the-notes-of-learning-reactivecocoa/index.html">
@@ -100,14 +100,15 @@ Last updated on 2017.03.22">
 <meta property="og:description" content="前言
 本文仅作为个人对于 ReactiveCocoa 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。
 
-Last updated on 2017.03.22">
-<meta property="og:updated_time" content="2017-03-22T12:28:45.000Z">
+Last updated on 2017.03.24">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-reactivecocoa-01.svg">
+<meta property="og:updated_time" content="2017-03-24T06:57:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ReactiveCocoa 知识点整理">
 <meta name="twitter:description" content="前言
 本文仅作为个人对于 ReactiveCocoa 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。
 
-Last updated on 2017.03.22">
+Last updated on 2017.03.24">
 
 
 
@@ -437,7 +438,7 @@ Last updated on 2017.03.22">
         <h2 id="前言">前言</h2><blockquote>
 <p>本文仅作为个人对于 <code>ReactiveCocoa</code> 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。</p>
 </blockquote>
-<p>Last updated on 2017.03.22</p>
+<p>Last updated on 2017.03.24</p>
 <a id="more"></a> 
 <hr>
 <h2 id="FRP_思想">FRP 思想</h2><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a = <span class="number">2</span></span><br><span class="line">b = <span class="number">2</span></span><br><span class="line">c = a + b <span class="comment">// c is 4</span></span><br><span class="line"></span><br><span class="line">b = <span class="number">3</span></span><br><span class="line"><span class="comment">// now what is the value of c?</span></span><br></pre></td></tr></table></figure>
@@ -459,8 +460,9 @@ Last updated on 2017.03.22">
 <ol>
 <li>[RACSignal createSignal] 来获得 signal</li>
 <li>[signal subscribeNext:] 来获得 subscriber，然后进行subscription</li>
-<li>进入 didSubscribe ，通过 [subscriber sendNext:] 来执行 next block 。</li>
+<li>进入 didSubscribe ，通过 [subscriber sendNext:] 来执行 next block</li>
 </ol>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-reactivecocoa-01.svg" alt=""></p>
 <h4 id="RACSubject">RACSubject</h4><p><code>RACSubject</code> 代表的是可以手动控制的信号，我们可以把它看作是 <code>RACSignal</code> 的可变版本，就好比 <code>NSMutableArray</code> 是 <code>NSArray</code> 的可变版本一样。<code>RACSubject</code> 继承自 <code>RACSignal</code> ，所以它可以作为信号源被订阅者订阅，同时，它又实现了 <code>RACSubscriber</code> 协议，所以它也可以作为订阅者订阅其他信号源，这个就是 <code>RACSubject</code> 为什么可以手动控制的原因。</p>
 <p>实际使用中，在 <code>MVVM</code> 中使用 <code>RACSubject</code> 可以非常方便地实现统一的错误处理逻辑。比如，我们可以在 <code>viewModel</code> 的基类中声明一个 <code>RACSubject</code> 类型的属性 <code>errors</code> ，然后在 <code>viewController</code> 的基类中编写统一的错误处理逻辑：</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.errors</span> subscribeNext:^(<span class="built_in">NSError</span> *error) &#123;</span><br><span class="line">    <span class="comment">// 错误处理逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -680,6 +682,10 @@ Last updated on 2017.03.22">
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/03/25/the-notes-of-learning-mvvm-with-rac/" rel="prev" title="MVVM With ReactiveCocoa">
+                MVVM With ReactiveCocoa <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -752,7 +758,7 @@ Last updated on 2017.03.22">
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">49</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -774,7 +780,7 @@ Last updated on 2017.03.22">
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">65</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

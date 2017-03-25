@@ -1,0 +1,1148 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MVC,MVVM,Notes,ReactiveCocoa," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前言
+本文仅作为个人对于 MVVM With ReactiveCocoa 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。
+
+Last updated on 2017.03.25">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MVVM With ReactiveCocoa">
+<meta property="og:url" content="http://itangqi.me/2017/03/25/the-notes-of-learning-mvvm-with-rac/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="前言
+本文仅作为个人对于 MVVM With ReactiveCocoa 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。
+
+Last updated on 2017.03.25">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-mvvm-with-rac-01.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-mvvm-with-rac-02.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-mvvm-with-rac-04.svg">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-mvvm-with-rac-03.png">
+<meta property="og:updated_time" content="2017-03-25T08:30:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MVVM With ReactiveCocoa">
+<meta name="twitter:description" content="前言
+本文仅作为个人对于 MVVM With ReactiveCocoa 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。
+
+Last updated on 2017.03.25">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://itangqi.me/2017/03/25/the-notes-of-learning-mvvm-with-rac/"/>
+
+
+
+
+
+  <title> MVVM With ReactiveCocoa | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qi Tang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://itangqi.me/2017/03/25/the-notes-of-learning-mvvm-with-rac/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qi Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi Tang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MVVM With ReactiveCocoa
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-25T00:00:00+08:00">
+                2017-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/03/25/the-notes-of-learning-mvvm-with-rac/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/25/the-notes-of-learning-mvvm-with-rac/" class="leancloud_visitors" data-flag-title="MVVM With ReactiveCocoa">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言">前言</h2><blockquote>
+<p>本文仅作为个人对于 <code>MVVM With ReactiveCocoa</code> 学习与使用的总结，文章绝大部分内容来自网络，详情请见参考链接。</p>
+</blockquote>
+<p>Last updated on 2017.03.25</p>
+<a id="more"></a> 
+<hr>
+<h2 id="Functor_Applicative_Monad">Functor Applicative Monad</h2><h3 id="Functor_、Applicative_和_Monad_是什么："><code>Functor</code> 、<code>Applicative</code> 和 <code>Monad</code> 是什么：</h3><ol>
+<li>一个 <code>Functor</code> 就是一种实现了 <code>Functor typeclass</code> 的数据类型。</li>
+<li>一个 <code>Applicative</code> 就是一种实现了 <code>Applicative typeclass</code> 的数据类型。</li>
+<li>一个 <code>Monad</code> 就是一种实现了 <code>Monad typeclass</code> 的数据类型。</li>
+</ol>
+<h3 id="typeclass"><code>typeclass</code></h3><p><code>typeclass</code> 就类似于 <code>Java</code> 中的接口，或者 <code>Objective-C</code> 中的协议。在 <code>typeclass</code> 中定义了一些函数，实现一个 <code>typeclass</code> 就是要实现这些函数，而所有实现了这个 <code>typeclass</code> 的数据类型都会拥有这些共同的行为。</p>
+<h3 id="Functor_、Applicative_和_Monad_三者之间的联系："><code>Functor</code> 、<code>Applicative</code> 和 <code>Monad</code> 三者之间的联系：</h3><ol>
+<li><p><code>Applicative</code> 是增强型的 <code>Functor</code> ，一种数据类型要成为 <code>Applicative</code> 的前提条件是它必须是 <code>Functor</code> ；</p>
+</li>
+<li><p><code>Monad</code> 是增强型的 <code>Applicative</code> ，一种数据类型要成为 <code>Monad</code> 的前提条件是它必须是 <code>Applicative</code> 。</p>
+</li>
+</ol>
+<h3 id="Functor_、_Applicative_和_Monad_三者之间的区别："><code>Functor</code> 、 <code>Applicative</code> 和 <code>Monad</code> 三者之间的区别：</h3><ol>
+<li><code>Functor</code> ：使用 <code>fmap</code> 应用一个函数到一个上下文中的值；</li>
+<li><code>Applicative</code> ：使用 <code>&lt;*&gt;</code> 应用一个上下文中的函数到一个上下文中的值；</li>
+<li><code>Monad</code> ：使用 <code>&gt;&gt;=</code> 应用一个接收一个普通值但是返回一个在上下文中的值的函数到一个上下文中的值。</li>
+</ol>
+<hr>
+<h2 id="MVC">MVC</h2><p><code>MVC</code> 是 <code>iOS</code> 开发中使用最普遍的架构模式，同时也是苹果官方推荐的架构模式。<code>MVC</code> 代表的是 <code>Model–View–Controller</code> ，它们之间的关系如下：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-mvvm-with-rac-01.png" alt=""></p>
+<p>是的，<code>MVC</code> 看上去棒极了，<code>Model</code> 代表数据，<code>View</code> 代表  <code>UI</code> ，而 <code>Controller</code> 则负责协调它们两者之间的关系。然而，尽管从技术上看 <code>View</code> 和 <code>Controller</code> 是相互独立的，但事实上它们几乎总是结对出现，一个 <code>View</code> 只能与一个  <code>Controller</code> 进行匹配，反之亦然。既然如此，那我们为何不将它们看作一个整体呢：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-mvvm-with-rac-02.png" alt=""></p>
+<p>因此，<code>M-VC</code> 可能是对 <code>iOS</code> 中的 <code>MVC</code> 模式更为准确的解读。在一个典型的 <code>MVC</code> 应用中，<code>Controller</code> 由于承载了过多的逻辑，往往会变得臃肿不堪，所以 <code>MVC</code> 也经常被人调侃成 <strong>Massive View Controller</strong> ：</p>
+<blockquote>
+<p>iOS architecture, where MVC stands for Massive View Controller.</p>
+</blockquote>
+<hr>
+<h2 id="MVVM">MVVM</h2><p>因此，一种可以很好地解决 <code>Massive View Controller</code> 问题的办法就是将 <code>Controller</code> 中的展示逻辑抽取出来，放置到一个专门的地方，而这个地方就是 <code>ViewModel</code> 。其实，我们只要在上图中的 <code>M-VC</code> 之间放入 <code>VM</code> ，就可以得到 <code>MVVM</code> 模式的结构图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-mvvm-with-rac-04.svg" alt=""></p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-mvvm-with-rac-03.png" alt=""></p>
+<p>从上图中，我们可以非常清楚地看到 <code>MVVM</code> 中四个组件之间的关系。</p>
+<p><strong>注：除了 <code>View</code> 、<code>ViewModel</code> 和 <code>Model</code> 之外，<code>MVVM</code>  中还有一个非常重要的隐含组件 <code>Binder</code> ：</strong></p>
+<ul>
+<li><code>View</code> ：由 <code>MVC</code> 中的 <code>View</code> 和 <code>Controller</code> 组成，负责 <code>UI</code> 的展示，绑定 <code>ViewModel</code> 中的属性，触发  <code>ViewModel</code> 中的命令；</li>
+<li><code>ViewModel</code> ：从 <code>MVC</code> 的 <code>Controller</code> 中抽取出来的展示逻辑，负责从 <code>Model</code> 中获取 <code>View</code> 所需的数据，转换成  <code>View</code> 可以展示的数据，并暴露公开的属性和命令供 <code>View</code> 进行绑定；</li>
+<li><code>Model</code> ：与 <code>MVC</code> 中的 <code>Model</code> 一致，包括数据模型、访问数据库的操作和网络请求等；</li>
+<li><code>Binder</code> ：在 <code>MVVM</code> 中，声明式的数据和命令绑定是一个隐含的约定，它可以让开发者非常方便地实现 <code>View</code> 和  <code>ViewModel</code> 的同步，避免编写大量繁杂的样板化代码。在微软的 <code>MVVM</code> 实现中，使用的是一种被称为 <a href="https://en.wikipedia.org/wiki/Extensible_Application_Markup_Language" target="_blank" rel="external">XAML</a> 的标记语言。</li>
+</ul>
+<h3 id="响应式">响应式</h3><h3 id="函数式">函数式</h3><ol>
+<li>高阶函数：高阶函数是入参是函数或者返回值是函数的函数</li>
+<li>不变量</li>
+<li>迭代</li>
+</ol>
+<h3 id="数据绑定">数据绑定</h3><p>在 <code>MVVM</code> 的架构中，最为关键的一环莫过于 <code>ViewModel</code> 层与 <code>View</code> 层的绑定了，我们的主角 <code>FRP</code> 恰好可以解决绑定问题，同时还能处理跨层错误处理的问题。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单向绑定</span></span><br><span class="line">    RAC(<span class="keyword">self</span><span class="variable">.someLabel</span>, text) = RACObserve(<span class="keyword">self</span><span class="variable">.viewModel</span>, someProperty);</span><br><span class="line">    RAC(<span class="keyword">self</span><span class="variable">.scrollView</span>, hidden) = <span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.someSignal</span>;</span><br><span class="line">    RAC(<span class="keyword">self</span><span class="variable">.confirmButton</span>, frame) = [<span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.someChannel</span></span><br><span class="line">                                      map:^<span class="keyword">id</span>(<span class="built_in">NSString</span> *str) &#123;</span><br><span class="line">                                          <span class="built_in">CGRect</span> rect = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, str<span class="variable">.length</span> * <span class="number">3</span>);</span><br><span class="line">                                          <span class="keyword">return</span> [<span class="built_in">NSValue</span> valueWith<span class="built_in">CGRect</span>:rect];</span><br><span class="line">                                      &#125;];</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 双向绑定</span></span><br><span class="line">    RACChannelTo(<span class="keyword">self</span><span class="variable">.someLabel</span>, text) = RACChannelTo(<span class="keyword">self</span><span class="variable">.viewModel</span>, someProperty);</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.textField</span><span class="variable">.rac_newTextChannel</span> subscribe:<span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.someChannel</span>];</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.someChannel</span> subscribe:<span class="keyword">self</span><span class="variable">.textField</span><span class="variable">.rac_newTextChannel</span>];</span><br><span class="line">    RACChannelTo(<span class="keyword">self</span>, reviewID) = <span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.someChannel</span>;</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 命令绑定</span></span><br><span class="line">    <span class="keyword">self</span><span class="variable">.confirmButton</span><span class="variable">.rac_command</span> = <span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.someCommand</span>;</span><br><span class="line">    </span><br><span class="line">    RAC(<span class="keyword">self</span><span class="variable">.textField</span>, hidden) = <span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.someCommand</span><span class="variable">.executing</span>;</span><br><span class="line">    [<span class="keyword">self</span><span class="variable">.viewModel</span><span class="variable">.someCommand</span><span class="variable">.errors</span></span><br><span class="line">     subscribeNext:^(<span class="built_in">NSError</span> *error) &#123;</span><br><span class="line">         <span class="comment">// 错误处理在这里</span></span><br><span class="line">     &#125;];</span><br></pre></td></tr></table></figure>
+<h3 id="子_ViewModel">子 ViewModel</h3><p><code>ViewModel</code> 不必在屏幕上显示所有东西。你可用子 <code>Viewmodel</code> 来代表屏幕上更小，更潜在被封装的部分。如果一个视图上的一小块儿（比如表格的 Cell）在 App 中可以被重用以及表现多个数据-模型对象，子 <code>ViewModel</code> 会格外有利。</p>
+<h3 id="ReactiveViewModel">ReactiveViewModel</h3><blockquote>
+<p>ReactiveViewModel is a combination code/documentation project for building Cocoa applications using Model-View-ViewModel and ReactiveCocoa.</p>
+</blockquote>
+<p><a href="https://github.com/ReactiveCocoa/ReactiveViewModel" target="_blank" rel="external">https://github.com/ReactiveCocoa/ReactiveViewModel</a></p>
+<h3 id="注意事项">注意事项</h3><ol>
+<li><code>ViewModel</code> 中的代码是与 <code>View</code> 无关的。</li>
+<li><code>ViewModel</code> 中使用 <code>readonly</code> 控制访问权限。</li>
+<li><code>ViewController</code> 总的责任是处理 <code>ViewModel</code> 中的变化。</li>
+<li>并非使用 <code>MVVM</code> 模式就必须的使用 <code>ReactiveCocoa</code> ，可以使用 <code>KVO</code> , <code>Block</code> , <code>Delegate</code> , <code>Notification</code> 等手段，而 <code>ReactiveCocoa</code> 更优雅的实现了这个过程。</li>
+</ol>
+<hr>
+<h2 id="参考链接">参考链接</h2><ol>
+<li><a href="http://blog.leichunfeng.com/blog/2015/11/08/functor-applicative-and-monad/" target="_blank" rel="external">Functor、Applicative 和 Monad</a></li>
+<li><a href="http://blog.leichunfeng.com/blog/2016/02/27/mvvm-with-reactivecocoa/" target="_blank" rel="external">MVVM With ReactiveCocoa</a></li>
+<li><a href="http://www.sprynthesis.com/2014/12/06/reactivecocoa-mvvm-introduction/" target="_blank" rel="external">ReactiveCocoa and MVVM, an Introduction</a></li>
+<li><a href="https://www.raywenderlich.com/74106/mvvm-tutorial-with-reactivecocoa-part-1" target="_blank" rel="external">MVVM Tutorial with ReactiveCocoa: Part 1/2</a></li>
+<li><a href="http://williamzang.com/blog/2016/06/27/ios-kai-fa-xia-de-han-shu-xiang-ying-shi-bian-cheng/" target="_blank" rel="external">iOS开发下的函数响应式编程</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>我知道是不会有人点的，但万一有人想不开呢？</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/wechat.jpg" alt="Qi Tang WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/alipay.jpg" alt="Qi Tang Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MVC/" rel="tag"># MVC</a>
+          
+            <a href="/tags/MVVM/" rel="tag"># MVVM</a>
+          
+            <a href="/tags/Notes/" rel="tag"># Notes</a>
+          
+            <a href="/tags/ReactiveCocoa/" rel="tag"># ReactiveCocoa</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/22/the-notes-of-learning-reactivecocoa/" rel="next" title="ReactiveCocoa 知识点整理">
+                <i class="fa fa-chevron-left"></i> ReactiveCocoa 知识点整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+           
+              <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾地走在全栈的路上...</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">65</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/imtangqi" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              小伙伴们
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://tikitoo.me/" title="安卓同学" target="_blank">安卓同学</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lovinghuan.com/" title="poberWong" target="_blank">poberWong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.zhaiyifan.cn/" title="MarkZhai" target="_blank">MarkZhai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yifeiyuan.me/" title="程序亦非猿" target="_blank">程序亦非猿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://abner-nimengbo.cn/" title="阿布" target="_blank">阿布</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.easydone.cn/" title="Ailurus" target="_blank">Ailurus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuxiaolong.me/" title="吴小龙同學" target="_blank">吴小龙同學</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://drakeet.me/" title="Drakeet" target="_blank">Drakeet</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.fangjie.info/" title="方杰" target="_blank">方杰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hujiaweibujidao.github.io/" title="五道口宅男" target="_blank">五道口宅男</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gudong.name/" title="咕咚" target="_blank">咕咚</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://soledad.me/" title="蔡越" target="_blank">蔡越</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Functor_Applicative_Monad"><span class="nav-number">2.</span> <span class="nav-text">Functor Applicative Monad</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Functor_、Applicative_和_Monad_是什么："><span class="nav-number">2.1.</span> <span class="nav-text">Functor 、Applicative 和 Monad 是什么：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#typeclass"><span class="nav-number">2.2.</span> <span class="nav-text">typeclass</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Functor_、Applicative_和_Monad_三者之间的联系："><span class="nav-number">2.3.</span> <span class="nav-text">Functor 、Applicative 和 Monad 三者之间的联系：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Functor_、_Applicative_和_Monad_三者之间的区别："><span class="nav-number">2.4.</span> <span class="nav-text">Functor 、 Applicative 和 Monad 三者之间的区别：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC"><span class="nav-number">3.</span> <span class="nav-text">MVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM"><span class="nav-number">4.</span> <span class="nav-text">MVVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#响应式"><span class="nav-number">4.1.</span> <span class="nav-text">响应式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数式"><span class="nav-number">4.2.</span> <span class="nav-text">函数式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据绑定"><span class="nav-number">4.3.</span> <span class="nav-text">数据绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子_ViewModel"><span class="nav-number">4.4.</span> <span class="nav-text">子 ViewModel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReactiveViewModel"><span class="nav-number">4.5.</span> <span class="nav-text">ReactiveViewModel</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">4.6.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">5.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "999a56b15bb84d2692373dee90bd4863",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cRxqlqW9Tlkg0rnkVdEPhC8o-gzGzoHsz", "sRfp02fY2qyxRj4KTp4AyzK7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
