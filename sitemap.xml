@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://itangqi.me/about/index.html</loc>
+    <lastmod>2017-03-25T08:44:40.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://itangqi.me/2017/03/25/the-notes-of-learning-mvvm-with-rac/</loc>
     <lastmod>2017-03-25T08:30:41.000Z</lastmod>
   </url>
@@ -19,11 +24,6 @@
   <url>
     <loc>http://itangqi.me/2017/03/08/handle-orientation-changes-one/</loc>
     <lastmod>2017-03-09T05:07:05.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://itangqi.me/about/index.html</loc>
-    <lastmod>2017-03-06T09:24:31.000Z</lastmod>
   </url>
   
   <url>
