@@ -1,0 +1,1154 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,Kotlin," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Qi Tang's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Preface
+
+本文主要记录了我在学习并使用 Kotlin 参与开发我司应用花瓣的过程中总结出来的心得体会，顺带也想安利一波 Kotlin。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Kotlin for Android Development">
+<meta property="og:url" content="http://itangqi.me/2017/03/28/using-kotlin-for-android-development/index.html">
+<meta property="og:site_name" content="Qi Tang's Blog">
+<meta property="og:description" content="Preface
+
+本文主要记录了我在学习并使用 Kotlin 参与开发我司应用花瓣的过程中总结出来的心得体会，顺带也想安利一波 Kotlin。">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-kotlin-01.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/using-kotlin-for-android-development-01.png">
+<meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/using-kotlin-for-android-development-02.png">
+<meta property="og:updated_time" content="2017-03-28T06:28:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Using Kotlin for Android Development">
+<meta name="twitter:description" content="Preface
+
+本文主要记录了我在学习并使用 Kotlin 参与开发我司应用花瓣的过程中总结出来的心得体会，顺带也想安利一波 Kotlin。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://itangqi.me/2017/03/28/using-kotlin-for-android-development/"/>
+
+
+
+
+
+  <title> Using Kotlin for Android Development | Qi Tang's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-61827851-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qi Tang's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">你不能把这个世界，让给你所鄙视的人</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'gbVKRja37fs1fJ6-rC4E','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://itangqi.me/2017/03/28/using-kotlin-for-android-development/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Qi Tang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qi Tang's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Using Kotlin for Android Development
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T00:00:00+08:00">
+                2017-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2017/03/28/using-kotlin-for-android-development/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/28/using-kotlin-for-android-development/" class="leancloud_visitors" data-flag-title="Using Kotlin for Android Development">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Preface">Preface</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-kotlin-01.png" alt=""></p>
+<blockquote>
+<p>本文主要记录了我在学习并使用 <code>Kotlin</code> 参与开发我司应用<a href="http://www.wandoujia.com/apps/com.huaban.android" target="_blank" rel="external">花瓣</a>的过程中总结出来的心得体会，顺带也想安利一波 <code>Kotlin</code>。</p>
+</blockquote>
+<a id="more"></a>
+<hr>
+<h2 id="Kotlin">Kotlin</h2><blockquote>
+<p>Statically typed programming language for the JVM, Android and the browser. (100% interoperable with Java™)</p>
+</blockquote>
+<p><code>Kotlin</code> 是由 JetBrains 在 2010 年推出的基于 JVM 的新编程语言，作为一个跨平台的语言，<code>Kotlin</code> 可以应用于任何 Java 的工作环境：服务器端的应用，移动应用（Android 版），桌面应用程序。</p>
+<h3 id="Advantage">Advantage</h3><ol>
+<li>Concise to reduce the amount of boilerplate code you need to write.</li>
+<li>Expressive to make your code more readable and understandable.</li>
+<li>Safe to avoid entire classes of errors such as null pointer exceptions.</li>
+<li>Versatile for building server-side applications, Android apps or frontend code running in the browser.</li>
+<li>Interoperable to leverage existing frameworks and libraries of the JVM with 100 percent Java interoperability. </li>
+</ol>
+<p>如果你之前对 <code>Kotlin</code> 并不了解，那么当你看到 <code>Kotlin</code> 的这些特性之后，现在是不是已经抑制不住内心的小激动了呢？</p>
+<p><strong>Talk is cheap. Show me the code.</strong> 下面将通过代码来直观的感受下 <code>Kotlin</code> 是如何提升开发者的幸福感的。</p>
+<h3 id="Concise">Concise</h3><p>举个例子，在使用 <code>Java</code> 开发时，我们定义一个 <code>Artist</code> 数据类，我们需要去编写（至少生成）这些代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Artist</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String url;</span><br><span class="line">    <span class="keyword">private</span> String mbid;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getUrl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> url;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUrl</span><span class="params">(String url)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.url = url;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMbid</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mbid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMbid</span><span class="params">(String mbid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mbid = mbid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span> <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Artist&#123;"</span> +</span><br><span class="line">          <span class="string">"id="</span> + id +</span><br><span class="line">          <span class="string">", name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">          <span class="string">", url='"</span> + url + <span class="string">'\''</span> +</span><br><span class="line">          <span class="string">", mbid='"</span> + mbid + <span class="string">'\''</span> +</span><br><span class="line">          <span class="string">'&#125;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而使用 <code>Kotlin</code> ，我们只需编写如下代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">data <span class="class"><span class="keyword">class</span> <span class="title">Artist</span></span>(</span><br><span class="line">    <span class="variable"><span class="keyword">var</span> id</span>: <span class="typename">Long</span>,</span><br><span class="line">    <span class="variable"><span class="keyword">var</span> name</span>: String,</span><br><span class="line">    <span class="variable"><span class="keyword">var</span> url</span>: String,</span><br><span class="line">    <span class="variable"><span class="keyword">var</span> mbid</span>: String)</span><br></pre></td></tr></table></figure>
+<p><code>Kotlin</code> 将自动帮我们生成 <code>getter</code> 、 <code>setter</code> 、 <code>toString</code> 、 <code>equals</code> 、 <code>hashCode</code> 和其他方法，如 <code>copy（）</code> 。</p>
+<h3 id="Null_Safety">Null Safety</h3><p>在使用 <code>Java</code> 开发的时候，我们的代码大多是防御性的。如果我们不想遇到 <code>NullPointerException</code> ，我们就需要在使用它之前不停地去判断它是否为 <code>null</code> 。如很多现代的语言，<code>Kotlin</code> 是<strong>空安全</strong>的，因为我们需要通过一个安全调用操作符（<code>?</code>）来明确地指定一个对象是否能为空。</p>
+<p>在 <code>Kotlin</code> 中，所有变量在默认情况下都被视为不可为空，因此尝试为变量分配空值将导致编译错误。如果你想明确声明一个变量可以接受一个空值，那么你需要附加一个 <code>？</code> 操作符到变量类型：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此时并不能通过编译，Artist 不可以为 null</span></span><br><span class="line"><span class="variable"><span class="keyword">var</span> notNullArtist</span>: Artist = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 现在，Artist 可以为 null</span></span><br><span class="line"><span class="variable"><span class="keyword">var</span> artist</span>: Artist? = <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+<h4 id="The_Safe_Call_Operator_\_The_Elvis_Operator_\_The_!!_Operator">The Safe Call Operator \ The Elvis Operator \ The !! Operator</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 无法编译，artist 可能为 null，我们需要进行处理</span></span><br><span class="line">artist.print()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 只要在 artist != null 时才会打印</span></span><br><span class="line">artist?.print()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 智能转换，如果我们在之前进行了空检查，则不需要使用安全调用操作符调用</span></span><br><span class="line"><span class="keyword">if</span> (artist != <span class="literal">null</span>) &#123;</span><br><span class="line">  artist.print()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 只有在确保 artist 不为 null 的情况下才能这么调用，否则它会抛出异常</span></span><br><span class="line">artist!!.print()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 Elvis 操作符来给定一个在是 null 的情况下的替代值</span></span><br><span class="line"><span class="variable"><span class="keyword">val</span> name</span> = artist?.name ?: <span class="string">"empty"</span></span><br></pre></td></tr></table></figure>
+<h3 id="Higher-Order_functions">Higher-Order functions</h3><p>很多语言已经支持了高阶函数，比如 <code>Java 8</code> ，但是你并不能用上 <code>Java 8</code> 。如果你在用 <code>Java 6</code> 或者 <code>Java 7</code> ，下面的例子实现了一个具有过滤功能的函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Function</span>&lt;<span class="title">T</span>, <span class="title">R</span>&gt; </span>&#123;</span><br><span class="line">  <span class="function">R <span class="title">call</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">filter</span><span class="params">(Collection&lt;T&gt; items, Function&lt;T, Boolean&gt; f)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> List&lt;T&gt; filtered = <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line">  <span class="keyword">for</span> (T item : items) <span class="keyword">if</span> (f.call(item)) filtered.add(item);</span><br><span class="line">  <span class="keyword">return</span> filtered;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">filter(numbers, <span class="keyword">new</span> Function&lt;Integer, Boolean&gt;() &#123;</span><br><span class="line">  <span class="annotation">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Boolean <span class="title">call</span><span class="params">(Integer value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> value % <span class="number">2</span> == <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们首先要声明一个函数接口，接受参数类型为 <code>T</code> ，返回类型为 <code>R</code> 。我们用接口中的方法遍历操作了目标集合，创建了一个新的列表，把符合条件的过滤了出来。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="type">&lt;T&gt;</span> <span class="title">filter</span><span class="params">(items: <span class="typename">Collection&lt;T&gt;, f: (T</span>)</span> -&gt; Boolean): List<span class="type">&lt;T&gt;</span> &#123;</span></span><br><span class="line">  <span class="variable"><span class="keyword">val</span> filtered</span> = arrayListOf<span class="type">&lt;T&gt;</span>()</span><br><span class="line">  <span class="keyword">for</span> (item <span class="keyword">in</span> items) <span class="keyword">if</span> (f(item)) filtered.add(item)</span><br><span class="line">  <span class="keyword">return</span> filtered</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码是在 <code>Kotlin</code> 下的实现，是不是简单很多？我们调用的时候如下： <code>kotlin filter(numbers, { value -&gt; value % 2 == 0 })</code></p>
+<p>你可能也发现了，我们没有定义任何的函数接口，这是因为在 <code>Kotlin</code> 中，函数也是一种数据类型。看到 <code>f:(T) -&gt; Boolean</code> 这个语句了吗？这就是函数类型作为参数的写法，<code>f</code> 是函数别名，<code>T</code> 是函数接受参数，<code>Boolean</code> 是这个函数的返回值。定义完成后，我们随后就能跟调用其他函数一样调用 <code>f</code> 。调用 <code>filter</code> 的时候，我们是用 <code>lambda</code> 表达式来传入过滤函数的，即：<code>{value -&gt; value % 2 = 0}</code> 。</p>
+<h3 id="Lambdas">Lambdas</h3><p>同样，在 <code>Java 8</code> 前，由于缺少了对 <code>lambdas</code> 的支持，所以编写监听和回调事件是件非常繁琐的事情。而 <code>Kotlin</code> 有着非常好的 <code>lambdas</code> 支持。</p>
+<p>我们来看一个常见的例子：将一个点击监听器添加到一个按钮。在 <code>Java 7</code> 及更早版本中，通常需要以下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">button.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line"> </span><br><span class="line">   <span class="annotation">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">       Toast.makeText(<span class="keyword">this</span>, <span class="string">"Button clicked"</span>, Toast.LENGTH_LONG).show();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>而然，使用 <code>Kotlin</code> 只需一行代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">button.setOnClickListener(&#123; view -&gt; toast(<span class="string">"Button clicked"</span>) &#125;)</span><br></pre></td></tr></table></figure>
+<p>真是简单且易读。</p>
+<h3 id="Extension_Functions">Extension Functions</h3><p>在使用 <code>Java</code> 开发的时候，我们经常会写一大堆的 <code>Utils</code> 类，以满足不同使用场景的需求，而 <code>Kotlin</code> 提供了 <code>Extension Functions</code> 这一特性允许我们可以给任何已存在的类添加方法，包括在 <code>Java</code> 中的一些基本类型。毫不夸张，<code>Extension Functions</code> 绝对算得上 <code>Kotlin</code> 最强大的特性之一。</p>
+<p>下面是一个工具函数，判断传入的字符串是否为电话号码格式，它接受一个字符串参数：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">isPhoneNumber</span><span class="params">(phoneNumber: <span class="typename">String</span>)</span>: Boolean &#123;</span></span><br><span class="line">    <span class="keyword">return</span> phoneNumber.isNotBlank() &amp;&amp; Pattern.matches(<span class="string">"^1\\d&#123;10&#125;$"</span>, phoneNumber)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>Extension Functions</code> 特性，就能给已存在的类（<code>String</code>）添加方法，写法如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> String.<span class="title">isPhoneNumber</span><span class="params">()</span> : Boolean &#123;</span></span><br><span class="line">    <span class="keyword">return</span> this.isNotBlank() &amp;&amp; Pattern.matches(<span class="string">"^1\\d&#123;10&#125;$"</span>, this)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面就是我们的调用方法，我们可以直接在字符串类型上调用这个方法：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"18612345678"</span>.isPhoneNumber()</span><br></pre></td></tr></table></figure>
+<p><strong>或许有人会问了，那既然可以给已存在的类添加方法，那是否可以添加属性（成员）呢？答案是肯定的！</strong></p>
+<p>关于上述问题的阐述，请参见：<a href="http://blog.inico.me/2016/10/26/Kotlin-Magic-Java-Swift#.WNiCcHR97YZ" target="_blank" rel="external">Kotlin的黑魔法</a></p>
+<h3 id="Anko">Anko</h3><blockquote>
+<p>Anko is a library which makes Android application development faster and easier. It makes your code clean and easy to read, and lets you forget about rough edges of Android SDK for Java.</p>
+</blockquote>
+<p><a href="https://github.com/Kotlin/anko" target="_blank" rel="external"><code>Anko</code></a> 大大简化了工作视图、线程和 Android 生命周期。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">val</span> act</span> = this</span><br><span class="line"><span class="variable"><span class="keyword">val</span> layout</span> = LinearLayout(act)</span><br><span class="line">layout.orientation = LinearLayout.VERTICAL</span><br><span class="line"><span class="variable"><span class="keyword">val</span> name</span> = EditText(act)</span><br><span class="line"><span class="variable"><span class="keyword">val</span> button</span> = Button(act)</span><br><span class="line">button.text = <span class="string">"Say Hello"</span></span><br><span class="line">button.setOnClickListener &#123;</span><br><span class="line">    Toast.makeText(act, <span class="string">"Hello, $&#123;name.text&#125;!"</span>,Toast.LENGTH_SHORT).show()</span><br><span class="line">&#125;</span><br><span class="line">layout.addView(name)</span><br><span class="line">layout.addView(button)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">verticalLayout｛</span><br><span class="line">    <span class="variable"><span class="keyword">val</span> name</span> = editText()</span><br><span class="line">    button(<span class="string">"Say Hello"</span>) &#123;</span><br><span class="line">        onClick &#123; toast(<span class="string">"Hello, $&#123;name.text&#125;!"</span>) &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Tips">Tips</h2><h3 id="Kotlin_Android_Extensions">Kotlin Android Extensions</h3><p><code>Kotlin Android Extensions</code> 本质上是一个视图绑定，使得开发者在代码中通过 <code>id</code> 就可以使用 <code>XML</code> 文件中定义的 <code>View</code> 。它将自动为 <code>View</code> 创建属性值，而不用使用第三方注解框架或者 <code>findViewById</code> 函数。</p>
+<p>例如，我们有 <code>activity_main.xml</code> 如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">android.support.constraint.ConstraintLayout</span></span><br><span class="line">    <span class="attribute">xmlns:android</span>=<span class="value">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    <span class="attribute">xmlns:app</span>=<span class="value">"http://schemas.android.com/apk/res-auto"</span></span><br><span class="line">    <span class="attribute">xmlns:tools</span>=<span class="value">"http://schemas.android.com/tools"</span></span><br><span class="line">    <span class="attribute">android:layout_width</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">android:layout_height</span>=<span class="value">"match_parent"</span></span><br><span class="line">    <span class="attribute">tools:context</span>=<span class="value">"me.itangqi.practicekotlin.MainActivity"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="title">TextView</span></span><br><span class="line">        <span class="attribute">android:id</span>=<span class="value">"@+id/textView"</span></span><br><span class="line">        <span class="attribute">android:layout_width</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:layout_height</span>=<span class="value">"wrap_content"</span></span><br><span class="line">        <span class="attribute">android:text</span>=<span class="value">"Hello World!"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">android.support.constraint.ConstraintLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果我们想在 <code>MainActivity</code> 中使用 <code>activity_main.xml</code> 里面定义的 <code>TextView</code> ，你只需要导入：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> kotlinx.android.synthetic.main.activity_main.*</span><br></pre></td></tr></table></figure>
+<p>之后便可以直接引用了：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="typename">Bundle?</span>)</span> &#123;</span></span><br><span class="line">    super.onCreate(savedInstanceState)</span><br><span class="line">    setContentView(R.layout.activity_main)</span><br><span class="line">    textView.text = <span class="string">"I´m a welcome text!!"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，<code>Kotlin Android Extensions</code> 在给我们带来开发上的快感的同时，也带来了隐患（我是真的被坑过…），那就是：<strong>只要你 <code>import kotlinx.android.synthetic.main.xxx</code> ，你便可以在当前 <code>Activity</code> \ <code>Fragment</code>，使用任何 <code>xml</code> 中声明的 <code>View</code>，而这也许并不是你想要的</strong> ，例如，我们有一个 <code>activity_second.xml</code> ，其中定义了一个 <code>Button</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;Button</span><br><span class="line">    android:id=<span class="string">"@+id/actionButton"</span></span><br><span class="line">    android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">    android:layout_height=<span class="string">"wrap_content"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>只要我们导入了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> kotlinx.android.synthetic.main.activity_second.*</span><br></pre></td></tr></table></figure>
+<p>我们便可在 <code>MainActivity</code> 中使用不属于 <code>activity_main.xml</code> 中的 <code>Button</code> ：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">(savedInstanceState: <span class="typename">Bundle?</span>)</span> &#123;</span></span><br><span class="line">    super.onCreate(savedInstanceState)</span><br><span class="line">    setContentView(R.layout.activity_main)</span><br><span class="line">    actionButton.text = <span class="string">"Click Me"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时可以正常通过编译，并不会报错，直到运行到该页面时 (&gt;_&lt;｡)</p>
+<p>因为 Android Studio 的智能提示，你需要在开发时格外注意，不要引入不属于本页面的 <code>View</code>：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/using-kotlin-for-android-development-01.png" alt=""></p>
+<p>此时，多个 <code>xml</code> 中可能都声明了 <code>id</code> 为 <code>textView</code> 的 <code>TextView</code>，一定要注意了。</p>
+<h3 id="minSdkVersion_API">minSdkVersion API</h3><p>这又是一个实实在在踩过的坑，由于 AS 之前的版本（&lt;2.3），<code>Lint</code> 并没有提示，我直接调用了高于 <code>minSdkVersion</code> 的 API ，结果当然惨不忍睹…</p>
+<p>不过，当我现在试图复现这个问题时，发现最新版 <code>2.3</code> 已经有提示了：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/using-kotlin-for-android-development-02.png" alt=""></p>
+<p>上述两个问题，其实严格上说，并不是 <code>Kotlin</code> 或者 <code>Android Studio</code> 的锅，因为通过问题反应出的，更多的是，要求我们在平日的开发工作中，提高编程时的规范，并时刻注重细节。</p>
+<hr>
+<h2 id="Reference">Reference</h2><ol>
+<li><a href="https://kotlinlang.org/docs/reference/" target="_blank" rel="external">Kotlin Reference</a></li>
+<li><a href="https://code.tutsplus.com/articles/coding-functional-android-apps-in-kotlin-lambdas-null-safety-more--cms-27964" target="_blank" rel="external">Coding Functional Android Apps in Kotlin: Lambdas, Null Safety &amp; More</a></li>
+<li><a href="https://realm.io/news/droidcon-michael-pardo-kotlin/" target="_blank" rel="external">Kotlin: A New Hope in a Java 6 Wasteland</a></li>
+<li><a href="https://medium.com/@juanchosaravia/learn-kotlin-while-developing-an-android-app-introduction-567e21ff9664#.y45ce9sa6" target="_blank" rel="external">Learn Kotlin with Keddit</a></li>
+<li><a href="http://blog.inico.me/2016/10/26/Kotlin-Magic-Java-Swift#.WNiCcHR97YZ" target="_blank" rel="external">Kotlin的黑魔法</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>我知道是不会有人点的，但万一有人想不开呢？</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/wechat.jpg" alt="Qi Tang WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://7xikfc.com1.z0.glb.clouddn.com/alipay.jpg" alt="Qi Tang Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Kotlin/" rel="tag"># Kotlin</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/25/the-notes-of-learning-mvvm-with-rac/" rel="next" title="MVVM With ReactiveCocoa">
+                <i class="fa fa-chevron-left"></i> MVVM With ReactiveCocoa
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Qi Tang" />
+          <p class="site-author-name" itemprop="name">Qi Tang</p>
+           
+              <p class="site-description motion-element" itemprop="description">学着 iOS，会点 Android，想着 Front End，正义无反顾地走在全栈的路上...</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/tangqi92" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/tangqi92" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/qiktang" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.instagram.com/imtangqi" target="_blank" title="Instagram">
+                  
+                    <i class="fa fa-fw fa-instagram"></i>
+                  
+                  Instagram
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.zhihu.com/people/tangqi92" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://book.douban.com/people/139568581" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+          <div class="cc-license motion-element" itemprop="license">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank">
+              <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+            </a>
+          </div>
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              小伙伴们
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://tikitoo.me/" title="安卓同学" target="_blank">安卓同学</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lovinghuan.com/" title="poberWong" target="_blank">poberWong</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.zhaiyifan.cn/" title="MarkZhai" target="_blank">MarkZhai</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yifeiyuan.me/" title="程序亦非猿" target="_blank">程序亦非猿</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://abner-nimengbo.cn/" title="阿布" target="_blank">阿布</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.easydone.cn/" title="Ailurus" target="_blank">Ailurus</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://wuxiaolong.me/" title="吴小龙同學" target="_blank">吴小龙同學</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://drakeet.me/" title="Drakeet" target="_blank">Drakeet</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.fangjie.info/" title="方杰" target="_blank">方杰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://hujiaweibujidao.github.io/" title="五道口宅男" target="_blank">五道口宅男</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gudong.name/" title="咕咚" target="_blank">咕咚</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://soledad.me/" title="蔡越" target="_blank">蔡越</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Preface"><span class="nav-number">1.</span> <span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kotlin"><span class="nav-number">2.</span> <span class="nav-text">Kotlin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Advantage"><span class="nav-number">2.1.</span> <span class="nav-text">Advantage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Concise"><span class="nav-number">2.2.</span> <span class="nav-text">Concise</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Null_Safety"><span class="nav-number">2.3.</span> <span class="nav-text">Null Safety</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#The_Safe_Call_Operator_\_The_Elvis_Operator_\_The_!!_Operator"><span class="nav-number">2.3.1.</span> <span class="nav-text">The Safe Call Operator \ The Elvis Operator \ The !! Operator</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Higher-Order_functions"><span class="nav-number">2.4.</span> <span class="nav-text">Higher-Order functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lambdas"><span class="nav-number">2.5.</span> <span class="nav-text">Lambdas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Extension_Functions"><span class="nav-number">2.6.</span> <span class="nav-text">Extension Functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Anko"><span class="nav-number">2.7.</span> <span class="nav-text">Anko</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">3.</span> <span class="nav-text">Tips</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kotlin_Android_Extensions"><span class="nav-number">3.1.</span> <span class="nav-text">Kotlin Android Extensions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#minSdkVersion_API"><span class="nav-number">3.2.</span> <span class="nav-text">minSdkVersion API</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Qi Tang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "999a56b15bb84d2692373dee90bd4863",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cRxqlqW9Tlkg0rnkVdEPhC8o-gzGzoHsz", "sRfp02fY2qyxRj4KTp4AyzK7");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
