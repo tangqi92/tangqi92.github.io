@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2017-05-23T12:59:50.000Z</updated>
+  <updated>2017-05-23T13:05:55.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -19,8 +19,9 @@
     <link href="http://itangqi.me/2017/05/23/the-comparison-of-third-party-dribbble-clients/"/>
     <id>http://itangqi.me/2017/05/23/the-comparison-of-third-party-dribbble-clients/</id>
     <published>2017-05-22T16:00:00.000Z</published>
-    <updated>2017-05-23T12:59:50.000Z</updated>
+    <updated>2017-05-23T13:05:55.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>最近的两个月，利用工作之余，我设计并开发了一款 <a href="https://dribbble.com/" target="_blank" rel="external">Dribbble</a> 第三方 iOS 客户端：<strong>Driki</strong> 。在郑重介绍 Driki 之前，今天我想先谈一谈，对目前市面上已有的 Dribbble 第三方客户端的一些看法。在此先感谢一下，正是有了它们的存在，才使得我能在 <strong>Driki</strong> 的设计与开发上得到许多灵感。下文中，我一共会提及 4 款应用，它们分别是：<a href="https://itunes.apple.com/us/app/zeeen-dribbble-client/id923813895?mt=8" target="_blank" rel="external">ZEEEN</a>、<a href="https://itunes.apple.com/us/app/balllin-a-dribbble-client/id457288487?mt=8" target="_blank" rel="external">Balllin</a>、<a href="https://itunes.apple.com/cn/app/super-ball-uigreat-dribbble-client/id1179976723?mt=8" target="_blank" rel="external">SuperBall</a> 与 <a href="https://itunes.apple.com/cn/app/dribbbiu-better-dribbble-client/id1098608767?mt=8&amp;ign-mpt=uo%3D8" target="_blank" rel="external">Dribbbiu</a> ，我会分别从售价、特点与不足进行分析与比较。</p>
+<a id="more"></a> 
 <hr>
 <h2 id="ZEEEN">ZEEEN</h2><h3 id="售价">售价</h3><ul>
 <li>18 元（以 2017-05-23 当日售价为准）</li>
@@ -98,7 +99,8 @@
 <p>最后，目前 <strong>Driki</strong> 正处于内测阶段，如果你对 <strong>Driki</strong> 感兴趣的话，欢迎前往：<a href="https://wj.qq.com/s/1379045/d450" target="_blank" rel="external">https://wj.qq.com/s/1379045/d450</a> 填写邮箱用于接受「TestFlight」，我保证，它不会让你失望的：）</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<h2 id="前言">前言</h2><p>最近的两个月，利用工作之余，我设计并开发了一款 <a href="https://dribbble.com/" target="_blank" rel="external">Dribbble</a> 第三方 iOS 客户端：<stron]]>
+    <![CDATA[<h2 id="前言">前言</h2><p>最近的两个月，利用工作之余，我设计并开发了一款 <a href="https://dribbble.com/">Dribbble</a> 第三方 iOS 客户端：<strong>Driki</strong> 。在郑重介绍 Driki 之前，今天我想先谈一谈，对目前市面上已有的 Dribbble 第三方客户端的一些看法。在此先感谢一下，正是有了它们的存在，才使得我能在 <strong>Driki</strong> 的设计与开发上得到许多灵感。下文中，我一共会提及 4 款应用，它们分别是：<a href="https://itunes.apple.com/us/app/zeeen-dribbble-client/id923813895?mt=8">ZEEEN</a>、<a href="https://itunes.apple.com/us/app/balllin-a-dribbble-client/id457288487?mt=8">Balllin</a>、<a href="https://itunes.apple.com/cn/app/super-ball-uigreat-dribbble-client/id1179976723?mt=8">SuperBall</a> 与 <a href="https://itunes.apple.com/cn/app/dribbbiu-better-dribbble-client/id1098608767?mt=8&amp;ign-mpt=uo%3D8">Dribbbiu</a> ，我会分别从售价、特点与不足进行分析与比较。</p>]]>
+    
     </summary>
     
       <category term="Dribbble" scheme="http://itangqi.me/tags/Dribbble/"/>
