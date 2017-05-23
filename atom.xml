@@ -4,7 +4,7 @@
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://itangqi.me/"/>
-  <updated>2017-03-28T06:28:48.000Z</updated>
+  <updated>2017-05-23T12:59:50.000Z</updated>
   <id>http://itangqi.me/</id>
   
   <author>
@@ -13,6 +13,101 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Dribbble 第三方 iOS 客户端比较]]></title>
+    <link href="http://itangqi.me/2017/05/23/the-comparison-of-third-party-dribbble-clients/"/>
+    <id>http://itangqi.me/2017/05/23/the-comparison-of-third-party-dribbble-clients/</id>
+    <published>2017-05-22T16:00:00.000Z</published>
+    <updated>2017-05-23T12:59:50.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>最近的两个月，利用工作之余，我设计并开发了一款 <a href="https://dribbble.com/" target="_blank" rel="external">Dribbble</a> 第三方 iOS 客户端：<strong>Driki</strong> 。在郑重介绍 Driki 之前，今天我想先谈一谈，对目前市面上已有的 Dribbble 第三方客户端的一些看法。在此先感谢一下，正是有了它们的存在，才使得我能在 <strong>Driki</strong> 的设计与开发上得到许多灵感。下文中，我一共会提及 4 款应用，它们分别是：<a href="https://itunes.apple.com/us/app/zeeen-dribbble-client/id923813895?mt=8" target="_blank" rel="external">ZEEEN</a>、<a href="https://itunes.apple.com/us/app/balllin-a-dribbble-client/id457288487?mt=8" target="_blank" rel="external">Balllin</a>、<a href="https://itunes.apple.com/cn/app/super-ball-uigreat-dribbble-client/id1179976723?mt=8" target="_blank" rel="external">SuperBall</a> 与 <a href="https://itunes.apple.com/cn/app/dribbbiu-better-dribbble-client/id1098608767?mt=8&amp;ign-mpt=uo%3D8" target="_blank" rel="external">Dribbbiu</a> ，我会分别从售价、特点与不足进行分析与比较。</p>
+<hr>
+<h2 id="ZEEEN">ZEEEN</h2><h3 id="售价">售价</h3><ul>
+<li>18 元（以 2017-05-23 当日售价为准）</li>
+</ul>
+<h3 id="设计">设计</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-09.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-10.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-11.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-03.PNG" alt=""></p>
+<h3 id="特点">特点</h3><ul>
+<li>自定义底部导航栏（NavigationBar）用于例如：返回上级、搜索等操作；</li>
+<li>Shot 详情页内，背景颜色与文字颜色，来自色板，视觉效果相当赞；</li>
+<li>Shot 详情页内，支持左右滑动进行查看；</li>
+<li>支持搜索；</li>
+<li>支持 3D Touch ；</li>
+<li>支持 Gif 全屏浏览；</li>
+<li>支持添加 Shot 至 Bucket ；</li>
+<li>应用中的动画效果与整体设计风格非常赞；</li>
+<li>错误处理提示完整，例如：网络请求次数超出限制的提示；</li>
+<li>拥有应用引导页；</li>
+</ul>
+<h3 id="不足">不足</h3><ul>
+<li>支持在 Shot 详情页左右滑动进行上一个 \ 下一个查看，但返回首页后位置仍然停留在最初的地方，影响在首页继续浏览的体验；</li>
+<li>不支持评论；</li>
+<li>不支持 iPad ；</li>
+</ul>
+<h3 id="总结">总结</h3><p>在我看来，无论是设计还是功能的完整程度，<code>ZEEEN</code> 毫无疑问是目前市面上最好的 <code>Dribbble</code> 第三方客户端（没有之一）。当然啦，其也并不是 100% 完美，未能支持 iPad ，便是一大遗憾。</p>
+<hr>
+<h2 id="Balllin">Balllin</h2><h3 id="售价-1">售价</h3><ul>
+<li>30 元（以 2017-05-23 当日售价为准）</li>
+</ul>
+<h3 id="设计-1">设计</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-04.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-06.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-19.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-02.PNG" alt=""></p>
+<h3 id="特点-1">特点</h3><ul>
+<li>功能上：<code>ZEEEN</code> 有的，<code>Balllin</code> 都有，所以详见 <code>ZEEEN</code> 即可；</li>
+<li>相较 <code>ZEEEN</code> 而言最大的优势便是其支持 iPad ； </li>
+</ul>
+<h3 id="不足-1">不足</h3><ul>
+<li>在详情页内无法左右滑动查看；</li>
+<li>Shot 不支持点击全屏浏览；</li>
+<li>搜索功能似乎无返回结果？（不知是否是 BUG）</li>
+<li>设计风格不够现代；</li>
+<li>不能 unlike；</li>
+</ul>
+<h3 id="总结-1">总结</h3><p><code>Balllin</code> 作为老牌 Dribbble 第三方客户端，功能相当完整，且支持 iPad ，但其 30 元的售价相较 <code>ZEEEN</code> 或接下来的两款应用都没有明显优势。</p>
+<hr>
+<h2 id="SuperBall">SuperBall</h2><h3 id="售价-2">售价</h3><ul>
+<li>6 元（以 2017-05-23 当日售价为准）</li>
+</ul>
+<h3 id="设计-2">设计</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-08.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-15.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-05.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-14.PNG" alt=""></p>
+<h3 id="特点-2">特点</h3><ul>
+<li>Shot 详情页内，支持下拉手势从详情页返回首页，且返回后的位置与详情页一致，这个功能相对赞；</li>
+<li>支持 iPad ；</li>
+</ul>
+<h3 id="不足-2">不足</h3><ul>
+<li>不支持 3D Touch ；</li>
+<li>虽然支持 iPad ，但体验效果较为差；</li>
+</ul>
+<h3 id="总结-2">总结</h3><p>其实 <code>SuperBall</code> 在设计上大量借鉴了 <code>ZEEEN</code> ，并增加了 <code>ZEEEN</code> 所不具有的返回首页的手势操作。不过在长时间使用后发现，<code>SuperBall</code> 在许多细节上仍与 <code>ZEEEN</code> 存在着一定差距，但是 6 元的价格，又使得其具有相对较高的性价比。</p>
+<hr>
+<h2 id="Dribbbiu">Dribbbiu</h2><h3 id="售价-3">售价</h3><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-07.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-13.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-20.PNG" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-comparison-of-third-party-dribbble-clients-01.PNG" alt=""></p>
+<h3 id="价格">价格</h3><ul>
+<li>12 元（以 2017-05-23 当日售价为准）</li>
+</ul>
+<h3 id="特点-3">特点</h3><ul>
+<li>自定义底部 Tabbar ；</li>
+<li>局部支持 3D Touch ；</li>
+<li>支持评论，并支持 @ 他人；</li>
+<li>支持 iPad，且支持分屏，是所有 Dribbble 第三方客户端中体验最好的；</li>
+</ul>
+<h3 id="不足-3">不足</h3><ul>
+<li>应用中无返回按钮，仅靠手势右划返回；</li>
+<li>不支持在详情页左右滑动查看；</li>
+<li>不支持 Gif 全屏浏览；</li>
+<li>无搜索功能；</li>
+</ul>
+<h3 id="总结-3">总结</h3><p><code>Dribbbiu</code> 的设计是我目前为止最为喜欢的，支持 iPad 并且支持分屏，但其在交互和功能上都有所缺失，加之 12 元的售价，无意使其性价比大打折扣；</p>
+<hr>
+<h2 id="总结-4">总结</h2><p>上文中提及的 4 款（收费）应用是我个人在试用了近 20 款 Dribbble 第三方客户端后，认为综合得分最高的 4 款。它们各有各的特点，但同时也存在的明显的不足（有点价位过高，有的功能不全），而我要做 <strong>Driki</strong> 的目的之一，便是希望能取其所长，补其所短，做一款设计、功能与价格综合性价比最高的 Dribbble 第三方客户端。</p>
+<p>最后，目前 <strong>Driki</strong> 正处于内测阶段，如果你对 <strong>Driki</strong> 感兴趣的话，欢迎前往：<a href="https://wj.qq.com/s/1379045/d450" target="_blank" rel="external">https://wj.qq.com/s/1379045/d450</a> 填写邮箱用于接受「TestFlight」，我保证，它不会让你失望的：）</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="前言">前言</h2><p>最近的两个月，利用工作之余，我设计并开发了一款 <a href="https://dribbble.com/" target="_blank" rel="external">Dribbble</a> 第三方 iOS 客户端：<stron]]>
+    </summary>
+    
+      <category term="Dribbble" scheme="http://itangqi.me/tags/Dribbble/"/>
+    
+      <category term="Driki" scheme="http://itangqi.me/tags/Driki/"/>
+    
+      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Using Kotlin for Android Development]]></title>
@@ -1990,118 +2085,6 @@
       <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
     
       <category term="UICollectionView" scheme="http://itangqi.me/tags/UICollectionView/"/>
-    
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title><![CDATA[初探 iOS 事件分发机制]]></title>
-    <link href="http://itangqi.me/2016/04/18/the-first-meet-with-event-delivery/"/>
-    <id>http://itangqi.me/2016/04/18/the-first-meet-with-event-delivery/</id>
-    <published>2016-04-17T16:00:00.000Z</published>
-    <updated>2016-05-28T08:34:14.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>今天看到一道面试题：<code>UIWindow</code> 与 <code>UIView</code> 有何区别？</p>
-<p>关于问题的答案，你可以自行 Google。要说这篇文章的由来，是因为答案中说到：<strong>UIWindow 管理和协调着事件的分发</strong>，这一点引起了我的疑问。</p>
-<p>那么，在 iOS 中，事件分发机制的概念与具体的流程是怎么样子的呢？如果你之前也未曾了解，亦或是一知半解，不如今天就和我一起学习下事件分发机制吧！</p>
-<a id="more"></a>
-<hr>
-<h2 id="UIEvent">UIEvent</h2><p><code>UIEvent</code> 表示用户交互的事件对象，在其类文件中，我们可以看到有一个枚举类型的属性  <code>UIEventType</code>，这个属性表示了当前的响应事件类型（Event Type）：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  UIEvent.h</span></span><br><span class="line"><span class="comment">//  UIKit</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2005-2015 Apple Inc. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UIEventType</span> type</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UIEventType</span>) &#123;</span><br><span class="line">    <span class="built_in">UIEventTypeTouches</span>,</span><br><span class="line">    <span class="built_in">UIEventTypeMotion</span>,</span><br><span class="line">    <span class="built_in">UIEventTypeRemoteControl</span>,</span><br><span class="line">    <span class="built_in">UIEventTypePresses</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">9</span>_0),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<ol>
-<li>触控事件（UIEventTypeTouches）：单点、多点触控以及各种手势操作；</li>
-<li>传感器事件（UIEventTypeMotion）：重力、加速度传感器等；</li>
-<li>远程控制事件（UIEventTypeRemoteControl）：远程遥控 iOS 设备多媒体播放等；</li>
-<li>按压事件（UIEventTypePresses）：3D Touch（iOS 9）；</li>
-</ol>
-<p>本文主要针对 Touch events 的分发进行讲解。</p>
-<hr>
-<h2 id="UITouch">UITouch</h2><p><code>UITouch</code> 表示单个点击，其类文件中，我们同样可以看到有一个枚举类型的属性 <code>UITouchPhase</code>，这个属性是用来表示当前点击的状态：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UITouchPhase</span> phase;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">UITouchPhase</span>,<span class="built_in">UITouchPhase</span>&#123;</span><br><span class="line">    <span class="built_in">NSTouchPhaseBegin</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseMoved</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseStationary</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseEnded</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseCanceled</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>这些状态包括点击开始、移动、停止不动、结束和取消五个状态。</p>
-<p>每次点击发生的时候，点击对象都放在一个集合中传入 <code>UIResponder</code> 的回调方法中，我们通过集合中对象获取用户点击的位置。</p>
-<h3 id="UITouch_方法">UITouch 方法</h3><p>可以通过以下方法获取用户点击的位置：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取点击坐标点</span></span><br><span class="line">-(<span class="built_in">CGPoint</span>) locationInView:(<span class="built_in">UIView</span> *)view;</span><br><span class="line"><span class="comment">//获取上个点击位置的坐标点</span></span><br><span class="line">-(<span class="built_in">CGPoint</span>) previousLocationInView:(<span class="built_in">UIView</span> *)view;</span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="Responder_Object">Responder Object</h2><p>Responder Object（响应者对象）是能够响应并处理事件的对象，是构成 Responder Chain（响应链）和事件传递链的节点。</p>
-<p>在 iOS 中，只有 <code>UIResponder</code>类的子类才能响应事件，而我们熟知的 <code>UIApplication</code>/<code>UIView</code>/<code>UIViewController</code> 都是 <code>UIResponder</code> 的子类，<code>UIResponder</code> 声明了用于处理事件的接口，并定义了默认的行为：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesMoved:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesEnded:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesCancelled:(nullable <span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br></pre></td></tr></table></figure>
-<p>这四个方法分别处理触摸开始事件、触摸移动事件、触摸终止事件、以及触摸跟踪取消事件。</p>
-<p>再来看下 <code>UIResponder</code> 的继承链：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-01.png" alt=""></p>
-<h3 id="First_Responder">First Responder</h3><p>First Responder（第一响应者）用于第一个接收事件，通常情况下，第一响应者是一个视图对象。</p>
-<p>一个对象可以通过以下操作成为第一响应者：</p>
-<ol>
-<li>重写 <code>canBecomeFirstResponder</code> 方法，并返回 <code>YES</code></li>
-<li>接收 <code>becomeFirstResponder</code> 消息，如果必要，一个对象可以给自己发这个消息</li>
-</ol>
-<h3 id="要点">要点</h3><ol>
-<li><code>CALayer</code> 不是 <code>UIResponder</code> 的子类，这说明 <code>CALayer</code> 无法响应事件，这也是 <code>UIView</code> 与 <code>CALayer</code> 的重要区别之一</li>
-</ol>
-<hr>
-<h2 id="Responder_Chain">Responder Chain</h2><p>当一个事件发生时，如果 First Responder 不进行处理，事件就会继续往下传递，被下个 Responder 接收，如果下个 Responder 仍不处理，又会被下下个 Responder 接收……直到一个 Responder 处理了事件或者没有 Responder 了。这些 Responder 按照传递次序连接起来的链条就构成了 Responder Chain（响应者链）。</p>
-<p>下图直观地反应了事件传递的流程：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-02.png" alt=""></p>
-<p>从图中可以看到，响应者链有以下特点：</p>
-<ol>
-<li><p>响应者链通常是由 initial view 开始</p>
-</li>
-<li><p>UIView 的 <code>nextResponder</code> 是它的 Super View；如果 UIView 已经是其所在的 UIViewController 的 Top View，那么 UIView 的 <code>nextResponder</code> 就是 UIViewController</p>
-</li>
-<li><p>UIViewController 如果有 Super ViewController，那么它的 <code>nextResponder</code> 为其 Super ViewController 最表层的 View；如果没有，那么它的 <code>nextResponder</code> 就是 UIWindow</p>
-</li>
-<li><p>UIWindow 的 contentView 指向 UIApplication，将其作为 <code>nextResponder</code></p>
-</li>
-<li><p>UIApplication 是一个响应者链的终点，它的 <code>nextResponder</code> 指向 AppDelegate（文档中说是 nil，如果有同学有明确的答案请告知），整个 Responder Chain 结束</p>
-</li>
-</ol>
-<p><strong>需要说明是</strong>：如果当前的 Responder 不处理事件，并希望将其传递给 <code>nextResponder</code> 时，需要手动编写代码，才会继续往下传递，否则事件会被废弃：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span> *)touches withEvent:(<span class="built_in">UIEvent</span> *)event</span><br><span class="line">&#123;  </span><br><span class="line">    <span class="comment">// 将事件传递给 nextResponder</span></span><br><span class="line">    <span class="keyword">id</span> theNextResponder = [<span class="keyword">self</span> nextResponder];</span><br><span class="line">    [theNextResponder touchesBegan:touches withEvent:event];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="要点-1">要点</h3><ol>
-<li><code>UIResponder</code> 本身是不会去存储或者设置 <code>nextResponder</code> 的，所谓的 <code>nextResponder</code> 都是子类去实现的</li>
-</ol>
-<hr>
-<h2 id="Hit-Test_View_&amp;_Hit-Testing">Hit-Test View &amp; Hit-Testing</h2><p><strong>Hit-Test View</strong>：当用户与触摸屏产生交互时，硬件就会探测到物理接触并且通知操作系统。操作系统就会创建相应的事件，并将其传递给当前正在运行的应用程序的事件队列。然后这个事件会被事件循环传递给优先响应对象，既 Hit-Test View</p>
-<p><strong>Hit-Testing</strong>：Hit-Test View 就是事件被触发时和用户交互的对象，寻找 Hit-Test View 的过程就叫做 Hit-Testing</p>
-<p>在 <code>UIView</code> 中定义了如下两个函数：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  UIView.h</span></span><br><span class="line"><span class="comment">//  UIKit</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2005-2015 Apple Inc. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line">- (nullable <span class="built_in">UIView</span> *)hitTest:(<span class="built_in">CGPoint</span>)point withEvent:(nullable <span class="built_in">UIEvent</span> *)event;   <span class="comment">// recursively calls -pointInside:withEvent:. point is in the receiver's coordinate system</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(nullable <span class="built_in">UIEvent</span> *)event;   <span class="comment">// default returns YES if point is in bounds</span></span><br></pre></td></tr></table></figure>
-<p>系统先调用 <code>pointInSide: WithEvent:</code> 判断当前视图以及这些视图的子视图是否能接收这次点击事件，然后在调用 <code>hitTest: withEvent:</code> 依次获取处理这个事件的所有视图对象，在获取所有的可处理事件对象后，开始调用这些对象的 touches 回调方法。</p>
-<p>下面通过两张图来观察：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-03.png" alt=""><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">图片来自</a></p>
-<p>UIWindow 有一个 MianVIew，MainView 里面有三个 Sub View：View A、View B、View C，他们各自有两个 Sub View，他们层级关系是：View A 在最下面，View B 中间，View C 最上(按照 <code>addSubview</code> 的顺序)，其中 View A 和 View B 有一部分重叠。如果手指在 View B.1 和 View A.2 重叠的上面点击，按照上面说的递归方式，顺序如下图所示：</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-04.png" alt=""><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">图片来自</a></p>
-<p>递归是向界面的根节点 UIWindow 发送 <code>hitTest:withEvent:</code> 消息开始的，从这个消息返回的是一个 UIView，也就是手指当前位置最前面的那个 Hittest View。当向 UIWindow 发送 <code>hitTest:withEvent:</code> 消息时，<code>hitTest:withEvent:</code> 里面所做的事，就是判断当前的点击位置是否在 Window 里面，如果在则遍历 Window 的 Subview 然后依次对 Subview 发送 <code>hitTest:withEvent:</code> 消息（注意这里给 Subview 发送消息是根据当前 Subview 的 index 顺序，index 越大就越先被访问）。如果当前的 point 没有在 View 上面，那么这个 View 的 Subview 也就不会被遍历了。当事件遍历到了 View B.1，发现 point 在 View B.1 里面，并且 View B.1 没有 Subview，那么他就是我们要找的 Hittest View 了，找到之后就会一路返回直到根节点，而 View B 之后的 View A 也不会被遍历了。</p>
-<hr>
-<h2 id="总结">总结</h2><p>所以关于事件的链有两条：事件的<strong>响应链</strong>；Hit-Testing 时事件的<strong>传递链</strong>。</p>
-<ul>
-<li><p><strong>事件响应链</strong>：由离用户最近的 View 向系统传递：<br>initial view –&gt; Super View –&gt; …… –&gt; View Controller –&gt; Window –&gt; Application –&gt; AppDelegate</p>
-</li>
-<li><p><strong>事件传递链</strong>：由系统向离用户最近的 View 传递：<br>UIKit –&gt; active app’s event queue –&gt; Window –&gt; Root View –&gt; …… –&gt; Lowest View</p>
-</li>
-</ul>
-<p>具体的应用可以参见：<a href="http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE.html" target="_blank" rel="external">事件传递响应链</a></p>
-<hr>
-<h2 id="参考">参考</h2><ul>
-<li><a href="https://developer.apple.com/library/ios/documentation/EventHandling/Conceptual/EventHandlingiPhoneOS/multitouch_background/multitouch_background.html" target="_blank" rel="external">Event Handling Guide for iOS</a></li>
-<li><a href="http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE.html" target="_blank" rel="external">事件传递响应链</a></li>
-<li><a href="https://www.zybuluo.com/MicroCai/note/66142" target="_blank" rel="external">iOS Events and Responder Chain</a></li>
-<li><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">深入浅出iOS事件机制</a></li>
-</ul>
-]]></content>
-    <summary type="html">
-    <![CDATA[<h2 id="前言">前言</h2><p>今天看到一道面试题：<code>UIWindow</code> 与 <code>UIView</code> 有何区别？</p>
-<p>关于问题的答案，你可以自行 Google。要说这篇文章的由来，是因为答案中说到：<strong>UIWindow 管理和协调着事件的分发</strong>，这一点引起了我的疑问。</p>
-<p>那么，在 iOS 中，事件分发机制的概念与具体的流程是怎么样子的呢？如果你之前也未曾了解，亦或是一知半解，不如今天就和我一起学习下事件分发机制吧！</p>]]>
-    
-    </summary>
-    
-      <category term="Event Delivery" scheme="http://itangqi.me/tags/Event-Delivery/"/>
-    
-      <category term="Event Type" scheme="http://itangqi.me/tags/Event-Type/"/>
-    
-      <category term="Responder Chain" scheme="http://itangqi.me/tags/Responder-Chain/"/>
-    
-      <category term="Responder Object" scheme="http://itangqi.me/tags/Responder-Object/"/>
     
       <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
     
