@@ -3,9 +3,9 @@
   <title><![CDATA[Qi Tang's Blog]]></title>
   <subtitle><![CDATA[你不能把这个世界，让给你所鄙视的人]]></subtitle>
   <link href="/atom.xml" rel="self"/>
-  <link href="http://itangqi.me/"/>
+  <link href="http://imtangqi.com/"/>
   <updated>2017-05-23T13:05:55.000Z</updated>
-  <id>http://itangqi.me/</id>
+  <id>http://imtangqi.com/</id>
   
   <author>
     <name><![CDATA[Qi Tang]]></name>
@@ -16,8 +16,8 @@
   
   <entry>
     <title><![CDATA[Dribbble 第三方 iOS 客户端比较]]></title>
-    <link href="http://itangqi.me/2017/05/23/the-comparison-of-third-party-dribbble-clients/"/>
-    <id>http://itangqi.me/2017/05/23/the-comparison-of-third-party-dribbble-clients/</id>
+    <link href="http://imtangqi.com/2017/05/23/the-comparison-of-third-party-dribbble-clients/"/>
+    <id>http://imtangqi.com/2017/05/23/the-comparison-of-third-party-dribbble-clients/</id>
     <published>2017-05-22T16:00:00.000Z</published>
     <updated>2017-05-23T13:05:55.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>最近的两个月，利用工作之余，我设计并开发了一款 <a href="https://dribbble.com/" target="_blank" rel="external">Dribbble</a> 第三方 iOS 客户端：<strong>Driki</strong> 。在郑重介绍 Driki 之前，今天我想先谈一谈，对目前市面上已有的 Dribbble 第三方客户端的一些看法。在此先感谢一下，正是有了它们的存在，才使得我能在 <strong>Driki</strong> 的设计与开发上得到许多灵感。下文中，我一共会提及 4 款应用，它们分别是：<a href="https://itunes.apple.com/us/app/zeeen-dribbble-client/id923813895?mt=8" target="_blank" rel="external">ZEEEN</a>、<a href="https://itunes.apple.com/us/app/balllin-a-dribbble-client/id457288487?mt=8" target="_blank" rel="external">Balllin</a>、<a href="https://itunes.apple.com/cn/app/super-ball-uigreat-dribbble-client/id1179976723?mt=8" target="_blank" rel="external">SuperBall</a> 与 <a href="https://itunes.apple.com/cn/app/dribbbiu-better-dribbble-client/id1098608767?mt=8&amp;ign-mpt=uo%3D8" target="_blank" rel="external">Dribbbiu</a> ，我会分别从售价、特点与不足进行分析与比较。</p>
@@ -103,18 +103,18 @@
     
     </summary>
     
-      <category term="Dribbble" scheme="http://itangqi.me/tags/Dribbble/"/>
+      <category term="Dribbble" scheme="http://imtangqi.com/tags/Dribbble/"/>
     
-      <category term="Driki" scheme="http://itangqi.me/tags/Driki/"/>
+      <category term="Driki" scheme="http://imtangqi.com/tags/Driki/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Using Kotlin for Android Development]]></title>
-    <link href="http://itangqi.me/2017/03/28/using-kotlin-for-android-development/"/>
-    <id>http://itangqi.me/2017/03/28/using-kotlin-for-android-development/</id>
+    <link href="http://imtangqi.com/2017/03/28/using-kotlin-for-android-development/"/>
+    <id>http://imtangqi.com/2017/03/28/using-kotlin-for-android-development/</id>
     <published>2017-03-27T16:00:00.000Z</published>
     <updated>2017-03-28T06:28:48.000Z</updated>
     <content type="html"><![CDATA[<h2 id="Preface">Preface</h2><p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-kotlin-01.png" alt=""></p>
@@ -210,18 +210,18 @@
     
     </summary>
     
-      <category term="Android" scheme="http://itangqi.me/tags/Android/"/>
+      <category term="Android" scheme="http://imtangqi.com/tags/Android/"/>
     
-      <category term="Kotlin" scheme="http://itangqi.me/tags/Kotlin/"/>
+      <category term="Kotlin" scheme="http://imtangqi.com/tags/Kotlin/"/>
     
-      <category term="Android" scheme="http://itangqi.me/categories/Android/"/>
+      <category term="Android" scheme="http://imtangqi.com/categories/Android/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[MVVM With ReactiveCocoa]]></title>
-    <link href="http://itangqi.me/2017/03/25/the-notes-of-learning-mvvm-with-rac/"/>
-    <id>http://itangqi.me/2017/03/25/the-notes-of-learning-mvvm-with-rac/</id>
+    <link href="http://imtangqi.com/2017/03/25/the-notes-of-learning-mvvm-with-rac/"/>
+    <id>http://imtangqi.com/2017/03/25/the-notes-of-learning-mvvm-with-rac/</id>
     <published>2017-03-24T16:00:00.000Z</published>
     <updated>2017-03-25T08:30:41.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
@@ -303,22 +303,22 @@
     
     </summary>
     
-      <category term="MVC" scheme="http://itangqi.me/tags/MVC/"/>
+      <category term="MVC" scheme="http://imtangqi.com/tags/MVC/"/>
     
-      <category term="MVVM" scheme="http://itangqi.me/tags/MVVM/"/>
+      <category term="MVVM" scheme="http://imtangqi.com/tags/MVVM/"/>
     
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
-      <category term="ReactiveCocoa" scheme="http://itangqi.me/tags/ReactiveCocoa/"/>
+      <category term="ReactiveCocoa" scheme="http://imtangqi.com/tags/ReactiveCocoa/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[ReactiveCocoa 知识点整理]]></title>
-    <link href="http://itangqi.me/2017/03/22/the-notes-of-learning-reactivecocoa/"/>
-    <id>http://itangqi.me/2017/03/22/the-notes-of-learning-reactivecocoa/</id>
+    <link href="http://imtangqi.com/2017/03/22/the-notes-of-learning-reactivecocoa/"/>
+    <id>http://imtangqi.com/2017/03/22/the-notes-of-learning-reactivecocoa/</id>
     <published>2017-03-21T16:00:00.000Z</published>
     <updated>2017-03-24T06:57:48.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><blockquote>
@@ -500,23 +500,23 @@
     
     </summary>
     
-      <category term="FRP" scheme="http://itangqi.me/tags/FRP/"/>
+      <category term="FRP" scheme="http://imtangqi.com/tags/FRP/"/>
     
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
-      <category term="ReactiveCocoa" scheme="http://itangqi.me/tags/ReactiveCocoa/"/>
+      <category term="ReactiveCocoa" scheme="http://imtangqi.com/tags/ReactiveCocoa/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[iOS 屏幕旋转的那些事（二）]]></title>
-    <link href="http://itangqi.me/2017/03/09/handle-orientation-changes-two/"/>
-    <id>http://itangqi.me/2017/03/09/handle-orientation-changes-two/</id>
+    <link href="http://imtangqi.com/2017/03/09/handle-orientation-changes-two/"/>
+    <id>http://imtangqi.com/2017/03/09/handle-orientation-changes-two/</id>
     <published>2017-03-08T16:00:00.000Z</published>
     <updated>2017-03-09T07:37:19.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>在 <a href="http://itangqi.me/2017/03/09/handle-orientation-changes-one/">iOS 屏幕旋转的那些事（一）</a>一文中，整个实践的过程都比较顺利，但直到我遇到了 FLEX……</p>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>在 <a href="http://itangqi.me/2017/03/09/handle-orientation-changes-one/" target="_blank" rel="external">iOS 屏幕旋转的那些事（一）</a>一文中，整个实践的过程都比较顺利，但直到我遇到了 FLEX……</p>
 <a id="more"></a>
 <hr>
 <h2 id="迷之_FLEX">迷之 FLEX</h2><p>如果你对 FLEX 还不了解，可参见：<a href="https://github.com/Flipboard/FLEX" target="_blank" rel="external">https://github.com/Flipboard/FLEX</a></p>
@@ -598,22 +598,22 @@
     
     </summary>
     
-      <category term="FLEX" scheme="http://itangqi.me/tags/FLEX/"/>
+      <category term="FLEX" scheme="http://imtangqi.com/tags/FLEX/"/>
     
-      <category term="Orientation" scheme="http://itangqi.me/tags/Orientation/"/>
+      <category term="Orientation" scheme="http://imtangqi.com/tags/Orientation/"/>
     
-      <category term="Rotation" scheme="http://itangqi.me/tags/Rotation/"/>
+      <category term="Rotation" scheme="http://imtangqi.com/tags/Rotation/"/>
     
-      <category term="UIDevice" scheme="http://itangqi.me/tags/UIDevice/"/>
+      <category term="UIDevice" scheme="http://imtangqi.com/tags/UIDevice/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[iOS 屏幕旋转的那些事（一）]]></title>
-    <link href="http://itangqi.me/2017/03/08/handle-orientation-changes-one/"/>
-    <id>http://itangqi.me/2017/03/08/handle-orientation-changes-one/</id>
+    <link href="http://imtangqi.com/2017/03/08/handle-orientation-changes-one/"/>
+    <id>http://imtangqi.com/2017/03/08/handle-orientation-changes-one/</id>
     <published>2017-03-07T16:00:00.000Z</published>
     <updated>2017-03-09T05:07:05.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>本文将讨论的话题是：iOS 屏幕旋转的那些事，文中示例 Demo 请参见：<a href="https://github.com/tangqi92/QTHandleOrientationChanges.git" target="_blank" rel="external">https://github.com/tangqi92/QTHandleOrientationChanges.git</a>。</p>
@@ -643,29 +643,29 @@
 <p>其中 <strong>Size</strong> 为 View 改变（旋转）后的 Size，而 <strong>coordinator</strong> 则可用来处理转换动画。例如，你可以在该方法中改变子 View 的位置或大小：</p>
 <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewWillTransitionToSize:(<span class="built_in">CGSize</span>)size withTransitionCoordinator:(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinator</span>&gt;)coordinator &#123;</span><br><span class="line"></span><br><span class="line">    [<span class="keyword">super</span> viewWillTransitionToSize:size withTransitionCoordinator:coordinator];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Code here will execute before the rotation begins.</span></span><br><span class="line">    <span class="comment">// Equivalent to placing it in the deprecated method -[willRotateToInterfaceOrientation:duration:].</span></span><br><span class="line">    [coordinator animateAlongsideTransition:^(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinatorContext</span>&gt; context) &#123;</span><br><span class="line">        <span class="comment">// Place code here to perform animations during the rotation.</span></span><br><span class="line">        <span class="comment">// You can pass nil for this closure if not necessary.</span></span><br><span class="line">        <span class="comment">// Reorganize views, or move child view controllers.</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">UIInterfaceOrientationIsLandscape</span>([<span class="built_in">UIApplication</span> sharedApplication]<span class="variable">.statusBarOrientation</span>)) &#123;</span><br><span class="line">            [<span class="keyword">self</span><span class="variable">.redView</span> mas_updateConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">                make<span class="variable">.size</span><span class="variable">.mas_equalTo</span>(<span class="built_in">CGSizeMake</span>(<span class="number">200</span>, <span class="number">200</span>));</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">UIInterfaceOrientationIsPortrait</span>([<span class="built_in">UIApplication</span> sharedApplication]<span class="variable">.statusBarOrientation</span>)) &#123;</span><br><span class="line">            [<span class="keyword">self</span><span class="variable">.redView</span> mas_updateConstraints:^(MASConstraintMaker *make) &#123;</span><br><span class="line">                make<span class="variable">.size</span><span class="variable">.mas_equalTo</span>(<span class="built_in">CGSizeMake</span>(<span class="number">100</span>, <span class="number">100</span>));</span><br><span class="line">            &#125;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">                                 completion:^(<span class="keyword">id</span>&lt;<span class="built_in">UIViewControllerTransitionCoordinatorContext</span>&gt; context)&#123;</span><br><span class="line">                                     <span class="comment">// Code here will execute after the rotation has finished.</span></span><br><span class="line">                                     <span class="comment">// Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:].</span></span><br><span class="line">                                     <span class="comment">// Do any cleanup, if necessary.</span></span><br><span class="line"></span><br><span class="line">                                 &#125;];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注释非常简单，就不做翻译了，其中，你可以通过 <code>[UIApplication sharedApplication].statusBarOrientation)</code> 来获取当前设备的方向，便于你之后的操作。</p>
-<p>嗯，这篇文章很水，而我会在下篇文章：<a href="http://itangqi.me/2017/03/09/handle-orientation-changes-two/">iOS 屏幕旋转的那些事（二）</a> 中具体介绍我遇到的一个坑。</p>
+<p>嗯，这篇文章很水，而我会在下篇文章：<a href="http://itangqi.me/2017/03/09/handle-orientation-changes-two/" target="_blank" rel="external">iOS 屏幕旋转的那些事（二）</a> 中具体介绍我遇到的一个坑。</p>
 ]]></content>
     <summary type="html">
     <![CDATA[<h2 id="前言">前言</h2><p>本文将讨论的话题是：iOS 屏幕旋转的那些事，文中示例 Demo 请参见：<a href="https://github.com/tangqi92/QTHandleOrientationChanges.git">https://github.com/tangqi92/QTHandleOrientationChanges.git</a>。</p>]]>
     
     </summary>
     
-      <category term="FLEX" scheme="http://itangqi.me/tags/FLEX/"/>
+      <category term="FLEX" scheme="http://imtangqi.com/tags/FLEX/"/>
     
-      <category term="Orientation" scheme="http://itangqi.me/tags/Orientation/"/>
+      <category term="Orientation" scheme="http://imtangqi.com/tags/Orientation/"/>
     
-      <category term="Rotation" scheme="http://itangqi.me/tags/Rotation/"/>
+      <category term="Rotation" scheme="http://imtangqi.com/tags/Rotation/"/>
     
-      <category term="UIDevice" scheme="http://itangqi.me/tags/UIDevice/"/>
+      <category term="UIDevice" scheme="http://imtangqi.com/tags/UIDevice/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[关于 UITableView's Separator Inset 的探究]]></title>
-    <link href="http://itangqi.me/2017/02/28/uitableview-cell-separatorinset/"/>
-    <id>http://itangqi.me/2017/02/28/uitableview-cell-separatorinset/</id>
+    <link href="http://imtangqi.com/2017/02/28/uitableview-cell-separatorinset/"/>
+    <id>http://imtangqi.com/2017/02/28/uitableview-cell-separatorinset/</id>
     <published>2017-02-27T16:00:00.000Z</published>
     <updated>2017-02-28T11:36:00.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>这是一次关于 UITableView’s Separator Inset 的探究，请结合 Demo：<a href="https://github.com/tangqi92/QTSeparatorInsetTableView.git" target="_blank" rel="external">https://github.com/tangqi92/QTSeparatorInsetTableView.git</a> 阅读本文。</p>
@@ -796,24 +796,24 @@
     
     </summary>
     
-      <category term="Inset" scheme="http://itangqi.me/tags/Inset/"/>
+      <category term="Inset" scheme="http://imtangqi.com/tags/Inset/"/>
     
-      <category term="Margin" scheme="http://itangqi.me/tags/Margin/"/>
+      <category term="Margin" scheme="http://imtangqi.com/tags/Margin/"/>
     
-      <category term="Separator" scheme="http://itangqi.me/tags/Separator/"/>
+      <category term="Separator" scheme="http://imtangqi.com/tags/Separator/"/>
     
-      <category term="UITableView" scheme="http://itangqi.me/tags/UITableView/"/>
+      <category term="UITableView" scheme="http://imtangqi.com/tags/UITableView/"/>
     
-      <category term="UITableViewCell" scheme="http://itangqi.me/tags/UITableViewCell/"/>
+      <category term="UITableViewCell" scheme="http://imtangqi.com/tags/UITableViewCell/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[UITableViewCell 中嵌套 UICollectionView 的实现]]></title>
-    <link href="http://itangqi.me/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/"/>
-    <id>http://itangqi.me/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/</id>
+    <link href="http://imtangqi.com/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/"/>
+    <id>http://imtangqi.com/2017/02/21/putting-a-uicollectionview-in-a-uitableviewcell/</id>
     <published>2017-02-20T16:00:00.000Z</published>
     <updated>2017-02-21T07:09:36.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>自从去年来到花瓣实习以后，因为时间与精力（其实就是懒）的原因，这半年多没有写过一篇技术相关的文章。不过，随着项目的逐渐进展，我想，有必要对一些知识点进行总结与回顾了。与此同时，如果能帮助到大家就最好不过了：）</p>
@@ -863,20 +863,20 @@
     
     </summary>
     
-      <category term="UICollectionView" scheme="http://itangqi.me/tags/UICollectionView/"/>
+      <category term="UICollectionView" scheme="http://imtangqi.com/tags/UICollectionView/"/>
     
-      <category term="UITableView" scheme="http://itangqi.me/tags/UITableView/"/>
+      <category term="UITableView" scheme="http://imtangqi.com/tags/UITableView/"/>
     
-      <category term="UITableViewCell" scheme="http://itangqi.me/tags/UITableViewCell/"/>
+      <category term="UITableViewCell" scheme="http://imtangqi.com/tags/UITableViewCell/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Bye 2016, Hi 2017]]></title>
-    <link href="http://itangqi.me/2016/12/31/bye2016-hi2017/"/>
-    <id>http://itangqi.me/2016/12/31/bye2016-hi2017/</id>
+    <link href="http://imtangqi.com/2016/12/31/bye2016-hi2017/"/>
+    <id>http://imtangqi.com/2016/12/31/bye2016-hi2017/</id>
     <published>2016-12-30T16:00:00.000Z</published>
     <updated>2016-12-31T06:57:43.000Z</updated>
     <content type="html"><![CDATA[<blockquote>
@@ -944,18 +944,18 @@
     
     </summary>
     
-      <category term="Review" scheme="http://itangqi.me/tags/Review/"/>
+      <category term="Review" scheme="http://imtangqi.com/tags/Review/"/>
     
-      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
+      <category term="Summary" scheme="http://imtangqi.com/tags/Summary/"/>
     
-      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
+      <category term="Life" scheme="http://imtangqi.com/categories/Life/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[近况]]></title>
-    <link href="http://itangqi.me/2016/08/14/what-is-going-on/"/>
-    <id>http://itangqi.me/2016/08/14/what-is-going-on/</id>
+    <link href="http://imtangqi.com/2016/08/14/what-is-going-on/"/>
+    <id>http://imtangqi.com/2016/08/14/what-is-going-on/</id>
     <published>2016-08-13T16:00:00.000Z</published>
     <updated>2016-08-14T12:27:25.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>这是一篇流水账，主要记录下过去两个月的时间里，我在生活和工作中经历的一些事与感悟。</p>
@@ -988,22 +988,22 @@
     
     </summary>
     
-      <category term="Diary" scheme="http://itangqi.me/tags/Diary/"/>
+      <category term="Diary" scheme="http://imtangqi.com/tags/Diary/"/>
     
-      <category term="Summary" scheme="http://itangqi.me/tags/Summary/"/>
+      <category term="Summary" scheme="http://imtangqi.com/tags/Summary/"/>
     
-      <category term="Life" scheme="http://itangqi.me/categories/Life/"/>
+      <category term="Life" scheme="http://imtangqi.com/categories/Life/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[Java 中的垃圾回收]]></title>
-    <link href="http://itangqi.me/2016/06/12/garbage-collection-in-java/"/>
-    <id>http://itangqi.me/2016/06/12/garbage-collection-in-java/</id>
+    <link href="http://imtangqi.com/2016/06/12/garbage-collection-in-java/"/>
+    <id>http://imtangqi.com/2016/06/12/garbage-collection-in-java/</id>
     <published>2016-06-11T16:00:00.000Z</published>
     <updated>2016-06-22T04:28:33.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>说来惭愧，作为一名前 Android 开发者，对于 Java 的理解理应十分透彻才对。可不瞒你说，就在写这篇文章之前，你要是问我关于 Java 中垃圾回收（GC）的问题，我准一脸懵逼，哈哈（我居然还有脸笑）~</p>
-<p>所以呢，在后继学习 iOS 开发的过程中，我特别注重原理的掌握。当然，如果你问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：<a href="http://itangqi.me/2016/03/10/the-notes-of-learning-arc/">《Objective-C 高级编程》读书笔记之 ARC</a>。</p>
+<p>所以呢，在后继学习 iOS 开发的过程中，我特别注重原理的掌握。当然，如果你问我 Objective-C 中的内存管理机制，我肯定是有所了解的，不信你看：<a href="http://itangqi.me/2016/03/10/the-notes-of-learning-arc/" target="_blank" rel="external">《Objective-C 高级编程》读书笔记之 ARC</a>。</p>
 <blockquote>
 <p>出来混，迟早是要还的。</p>
 </blockquote>
@@ -1169,18 +1169,18 @@
     
     </summary>
     
-      <category term="GC" scheme="http://itangqi.me/tags/GC/"/>
+      <category term="GC" scheme="http://imtangqi.com/tags/GC/"/>
     
-      <category term="JVM" scheme="http://itangqi.me/tags/JVM/"/>
+      <category term="JVM" scheme="http://imtangqi.com/tags/JVM/"/>
     
-      <category term="Java" scheme="http://itangqi.me/categories/Java/"/>
+      <category term="Java" scheme="http://imtangqi.com/categories/Java/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[抓包工具 Charles 使用心得]]></title>
-    <link href="http://itangqi.me/2016/05/30/tips-for-using-charles/"/>
-    <id>http://itangqi.me/2016/05/30/tips-for-using-charles/</id>
+    <link href="http://imtangqi.com/2016/05/30/tips-for-using-charles/"/>
+    <id>http://imtangqi.com/2016/05/30/tips-for-using-charles/</id>
     <published>2016-05-29T16:00:00.000Z</published>
     <updated>2016-05-30T15:01:07.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>虽然实习工作还没有着落，但学习还是要继续的嘛，今天就来学习使用下 Mac 下截取网络封包的工具：<a href="http://www.charlesproxy.com/" target="_blank" rel="external">Charles</a>。</p>
@@ -1274,18 +1274,18 @@
     
     </summary>
     
-      <category term="Charles" scheme="http://itangqi.me/tags/Charles/"/>
+      <category term="Charles" scheme="http://imtangqi.com/tags/Charles/"/>
     
-      <category term="Tips" scheme="http://itangqi.me/tags/Tips/"/>
+      <category term="Tips" scheme="http://imtangqi.com/tags/Tips/"/>
     
-      <category term="Mac" scheme="http://itangqi.me/categories/Mac/"/>
+      <category term="Mac" scheme="http://imtangqi.com/categories/Mac/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[AFNetworking 3.0 源码阅读笔记（七）]]></title>
-    <link href="http://itangqi.me/2016/05/20/the-notes-of-learning-afnetworking-seven/"/>
-    <id>http://itangqi.me/2016/05/20/the-notes-of-learning-afnetworking-seven/</id>
+    <link href="http://imtangqi.com/2016/05/20/the-notes-of-learning-afnetworking-seven/"/>
+    <id>http://imtangqi.com/2016/05/20/the-notes-of-learning-afnetworking-seven/</id>
     <published>2016-05-19T16:00:00.000Z</published>
     <updated>2016-05-28T07:42:17.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>自 iOS 9 发布之后，由于新特性 <a href="https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html" target="_blank" rel="external">App Transport Security</a> 的引入，在默认行为下是不能发送 HTTP 请求的。很多网站都在转用 HTTPS，而 <code>AFNetworking</code> 中的 <code>AFSecurityPolicy</code> 就是为了阻止<a href="https://zh.wikipedia.org/zh/%E4%B8%AD%E9%97%B4%E4%BA%BA%E6%94%BB%E5%87%BB" target="_blank" rel="external">中间人攻击</a>，以及其它漏洞的工具。</p>
@@ -1381,20 +1381,20 @@
     
     </summary>
     
-      <category term="AFNetworking" scheme="http://itangqi.me/tags/AFNetworking/"/>
+      <category term="AFNetworking" scheme="http://imtangqi.com/tags/AFNetworking/"/>
     
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
-      <category term="Source Code" scheme="http://itangqi.me/tags/Source-Code/"/>
+      <category term="Source Code" scheme="http://imtangqi.com/tags/Source-Code/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[AFNetworking 3.0 源码阅读笔记（六）]]></title>
-    <link href="http://itangqi.me/2016/05/17/the-notes-of-learning-afnetworking-six/"/>
-    <id>http://itangqi.me/2016/05/17/the-notes-of-learning-afnetworking-six/</id>
+    <link href="http://imtangqi.com/2016/05/17/the-notes-of-learning-afnetworking-six/"/>
+    <id>http://imtangqi.com/2016/05/17/the-notes-of-learning-afnetworking-six/</id>
     <published>2016-05-16T16:00:00.000Z</published>
     <updated>2016-05-28T07:41:29.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p><code>AFNetworkReachabilityManager</code> 是对 <code>SystemConfiguration</code> 模块的封装，苹果的文档中也有一个类似的项目 <a href="https://developer.apple.com/library/ios/samplecode/reachability/" target="_blank" rel="external">Reachability</a> 这里对网络状态的监控跟苹果官方的实现几乎是完全相同的。</p>
@@ -1463,20 +1463,20 @@
     
     </summary>
     
-      <category term="AFNetworking" scheme="http://itangqi.me/tags/AFNetworking/"/>
+      <category term="AFNetworking" scheme="http://imtangqi.com/tags/AFNetworking/"/>
     
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
-      <category term="Source Code" scheme="http://itangqi.me/tags/Source-Code/"/>
+      <category term="Source Code" scheme="http://imtangqi.com/tags/Source-Code/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[AFNetworking 3.0 源码阅读笔记（五）]]></title>
-    <link href="http://itangqi.me/2016/05/15/the-notes-of-learning-afnetworking-five/"/>
-    <id>http://itangqi.me/2016/05/15/the-notes-of-learning-afnetworking-five/</id>
+    <link href="http://imtangqi.com/2016/05/15/the-notes-of-learning-afnetworking-five/"/>
+    <id>http://imtangqi.com/2016/05/15/the-notes-of-learning-afnetworking-five/</id>
     <published>2016-05-14T16:00:00.000Z</published>
     <updated>2016-05-28T07:41:22.000Z</updated>
     <content type="html"><![CDATA[<h2 id="AFURLRequestSerialization">AFURLRequestSerialization</h2><p><code>AFURLRequestSerialization</code> 定义为协议，其主要工作是对发出的 HTTP 请求进行处理：</p>
@@ -1545,20 +1545,20 @@
     
     </summary>
     
-      <category term="AFNetworking" scheme="http://itangqi.me/tags/AFNetworking/"/>
+      <category term="AFNetworking" scheme="http://imtangqi.com/tags/AFNetworking/"/>
     
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
-      <category term="Source Code" scheme="http://itangqi.me/tags/Source-Code/"/>
+      <category term="Source Code" scheme="http://imtangqi.com/tags/Source-Code/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[AFNetworking 3.0 源码阅读笔记（四）]]></title>
-    <link href="http://itangqi.me/2016/05/13/the-notes-of-learning-afnetworking-four/"/>
-    <id>http://itangqi.me/2016/05/13/the-notes-of-learning-afnetworking-four/</id>
+    <link href="http://imtangqi.com/2016/05/13/the-notes-of-learning-afnetworking-four/"/>
+    <id>http://imtangqi.com/2016/05/13/the-notes-of-learning-afnetworking-four/</id>
     <published>2016-05-12T16:00:00.000Z</published>
     <updated>2016-05-28T07:40:53.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>通过前面的文章，我们已经知道 <code>AFNetworking</code> 是对 <code>NSURLSession</code> 的封装，也了解它是如何发出请求的，在这里我们<strong>对发出请求以及接收响应的过程</strong>进行序列化，这涉及到两个<strong>模块</strong>：</p>
@@ -1635,20 +1635,20 @@
     
     </summary>
     
-      <category term="AFNetworking" scheme="http://itangqi.me/tags/AFNetworking/"/>
+      <category term="AFNetworking" scheme="http://imtangqi.com/tags/AFNetworking/"/>
     
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
-      <category term="Source Code" scheme="http://itangqi.me/tags/Source-Code/"/>
+      <category term="Source Code" scheme="http://imtangqi.com/tags/Source-Code/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[AFNetworking 3.0 源码阅读笔记（三）]]></title>
-    <link href="http://itangqi.me/2016/05/09/the-notes-of-learning-afnetworking-three/"/>
-    <id>http://itangqi.me/2016/05/09/the-notes-of-learning-afnetworking-three/</id>
+    <link href="http://imtangqi.com/2016/05/09/the-notes-of-learning-afnetworking-three/"/>
+    <id>http://imtangqi.com/2016/05/09/the-notes-of-learning-afnetworking-three/</id>
     <published>2016-05-08T16:00:00.000Z</published>
     <updated>2016-05-28T07:39:29.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p><code>AFURLSessionManager</code> 绝对可以称得上是 AFNetworking 的核心，所以本文篇幅会相对长一点，但我保证绝对是满满的干货~</p>
@@ -1825,20 +1825,20 @@
     
     </summary>
     
-      <category term="AFNetworking" scheme="http://itangqi.me/tags/AFNetworking/"/>
+      <category term="AFNetworking" scheme="http://imtangqi.com/tags/AFNetworking/"/>
     
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
-      <category term="Source Code" scheme="http://itangqi.me/tags/Source-Code/"/>
+      <category term="Source Code" scheme="http://imtangqi.com/tags/Source-Code/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[AFNetworking 3.0 源码阅读笔记（二）]]></title>
-    <link href="http://itangqi.me/2016/05/06/the-notes-of-learning-afnetworking-two/"/>
-    <id>http://itangqi.me/2016/05/06/the-notes-of-learning-afnetworking-two/</id>
+    <link href="http://imtangqi.com/2016/05/06/the-notes-of-learning-afnetworking-two/"/>
+    <id>http://imtangqi.com/2016/05/06/the-notes-of-learning-afnetworking-two/</id>
     <published>2016-05-05T16:00:00.000Z</published>
     <updated>2016-05-28T07:30:39.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>首先，我们来看一下 AFNetworking 框架中主要涉及到了哪些类：</p>
@@ -1913,23 +1913,23 @@
     
     </summary>
     
-      <category term="AFNetworking" scheme="http://itangqi.me/tags/AFNetworking/"/>
+      <category term="AFNetworking" scheme="http://imtangqi.com/tags/AFNetworking/"/>
     
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
-      <category term="Source Code" scheme="http://itangqi.me/tags/Source-Code/"/>
+      <category term="Source Code" scheme="http://imtangqi.com/tags/Source-Code/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[AFNetworking 3.0 源码阅读笔记（一）]]></title>
-    <link href="http://itangqi.me/2016/05/05/the-notes-of-learning-afnetworking-one/"/>
-    <id>http://itangqi.me/2016/05/05/the-notes-of-learning-afnetworking-one/</id>
+    <link href="http://imtangqi.com/2016/05/05/the-notes-of-learning-afnetworking-one/"/>
+    <id>http://imtangqi.com/2016/05/05/the-notes-of-learning-afnetworking-one/</id>
     <published>2016-05-04T16:00:00.000Z</published>
     <updated>2016-05-28T04:28:06.000Z</updated>
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>在完成 <a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">SDWebImage</a> 的源码阅读后（可参见系列文章：<a href="http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/">SDWebImage 源码阅读笔记</a>），我又将目光瞄向了大名鼎鼎的网络库 <a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a>，不过为了能保证源码阅读的流畅性，不至于到时一脸懵逼，在正式开始之前，我又恶补了下网络相关的知识，可参见相关文章：<a href="http://itangqi.me/2016/04/01/from-nsurlconnection-to-nsurlsession/">从 NSURLConnection 到 NSURLSession</a> 与<a href="http://itangqi.me/2016/04/04/the-notes-of-learning-illustrating-http-one/">《图解 HTTP》读书笔记</a>。</p>
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>在完成 <a href="https://github.com/rs/SDWebImage" target="_blank" rel="external">SDWebImage</a> 的源码阅读后（可参见系列文章：<a href="http://itangqi.me/2016/03/19/the-notes-of-learning-sdwebimage-one/" target="_blank" rel="external">SDWebImage 源码阅读笔记</a>），我又将目光瞄向了大名鼎鼎的网络库 <a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a>，不过为了能保证源码阅读的流畅性，不至于到时一脸懵逼，在正式开始之前，我又恶补了下网络相关的知识，可参见相关文章：<a href="http://itangqi.me/2016/04/01/from-nsurlconnection-to-nsurlsession/" target="_blank" rel="external">从 NSURLConnection 到 NSURLSession</a> 与<a href="http://itangqi.me/2016/04/04/the-notes-of-learning-illustrating-http-one/" target="_blank" rel="external">《图解 HTTP》读书笔记</a>。</p>
 <p>好啦，似乎万事具备，就让我们扬帆起航，开启 AFNetworking 源码阅读之旅吧！</p>
 <a id="more"></a>
 <hr>
@@ -1949,7 +1949,7 @@
 </blockquote>
 <p>这种区别来源与它们下层的依赖，AFNetworking 3.0 依赖的较新的 <code>NSURLSession</code> API，AFNetworking 2.0 依赖于 <code>NSURLConnection</code> 和 <code>NSOperation</code>。</p>
 <p>Session 提供了一个较为中心的管理机制，可以通过配置 <code>NSURLSessionConfiguration</code> 来控制一系列请求。而 Operation 则提供了较为分散的管理方法，不同的 Operation 之间没有太大的联系，可以独自进行配置。</p>
-<p>如果你对 <code>NSURLConnection</code> 与 <code>NSURLSession</code> 的概念不熟，建议不妨看下我之前的文章：<a href="http://itangqi.me/2016/04/01/from-nsurlconnection-to-nsurlsession/">从 NSURLConnection 到 NSURLSession</a> 补补课：）</p>
+<p>如果你对 <code>NSURLConnection</code> 与 <code>NSURLSession</code> 的概念不熟，建议不妨看下我之前的文章：<a href="http://itangqi.me/2016/04/01/from-nsurlconnection-to-nsurlsession/" target="_blank" rel="external">从 NSURLConnection 到 NSURLSession</a> 补补课：）</p>
 <h3 id="新设备要求">新设备要求</h3><p>AFNetworking 3.0 正式支持 iOS 7+，Mac OS X 10.9+，watchOS 2+，tvOS 9 和 Xcode 7。如果你想在针对较旧版本的 SDK 项目中使用 AFNetworking，请检查 <a href="https://github.com/AFNetworking/AFNetworking/blob/master/README.md#requirements" target="_blank" rel="external">README</a> 的兼容性信息。</p>
 <h3 id="NSURLConnection_的_API_已被废弃">NSURLConnection 的 API 已被废弃</h3><p>AFNetworking 1.0 建立在 <code>NSURLConnection</code> 的基础 API 之上，AFNetworking 2.0 提供了选择使用 <code>NSURLConnection</code> 的基础 API 或者较新基于 <code>NSURLSession</code> 的 API 的选项。AFNetworking 3.0 现已是完全基于 <code>NSURLSession</code> 的 API，这降低了日后维护的负担，同时支持苹果增强关于 <code>NSURLSession</code> 提供的任何额外功能。由于 Xcode 7 中，<code>NSURLConnection</code> 的 API 已经正式被苹果弃用。虽然该 API 将继续运行，但将没有新功能将被添加，并且苹果已经通知所有基于网络的功能，以充分使 <code>NSURLSession</code> 向前发展。</p>
 <p>AFNetworking 2.x 将继续接受严重的 bug 提交和提供安全补丁，但未来不会有新的功能被添加。Alamofire（Swift 下的网络请求）软件基金会建议，所有的项目迁移到基于 <code>NSURLSession</code>的 API。</p>
@@ -1997,20 +1997,20 @@
     
     </summary>
     
-      <category term="AFNetworking" scheme="http://itangqi.me/tags/AFNetworking/"/>
+      <category term="AFNetworking" scheme="http://imtangqi.com/tags/AFNetworking/"/>
     
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
-      <category term="Source Code" scheme="http://itangqi.me/tags/Source-Code/"/>
+      <category term="Source Code" scheme="http://imtangqi.com/tags/Source-Code/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
   <entry>
     <title><![CDATA[UICollectionView 学习笔记]]></title>
-    <link href="http://itangqi.me/2016/04/21/the-notes-of-learning-uicollectionview/"/>
-    <id>http://itangqi.me/2016/04/21/the-notes-of-learning-uicollectionview/</id>
+    <link href="http://imtangqi.com/2016/04/21/the-notes-of-learning-uicollectionview/"/>
+    <id>http://imtangqi.com/2016/04/21/the-notes-of-learning-uicollectionview/</id>
     <published>2016-04-20T16:00:00.000Z</published>
     <updated>2016-05-28T03:47:40.000Z</updated>
     <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 <strong>UICollectionView</strong>。</p>
@@ -2084,11 +2084,11 @@
     
     </summary>
     
-      <category term="Notes" scheme="http://itangqi.me/tags/Notes/"/>
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
-      <category term="UICollectionView" scheme="http://itangqi.me/tags/UICollectionView/"/>
+      <category term="UICollectionView" scheme="http://imtangqi.com/tags/UICollectionView/"/>
     
-      <category term="iOS" scheme="http://itangqi.me/categories/iOS/"/>
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
     
   </entry>
   
