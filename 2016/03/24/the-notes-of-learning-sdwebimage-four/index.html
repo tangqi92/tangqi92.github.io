@@ -97,7 +97,7 @@
 <meta property="og:description" content="前言关于 SDWebImage 整体的架构可以参见下图：">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-sdwebimage-four-01.jpeg">
 <meta property="og:image" content="http://7xikfc.com1.z0.glb.clouddn.com/CocoaDocs.org%20%20%20SDWebImage%20Referethe-notes-of-learning-sdwebimage-four-02.png">
-<meta property="og:updated_time" content="2016-05-28T03:48:29.000Z">
+<meta property="og:updated_time" content="2017-07-12T06:29:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage 源码阅读笔记（四）">
 <meta name="twitter:description" content="前言关于 SDWebImage 整体的架构可以参见下图：">
@@ -449,7 +449,7 @@
 <li><a href="https://github.com/rs/SDWebImage/wiki/How-is-SDWebImage-better-than-X%3F" target="_blank" rel="external">How is SDWebImage better than X?</a></li>
 </ul>
 <hr>
-<h2 id="LRU">LRU</h2><p>在<a href="http://itangqi.me/2016/03/21/the-notes-of-learning-sdwebimage-two/" target="_blank" rel="external">《SDWebImage 源码阅读笔记（二）》</a>中，我们知道，SDWebImage 的图片清理机制（磁盘）是，删除过期时间的缓存（每次一半的递归来移除那些过早的文件）。</p>
+<h2 id="LRU">LRU</h2><p>在<a href="http://imtangqi.com/2016/03/21/the-notes-of-learning-sdwebimage-two/">《SDWebImage 源码阅读笔记（二）》</a>中，我们知道，SDWebImage 的图片清理机制（磁盘）是，删除过期时间的缓存（每次一半的递归来移除那些过早的文件）。</p>
 <p>在一次面试中，面试官问及是否可以提供其他的淘汰策略时，我提到了 LRU（近期最少使用算法），不过当要求说出算法的具体实现时，自己又懵逼了……</p>
 <p>下面是来自 SDWebImage 的文档页截图：</p>
 <p><img src="http://7xikfc.com1.z0.glb.clouddn.com/CocoaDocs.org%20%20%20SDWebImage%20Referethe-notes-of-learning-sdwebimage-four-02.png" alt=""></p>
