@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://imtangqi.com/about/index.html</loc>
+    
+    <lastmod>2017-11-11T12:58:21.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://imtangqi.com/2017/03/22/the-notes-of-learning-reactivecocoa/</loc>
+    
+    <lastmod>2017-07-14T11:00:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://imtangqi.com/2015/01/21/alfred-workflows-recommendation/</loc>
     
     <lastmod>2017-07-12T06:34:14.000Z</lastmod>
@@ -135,13 +149,6 @@
   </url>
   
   <url>
-    <loc>http://imtangqi.com/about/index.html</loc>
-    
-    <lastmod>2017-07-11T08:06:45.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://imtangqi.com/links.html</loc>
     
     <lastmod>2017-07-09T07:27:51.000Z</lastmod>
@@ -166,13 +173,6 @@
     <loc>http://imtangqi.com/2017/03/25/the-notes-of-learning-mvvm-with-rac/</loc>
     
     <lastmod>2017-03-25T08:30:41.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://imtangqi.com/2017/03/22/the-notes-of-learning-reactivecocoa/</loc>
-    
-    <lastmod>2017-03-24T06:57:48.000Z</lastmod>
     
   </url>
   
