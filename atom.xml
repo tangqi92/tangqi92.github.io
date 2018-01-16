@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>Qi Tang&#39;s Blog</title>
+  <title>Tang&#39;s Blog</title>
   <subtitle>你不能把这个世界，让给你所鄙视的人</subtitle>
   <link href="/atom.xml" rel="self"/>
   
@@ -9,7 +9,7 @@
   <id>http://imtangqi.com/</id>
   
   <author>
-    <name>Qi Tang</name>
+    <name>Tang</name>
     
   </author>
   
