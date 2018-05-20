@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://imtangqi.com/"/>
-  <updated>2018-01-12T14:32:30.000Z</updated>
+  <updated>2017-05-23T13:05:55.000Z</updated>
   <id>http://imtangqi.com/</id>
   
   <author>
@@ -14,107 +14,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>Buh-bye 2017. Well, hello 2018!</title>
-    <link href="http://imtangqi.com/2017/12/31/Buh-bye%202017.%20Well,%20hello%202018!/"/>
-    <id>http://imtangqi.com/2017/12/31/Buh-bye 2017. Well, hello 2018!/</id>
-    <published>2017-12-30T16:00:00.000Z</published>
-    <updated>2018-01-12T14:32:30.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>“自我”也像国家、神和金钱一样，只是虚构的故事。每个人都有一个复杂的系统，会丢下我们大部分的体验，只精挑细选留下几样，再与我们看过的电影、读过的小说、听过的演讲、做过的白日梦全部混合在一起，编织出一个看似一致连贯的故事，告诉我们自己是谁、来自哪里、要去哪里。—— 《未来简史》</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="工作">工作</h2><h3 id="1_-_3_月，花瓣_4-0_的开发">1 - 3 月，花瓣 4.0 的开发</h3><p>其实 4.0 的开发工作从去年 11 月份便开始了，不过由于陶叔叔的离职，加上自己在来花瓣实习之前没有实际的项目经验，所以基本上那个时候，我每天都是在不断地踩坑中度过的。不过，也正是那段经历，促使了我在技术上的快速成长与心里抗压能力的不断提升，更重要的是，那段经历让我开始找到了编程的快乐和与之带来的成就感。到了今年 3 月份的时候，我基本上可以独立 Hold 住花瓣这样体量应用的日常维护和开发工作了。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/2017_01.PNG" alt=""></p>
-<h3 id="4_-_5_月，花瓣_4-0_正式上线和_Driki_的设计与开发">4 - 5 月，花瓣 4.0 正式上线和 Driki 的设计与开发</h3><p>作为从 3.0 到 4.0 的大版本更新，并且采用了全新的设计风格加上对功能模块做了精简与调整，我们在正式上线前进行了长达 1 个多月的内测。期间收到了许多热心用户对产品的反馈与意见，当然也有之前没有发现的 Bug。虽然作为开发的我，每天除了日常开发与修复 Bug 之外还要负责在用户群里为用户解答各种各样的疑问，但最终能得到用户的肯定与认可也觉得这一切都是值得的。5 月底，我们终于上线 4.0 版本。</p>
-<p>而 Driki 的诞生其实可以追溯到 2 月份，那时候正值新春假期，我出于「假期不写代码」的原则开始收听一档设计类播客：Anyway.FM ，而正是通过两位主播诙谐幽默地讲解，帮我打开了设计的大门，使我一下子便爱上了设计。当时每天最开心的事便是一边听着播客，一边上着 Dribbble ，最后打开 Sketch 把 Dribbble 上看到有意思的图临摹出来。有一天，当我很自然地打开 App Store 搜索 Dribbble 客户端时，我居然发现 Dribbble 没有自己的官方客户端。好吧，在下载并试用了一些免费与付费的第三方客户端后，我认为目前市面上没有一款免费的第三方客户端是我满意的，而付费的又或多或少有着我所想要却没有的功能，于是我便非常愉快地决定自己动手设计并开发一款有着自己设计理念与产品定位的 Dribbble 第三方客户端。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/2017_02_01.jpg" alt=""></p>
-<h3 id="6_-_8_月，美思_for_RN_的开发和_Driki_正式上架">6 - 8 月，美思 for RN 的开发和 Driki 正式上架</h3><p>6 月初，我参加了一场由图拉鼎组织的 WWDC 杭州线下观影活动，见到了许多之前只在网上有关注的朋友，其中有许多独立开发者，包括 Pin 的作者钟颖（当然，他不认识我是谁）。那次活动，似乎成为了我 2017 年的转折点，后来发生的一切都越来越好。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/2017_03_01.JPG" alt=""></p>
-<p>7 月初，Driki 在经过几轮内测之后正式上线，承蒙各位朋友的抬举，收到了许多宝贵的意见和反馈。这也使我更加坚定想要把 Driki 做成 A Better Dribbble Client 。</p>
-<p>公司对于移动端一直不够重视，花瓣 4.0 在正式上线后，除了日常修复 Bug 之外，几乎已经没有新的需求了。此时，我们决定将公司另一款移动端产品「美思」使用 RN 进行重写，在士辛的带领下，我也算入了 RN 的坑，但自己的内心却非常清楚自己真正热爱、想继续深造的技术是什么。我之所以选择留在花瓣，正是因为我可以写着自己所喜欢的应用，和一个志趣相投的产品设计师 YaJin 一起合作，而如果我不能以自己喜欢的方式做自己喜欢的工作了，我想我也是时候离开了。8 月初，随着各大互联网公司秋招的开启，我也将主要精力投入到了秋招上，此时正巧看到网易正在招 iOS 实习生，对于当时从未想离开杭州的我来说，网易是个不错的选择，最终顺利通过面试加入了网易，开启我第二段实习经历。</p>
-<h3 id="9_-_11_月，企业易信适配和收获_WXG_的_Offer">9 - 11 月，企业易信适配和收获 WXG 的 Offer</h3><p>在网易实习的部门是易信下的企业易信组，我们团队并大，但既有年纪相对较大的工程师，也有爱搞怪爱滑板的小鲜肉，最重要的是，团队中的每一个人都能独挡一面。由于实习时间相对较短，工作上主要完成了 iOS 11 与 iPhone X 的适配与日常 Bug 的修复。但更重的是，借此机会，我对大公司的工作流程与工作方式有了切身的体会。</p>
-<p>9 月初的某一天，我接到了一通来自广州的电话，电话那头传来：“你好，请问是 XX 同学吗？我是 WXG 的面试官，请问你现在有时间进行面试吗？”我愣了愣，心想：“WTF!!! 我没投 WXG 啊？WXG 这么难进的 BG 我怎么可能会投？”不过缓过神来，心想这么难得的一次机会，我一定要好好珍惜，不管面试过不过，也是为之后的秋招面试攒经验和攒人品了。当然，你永远不知道接下来会发生什么，最终，在经过 3 轮技术面试，1 轮综合面（气质面试），和不知道算不算 HR 面试的面试后，我神奇般地拿到了 WXG 的 Offer 。从一开始抱着学习的心态，到最后怀着毕进 WXG 的决心，幸运之神又一次站在了我这边。WXG 是我秋招的第一面，也是我最后一面，因为在我拿到 Offer 之后，我选择推掉了之后所有的笔试和面试，没错，没什么比能进 WXG 更令我兴奋的了。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/2017_04_01.jpg" alt=""></p>
-<h2 id="生活">生活</h2><h3 id="1_-_5_月，生活极其不规律">1 - 5 月，生活极其不规律</h3><p>在花瓣，由于有弹性工作与调休机制的存在，我每天可以 12 点才到公司，正常情况下我会选择工作到晚上 11 点之后再回家，回家之后又会各种折腾到凌晨 1、2 点再睡觉，第二天睡到上午 10 点之后（反正是自然醒）再起床。原本的健身与做饭计划也被我搁置了，更别说早睡早起了，整个生活极其不规律。这样的生活作息持续到 5 月初，我的身体终于给我发出了警告：持续一周的低烧。这场病过后，我意识到我不能再这样下去了，我必须让自己的生活重新回到正轨上。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/2017_05_01.jpg" alt=""></p>
-<h3 id="6_-_8_月，爱上健身与做饭">6 - 8 月，爱上健身与做饭</h3><p>由于前两年得了慢性胃炎，我的体重一直在 110 斤左右，对于身高 175 的我而已，看上去实在是略显单薄了些，加上 5 月初的一场病，使我更加坚定要通过坚持健身来达到增强体制与增肌的目的。于是，我便开启了健身之旅，通过有规律且有目的性的健身，加上有针对性的饮食与自律的生活作息，我在短短两个月的时间里体重就增长了 11 斤。如今，我依旧保持每周健身 2 - 3 次的习惯，身体和精神状态都改善了很多，现在看来，当时的决定与投入（时间和金钱）是完全正确的。</p>
-<p>除此之外，伴随着健身，我还重新找回了做饭的技能。5 月份买了烤箱后，鸡胸肉基本都靠它啦，而且我还学着做饼干和蛋糕，只是后来嫌清洗太麻烦没做几次。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/2017_07.JPG" alt=""></p>
-<h3 id="9_-_11_月，网易的班车与伙食">9 - 11 月，网易的班车与伙食</h3><p>入职网易后，由于种种原因，我没有选择搬家，而是继续住在原来的地方。于是每天去公司只能选择坐班车，而为了赶班车，我每天必须要起大早，而且路上车程要 1 个小时。说实话，一开始真的挺难适应的，不过到后来，我也养成了上车就睡，一觉睡到公司的习惯。</p>
-<p>网易的伙食在互联网公司里是出了名的好，虽然入职后听同事说已经不如以前了，但即使这样，也依然要比大多数公司要来得好。由于部门在西可办公，所以我和同事常常会回老园区吃饭，吃完饭再去咖啡吧或者严选逛一圈。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/2017_06.JPG" alt=""></p>
-<h3 id="12_月，离别杭州，重回学校">12 月，离别杭州，重回学校</h3><p>杭州，一座我莫名喜欢的城市，如果不是 WXG 的 Offer ，我想，我可能不会选择离开。</p>
-<p>随着秋招画上圆满的句号，我也将精力转移到了毕业的相关事宜上，结合当时在企业易信的工作内容，我认为提前结束实习回学校是一个更好的选择。一方面，我可以有更多的时间专心写论文；另一方面，我也可以利用这段时间重点弥补自己在技术上的短板（深度与广度）。</p>
-<p>回学校后，一切都还是那么熟悉与亲切，每天早上 8 点起床，晚上 12 点睡觉，每天有大量的时间用于学习，一周坚持健身 3 次，同时开始 Driki 2.0 的更新工作。对了，12 月初还关注了一波数字货币，买了一些币，打算长期持有。</p>
-<h2 id="总结">总结</h2><p>2017 年，在工作上，花瓣 4.0 的上线无疑是最大的成就，其次是个人第一款 iOS 应用 Driki 的上架，最后是去网易打了个酱油。</p>
-<p>2017 年，在生活上，坚持健身则无疑是最大的成就，其次是选择重新回到学校。</p>
-<p>即使这样，如果要给我的 2017 年打分，我想也只能给个及格分。在工作上，我认为我在技术上，尤其是在下半年，几乎没有实质性的提升，自我驱动严重不足。在生活上，上半年基本是在一个颓废期，只是下半年随着健身重回正轨，自制力仍需提升。当然，所有的一切，都代表过去，而我要做的，是当下的每一天，希望明年无论是在学业还是工作还是生活上都能做得比今年更好。</p>
-<h2 id="阅读">阅读</h2><p>今年只完整地阅读完 5 本书（非技术书籍），我对此是非常不满意的，因为我并非忙到没有时间，而只是不愿抽出时间来阅读（更多时间是用来看综艺节目了）。希望明年，至少明年上半年还在学校的时间里，可以多抽出时间用于阅读。</p>
-<ol>
-<li><a href="https://book.douban.com/subject/6431994/" target="_blank" rel="external">悟空传</a></li>
-<li><a href="https://book.douban.com/subject/26278687/" target="_blank" rel="external">皮囊</a></li>
-<li><a href="https://book.douban.com/subject/26340138/" target="_blank" rel="external">岛上书店</a></li>
-<li><a href="https://book.douban.com/subject/26649712/" target="_blank" rel="external">共享经济2.0</a></li>
-<li><a href="https://book.douban.com/subject/1034282/" target="_blank" rel="external">时间简史</a></li>
-</ol>
-<h2 id="影视">影视</h2><p>今年绝大部分的娱乐时间都用在了看电影（电视剧）上，根据自己在豆瓣上的记录，2017 年我看了将近 100 部电影（电视剧），而明年一定要减少无聊综艺节目的观看。</p>
-<ol>
-<li><a href="https://movie.douban.com/subject/7054120/" target="_blank" rel="external">黑镜系列</a></li>
-<li><a href="https://movie.douban.com/subject/3986493/" target="_blank" rel="external">神探夏洛克系列</a></li>
-<li><a href="https://movie.douban.com/subject/2338055/" target="_blank" rel="external">西部世界</a></li>
-<li><a href="https://movie.douban.com/subject/26883064/" target="_blank" rel="external">白夜追凶</a></li>
-<li><a href="https://movie.douban.com/subject/26325320/" target="_blank" rel="external">血战钢锯岭</a></li>
-<li><a href="https://movie.douban.com/subject/2252773/" target="_blank" rel="external">末日危途</a></li>
-<li><a href="https://movie.douban.com/subject/26683290/" target="_blank" rel="external">你的名字。</a></li>
-<li><a href="https://movie.douban.com/subject/25807345/" target="_blank" rel="external">彗星来的那一夜</a></li>
-<li><a href="https://zh.wikipedia.org/wiki/%E6%88%91%E5%8F%AA%E6%98%AF%E5%80%8B%E8%A8%88%E7%A8%8B%E8%BB%8A%E5%8F%B8%E6%A9%9F" target="_blank" rel="external">出租车司机</a></li>
-<li><a href="https://movie.douban.com/subject/1300299/" target="_blank" rel="external">杀人回忆</a></li>
-</ol>
-<h2 id="心愿单">心愿单</h2><h3 id="2017_年心愿实现情况">2017 年心愿实现情况</h3><ol>
-<li>坚持健身：从下半年开始，坚持每周健身 2 - 3 次，体重成功增长 14 斤</li>
-<li>自己做饭：随着开始有规律地健身，每周一般做 2 次饭</li>
-<li>早睡早起：每天都告诉自己要早睡早起，但每天都做不到</li>
-<li>论文顺利开题：虽然时间比预期的要晚了点，但好歹顺利开题了</li>
-<li>拿到心仪的 Offer：简直超乎预期好嘛，完美</li>
-<li>做自己，做喜欢的事：基本满意，但我想我还能做得更好</li>
-</ol>
-<h3 id="2018_年心愿清单">2018 年心愿清单</h3><ol>
-<li>坚持健身</li>
-<li>毕业旅行</li>
-<li>顺利毕业</li>
-<li>成功入职</li>
-<li>成为 Vlogger</li>
-<li>阅读 12 本书籍</li>
-<li>撰写 12 篇文章</li>
-<li>努力工作，努力赚钱</li>
-</ol>
-<h2 id="推荐应用">推荐应用</h2><ol>
-<li>Driki</li>
-<li>Castro</li>
-<li>Reeder</li>
-<li>Telegram</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;“自我”也像国家、神和金钱一样，只是虚构的故事。每个人都有一个复杂的系统，会丢下我们大部分的体验，只精挑细选留下几样，再与我们看过的电影、读过的小说、听过的演讲、做过的白日梦全部混合在一起，编织出一个看似一致连贯的故事，告诉我们自己是谁、来自哪里、要去哪里。—— 《未来简史》&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="Life" scheme="http://imtangqi.com/categories/Life/"/>
-    
-    
-      <category term="Review" scheme="http://imtangqi.com/tags/Review/"/>
-    
-      <category term="Summary" scheme="http://imtangqi.com/tags/Summary/"/>
-    
-  </entry>
   
   <entry>
     <title>Dribbble 第三方 iOS 客户端比较</title>
@@ -1004,137 +903,6 @@
       <category term="UITableView" scheme="http://imtangqi.com/tags/UITableView/"/>
     
       <category term="UITableViewCell" scheme="http://imtangqi.com/tags/UITableViewCell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Bye 2016, Hi 2017</title>
-    <link href="http://imtangqi.com/2016/12/31/bye2016-hi2017/"/>
-    <id>http://imtangqi.com/2016/12/31/bye2016-hi2017/</id>
-    <published>2016-12-30T16:00:00.000Z</published>
-    <updated>2016-12-31T06:57:43.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>过去的如果就这么过去了，以后只会越来越糟。——《驴得水》</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="技术">技术</h2><h3 id="1_月_—_2_月">1 月 — 2 月</h3><p>为了迎接 3 月份的实习生面试，这 2 个月基本上就是在不断地刷题中度过的。</p>
-<p>对了，想要进大厂，数据结构与算法一定要过关，别问我为什么这么说。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/IMG_1930%203.JPG" alt=""></p>
-<h3 id="3_月_—_5_月">3 月 — 5 月</h3><p>正式开启了长达 3 个月之久的实习生求职之旅，虽然一路磕磕绊绊，但却也收获了许多宝贵的经验。</p>
-<p>最开始，经历了豆瓣顺利到让人怀疑的面试，最终顺利拿到 Offer。</p>
-<p>紧接着，接连跪在了百度与腾讯的在线笔试上，开始怀疑人生。</p>
-<p>再后来，面对阿里内推与现场面试这两次机会时，都没能把握住。</p>
-<p>幸运的是，我遇到了<a href="http://huaban.com/" target="_blank" rel="external">花瓣</a>。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/IMG_0997.JPG" alt=""></p>
-<h3 id="6_月">6 月</h3><p>最轻松的一个月，闲暇时开始 <a href="https://github.com/tangqi92/GankYou" target="_blank" rel="external">GankYou</a> 的开发，随后由于工作的原因，没能持续更新下去，希望 17 年自己能把 Side Project 坚持下去。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/meizhi.png" alt=""></p>
-<h3 id="7_月_—_9_月">7 月 — 9 月</h3><p>来到花瓣实习，经历了陶叔叔离职，产生过离开的想法，不过最终决定留下。</p>
-<p>随后在士辛的指导下，参与了阔别三年之久的花瓣 Android <a href="http://www.wandoujia.com/apps/com.huaban.android" target="_blank" rel="external">3.0</a> 版本的开发，有幸见证了用户从零一步步增长到几十万的过程。</p>
-<p>由于没有历史包袱，3.0 版本是完全基于 Kotlin 编写的，感觉很爽啊！但期间也踩了不少坑，之后会专门写篇文章来进行总结。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/665d097e49420fdbd0221fe7956b1820-for-7743-o_1arfsrcjt1h02tat1ogr1kkf1s3514-uid-12202.jpeg" alt=""></p>
-<h3 id="10_月_—_12_月">10 月 — 12 月</h3><p>花瓣 Android 由士辛继续迭代，而我也正式转向 iOS，独立负责花瓣 iOS 4.0 版本的改版。4.0 采用了全新的设计，相应模块也进行了改版，目前为止已经进入内测阶段。</p>
-<p>第一次独立负责项目，从一开始的畏畏缩缩，到现在的游刃有余，这是我飞速进步的 3 个月。我有个小小的愿望，那就是希望能通过自己的不断地努力，把花瓣 iOS 不断做得更好，能得到更多人的喜欢与肯定。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/IMG_1933.PNG" alt=""></p>
-<h2 id="生活">生活</h2><h3 id="1_月_—_6_月">1 月 — 6 月</h3><p>下学期基本上就没去上过课，心思全在找实习上。</p>
-<p>对于研二选择实习的我而言，其实这就是整个研究生生涯亦是整个学生生涯，最后的校园时光了，很高兴能与一群志同道合的小伙伴们一起度过。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/Enlighsst.jpg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/IMG_0638.JPG" alt=""></p>
-<h3 id="7_月_—_12_月">7 月 — 12 月</h3><p>选择一个人住，选择自己想要的生活。</p>
-<p>开始健身，开始自己做饭，开始改变穿衣风格。</p>
-<p>感到累了，迷惘了，就回家，回到那个最温暖的地方。</p>
-<p>感谢陶叔叔对我的赏识，让我有幸加入花瓣；感谢士辛在技术上的指点，让我快速成长起来；感谢雅金在设计与产品上的追求，让我更加有动力将花瓣做得更加精致；感谢花瓣的所有人，让我很有归属感。</p>
-<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/Enlight%2031.jpg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/Enlight%2032.jpg" alt=""></p>
-<h2 id="2017">2017</h2><blockquote>
-<p>永远保持真诚，保持高尚的品行。把每天过成你的最后一天，活得充实、不留遗憾，有冒险精神、要英勇，但也要尽情享受，因为人生本短。——《神奇队长》</p>
-</blockquote>
-<h2 id="书单列表">书单列表</h2><ol>
-<li><a href="https://book.douban.com/subject/26630830/" target="_blank" rel="external">程序员面试宝典</a></li>
-<li><a href="https://book.douban.com/subject/25910559/" target="_blank" rel="external">剑指Offer</a></li>
-<li><a href="https://book.douban.com/subject/25863515/" target="_blank" rel="external">图解HTTP</a></li>
-<li><a href="https://book.douban.com/subject/24284008/" target="_blank" rel="external">Objective-C基础教程</a></li>
-<li><a href="https://book.douban.com/subject/19967897/" target="_blank" rel="external">Objective-C 程序设计</a></li>
-<li><a href="https://book.douban.com/subject/24720270/" target="_blank" rel="external">Objective-C高级编程</a></li>
-<li><a href="https://book.douban.com/subject/25829244/" target="_blank" rel="external">Effective Objective-C 2.0</a></li>
-<li><a href="https://book.douban.com/subject/26599538/" target="_blank" rel="external">Android开发艺术探索</a></li>
-<li><a href="http://producter.io/" target="_blank" rel="external">Producter</a></li>
-<li><a href="https://book.douban.com/subject/3523041/" target="_blank" rel="external">平凡的世界（全三册）</a></li>
-</ol>
-<h2 id="推荐单品">推荐单品</h2><ol>
-<li><a href="http://you.163.com/item/detail?id=1037011" target="_blank" rel="external">安睡慢回弹记忆绵床垫</a></li>
-<li><a href="https://detail.tmall.com/item.htm?spm=a1z10.3-b-s.w4011-14571099812.64.jqDlt6&amp;id=13230519823&amp;rn=41ae3101ca27fd6ebef56811aefb1222&amp;abbucket=18&amp;skuId=50444570013" target="_blank" rel="external">飞利浦电动牙刷HX6730</a></li>
-</ol>
-<h2 id="心愿单">心愿单</h2><ol>
-<li>坚持健身</li>
-<li>自己做饭</li>
-<li>早睡早起</li>
-<li>论文顺利开题</li>
-<li>拿到心仪的 Offer</li>
-<li>做自己，做喜欢的事</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;过去的如果就这么过去了，以后只会越来越糟。——《驴得水》&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="Life" scheme="http://imtangqi.com/categories/Life/"/>
-    
-    
-      <category term="Review" scheme="http://imtangqi.com/tags/Review/"/>
-    
-      <category term="Summary" scheme="http://imtangqi.com/tags/Summary/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>近况</title>
-    <link href="http://imtangqi.com/2016/08/14/what-is-going-on/"/>
-    <id>http://imtangqi.com/2016/08/14/what-is-going-on/</id>
-    <published>2016-08-13T16:00:00.000Z</published>
-    <updated>2016-08-14T12:27:25.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>这是一篇流水账，主要记录下过去两个月的时间里，我在生活和工作中经历的一些事与感悟。</p>
-<a id="more"></a>
-<hr>
-<h2 id="最后的校园时光">最后的校园时光</h2><blockquote>
-<p>习惯幕起幕落，总以为明天还很多。当我渐渐习惯并开始享受读研的日子时，我却到了不得不得和她说「再见」的时候。</p>
-</blockquote>
-<p>在 6 月初拿到实习 Offer 并决定不再面试其他公司后，我终于结束了长达 3 个月的实习生求职之旅（此处泪流满面.jpg）。同时，作为实验室最后一个确定实习意向的我，也终于能放下心中悬着的石头，和小伙伴们一起尽情地享受最后宝贵的校园时光了。</p>
-<p>所以，在最后大半个月的时间里，我们总会找各种理由，隔三差五出去聚餐。亦或者在实验室，三五成群打牌、打游戏或者看电影（平时肯定不会这样哒），我们尽可能用照片记录下这一切，因为我们心里都清楚，这段弥足珍贵的时光，将一去不复返。如果说，读研给我留下了什么？与那些貌似高大尚其实华而不实的课程、与那些枯燥乏味且强制要听的讲座、与那些只会剥削利用学生劳动力的教授相比，那绝对是一群友爱的小伙伴。你能相信吗？即使现在我们散落在全国各地，但我们每周末都会约定一起进行视屏聊天。可以说，能拥有这样一群小伙伴真的非常幸福。</p>
-<hr>
-<h2 id="拥抱变化">拥抱变化</h2><blockquote>
-<p>如果说，为什么选择花瓣？那我会毫不避讳地说：“我是冲着陶叔叔来的~”</p>
-</blockquote>
-<p>是的，正因为花瓣 iOS 端负责人是陶叔叔，所以我相信，若能在他的指导下工作，我一定能快速的成长。</p>
-<p>可当我怀揣着雄心壮志，准备大干一番的时候，我却得知了陶叔叔即将离职的消息，而那是在我正式报道的第一天。突如其来的「变化」让我措手不及，我清楚的记得，当我听到这个消息的时候，我脑子是一片空白的。陶叔叔说他离职还有半个月的时间，不管接下来我怎么选择，这段日子，该学习的还要学习，该工作的还要工作。同时他也给了我很多中肯的意见，但他也始终强调，最终的决定一定是我自己拿。</p>
-<p>那么，既然有了「变化」，就要有一颗积极的心去「拥抱变化」，一方面我每天照常努力学习与工作，另一方面我给自己列举了很多可能性，在纠结与权衡半个月之后，我决定留在花瓣。因为我相信花瓣，也相信自己，这是一个机会，我希望我能把握住它。</p>
-<p>最后仍要感谢下陶叔叔，如果不是他，我也许就不会选择花瓣。虽然只和他共事短短半个月的时间，但他对我真的非常的好，身怀绝技却又平易近人（其实是有些逗逼啦~）。从他身上学到了不仅仅是技术，还有很多很多，祝陶叔叔之后一切顺利，以后常聚，记得请我吃饭啊，哈哈~</p>
-<hr>
-<h2 id="花瓣">花瓣</h2><blockquote>
-<p>放弃了豆瓣，错过了阿里，选择了花瓣，这一切都是「缘」。</p>
-</blockquote>
-<p>花瓣是个小团队，所以在花瓣，你既要当开发，又要当测试，还要兼职卖萌当客服解答用户的疑问。我当然不是在抱怨，反而是很享受这个过程，因为在这有一种「归属感」，只要你想，你能在花瓣做任何事。团队非常友爱，相处起来非常融洽，上个星期，我还在公司过了生日。</p>
-<p>过去的一个月，我都在参与花瓣 Android 的开发，虽然非常繁忙但却又感到非常幸运，因为能参与到一个全新的项目中（由于没有历史包袱，这次我们是从零开始重写），有很多想做却没机会做的事可以去实现。关于项目的具体细节，之后会有专门的文章来讲述，其实我和小伙伴是有计划搭建公司的技术博客，希望之后能付诸于行动吧~</p>
-<p>花瓣 Android 正式版即将上线了，如果你想尝鲜的话，可以在这里获取<a href="http://fir.im/huabanAndroid" target="_blank" rel="external">最新测试版</a>（求轻喷 ≧▽≦）</p>
-<p>关于接下来的计划，一方面，是继续迭代花瓣 Android 客户端，我和小伙伴「士辛」都有着共同的愿景，就是希望能做一款令自己满意的精致的应用，希望我们能实现吧~另一方面，是希望能推进花瓣 iOS 客户端新版本的开发工作，毕竟自己更热爱 iOS。但不管怎么，眼下的仍需要踏踏实实，一步一脚印走下去，加油吧！</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;&lt;p&gt;这是一篇流水账，主要记录下过去两个月的时间里，我在生活和工作中经历的一些事与感悟。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Life" scheme="http://imtangqi.com/categories/Life/"/>
-    
-    
-      <category term="Diary" scheme="http://imtangqi.com/tags/Diary/"/>
-    
-      <category term="Summary" scheme="http://imtangqi.com/tags/Summary/"/>
     
   </entry>
   
@@ -2182,6 +1950,377 @@
       <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
     
       <category term="Source Code" scheme="http://imtangqi.com/tags/Source-Code/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UICollectionView 学习笔记</title>
+    <link href="http://imtangqi.com/2016/04/21/the-notes-of-learning-uicollectionview/"/>
+    <id>http://imtangqi.com/2016/04/21/the-notes-of-learning-uicollectionview/</id>
+    <published>2016-04-20T16:00:00.000Z</published>
+    <updated>2016-05-28T03:47:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 <strong>UICollectionView</strong>。</p>
+<a id="more"></a> 
+<hr>
+<h2 id="简介">简介</h2><p>首先看苹果官方文档 <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/" target="_blank" rel="external">UICollectionView Class Reference</a> 的介绍:</p>
+<blockquote>
+<p>The UICollectionView class manages an ordered collection of data items and presents them using customizable layouts. Collection views provide the same general function as table views except that a collection view is able to support more than just single-column layouts. Collection views support customizable layouts that can be used to implement multi-column grids, tiled layouts, circular layouts, and many more. You can even change the layout of a collection view dynamically if you want.</p>
+</blockquote>
+<p>一句话总结就是：<strong>UICollectionView 与 UITableView 相似，却提供了可自定义多列网格（Grild）的功能。</strong></p>
+<hr>
+<h2 id="核心">核心</h2><ul>
+<li><p><strong>Cells</strong>：单元格，用于展示内容的主体</p>
+</li>
+<li><p><strong>Supplementary Views</strong>：追加视图，相当于 UITableView 中每个 Section 的 Header 或 Footer</p>
+</li>
+<li><p><strong>Decoration Views</strong>：装饰视图，用于装饰整个 UICollectionView</p>
+</li>
+</ul>
+<p>UICollectionView 最常见的使用场景，想必就是相册（照片墙）的实现与展示了，下面通过一张图来直观地认识 CollectionView 各部分的构成：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-001.png" alt=""></p>
+<hr>
+<h2 id="实现">实现</h2><p>如果你在之前有了解及使用过 UITableView 的话，那么恭喜你，你将会快速上手 UICollectionView。</p>
+<h3 id="UICollectionViewDataSource">UICollectionViewDataSource</h3><p>UICollectionViewDataSource - 负责提供展示的数据，实现下面两个必须的委托方法，其实 UITableView 并无二意，所以在此不做过多介绍了。</p>
+<ul>
+<li><p><strong>numberOfItemsInSection</strong>：某个 section 里有多少个 item</p>
+</li>
+<li><p><strong>cellForItemAtIndexPath</strong>：对于某个位置应该显示什么样的 cell，里面会涉及到 cell 的复用，可参见 TableView</p>
+</li>
+</ul>
+<p>其实到这里，CollectionView 就可以正常显示了，对吧，就是这么简单：）</p>
+<h3 id="UICollectionViewDelegate">UICollectionViewDelegate</h3><p>UICollectionViewDelegate - 负责用户的交互、Cell 的外形，委托方法和 TableView 相似，可以选择性实现以下委托方法。</p>
+<ul>
+<li><p><strong>collectionView:shouldHighlightItemAtIndexPath</strong>：是否支持高亮？</p>
+</li>
+<li><p><strong>collectionView:didHighlightItemAtIndexPath</strong>：如果支持高亮，那么高亮；</p>
+</li>
+<li><p><strong>collectionView:shouldSelectItemAtIndexPath</strong>：询问是否可以被选中？</p>
+</li>
+<li><p><strong>collectionView:didUnhighlightItemAtIndexPath</strong>：如果支持高亮，那么现在取消高亮；</p>
+</li>
+<li><p><strong>collectionView:didSelectItemAtIndexPath</strong>：如果支持可以被选中，那么选中 cell；</p>
+</li>
+</ul>
+<p>下面再通过几张图来更加清晰地理解：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-002.jpg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-003.jpg" alt=""><br><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-004.jpg" alt=""></p>
+<h3 id="UICollectionViewLayout">UICollectionViewLayout</h3><p>在布局上，与 UITableView 直接使用系统提供的样式不同，UICollectionView 使用的是 UICollectionViewLayout 来自定义布局样式。</p>
+<p>在苹果官方文档：<a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/" target="_blank" rel="external">UICollectionViewLayout Class Reference</a> 中对其做了如下解释:</p>
+<blockquote>
+<p>The UICollectionViewLayout class is an abstract base class that you subclass and use to generate layout information for a collection view. The job of a layout object is to determine the placement of cells, supplementary views, and decoration views inside the collection view’s bounds and to report that information to the collection view when asked. The collection view then applies the provided layout information to the corresponding views so that they can be presented onscreen.</p>
+</blockquote>
+<p>这里做下简短的总结：</p>
+<ol>
+<li><p>UICollectionViewLayout 是一个抽象基类，你需要继承自他，来为 CollectionView 生成 Layout 信息。Layout 对象的作用是决定 Cells，Supplementary Views 和 Decoration Views 在 CollectionView 中的布局位置。当然啦，如果你不想折腾，苹果也贴心的为你准备了 UICollectionViewFlowLayout - 流水式布局效果。</p>
+</li>
+<li><p>UICollectionView 的显示效果几乎全部由 UICollectionViewLayout 负责，而真正存储着每一个 Cell 的位置、大小等属性的是 UICollectionViewLayoutAttributes 。每一个 Cell 对应着一个属于自己的 UICollectionViewLayoutAttributes，而 UICollectionViewLayout 正是利用 UICollectionViewLayoutAttributes 里存在的信息对每一个 Cell 进行布局。</p>
+</li>
+</ol>
+<p>下面通过一张图来了解 UICollectionView 的构成：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-notes-of-learning-uicollectionview-005.jpg" alt=""></p>
+<h2 id="总结">总结</h2><p>可以说 UICollectionView 是 iOS 开发中必不可少的 UIKit 控件之一。</p>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionView_class/" target="_blank" rel="external">UICollectionView Class Reference</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UICollectionViewLayout_class/" target="_blank" rel="external">UICollectionViewLayout Class Reference</a></li>
+<li><a href="http://www.appcoda.com/ios-programming-uicollectionview-tutorial/" target="_blank" rel="external">Create Grid Layout Using UICollectionView in iOS 6</a></li>
+<li><a href="http://my.oschina.net/sunqichao/blog/182623" target="_blank" rel="external">UICollectionView 使用 介绍</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;&lt;p&gt;最近计划着开个新项目，前期工作准备先撸个图片选择器出来。当然核心肯定是 PhotoKit (ASsetsLibrary) 啦，不过那些会在稍后文章中介绍，今天的主角则是 &lt;strong&gt;UICollectionView&lt;/strong&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
+    
+    
+      <category term="Notes" scheme="http://imtangqi.com/tags/Notes/"/>
+    
+      <category term="UICollectionView" scheme="http://imtangqi.com/tags/UICollectionView/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>初探 iOS 事件分发机制</title>
+    <link href="http://imtangqi.com/2016/04/18/the-first-meet-with-event-delivery/"/>
+    <id>http://imtangqi.com/2016/04/18/the-first-meet-with-event-delivery/</id>
+    <published>2016-04-17T16:00:00.000Z</published>
+    <updated>2016-05-28T08:34:14.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>今天看到一道面试题：<code>UIWindow</code> 与 <code>UIView</code> 有何区别？</p>
+<p>关于问题的答案，你可以自行 Google。要说这篇文章的由来，是因为答案中说到：<strong>UIWindow 管理和协调着事件的分发</strong>，这一点引起了我的疑问。</p>
+<p>那么，在 iOS 中，事件分发机制的概念与具体的流程是怎么样子的呢？如果你之前也未曾了解，亦或是一知半解，不如今天就和我一起学习下事件分发机制吧！</p>
+<a id="more"></a>
+<hr>
+<h2 id="UIEvent">UIEvent</h2><p><code>UIEvent</code> 表示用户交互的事件对象，在其类文件中，我们可以看到有一个枚举类型的属性  <code>UIEventType</code>，这个属性表示了当前的响应事件类型（Event Type）：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  UIEvent.h</span></span><br><span class="line"><span class="comment">//  UIKit</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2005-2015 Apple Inc. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UIEventType</span> type</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, <span class="built_in">UIEventType</span>) &#123;</span><br><span class="line">    <span class="built_in">UIEventTypeTouches</span>,</span><br><span class="line">    <span class="built_in">UIEventTypeMotion</span>,</span><br><span class="line">    <span class="built_in">UIEventTypeRemoteControl</span>,</span><br><span class="line">    <span class="built_in">UIEventTypePresses</span> <span class="built_in">NS_ENUM_AVAILABLE_IOS</span>(<span class="number">9</span>_0),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>触控事件（UIEventTypeTouches）：单点、多点触控以及各种手势操作；</li>
+<li>传感器事件（UIEventTypeMotion）：重力、加速度传感器等；</li>
+<li>远程控制事件（UIEventTypeRemoteControl）：远程遥控 iOS 设备多媒体播放等；</li>
+<li>按压事件（UIEventTypePresses）：3D Touch（iOS 9）；</li>
+</ol>
+<p>本文主要针对 Touch events 的分发进行讲解。</p>
+<hr>
+<h2 id="UITouch">UITouch</h2><p><code>UITouch</code> 表示单个点击，其类文件中，我们同样可以看到有一个枚举类型的属性 <code>UITouchPhase</code>，这个属性是用来表示当前点击的状态：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>,<span class="keyword">readonly</span>) <span class="built_in">UITouchPhase</span> phase;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">UITouchPhase</span>,<span class="built_in">UITouchPhase</span>&#123;</span><br><span class="line">    <span class="built_in">NSTouchPhaseBegin</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseMoved</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseStationary</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseEnded</span>,</span><br><span class="line">    <span class="built_in">NSTouchPhaseCanceled</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这些状态包括点击开始、移动、停止不动、结束和取消五个状态。</p>
+<p>每次点击发生的时候，点击对象都放在一个集合中传入 <code>UIResponder</code> 的回调方法中，我们通过集合中对象获取用户点击的位置。</p>
+<h3 id="UITouch_方法">UITouch 方法</h3><p>可以通过以下方法获取用户点击的位置：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取点击坐标点</span></span><br><span class="line">-(<span class="built_in">CGPoint</span>) locationInView:(<span class="built_in">UIView</span> *)view;</span><br><span class="line"><span class="comment">//获取上个点击位置的坐标点</span></span><br><span class="line">-(<span class="built_in">CGPoint</span>) previousLocationInView:(<span class="built_in">UIView</span> *)view;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Responder_Object">Responder Object</h2><p>Responder Object（响应者对象）是能够响应并处理事件的对象，是构成 Responder Chain（响应链）和事件传递链的节点。</p>
+<p>在 iOS 中，只有 <code>UIResponder</code>类的子类才能响应事件，而我们熟知的 <code>UIApplication</code>/<code>UIView</code>/<code>UIViewController</code> 都是 <code>UIResponder</code> 的子类，<code>UIResponder</code> 声明了用于处理事件的接口，并定义了默认的行为：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesMoved:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesEnded:(<span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br><span class="line">- (<span class="keyword">void</span>)touchesCancelled:(nullable <span class="built_in">NSSet</span>&lt;<span class="built_in">UITouch</span> *&gt; *)touches withEvent:(nullable <span class="built_in">UIEvent</span> *)event;</span><br></pre></td></tr></table></figure>
+<p>这四个方法分别处理触摸开始事件、触摸移动事件、触摸终止事件、以及触摸跟踪取消事件。</p>
+<p>再来看下 <code>UIResponder</code> 的继承链：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-01.png" alt=""></p>
+<h3 id="First_Responder">First Responder</h3><p>First Responder（第一响应者）用于第一个接收事件，通常情况下，第一响应者是一个视图对象。</p>
+<p>一个对象可以通过以下操作成为第一响应者：</p>
+<ol>
+<li>重写 <code>canBecomeFirstResponder</code> 方法，并返回 <code>YES</code></li>
+<li>接收 <code>becomeFirstResponder</code> 消息，如果必要，一个对象可以给自己发这个消息</li>
+</ol>
+<h3 id="要点">要点</h3><ol>
+<li><code>CALayer</code> 不是 <code>UIResponder</code> 的子类，这说明 <code>CALayer</code> 无法响应事件，这也是 <code>UIView</code> 与 <code>CALayer</code> 的重要区别之一</li>
+</ol>
+<hr>
+<h2 id="Responder_Chain">Responder Chain</h2><p>当一个事件发生时，如果 First Responder 不进行处理，事件就会继续往下传递，被下个 Responder 接收，如果下个 Responder 仍不处理，又会被下下个 Responder 接收……直到一个 Responder 处理了事件或者没有 Responder 了。这些 Responder 按照传递次序连接起来的链条就构成了 Responder Chain（响应者链）。</p>
+<p>下图直观地反应了事件传递的流程：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-02.png" alt=""></p>
+<p>从图中可以看到，响应者链有以下特点：</p>
+<ol>
+<li><p>响应者链通常是由 initial view 开始</p>
+</li>
+<li><p>UIView 的 <code>nextResponder</code> 是它的 Super View；如果 UIView 已经是其所在的 UIViewController 的 Top View，那么 UIView 的 <code>nextResponder</code> 就是 UIViewController</p>
+</li>
+<li><p>UIViewController 如果有 Super ViewController，那么它的 <code>nextResponder</code> 为其 Super ViewController 最表层的 View；如果没有，那么它的 <code>nextResponder</code> 就是 UIWindow</p>
+</li>
+<li><p>UIWindow 的 contentView 指向 UIApplication，将其作为 <code>nextResponder</code></p>
+</li>
+<li><p>UIApplication 是一个响应者链的终点，它的 <code>nextResponder</code> 指向 AppDelegate（文档中说是 nil，如果有同学有明确的答案请告知），整个 Responder Chain 结束</p>
+</li>
+</ol>
+<p><strong>需要说明是</strong>：如果当前的 Responder 不处理事件，并希望将其传递给 <code>nextResponder</code> 时，需要手动编写代码，才会继续往下传递，否则事件会被废弃：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)touchesBegan:(<span class="built_in">NSSet</span> *)touches withEvent:(<span class="built_in">UIEvent</span> *)event</span><br><span class="line">&#123;  </span><br><span class="line">    <span class="comment">// 将事件传递给 nextResponder</span></span><br><span class="line">    <span class="keyword">id</span> theNextResponder = [<span class="keyword">self</span> nextResponder];</span><br><span class="line">    [theNextResponder touchesBegan:touches withEvent:event];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="要点-1">要点</h3><ol>
+<li><code>UIResponder</code> 本身是不会去存储或者设置 <code>nextResponder</code> 的，所谓的 <code>nextResponder</code> 都是子类去实现的</li>
+</ol>
+<hr>
+<h2 id="Hit-Test_View_&amp;_Hit-Testing">Hit-Test View &amp; Hit-Testing</h2><p><strong>Hit-Test View</strong>：当用户与触摸屏产生交互时，硬件就会探测到物理接触并且通知操作系统。操作系统就会创建相应的事件，并将其传递给当前正在运行的应用程序的事件队列。然后这个事件会被事件循环传递给优先响应对象，既 Hit-Test View</p>
+<p><strong>Hit-Testing</strong>：Hit-Test View 就是事件被触发时和用户交互的对象，寻找 Hit-Test View 的过程就叫做 Hit-Testing</p>
+<p>在 <code>UIView</code> 中定义了如下两个函数：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  UIView.h</span></span><br><span class="line"><span class="comment">//  UIKit</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Copyright (c) 2005-2015 Apple Inc. All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line">- (nullable <span class="built_in">UIView</span> *)hitTest:(<span class="built_in">CGPoint</span>)point withEvent:(nullable <span class="built_in">UIEvent</span> *)event;   <span class="comment">// recursively calls -pointInside:withEvent:. point is in the receiver's coordinate system</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)pointInside:(<span class="built_in">CGPoint</span>)point withEvent:(nullable <span class="built_in">UIEvent</span> *)event;   <span class="comment">// default returns YES if point is in bounds</span></span><br></pre></td></tr></table></figure>
+<p>系统先调用 <code>pointInSide: WithEvent:</code> 判断当前视图以及这些视图的子视图是否能接收这次点击事件，然后在调用 <code>hitTest: withEvent:</code> 依次获取处理这个事件的所有视图对象，在获取所有的可处理事件对象后，开始调用这些对象的 touches 回调方法。</p>
+<p>下面通过两张图来观察：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-03.png" alt=""><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">图片来自</a></p>
+<p>UIWindow 有一个 MianVIew，MainView 里面有三个 Sub View：View A、View B、View C，他们各自有两个 Sub View，他们层级关系是：View A 在最下面，View B 中间，View C 最上(按照 <code>addSubview</code> 的顺序)，其中 View A 和 View B 有一部分重叠。如果手指在 View B.1 和 View A.2 重叠的上面点击，按照上面说的递归方式，顺序如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/the-first-meet-with-event-delivery-04.png" alt=""><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">图片来自</a></p>
+<p>递归是向界面的根节点 UIWindow 发送 <code>hitTest:withEvent:</code> 消息开始的，从这个消息返回的是一个 UIView，也就是手指当前位置最前面的那个 Hittest View。当向 UIWindow 发送 <code>hitTest:withEvent:</code> 消息时，<code>hitTest:withEvent:</code> 里面所做的事，就是判断当前的点击位置是否在 Window 里面，如果在则遍历 Window 的 Subview 然后依次对 Subview 发送 <code>hitTest:withEvent:</code> 消息（注意这里给 Subview 发送消息是根据当前 Subview 的 index 顺序，index 越大就越先被访问）。如果当前的 point 没有在 View 上面，那么这个 View 的 Subview 也就不会被遍历了。当事件遍历到了 View B.1，发现 point 在 View B.1 里面，并且 View B.1 没有 Subview，那么他就是我们要找的 Hittest View 了，找到之后就会一路返回直到根节点，而 View B 之后的 View A 也不会被遍历了。</p>
+<hr>
+<h2 id="总结">总结</h2><p>所以关于事件的链有两条：事件的<strong>响应链</strong>；Hit-Testing 时事件的<strong>传递链</strong>。</p>
+<ul>
+<li><p><strong>事件响应链</strong>：由离用户最近的 View 向系统传递：<br>initial view –&gt; Super View –&gt; …… –&gt; View Controller –&gt; Window –&gt; Application –&gt; AppDelegate</p>
+</li>
+<li><p><strong>事件传递链</strong>：由系统向离用户最近的 View 传递：<br>UIKit –&gt; active app’s event queue –&gt; Window –&gt; Root View –&gt; …… –&gt; Lowest View</p>
+</li>
+</ul>
+<p>具体的应用可以参见：<a href="http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE.html" target="_blank" rel="external">事件传递响应链</a></p>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://developer.apple.com/library/ios/documentation/EventHandling/Conceptual/EventHandlingiPhoneOS/multitouch_background/multitouch_background.html" target="_blank" rel="external">Event Handling Guide for iOS</a></li>
+<li><a href="http://sindrilin.com/ios-dev/2015/12/27/%E4%BA%8B%E4%BB%B6%E4%BC%A0%E9%80%92%E5%93%8D%E5%BA%94%E9%93%BE.html" target="_blank" rel="external">事件传递响应链</a></li>
+<li><a href="https://www.zybuluo.com/MicroCai/note/66142" target="_blank" rel="external">iOS Events and Responder Chain</a></li>
+<li><a href="http://zhoon.github.io/ios/2015/04/12/ios-event.html" target="_blank" rel="external">深入浅出iOS事件机制</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;&lt;p&gt;今天看到一道面试题：&lt;code&gt;UIWindow&lt;/code&gt; 与 &lt;code&gt;UIView&lt;/code&gt; 有何区别？&lt;/p&gt;
+&lt;p&gt;关于问题的答案，你可以自行 Google。要说这篇文章的由来，是因为答案中说到：&lt;strong&gt;UIWindow 管理和协调着事件的分发&lt;/strong&gt;，这一点引起了我的疑问。&lt;/p&gt;
+&lt;p&gt;那么，在 iOS 中，事件分发机制的概念与具体的流程是怎么样子的呢？如果你之前也未曾了解，亦或是一知半解，不如今天就和我一起学习下事件分发机制吧！&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
+    
+    
+      <category term="Event Delivery" scheme="http://imtangqi.com/tags/Event-Delivery/"/>
+    
+      <category term="Event Type" scheme="http://imtangqi.com/tags/Event-Type/"/>
+    
+      <category term="Responder Chain" scheme="http://imtangqi.com/tags/Responder-Chain/"/>
+    
+      <category term="Responder Object" scheme="http://imtangqi.com/tags/Responder-Object/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS 中的 Autorelease Pool</title>
+    <link href="http://imtangqi.com/2016/04/15/autorelease-pool-in-ios/"/>
+    <id>http://imtangqi.com/2016/04/15/autorelease-pool-in-ios/</id>
+    <published>2016-04-14T16:00:00.000Z</published>
+    <updated>2016-05-28T08:36:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言">前言</h2><p>Objective-C 对象的生命周期取决于其引用计数。在 Objective-C 的引用计数架构中，有一项特性叫做 Autorelease Pool（自动释放池）。释放对象有两种方式：</p>
+<ol>
+<li>调用 <code>release</code> 方法，使其保留计数立即减 1 </li>
+<li>调用 <code>autorelease</code> 方法，将其加入 Autorelease Pool 中</li>
+</ol>
+<p>Autorelease Pool 用于存放那些需要在稍后某个时刻释放的对象。当 Pool drain（清空）时，系统会向其中的对象发送 <code>release</code> 消息。</p>
+<a id="more"></a>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-01.jpg" alt=""></p>
+<hr>
+<h2 id="详解">详解</h2><p>创建 Autorelease Pool 所使用语法如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果在没有创建 Autorelease Pool 的情况下给对象发送 <code>autorelease</code> 消息，那么控制台会输出这样一条信息：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__<span class="built_in">NSAutoreleaseNoPool</span>(): Object <span class="number">0x350270</span> of class <span class="built_in">NSCFString</span> autoreleased with no pool <span class="keyword">in</span> place - just leaking - <span class="keyword">break</span> on objc_ autoreleaseNoPool() to debug</span><br></pre></td></tr></table></figure>
+<p>而然，一般情况下无须担心 Autorelease Pool 的创建问题。Mac OS X  与 iOS 应用程序分别运行于 Cocoa 及 Cocoa Touch 环境中。系统会自动创建一些线程，比如主线程或者是 GCD 机制中的线程，这些线程默认都有 Autorelease Pool，每次执行 Event Loop（事件循环）时，就会将其清空。因此，不需要自己来创建。</p>
+<p>通常只有一个地方需要创建 Autorelease Pool，那就是在 <code>main</code> 函数里，我们用 Autorelease Pool  来包裹应用程序的入口点。比如说，iOS 程序的 <code>main</code> 函数经常这样写：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> * argv[]) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">UIApplicationMain</span>(argc, argv, <span class="literal">nil</span>, <span class="built_in">NSStringFromClass</span>([AppDelegate class]));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实从技术角度看，不是非得有个 <code>@autoreleasepool {}</code> 才行。因为块的末尾恰好就是应用程序的终止处，而此时操作系统会把程序所占的全部内存都释放掉。虽说如此，但是如果不写这个块的话，那么由 <code>UIApplicationMain</code> 函数所自动释放的那些对象，就没有 Autorelease Pool 可以容纳了，于是系统会发出警告信息来表明这一情况。所以说，这个池可以理解成最外围捕捉全部自动释放对象所用的池。</p>
+<hr>
+<h2 id="示例">示例</h2><p>下面这段代码中的花括号定义了 Autorelease Pool 的范围。Autorelease Pool 于 <code>{</code>（左花括号）处创建，并于对应的 <code>}</code>（右花括号）处自动清空。位于 Autorelease Pool 范围内的对象，将在此范围末尾处收到 <code>release</code> 消息。Autorelease Pool 可以嵌套。系统在自动释放对象时，会把它放到最内层的池里。比如说：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">    <span class="built_in">NSString</span> *string = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"1 = %i"</span>, <span class="number">1</span>];</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="built_in">NSNumber</span> *number = [<span class="built_in">NSNumber</span> numberWithInt:<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>本例中有两个对象，它们都由类的工厂方法所创建，这样创建出来的对象会自动释放。<code>NSString</code> 对象放在外围的 Autorelease Pool 中，而 <code>NSNumber</code> 对象则放在里层的 Autorelease Pool 中。将 Autorelease Pool 嵌套使用的好处是，可以借此控制应用程序的<strong>内存峰值（high-memory waterline）</strong>，使其不致过高。</p>
+<p>考虑下面这段代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</span><br><span class="line">    [<span class="keyword">self</span> doSomethingWithInt:i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果 <code>doSomethingWithInt:</code> 方法要创建临时对象，那么这些对象很可能会放在 Autorelease Pool 里。比方说，它们可能是一些临时字符串。但是，即便这些对象在调用完方法之后就不再使用了，它们也依然处于]存活状态，因为目前还在 Autorelease Pool 里，等待系统稍后将其释放并回收。然而，<strong>Autorelease Pool 要等到线程执行下一个事件循环时才会清空。</strong>这就意味着在执行 for 循环时，会持续有新的对象创建出来，并加入 Autorelease Pool 中。所有这种对象都要等 for 循环执行完才会释放。这样一来，在执行 for 循环时，应用程序所占内存量就会持续上涨，而等到所有临时对象都释放之后，内存量又会突然下降。</p>
+<hr>
+<h2 id="实现原理">实现原理</h2><h3 id="AutoreleasePoolPage">AutoreleasePoolPage</h3><p>ARC 下，我们使用 <code>@autoreleasepool {}</code> 来使用一个 Autorelease Pool，随后编译器将其改写成下面的样子：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *context = objc_autoreleasePoolPush();</span><br><span class="line"><span class="comment">// &#123;&#125;中的代码</span></span><br><span class="line">objc_autoreleasePoolPop(context);</span><br></pre></td></tr></table></figure>
+<p>而这两个函数都是对 <code>AutoreleasePoolPage</code> 的简单封装，所以自动释放机制的核心就在于这个类。</p>
+<p><code>AutoreleasePoolPage</code> 是一个 C++ 实现的类：</p>
+<ol>
+<li>Autorelease Pool 并没有单独的结构，而是由若干个 <code>AutoreleasePoolPage</code> 以<strong>双向链表</strong>的形式组合而成（分别对应结构中的 parent 指针和 child 指针）</li>
+<li>Autorelease Pool 是按线程一一对应的（结构中的 thread 指针指向当前线程）</li>
+<li><code>AutoreleasePoolPage</code> 每个对象会开辟 4096 字节内存（也就是虚拟内存一页的大小），除了上面的实例变量所占空间，剩下的空间全部用来储存 autorelease 对象的地址</li>
+<li>上面的 id *next 指针作为游标指向栈顶最新 add 进来的 autorelease 对象的下一个位置</li>
+<li>一个 <code>AutoreleasePoolPage</code> 的空间被占满时，会新建一个 <code>AutoreleasePoolPage</code> 对象，连接链表，后来的 autorelease 对象在新的 Page 加入</li>
+</ol>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-02.jpg" alt=""></p>
+<ul>
+<li><code>magic</code> 用来校验 <code>AutoreleasePoolPage</code> 的结构是否完整</li>
+<li><code>next</code> 指向最新添加的 autoreleased 对象的下一个位置，初始化时指向 begin() </li>
+<li><code>thread</code> 指向当前线程</li>
+<li><code>parent</code> 指向父结点，第一个结点的 parent 值为 nil </li>
+<li><code>child</code> 指向子结点，最后一个结点的 child 值为 nil </li>
+<li><code>depth</code> 代表深度，从 0 开始，往后递增 1</li>
+<li><code>hiwat</code> 代表 high water mark </li>
+</ul>
+<p>另外，当 next == begin() 时，表示 <code>AutoreleasePoolPage</code> 为空；当 next == end() 时，表示 <code>AutoreleasePoolPage</code> 已满。</p>
+<p>所以，若当前线程中只有一个 <code>AutoreleasePoolPage</code> 对象，并记录了很多 autorelease 对象地址时内存如下图：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-03.jpg" alt=""></p>
+<p>图中的情况，这一页再加入一个 autorelease 对象就要满了（也就是 next 指针马上指向栈顶），这时就要执行上面说的操作，建立下一页 Page 对象，与这一页链表连接完成后，新 Page 的 next 指针被初始化在栈底（ begin 的位置），然后继续向栈顶添加新对象。</p>
+<p>所以，向一个对象发送 <code>autorelease</code> 消息，就是将这个对象加入到当前 <code>AutoreleasePoolPage</code> 的栈顶 next 指针指向的位置</p>
+<h3 id="释放时机">释放时机</h3><p>每当进行一次 <code>objc_autoreleasePoolPush</code> 调用时，Runtime 向当前的 <code>AutoreleasePoolPage</code>中 add 进一个<strong>哨兵对象（POOL_SENTINEL）</strong>，值为 0（也就是个 nil），那么这一个 page 就变成了下面的样子：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-04.jpg" alt=""></p>
+<p><code>objc_autoreleasePoolPush</code> 的返回值正是这个哨兵对象的地址，被 <code>objc_autoreleasePoolPop</code>（哨兵对象）作为入参，于是：</p>
+<ol>
+<li>根据传入的哨兵对象地址找到哨兵对象所处的 Page</li>
+<li>在当前 Page 中，将晚于哨兵对象插入的所有 autorelease 对象都发送一次 <code>release</code> 消息，并向回移动next指针到正确位置</li>
+<li>补充 2：从最新加入的对象一直向前清理，可以向前跨越若干个 Page，直到哨兵所在的 Page</li>
+</ol>
+<p>刚才的 <code>objc_autoreleasePoolPop</code> 执行后，最终变成了下面的样子：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-05.jpg" alt=""></p>
+<hr>
+<h2 id="@autoreleasepool_{}">@autoreleasepool {}</h2><p>我们使用 <code>clang -rewrite-objc</code> 命令将下面的 Objective-C 代码重写成 C++ 代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>将会得到以下输出结果（只保留了相关代码）：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> __declspec(dllimport) <span class="keyword">void</span> * objc_autoreleasePoolPush(<span class="keyword">void</span>);</span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> __declspec(dllimport) <span class="keyword">void</span> objc_autoreleasePoolPop(<span class="keyword">void</span> *);</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> __AtAutoreleasePool &#123;</span><br><span class="line">  __AtAutoreleasePool() &#123;atautoreleasepoolobj = objc_autoreleasePoolPush();&#125;</span><br><span class="line">  ~__AtAutoreleasePool() &#123;objc_autoreleasePoolPop(atautoreleasepoolobj);&#125;</span><br><span class="line">  <span class="keyword">void</span> * atautoreleasepoolobj;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* @autoreleasepool */</span> &#123; __AtAutoreleasePool __autoreleasepool;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>苹果通过声明一个 <code>__AtAutoreleasePool</code> 类型的局部变量 <code>__autoreleasepool</code> 来实现 <code>@autoreleasepool {}</code>。当声明 <code>__autoreleasepool</code> 变量时，构造函数 <code>__AtAutoreleasePool()</code> 被调用，即执行 <code>atautoreleasepoolobj = objc_autoreleasePoolPush();</code>；当出了当前作用域时，析构函数 <code>~__AtAutoreleasePool()</code> 被调用，即执行 <code>objc_autoreleasePoolPop(atautoreleasepoolobj);</code>。也就是说 <code>@autoreleasepool {}</code> 的实现代码可以进一步简化如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* @autoreleasepool */</span> &#123;</span><br><span class="line">    <span class="keyword">void</span> *atautoreleasepoolobj = objc_autoreleasePoolPush();</span><br><span class="line">    <span class="comment">// 用户代码，所有接收到 autorelease 消息的对象会被添加到这个 Autorelease Pool 中</span></span><br><span class="line">    objc_autoreleasePoolPop(atautoreleasepoolobj);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，单个 Autorelease Pool 的运行过程可以简单地理解为 <code>objc_autoreleasePoolPush()</code>、<code>[obj autorelease]</code> 和 <code>objc_autoreleasePoolPop(void *)</code> 三个过程。</p>
+<h3 id="push_操作">push 操作</h3><p>上面提到的 <code>objc_autoreleasePoolPush()</code> 函数本质上就是调用的 <code>AutoreleasePoolPage</code> 的 <code>push</code> 函数：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *</span><br><span class="line">objc_autoreleasePoolPush(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (UseGC) <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    <span class="keyword">return</span> AutoreleasePoolPage::push();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，我们接下来看看 <code>AutoreleasePoolPage</code> 的 <code>push</code> 函数的作用和执行过程。一个 <code>push</code> 操作其实就是创建一个新的 Autorelease Pool，对应 <code>AutoreleasePoolPage</code> 的具体实现就是往 <code>AutoreleasePoolPage</code> 中的 <code>next</code> 位置插入一个 <strong>POOL_SENTINEL</strong>（哨兵对象），并且返回插入的 <code>POOL_SENTINEL</code> 的内存地址。这个地址也就是我们前面提到的 pool token ，在执行 <code>pop</code> 操作的时候作为函数的入参：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> *push()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">id</span> *dest = autoreleaseFast(POOL_SENTINEL);</span><br><span class="line">    assert(*dest == POOL_SENTINEL);</span><br><span class="line">    <span class="keyword">return</span> dest;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>push</code> 函数通过调用 <code>autoreleaseFast</code> 函数来执行具体的插入操作：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">id</span> *autoreleaseFast(<span class="keyword">id</span> obj)</span><br><span class="line">&#123;</span><br><span class="line">    AutoreleasePoolPage *page = hotPage();</span><br><span class="line">    <span class="keyword">if</span> (page &amp;&amp; !page-&gt;full()) &#123;</span><br><span class="line">        <span class="keyword">return</span> page-&gt;add(obj);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (page) &#123;</span><br><span class="line">        <span class="keyword">return</span> autoreleaseFullPage(obj, page);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> autoreleaseNoPage(obj);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>autoreleaseFast</code> 函数在执行一个具体的插入操作时，分别对三种情况进行了不同的处理：</p>
+<ol>
+<li>当前 Page 存在且没有满时，直接将对象添加到当前 Page 中，即 next 指向的位置</li>
+<li>当前 Page 存在且已满时，创建一个新的 Page ，并将对象添加到新创建的 Page 中</li>
+<li>当前 Page 不存在时，即还没有 Page 时，创建第一个 Page ，并将对象添加到新创建的 Page 中</li>
+</ol>
+<p>每调用一次 <code>push</code> 操作就会创建一个新的 Autorelease Pool，即往 <code>AutoreleasePoolPage</code> 中插入一个 <code>POOL_SENTINEL</code>，并且返回插入的 <code>POOL_SENTINEL</code> 的内存地址。</p>
+<h3 id="autorelease_操作">autorelease 操作</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">id</span>)autorelease &#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="keyword">id</span>)<span class="keyword">self</span>)-&gt;rootAutorelease();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过查看 <code>((id)self)-&gt;rootAutorelease()</code> 的方法调用，我们发现最终调用的就是  <code>AutoreleasePoolPage</code> 的 <code>autorelease</code> 函数：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">__attribute__((noinline,used))</span><br><span class="line"><span class="keyword">id</span></span><br><span class="line">objc_object::rootAutorelease2()</span><br><span class="line">&#123;</span><br><span class="line">    assert(!isTaggedPointer());</span><br><span class="line">    <span class="keyword">return</span> AutoreleasePoolPage::autorelease((<span class="keyword">id</span>)<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>AutoreleasePoolPage</code> 的 <code>autorelease</code> 函数的实现对我们来说就比较容量理解了，它跟 <code>push</code> 操作的实现非常相似。只不过 <code>push</code> 操作插入的是一个 <code>POOL_SENTINEL</code>，而 <code>autorelease</code> 操作插入的是一个具体的 autoreleased 对象：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">id</span> autorelease(<span class="keyword">id</span> obj)</span><br><span class="line">&#123;</span><br><span class="line">    assert(obj);</span><br><span class="line">    assert(!obj-&gt;isTaggedPointer());</span><br><span class="line">    <span class="keyword">id</span> *dest __unused = autoreleaseFast(obj);</span><br><span class="line">    assert(!dest  ||  *dest == obj);</span><br><span class="line">    <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="pop_操作">pop 操作</h3><p>同理，前面提到的 <code>objc_autoreleasePoolPop(void *)</code> 函数本质上也是调用的  <code>AutoreleasePoolPage</code> 的 <code>pop</code> 函数：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span></span><br><span class="line">objc_autoreleasePoolPop(<span class="keyword">void</span> *ctxt)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (UseGC) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// fixme rdar://9167170</span></span><br><span class="line">    <span class="keyword">if</span> (!ctxt) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    AutoreleasePoolPage::pop(ctxt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>pop</code> 函数的入参就是 <code>push</code> 函数的返回值，也就是 <code>POOL_SENTINEL</code> 的内存地址，即 pool token。当执行 <code>pop</code> 操作时，内存地址在 pool token 之后的所有 autoreleased 对象都会被 release。直到 pool token 所在 Page 的 next 指向 pool token 为止。</p>
+<p>下面是某个线程的 Autorelease Pool 堆栈的内存结构图，在这个 Autorelease Pool 堆栈中总共有两个 <code>POOL_SENTINEL</code>，即有两个 Autorelease Pool。该堆栈由三个 <code>AutoreleasePoolPage</code> 结点组成，第一个 <code>AutoreleasePoolPage</code> 结点为 <code>coldPage()</code>，最后一个 <code>AutoreleasePoolPage</code> 结点为 <code>hotPage()</code>。其中，前两个结点已经满了，最后一个结点中保存了最新添加的 autoreleased 对象 <code>objr3</code> 的内存地址：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-06.png" alt=""></p>
+<p>此时，如果执行 <code>pop(token1)</code> 操作，那么该 Autorelease Pool 堆栈的内存结构将会变成如下图所示：</p>
+<p><img src="http://7xikfc.com1.z0.glb.clouddn.com/autorelease-pool-in-ios-07.png" alt=""></p>
+<hr>
+<h2 id="总结">总结</h2><p>这种情况不甚理想，尤其当循环长度无法预知的情况下更是如此。比方说，要从数据库中读出许多对象。代码可能会这么写：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *databaseRecords = <span class="comment">/* ... */</span>;</span><br><span class="line"><span class="built_in">NSMutableArray</span> *people = [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">NSDictionary</span> *record <span class="keyword">in</span> databaseRecords) &#123;</span><br><span class="line">    EOCPerson *person = [[EOCPerson alloc] initWithRecord:record];</span><br><span class="line">    [people addObject:person];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>EOCPerson</code> 的初始化函数也许会像上列那样，再创建出一些临时对象。若记录有很多条，则内存中也会有很多不必要的临时对象，它们本来应该提早回收的。增加一个 Autorelease Pool 即可解决此问题。如果把循环内的代码包裹在 <code>@autoreleasepool {}</code> 中，那么在循环中自动释放的对象就会放在这个 Pool，而不是线程的主池里面。例如：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *databaseRecords = <span class="comment">/* ... */</span>;</span><br><span class="line"><span class="built_in">NSMutableArray</span> *people = [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">NSDictionary</span> *record <span class="keyword">in</span> databaseRecords) &#123;</span><br><span class="line">    <span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        EOCPerson *person = [[EOCPerson alloc] initWithRecord:record];</span><br><span class="line">        [people addObject:person]; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>加上这个 Autorelease Pool 之后，应用程序在执行循环时的内存峰值就会降低，不再像原来那么高了。内存峰值（high-memory waterline）是指应用程序在某个特定时间段内的最大内存用量（highest memory footprint）。新增的 <code>@autoreleasepool {}</code> 可以减少这个峰值，因为系统会在块的末尾把某些对象回收掉。而刚才提到的那种临时对象，就在回收之列。</p>
+<p>是否应该用池来优化效率，完全取决于具体的应用程序。首先得监控内存用量，判断其中有没有需要解决的问题，如果没有完成这一步，那就别急着优化。尽管 <code>@autoreleasepool {}</code> 的开销不太大，但毕竟还是有的，所以尽量不要建立额外的 Autorelease Pool。</p>
+<h3 id="MRC_vs-_ARC">MRC vs. ARC</h3><p>如果在 ARC 出现之前就写过 Objective-C 程序，那么可能还记得有种老式写法，就是使用 <code>NSAutoreleasePool</code> 对象。这个特殊的对象与普通对象不同，它专门用来表示 Autorelease Pool，就像新语法中的 <code>@autoreleasepool {}</code> 一样。但是这种写法并不会在每次执行 for 循环时都清空池，此对象更为重量级，通常用来创建那种偶尔需要清空的池，比方说：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *databaseRecords = <span class="comment">/* ... */</span>;</span><br><span class="line"><span class="built_in">NSMutableArray</span> *people = [<span class="built_in">NSMutableArray</span> new];</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line"><span class="built_in">NSAutoreleasePool</span> *pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init];</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">NSDictionary</span> *record <span class="keyword">in</span> databaseRecords) &#123;</span><br><span class="line">    EOCPerson *person = [[EOCPerson alloc] initWithRecord:record];</span><br><span class="line">    [people addObject:person];</span><br><span class="line">        </span><br><span class="line">    <span class="comment">// Drain the pool only every 10 cycles</span></span><br><span class="line">    <span class="keyword">if</span> (++i == <span class="number">10</span>) &#123;</span><br><span class="line">        [pool drain];</span><br><span class="line">        i = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="comment">// Also drain at the end in case the loop is not a multiple of 10</span></span><br><span class="line">[pool drain];</span><br></pre></td></tr></table></figure>
+<p>现在不需要再这样写代码了。采用随着 ARC 所引入的新语法，可以创建出更为轻量级的 Autorelease Pool。原来所写的代码可能会每执行 n 次循环清空一次 Autorelease Pool，现在可以改用 <code>@autoreleasepool {}</code> 把 for 循环中的语句包起来，这样的话，每次执行循环时都会建立并清空 Autorelease Pool。</p>
+<p><code>@autoreleasepool {}</code> 语法还有个好处：每个 Autorelease Pool 均有其范围，可以避免无意间误用了那些在清空池后已为系统所回收的对象。比方说，考虑下面这段采用旧式写法的代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSAutoreleasePool</span> *pool = [[<span class="built_in">NSAutoreleasePool</span> alloc] init];</span><br><span class="line"><span class="keyword">id</span> object = [<span class="keyword">self</span> createObject];</span><br><span class="line">[pool drain];</span><br><span class="line">[<span class="keyword">self</span> useObject:object];</span><br></pre></td></tr></table></figure>
+<p>这样写虽然稍显夸张，但却能说明问题。调用 <code>useObject:</code> 方法时所传入的那个对象，可能已经为系统所回收了。同样的代码改用新式写法就变成了：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@autoreleasepool</span> &#123;</span><br><span class="line">    <span class="keyword">id</span> object = [<span class="keyword">self</span> createObject];</span><br><span class="line">&#125;</span><br><span class="line">[<span class="keyword">self</span> useObject:object];</span><br></pre></td></tr></table></figure>
+<p>这次根本就无法编译，因为 object 变量出了 Autorelease Pool 的外围后就不可用了，所以在调用 <code>useObject:</code> 方法时不能用它做参数。</p>
+<h3 id="NSThread、NSRunLoop_和_NSAutoreleasePool">NSThread、NSRunLoop 和 NSAutoreleasePool</h3><p>根据苹果官方文档中对 <code>NSRunLoop</code> 的描述，我们可以知道每一个线程，包括主线程，都会拥有一个专属的 <code>NSRunLoop</code> 对象，并且会在有需要的时候自动创建。</p>
+<p>在主线程的 <code>NSRunLoop</code> 对象（在系统级别的其他线程中应该也是如此，比如通过 <code>dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)</code> 获取到的线程）的每个（事件循环）Event Loop 开始前，系统会自动创建一个 Autorelease Pool ，并在 Event Loop 结束时 drain 。</p>
+<p>另外，<code>NSAutoreleasePool</code> 中还提到，每一个线程都会维护自己的 Autorelease Pool 堆栈。换句话说 Autorelease Pool 是与线程紧密相关的，每一个 Autorelease Pool 只对应一个线程。</p>
+<p>弄清楚 <code>NSThread</code>、<code>NSRunLoop</code> 和 <code>NSAutoreleasePool</code> 三者之间的关系可以帮助我们从整体上了解 Objective-C 的内存管理机制</p>
+<h3 id="使用场景">使用场景</h3><ol>
+<li>你编写是命令行工具的代码，而不是基于 UI 框架的代码</li>
+<li>你需要写一个循环，里面会创建很多临时的对象<ul>
+<li>这时候你可以在循环内部的代码块里使用一个 <code>@autoreleasepool {}</code>，这样这些对象就能在一次迭代完成后被释放掉。这种方式可以降低内存最大占用</li>
+</ul>
+</li>
+<li>当你大量使用辅助线程<ul>
+<li>你需要在线程的任务代码中创建自己的 <code>@autoreleasepool {}</code></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="要点">要点</h2><ul>
+<li>Autorelease Pool 排布在栈中，对象收到 <code>autorelease</code> 消息后，系统将其放入最顶端的池里。</li>
+<li>合理运用 Autorelease Pool，可降低应用程序的内存峰值。</li>
+<li><code>@autoreleasepool {}</code> 这种新式写法能创建出更为轻便的 Autorelease Pool。</li>
+</ul>
+<hr>
+<h2 id="参考">参考</h2><ul>
+<li><a href="https://book.douban.com/subject/25829244/" target="_blank" rel="external">Effective Objective-C 2.0</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html#//apple_ref/doc/uid/20000047-CJBFBEDI" target="_blank" rel="external">Using Autorelease Pool Blocks</a></li>
+<li><a href="http://blog.sunnyxx.com/2014/10/15/behind-autorelease/" target="_blank" rel="external">黑幕背后的Autorelease</a></li>
+<li><a href="http://blog.leichunfeng.com/blog/2015/05/31/objective-c-autorelease-pool-implementation-principle/" target="_blank" rel="external">Objective-C Autorelease Pool 的实现原理</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;前言&lt;/h2&gt;&lt;p&gt;Objective-C 对象的生命周期取决于其引用计数。在 Objective-C 的引用计数架构中，有一项特性叫做 Autorelease Pool（自动释放池）。释放对象有两种方式：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;调用 &lt;code&gt;release&lt;/code&gt; 方法，使其保留计数立即减 1 &lt;/li&gt;
+&lt;li&gt;调用 &lt;code&gt;autorelease&lt;/code&gt; 方法，将其加入 Autorelease Pool 中&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Autorelease Pool 用于存放那些需要在稍后某个时刻释放的对象。当 Pool drain（清空）时，系统会向其中的对象发送 &lt;code&gt;release&lt;/code&gt; 消息。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS" scheme="http://imtangqi.com/categories/iOS/"/>
+    
+    
+      <category term="Autorelease Pool" scheme="http://imtangqi.com/tags/Autorelease-Pool/"/>
+    
+      <category term="Memory Management" scheme="http://imtangqi.com/tags/Memory-Management/"/>
     
   </entry>
   
